@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 15: Exercises and Complements – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap14.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 15: Exercises and Complements</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level3" id="exercise-15.1-bernoulli-distribution">
+<h3 class="anchored" data-anchor-id="exercise-15.1-bernoulli-distribution">Exercise 15.1: Bernoulli Distribution</h3>
+<p>Suppose that <span class="math inline">\(X\)</span> has the <strong>Bernoulli distribution</strong> with parameter <span class="math inline">\(p_X\)</span>. Furthermore, suppose that conditional on <span class="math inline">\(X = 1\)</span>, <span class="math inline">\(Y\)</span> is Bernoulli with parameter <span class="math inline">\(p_{Y1}\)</span>, but that conditional on <span class="math inline">\(X = 0\)</span>, <span class="math inline">\(Y\)</span> is Bernoulli with parameter <span class="math inline">\(p_{Y0}\)</span>.</p>
+<p>(a). What is the <strong>marginal distribution</strong> of <span class="math inline">\(Y\)</span>?</p>
+<p>(b). What is the <strong>joint distribution</strong> of <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>?</p>
+<p>(c). Suppose you have a random sample <span class="math inline">\(\left\{\left(X_1, Y_1\right), \ldots,\left(X_n, Y_n\right)\right\}\)</span> from the joint distribution. Let</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{p}_X &amp;= \dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(X_i=1\right) \text { and } \\
+\hat{p}_Y &amp;= \dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(Y_i=1\right) .
+\end{aligned}
+\]</span></p>
+<p>What are the statistical properties of <span class="math inline">\(\hat{p}_X\)</span> and <span class="math inline">\(\hat{p}_Y\)</span>?</p>
+</section>
+<section class="level3" id="solution-15.1">
+<h3 class="anchored" data-anchor-id="solution-15.1">Solution 15.1</h3>
+<p>(a). The <strong>marginal distribution</strong> of <span class="math inline">\(Y\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(Y=1) &amp;= P(Y=1 \mid X=1) P(X=1) + P(Y=1 \mid X=0) P(X=0) \\
+&amp;= p_{Y1} p_X + p_{Y0} (1 - p_X)
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+P(Y=0) = 1 - P(Y=1) = 1 - [p_{Y1} p_X + p_{Y0} (1 - p_X)]
+\]</span></p>
+<p>Thus, <span class="math inline">\(Y\)</span> follows a Bernoulli distribution with parameter <span class="math inline">\(p_Y = p_{Y1} p_X + p_{Y0} (1 - p_X)\)</span>.</p>
+<p>(b). The <strong>joint distribution</strong> of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(X=1, Y=1) &amp;= P(Y=1 \mid X=1) P(X=1) = p_{Y1} p_X \\
+P(X=1, Y=0) &amp;= P(Y=0 \mid X=1) P(X=1) = (1 - p_{Y1}) p_X \\
+P(X=0, Y=1) &amp;= P(Y=1 \mid X=0) P(X=0) = p_{Y0} (1 - p_X) \\
+P(X=0, Y=0) &amp;= P(Y=0 \mid X=0) P(X=0) = (1 - p_{Y0}) (1 - p_X)
+\end{aligned}
+\]</span></p>
+<p>This can be summarized in a table:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\((X, Y)\)</span></th>
+<th style="text-align: left;">Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((1, 1)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(p_X p_{Y1}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((1, 0)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(p_X (1 - p_{Y1})\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\((0, 1)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((1 - p_X) p_{Y0}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\((0, 0)\)</span></td>
+<td style="text-align: left;"><span class="math inline">\((1 - p_X) (1 - p_{Y0})\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>(c). The estimators <span class="math inline">\(\hat{p}_X\)</span> and <span class="math inline">\(\hat{p}_Y\)</span> are the sample means of Bernoulli random variables.</p>
+<ul>
+<li><span class="math inline">\(\hat{p}_X = \dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(X_i=1\right)\)</span> is the sample mean of <span class="math inline">\(n\)</span> independent Bernoulli(<span class="math inline">\(p_X\)</span>) random variables.</li>
+<li><span class="math inline">\(\hat{p}_Y = \dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(Y_i=1\right)\)</span> is the sample mean of <span class="math inline">\(n\)</span> independent Bernoulli(<span class="math inline">\(p_Y\)</span>) random variables, where <span class="math inline">\(p_Y = p_{Y1} p_X + p_{Y0} (1 - p_X)\)</span>.</li>
+</ul>
+<p>The <strong>statistical properties</strong> of these estimators are:</p>
+<ul>
+<li><strong>Unbiasedness</strong>: <span class="math inline">\(E[\hat{p}_X] = p_X\)</span> and <span class="math inline">\(E[\hat{p}_Y] = p_Y\)</span>.</li>
+<li><strong>Consistency</strong>: <span class="math inline">\(\hat{p}_X \xrightarrow{p} p_X\)</span> and <span class="math inline">\(\hat{p}_Y \xrightarrow{p} p_Y\)</span> as <span class="math inline">\(n \to \infty\)</span>.</li>
+<li><strong>Asymptotic normality</strong>: By the Central Limit Theorem, as <span class="math inline">\(n \to \infty\)</span>, <span class="math display">\[
+\begin{aligned}
+\sqrt{n}(\hat{p}_X - p_X) &amp;\xrightarrow{d} N(0, p_X(1-p_X)) \\
+\sqrt{n}(\hat{p}_Y - p_Y) &amp;\xrightarrow{d} N(0, p_Y(1-p_Y))
+\end{aligned}
+\]</span></li>
+</ul>
+<section class="level4" id="intuitive-explanation">
+<h4 class="anchored" data-anchor-id="intuitive-explanation">Intuitive Explanation:</h4>
+<p>(a). The marginal distribution of <span class="math inline">\(Y\)</span> is found by considering all possible ways <span class="math inline">\(Y\)</span> can be 1 or 0, weighted by the probabilities of the corresponding <span class="math inline">\(X\)</span> values. This is an application of the law of total probability.</p>
+<p>(b). The joint distribution describes the probability of each combination of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> values. It is calculated by multiplying the conditional probability of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span> by the probability of <span class="math inline">\(X\)</span>.</p>
+<p>(c). <span class="math inline">\(\hat{p}_X\)</span> and <span class="math inline">\(\hat{p}_Y\)</span> are sample means. The sample mean is an unbiased and consistent estimator of the population mean. As the sample size increases, the sample mean converges to the true mean, and its distribution becomes approximately normal.</p>
+</section>
+</section>
+<section class="level3" id="example-1-estimating-joint-probability">
+<h3 class="anchored" data-anchor-id="example-1-estimating-joint-probability">Example 1: Estimating Joint Probability</h3>
+<p>Suppose you have a random sample <span class="math inline">\(\left\{\left(X_1, Y_1\right), \ldots,\left(X_n, Y_n\right)\right\}\)</span> from the joint distribution. Let</p>
+<p><span class="math display">\[
+\hat{p}_X=\dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(X_i=1\right) ; \quad \hat{p}_Y=\dfrac{1}{n} \sum_{i=1}^n \mathbb{1}\left(Y_i=1\right) .
+\]</span></p>
+<p>They are both <strong>unbiased</strong> for <span class="math inline">\(p_X\)</span> and <span class="math inline">\(p_Y=p_X p_{Y 1}+\left(1-p_X\right) p_{Y 0}\)</span> respectively. <strong>Consistent</strong> and <strong>asymptotically normal</strong> as <span class="math inline">\(n \rightarrow \infty\)</span>. Can’t estimate <span class="math inline">\(p_{Y 1}, p_{Y 0}\)</span> from just the marginal information. With</p>
+<p><span class="math display">\[
+\hat{p}_{11}=\dfrac{1}{n} \sum_{i=1}^n\left(X_i=1, Y_i=1\right)=\dfrac{n_1}{n}
+\]</span></p>
+<p>we can just use</p>
+<p><span class="math display">\[
+\hat{p}_{Y 1}=\dfrac{\hat{p}_{11}}{\hat{p}_X} ; \quad \hat{p}_{Y 0}=\dfrac{\hat{p}_Y-\hat{p}_{11}}{1-\hat{p}_X}
+\]</span></p>
+<section class="level4" id="intuitive-explanation-1">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-1">Intuitive Explanation:</h4>
+<p>The estimators <span class="math inline">\(\hat{p}_{Y 1}\)</span> and <span class="math inline">\(\hat{p}_{Y 0}\)</span> are derived from the relationships between the joint and marginal probabilities. <span class="math inline">\(\hat{p}_{11}\)</span> estimates the joint probability <span class="math inline">\(P(X=1, Y=1)\)</span>, and we use the previously established relationships to solve for <span class="math inline">\(p_{Y 1}\)</span> and <span class="math inline">\(p_{Y 0}\)</span>.</p>
+</section>
+</section>
+<section class="level3" id="exercise-2-unknown-probability-distribution">
+<h3 class="anchored" data-anchor-id="exercise-2-unknown-probability-distribution">Exercise 2: Unknown Probability Distribution</h3>
+<p>The random variable <span class="math inline">\(X\)</span> has the following distribution</p>
+<p><span class="math display">\[
+X= \begin{cases}0 &amp; \text { with probability } 1-p \\ \theta &amp; \text { with probability } p\end{cases}
+\]</span></p>
+<p>for some unknown <span class="math inline">\(\theta\)</span> with <span class="math inline">\(0&lt;\theta&lt;1\)</span> and some small known <span class="math inline">\(p\)</span>. Suppose that observations <span class="math inline">\(X_1, X_2, \ldots\)</span> are to be drawn sequentially. Consider the following strategy for determining <span class="math inline">\(\theta\)</span>. Sample until the first occasion on which <span class="math inline">\(X_n=\theta\)</span>. Thus <span class="math inline">\(n\)</span> is a random variable <span class="math inline">\(n \in\{1,2, \ldots\}\)</span>. Calculate the distribution of the number of observations <span class="math inline">\(n\)</span> and its expected value. In what sense is this method consistent?</p>
+</section>
+<section class="level3" id="solution-2">
+<h3 class="anchored" data-anchor-id="solution-2">Solution 2:</h3>
+<p>The probability that the first occurrence of <span class="math inline">\(X_n = \theta\)</span> is at the <span class="math inline">\(n\)</span>-th observation is given by the probability of observing <span class="math inline">\(n-1\)</span> zeros followed by one <span class="math inline">\(\theta\)</span>. Since the observations are independent, this probability is:</p>
+<p><span class="math display">\[
+P(n) = (1-p)^{n-1} p, \quad n = 1, 2, \ldots
+\]</span></p>
+<p>This is a <strong>geometric distribution</strong> with success probability <span class="math inline">\(p\)</span>.</p>
+<p>The <strong>expected value</strong> of a geometric distribution is:</p>
+<p><span class="math display">\[
+E[n] = \dfrac{1}{p}
+\]</span></p>
+<p><strong>Consistency</strong> in this context means that as the number of trials increases, the estimator converges in probability to the true parameter value. Here, we are estimating the parameter <span class="math inline">\(\theta\)</span> by observing when <span class="math inline">\(X_n = \theta\)</span>. Since <span class="math inline">\(p\)</span> is known and <span class="math inline">\(0 &lt; \theta &lt; 1\)</span>, the method is consistent in the sense that if we observe the sequence long enough, we will eventually observe <span class="math inline">\(X_n = \theta\)</span>. The probability of observing <span class="math inline">\(\theta\)</span> in any single trial is <span class="math inline">\(p\)</span>, and the expected number of trials until we observe <span class="math inline">\(\theta\)</span> is <span class="math inline">\(\dfrac{1}{p}\)</span>. As <span class="math inline">\(n\)</span> increases, the probability of not having observed <span class="math inline">\(\theta\)</span> decreases, approaching zero.</p>
+<section class="level4" id="intuitive-explanation-2">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-2">Intuitive Explanation:</h4>
+<p>The distribution of <span class="math inline">\(n\)</span> is geometric because we are counting the number of trials until the first success (observing <span class="math inline">\(\theta\)</span>), where each trial has the same success probability <span class="math inline">\(p\)</span>. The expected value <span class="math inline">\(\dfrac{1}{p}\)</span> represents the average number of trials needed to observe the first success. The method is consistent because the probability of observing <span class="math inline">\(\theta\)</span> eventually approaches 1 as we continue the trials.</p>
+</section>
+</section>
+<section class="level3" id="exercise-3-covariance-estimator">
+<h3 class="anchored" data-anchor-id="exercise-3-covariance-estimator">Exercise 3: Covariance Estimator</h3>
+<p>Suppose that <span class="math inline">\(X, Y\)</span> are two random variables with</p>
+<p><span class="math display">\[
+\operatorname{cov}(X, Y)=\sigma_{X Y} .
+\]</span></p>
+<p>Suppose you have a random sample <span class="math inline">\(\left\{\left(X_1, Y_1\right), \ldots,\left(X_n, Y_n\right)\right\}\)</span> and let</p>
+<p><span class="math display">\[
+\begin{aligned}
+\bar{X} &amp; =\dfrac{1}{n} \sum_{i=1}^n X_i ; &amp; \bar{Y} &amp; =\dfrac{1}{n} \sum_{i=1}^n Y_i \\
+\hat{\sigma}_{X Y} &amp; =\dfrac{1}{n} \sum_{i=1}^n\left(X_i-\bar{X}\right)\left(Y_i-\bar{Y}\right) . &amp; &amp;
+\end{aligned}
+\]</span></p>
+<p>Show that <span class="math inline">\(\hat{\sigma}_{X Y}\)</span> is biased. Use (7.10) to show how to construct an unbiased estimator of <span class="math inline">\(\sigma_{X Y}\)</span>.</p>
+</section>
+<section class="level3" id="solution-3">
+<h3 class="anchored" data-anchor-id="solution-3">Solution 3:</h3>
+<p>To show that <span class="math inline">\(\hat{\sigma}_{X Y}\)</span> is biased, we need to compute its expected value.</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\sigma}_{X Y}] &amp;= E\left[\dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})\right] \\
+&amp;= \dfrac{1}{n} \sum_{i=1}^n E[(X_i - \bar{X})(Y_i - \bar{Y})]
+\end{aligned}
+\]</span></p>
+<p>Using the identity <span class="math inline">\(E[(X_i - \bar{X})(Y_i - \bar{Y})] = \dfrac{n-1}{n} \sigma_{XY}\)</span>, we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\sigma}_{XY}] &amp;= \dfrac{1}{n} \sum_{i=1}^n \dfrac{n-1}{n} \sigma_{XY} \\
+&amp;= \dfrac{n-1}{n} \sigma_{XY}
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(E[\hat{\sigma}_{XY}] = \dfrac{n-1}{n} \sigma_{XY} \neq \sigma_{XY}\)</span>, the estimator <span class="math inline">\(\hat{\sigma}_{XY}\)</span> is <strong>biased</strong>.</p>
+<p>To construct an <strong>unbiased estimator</strong>, we can use the formula (7.10) from the text, which suggests multiplying the biased estimator by <span class="math inline">\(\dfrac{n}{n-1}\)</span>:</p>
+<p><span class="math display">\[
+\begin{aligned}
+s_{XY} &amp;= \dfrac{n}{n-1} \hat{\sigma}_{XY} \\
+&amp;= \dfrac{n}{n-1} \cdot \dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y}) \\
+&amp;= \dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})
+\end{aligned}
+\]</span></p>
+<p>Then,</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[s_{XY}] &amp;= E\left[\dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})\right] \\
+&amp;= \dfrac{1}{n-1} \sum_{i=1}^n E[(X_i - \bar{X})(Y_i - \bar{Y})] \\
+&amp;= \dfrac{1}{n-1} \sum_{i=1}^n \dfrac{n-1}{n} \sigma_{XY} \\
+&amp;= \sigma_{XY}
+\end{aligned}
+\]</span></p>
+<p>Thus, <span class="math inline">\(s_{XY} = \dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})(Y_i - \bar{Y})\)</span> is an unbiased estimator of <span class="math inline">\(\sigma_{XY}\)</span>.</p>
+<section class="level4" id="intuitive-explanation-3">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-3">Intuitive Explanation:</h4>
+<p>The estimator <span class="math inline">\(\hat{\sigma}_{XY}\)</span> is biased because it systematically underestimates the true covariance. The bias arises because we are using the sample means <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(\bar{Y}\)</span> to estimate the population means, which introduces a slight underestimation. By multiplying by <span class="math inline">\(\dfrac{n}{n-1}\)</span>, we correct for this underestimation, resulting in an unbiased estimator <span class="math inline">\(s_{XY}\)</span>.</p>
+</section>
+</section>
+<section class="level3" id="exercise-4-likelihood-function">
+<h3 class="anchored" data-anchor-id="exercise-4-likelihood-function">Exercise 4: Likelihood Function</h3>
+<p>Write down the <strong>likelihood function</strong> for the parameter <span class="math inline">\(\theta\)</span> based on the random sample <span class="math inline">\(\left\{X_1, \ldots, X_n\right\}\)</span> and describe the <strong>maximum likelihood estimator(s)</strong> of <span class="math inline">\(\theta\)</span>, when the population random variable <span class="math inline">\(X\)</span> has the following distributions:</p>
+<ol type="a">
+<li><p>A normal distribution <span class="math inline">\(N\left[0, \theta^2\right]\)</span>;</p></li>
+<li><p>A uniform distribution <span class="math inline">\(U[0, \exp (\theta)]\)</span>;</p></li>
+<li><p>A uniform distribution <span class="math inline">\(U[\theta-1, \theta+1]\)</span>;</p></li>
+<li><p>A uniform distribution <span class="math inline">\(U[\theta, 2 \theta]\)</span>.</p></li>
+</ol>
+</section>
+<section class="level3" id="solution-4">
+<h3 class="anchored" data-anchor-id="solution-4">Solution 4:</h3>
+<ol type="a">
+<li>For a normal distribution <span class="math inline">\(N\left[0, \theta^2\right]\)</span>, the probability density function (pdf) is:</li>
+</ol>
+<p><span class="math display">\[
+f(x ; \theta) = \dfrac{1}{\sqrt{2 \pi \theta^2}} \exp \left(-\dfrac{x^2}{2 \theta^2}\right)
+\]</span></p>
+<p>The likelihood function for the sample <span class="math inline">\(\left\{X_1, \ldots, X_n\right\}\)</span> is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+L(\theta) &amp;= \prod_{i=1}^n f\left(x_i ; \theta\right) \\
+&amp;= \prod_{i=1}^n \dfrac{1}{\sqrt{2 \pi \theta^2}} \exp \left(-\dfrac{x_i^2}{2 \theta^2}\right) \\
+&amp;= \left(\dfrac{1}{2 \pi \theta^2}\right)^{n / 2} \exp \left(-\sum_{i=1}^n \dfrac{x_i^2}{2 \theta^2}\right)
+\end{aligned}
+\]</span></p>
+<p>To find the maximum likelihood estimator (MLE), we maximize the log-likelihood function:</p>
+<p><span class="math display">\[
+\ell(\theta) = -\dfrac{n}{2} \log (2 \pi) - n \log (\theta) - \dfrac{1}{2 \theta^2} \sum_{i=1}^n x_i^2
+\]</span></p>
+<p>Taking the derivative with respect to <span class="math inline">\(\theta\)</span> and setting it to zero:</p>
+<p><span class="math display">\[
+\dfrac{d \ell(\theta)}{d \theta} = -\dfrac{n}{\theta} + \dfrac{1}{\theta^3} \sum_{i=1}^n x_i^2 = 0
+\]</span></p>
+<p>Solving for <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[
+\hat{\theta}_{MLE} = \sqrt{\dfrac{1}{n} \sum_{i=1}^n x_i^2}
+\]</span></p>
+<ol start="2" type="a">
+<li>For a uniform distribution <span class="math inline">\(U[0, \exp (\theta)]\)</span>, the pdf is:</li>
+</ol>
+<p><span class="math display">\[
+f(x ; \theta) = \begin{cases}\dfrac{1}{\exp (\theta)} &amp; \text { if } 0 \leq x \leq \exp (\theta) \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>The likelihood function is:</p>
+<p><span class="math display">\[
+L(\theta) = \prod_{i=1}^n f\left(x_i ; \theta\right) = \begin{cases}\dfrac{1}{[\exp (\theta)]^n} &amp; \text { if } 0 \leq x_i \leq \exp (\theta) \text { for all } i \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>This is equivalent to:</p>
+<p><span class="math display">\[
+L(\theta) = \begin{cases}\exp (-n \theta) &amp; \text { if } \theta \geq \log \left(\max \left\{x_1, \ldots, x_n\right\}\right) \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>The likelihood function is maximized when <span class="math inline">\(\theta\)</span> is as small as possible, so the MLE is:</p>
+<p><span class="math display">\[
+\hat{\theta}_{MLE} = \log \left(\max \left\{X_1, \ldots, X_n\right\}\right)
+\]</span></p>
+<ol start="3" type="a">
+<li>For a uniform distribution <span class="math inline">\(U[\theta-1, \theta+1]\)</span>, the pdf is:</li>
+</ol>
+<p><span class="math display">\[
+f(x ; \theta) = \begin{cases}\dfrac{1}{2} &amp; \text { if } \theta-1 \leq x \leq \theta+1 \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>The likelihood function is:</p>
+<p><span class="math display">\[
+L(\theta) = \prod_{i=1}^n f\left(x_i ; \theta\right) = \begin{cases}\left(\dfrac{1}{2}\right)^n &amp; \text { if } \theta-1 \leq x_i \leq \theta+1 \text { for all } i \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>This is equivalent to:</p>
+<p><span class="math display">\[
+L(\theta) = \begin{cases}\left(\dfrac{1}{2}\right)^n &amp; \text { if } \max \left\{x_1, \ldots, x_n\right\}-1 \leq \theta \leq \min \left\{x_1, \ldots, x_n\right\}+1 \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>Any value of <span class="math inline">\(\theta\)</span> in the interval <span class="math inline">\([\max \left\{x_1, \ldots, x_n\right\}-1, \min \left\{x_1, \ldots, x_n\right\}+1]\)</span> maximizes the likelihood function. Thus, there is not a unique MLE, but rather a range of MLEs.</p>
+<ol start="4" type="a">
+<li>For a uniform distribution <span class="math inline">\(U[\theta, 2 \theta]\)</span>, the pdf is:</li>
+</ol>
+<p><span class="math display">\[
+f(x ; \theta) = \begin{cases}\dfrac{1}{\theta} &amp; \text { if } \theta \leq x \leq 2 \theta \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>The likelihood function is:</p>
+<p><span class="math display">\[
+L(\theta) = \prod_{i=1}^n f\left(x_i ; \theta\right) = \begin{cases}\left(\dfrac{1}{\theta}\right)^n &amp; \text { if } \theta \leq x_i \leq 2 \theta \text { for all } i \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>This is equivalent to:</p>
+<p><span class="math display">\[
+L(\theta) = \begin{cases}\left(\dfrac{1}{\theta}\right)^n &amp; \text { if } \dfrac{1}{2} \max \left\{x_1, \ldots, x_n\right\} \leq \theta \leq \min \left\{x_1, \ldots, x_n\right\} \\ 0 &amp; \text { otherwise }\end{cases}
+\]</span></p>
+<p>The likelihood function is maximized when <span class="math inline">\(\theta\)</span> is as small as possible, so the MLE is:</p>
+<p><span class="math display">\[
+\hat{\theta}_{MLE} = \dfrac{1}{2} \max \left\{X_1, \ldots, X_n\right\}
+\]</span></p>
+<section class="level4" id="intuitive-explanation-4">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-4">Intuitive Explanation:</h4>
+<ol type="a">
+<li><p>For the normal distribution, the MLE of <span class="math inline">\(\theta\)</span> is found by maximizing the likelihood function, which involves taking the derivative of the log-likelihood and setting it to zero. The resulting estimator is the square root of the average of the squared observations.</p></li>
+<li><p>For the uniform distribution <span class="math inline">\(U[0, \exp(\theta)]\)</span>, the MLE is the log of the maximum observation. This is because the likelihood is maximized when <span class="math inline">\(\theta\)</span> is as small as possible while still ensuring all observations are within the range <span class="math inline">\([0, \exp(\theta)]\)</span>.</p></li>
+<li><p>For the uniform distribution <span class="math inline">\(U[\theta-1, \theta+1]\)</span>, there is a range of MLEs. Any value of <span class="math inline">\(\theta\)</span> within the interval <span class="math inline">\([\max\{x_i\}-1, \min\{x_i\}+1]\)</span> maximizes the likelihood.</p></li>
+<li><p>For the uniform distribution <span class="math inline">\(U[\theta, 2\theta]\)</span>, the MLE is half of the maximum observation. The likelihood is maximized when <span class="math inline">\(\theta\)</span> is as small as possible while ensuring all observations are within the range <span class="math inline">\([\theta, 2\theta]\)</span>.</p></li>
+</ol>
+</section>
+</section>
+<section class="level3" id="exercise-5-joint-asymptotic-properties">
+<h3 class="anchored" data-anchor-id="exercise-5-joint-asymptotic-properties">Exercise 5: Joint Asymptotic Properties</h3>
+<p>Suppose that <span class="math inline">\(X \sim N\left(\theta, \sigma^2 I_2\right)\)</span>, where <span class="math inline">\(I_2\)</span> is the <span class="math inline">\(2 \times 2\)</span> identity matrix and <span class="math inline">\(X=\left(X_1, X_2\right)^T\)</span>, while <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\theta=\left(\theta_1, \theta_2\right)^T\)</span> are unknown parameters. We have samples <span class="math inline">\(\left\{X_{11}, \ldots, X_{1 n}\right\}\)</span> and <span class="math inline">\(\left\{X_{21}, \ldots, X_{2 m}\right\}\)</span>, for large <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>. Let <span class="math inline">\(\hat{\theta}_1=n^{-1} \sum_{i=1}^n X_{1 i}, \hat{\theta}_2=m^{-1} \sum_{i=1}^m X_{2 i}, \hat{\sigma}_1^2=(n-1)^{-1} \sum_{i=1}^n\left(X_{1 i}-\hat{\theta}_1\right)^2\)</span>, and <span class="math inline">\(\hat{\sigma}_2^2=(m-1)^{-1} \sum_{i=1}^m\left(X_{2 i}-\hat{\theta}_2\right)^2\)</span>. You may assume that <span class="math inline">\(m, n \rightarrow \infty\)</span> such that <span class="math inline">\(m / n \rightarrow \pi \in(0, \infty)\)</span>.</p>
+<p>(a). What are the <strong>asymptotic properties</strong> of <span class="math inline">\(\hat{\sigma}_1^2\)</span> and <span class="math inline">\(\hat{\sigma}_2^2\)</span> as <span class="math inline">\(m, n \rightarrow \infty\)</span>, i.e., what are the <strong>probability limits</strong> and the <strong>asymptotic distributions</strong>?</p>
+<p>(b). Now consider the class of random variables <span class="math inline">\(\tilde{\sigma}^2(\omega)=\omega \hat{\sigma}_1^2+(1-\omega) \hat{\sigma}_2^2\)</span>, where <span class="math inline">\(\omega \in[0,1]\)</span>. Show that <span class="math inline">\(E\left[\tilde{\sigma}^2(\omega)\right]=\sigma^2\)</span> for all <span class="math inline">\(\omega\)</span>.</p>
+<p>(c). Which member of this class has (<strong>asymptotically</strong>) the smallest variance.</p>
+</section>
+<section class="level3" id="solution-5">
+<h3 class="anchored" data-anchor-id="solution-5">Solution 5:</h3>
+<ol type="a">
+<li>The estimators <span class="math inline">\(\hat{\sigma}_1^2\)</span> and <span class="math inline">\(\hat{\sigma}_2^2\)</span> are sample variances for the two samples.</li>
+</ol>
+<ul>
+<li><p><strong>Probability limits</strong>: Since <span class="math inline">\(\hat{\theta}_1\)</span> and <span class="math inline">\(\hat{\theta}_2\)</span> are sample means, they are consistent estimators of <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span>, respectively. Therefore, <span class="math inline">\(\hat{\sigma}_1^2\)</span> and <span class="math inline">\(\hat{\sigma}_2^2\)</span> are consistent estimators of <span class="math inline">\(\sigma^2\)</span>: <span class="math display">\[
+\begin{aligned}
+\hat{\sigma}_1^2 &amp;\xrightarrow{p} \sigma^2 \\
+\hat{\sigma}_2^2 &amp;\xrightarrow{p} \sigma^2
+\end{aligned}
+\]</span></p></li>
+<li><p><strong>Asymptotic distributions</strong>: By the properties of the normal distribution and the Central Limit Theorem, we have: <span class="math display">\[
+\begin{aligned}
+\sqrt{n}(\hat{\theta}_1 - \theta_1) &amp;\xrightarrow{d} N(0, \sigma^2) \\
+\sqrt{m}(\hat{\theta}_2 - \theta_2) &amp;\xrightarrow{d} N(0, \sigma^2)
+\end{aligned}
+\]</span> Also, the sample variances, when multiplied by the degrees of freedom, follow a chi-squared distribution: <span class="math display">\[
+\begin{aligned}
+(n-1)\dfrac{\hat{\sigma}_1^2}{\sigma^2} &amp;\sim \chi^2_{n-1} \\
+(m-1)\dfrac{\hat{\sigma}_2^2}{\sigma^2} &amp;\sim \chi^2_{m-1}
+\end{aligned}
+\]</span> As <span class="math inline">\(n, m \to \infty\)</span>, the chi-squared distribution, when standardized, approaches a standard normal distribution. Thus, <span class="math display">\[
+\begin{aligned}
+\sqrt{n}(\hat{\sigma}_1^2 - \sigma^2) &amp;\xrightarrow{d} N(0, 2\sigma^4) \\
+\sqrt{m}(\hat{\sigma}_2^2 - \sigma^2) &amp;\xrightarrow{d} N(0, 2\sigma^4)
+\end{aligned}
+\]</span></p></li>
+</ul>
+<ol start="2" type="a">
+<li><p>We want to show that <span class="math inline">\(E[\tilde{\sigma}^2(\omega)] = \sigma^2\)</span> for all <span class="math inline">\(\omega \in [0, 1]\)</span>. <span class="math display">\[
+\begin{aligned}
+E[\tilde{\sigma}^2(\omega)] &amp;= E[\omega \hat{\sigma}_1^2 + (1-\omega) \hat{\sigma}_2^2] \\
+&amp;= \omega E[\hat{\sigma}_1^2] + (1-\omega) E[\hat{\sigma}_2^2]
+\end{aligned}
+\]</span> Since <span class="math inline">\(\hat{\sigma}_1^2\)</span> and <span class="math inline">\(\hat{\sigma}_2^2\)</span> are unbiased estimators of <span class="math inline">\(\sigma^2\)</span>, we have <span class="math inline">\(E[\hat{\sigma}_1^2] = \sigma^2\)</span> and <span class="math inline">\(E[\hat{\sigma}_2^2] = \sigma^2\)</span>. Therefore, <span class="math display">\[
+\begin{aligned}
+E[\tilde{\sigma}^2(\omega)] &amp;= \omega \sigma^2 + (1-\omega) \sigma^2 \\
+&amp;= \sigma^2
+\end{aligned}
+\]</span> Thus, <span class="math inline">\(E[\tilde{\sigma}^2(\omega)] = \sigma^2\)</span> for all <span class="math inline">\(\omega \in [0, 1]\)</span>.</p></li>
+<li><p>To find the member of the class with the smallest asymptotic variance, we need to find the variance of <span class="math inline">\(\tilde{\sigma}^2(\omega)\)</span> and minimize it with respect to <span class="math inline">\(\omega\)</span>. <span class="math display">\[
+\begin{aligned}
+\text{Var}[\tilde{\sigma}^2(\omega)] &amp;= \text{Var}[\omega \hat{\sigma}_1^2 + (1-\omega) \hat{\sigma}_2^2] \\
+&amp;= \omega^2 \text{Var}[\hat{\sigma}_1^2] + (1-\omega)^2 \text{Var}[\hat{\sigma}_2^2] + 2\omega(1-\omega)\text{Cov}(\hat{\sigma}_1^2, \hat{\sigma}_2^2)
+\end{aligned}
+\]</span> Since the samples are independent, <span class="math inline">\(\text{Cov}(\hat{\sigma}_1^2, \hat{\sigma}_2^2) = 0\)</span>. Also, using the asymptotic variances from part (a), <span class="math display">\[
+\begin{aligned}
+\text{Var}[\hat{\sigma}_1^2] &amp;\approx \dfrac{2\sigma^4}{n} \\
+\text{Var}[\hat{\sigma}_2^2] &amp;\approx \dfrac{2\sigma^4}{m}
+\end{aligned}
+\]</span> Thus, <span class="math display">\[
+\text{Var}[\tilde{\sigma}^2(\omega)] \approx \omega^2 \dfrac{2\sigma^4}{n} + (1-\omega)^2 \dfrac{2\sigma^4}{m}
+\]</span> To minimize this variance with respect to <span class="math inline">\(\omega\)</span>, we take the derivative and set it to zero: <span class="math display">\[
+\dfrac{d}{d\omega} \text{Var}[\tilde{\sigma}^2(\omega)] = 2\omega \dfrac{2\sigma^4}{n} - 2(1-\omega) \dfrac{2\sigma^4}{m} = 0
+\]</span> <span class="math display">\[
+\omega \dfrac{1}{n} = (1-\omega) \dfrac{1}{m}
+\]</span> <span class="math display">\[
+\omega m = n - \omega n
+\]</span> <span class="math display">\[
+\omega (n+m) = n
+\]</span> <span class="math display">\[
+\omega = \dfrac{n}{n+m}
+\]</span> Since <span class="math inline">\(m/n \to \pi\)</span>, we have <span class="math display">\[
+\omega = \dfrac{1}{1 + \pi}
+\]</span> Thus, the member of the class with the smallest asymptotic variance is <span class="math display">\[
+\tilde{\sigma}^2\left(\dfrac{n}{n+m}\right) = \dfrac{n}{n+m} \hat{\sigma}_1^2 + \dfrac{m}{n+m} \hat{\sigma}_2^2
+\]</span></p></li>
+</ol>
+<section class="level4" id="intuitive-explanation-5">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-5">Intuitive Explanation:</h4>
+<ol type="a">
+<li><p>The probability limits indicate that the estimators converge to the true parameter value as the sample sizes increase. The asymptotic distributions describe the behavior of the estimators around the true value for large samples.</p></li>
+<li><p>The expected value of the weighted average of the two unbiased estimators is also unbiased, regardless of the weights.</p></li>
+<li><p>The variance of the weighted average is minimized when the weights are proportional to the sample sizes. This makes intuitive sense because larger samples provide more information and thus should be given more weight. The optimal weight is inversely proportional to the asymptotic variance of each estimator.</p></li>
+</ol>
+</section>
+</section>
+<section class="level3" id="exercise-6-likelihood-ratio-test">
+<h3 class="anchored" data-anchor-id="exercise-6-likelihood-ratio-test">Exercise 6: Likelihood Ratio Test</h3>
+<p>Suppose that <span class="math inline">\(X \sim N\left(0, \sigma^2\right)\)</span>. Describe how to carry out a <strong>likelihood ratio test</strong> of:</p>
+<ol type="a">
+<li><p><span class="math inline">\(H_0: \sigma^2=1\)</span> versus the alternative <span class="math inline">\(H_A: \sigma^2=2\)</span>;</p></li>
+<li><p><span class="math inline">\(H_0: \sigma^2=1\)</span> versus the alternative <span class="math inline">\(H_A: \sigma^2&gt;1\)</span>;</p></li>
+<li><p><span class="math inline">\(H_0: \sigma^2=1\)</span> versus the alternative <span class="math inline">\(H_A: \sigma^2 \neq 1\)</span>;</p></li>
+<li><p>Which of the above tests are <strong>UMP</strong>? Which of the above tests are <strong>unbiased</strong>?</p></li>
+</ol>
+</section>
+<section class="level3" id="solution-6">
+<h3 class="anchored" data-anchor-id="solution-6">Solution 6:</h3>
+<ol type="a">
+<li>The likelihood ratio test statistic for <span class="math inline">\(H_0: \sigma^2=1\)</span> versus <span class="math inline">\(H_A: \sigma^2=2\)</span> is:</li>
+</ol>
+<p><span class="math display">\[
+\lambda(x) = \dfrac{L(\sigma^2 = 1 \mid x)}{L(\sigma^2 = 2 \mid x)}
+\]</span></p>
+<p>where <span class="math inline">\(L(\sigma^2 \mid x)\)</span> is the likelihood function for a sample <span class="math inline">\(x = (x_1, \ldots, x_n)\)</span> from <span class="math inline">\(N(0, \sigma^2)\)</span>:</p>
+<p><span class="math display">\[
+L(\sigma^2 \mid x) = \left(\dfrac{1}{2\pi\sigma^2}\right)^{n/2} \exp\left(-\dfrac{1}{2\sigma^2}\sum_{i=1}^n x_i^2\right)
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\lambda(x) = \dfrac{\left(\dfrac{1}{2\pi}\right)^{n/2} \exp\left(-\dfrac{1}{2}\sum_{i=1}^n x_i^2\right)}{\left(\dfrac{1}{4\pi}\right)^{n/2} \exp\left(-\dfrac{1}{4}\sum_{i=1}^n x_i^2\right)} = 2^{n/2} \exp\left(-\dfrac{1}{4}\sum_{i=1}^n x_i^2\right)
+\]</span></p>
+<p>We reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\lambda(x) &lt; c\)</span> for some critical value <span class="math inline">\(c\)</span>. Equivalently, we reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\sum_{i=1}^n x_i^2 &gt; k\)</span> for some <span class="math inline">\(k\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\sum_{i=1}^n x_i^2 \sim \chi^2_n\)</span>, so we can find <span class="math inline">\(k\)</span> such that <span class="math inline">\(P(\chi^2_n &gt; k) = \alpha\)</span> for a given significance level <span class="math inline">\(\alpha\)</span>.</p>
+<ol start="2" type="a">
+<li>For <span class="math inline">\(H_0: \sigma^2=1\)</span> versus <span class="math inline">\(H_A: \sigma^2&gt;1\)</span>, the likelihood ratio test statistic is:</li>
+</ol>
+<p><span class="math display">\[
+\lambda(x) = \dfrac{L(\sigma^2 = 1 \mid x)}{\sup_{\sigma^2 &gt; 1} L(\sigma^2 \mid x)}
+\]</span></p>
+<p>The MLE of <span class="math inline">\(\sigma^2\)</span> under <span class="math inline">\(H_A\)</span> is <span class="math inline">\(\hat{\sigma}^2 = \dfrac{1}{n}\sum_{i=1}^n x_i^2\)</span> if <span class="math inline">\(\hat{\sigma}^2 &gt; 1\)</span>, and <span class="math inline">\(\hat{\sigma}^2 = 1\)</span> otherwise. Thus,</p>
+<p><span class="math display">\[
+\lambda(x) = \begin{cases}
+\dfrac{\left(\dfrac{1}{2\pi}\right)^{n/2} \exp\left(-\dfrac{1}{2}\sum_{i=1}^n x_i^2\right)}{\left(\dfrac{1}{2\pi\hat{\sigma}^2}\right)^{n/2} \exp\left(-\dfrac{n}{2}\right)} &amp; \text{if } \hat{\sigma}^2 &gt; 1 \\
+1 &amp; \text{if } \hat{\sigma}^2 \leq 1
+\end{cases}
+\]</span></p>
+<p>We reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\lambda(x) &lt; c\)</span>, which is equivalent to rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\sum_{i=1}^n x_i^2 &gt; k\)</span> for some <span class="math inline">\(k\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\sum_{i=1}^n x_i^2 \sim \chi^2_n\)</span>, so we can find <span class="math inline">\(k\)</span> such that <span class="math inline">\(P(\chi^2_n &gt; k) = \alpha\)</span>.</p>
+<ol start="3" type="a">
+<li>For <span class="math inline">\(H_0: \sigma^2=1\)</span> versus <span class="math inline">\(H_A: \sigma^2 \neq 1\)</span>, the likelihood ratio test statistic is:</li>
+</ol>
+<p><span class="math display">\[
+\lambda(x) = \dfrac{L(\sigma^2 = 1 \mid x)}{\sup_{\sigma^2} L(\sigma^2 \mid x)}
+\]</span></p>
+<p>The MLE of <span class="math inline">\(\sigma^2\)</span> is <span class="math inline">\(\hat{\sigma}^2 = \dfrac{1}{n}\sum_{i=1}^n x_i^2\)</span>. Thus,</p>
+<p><span class="math display">\[
+\lambda(x) = \dfrac{\left(\dfrac{1}{2\pi}\right)^{n/2} \exp\left(-\dfrac{1}{2}\sum_{i=1}^n x_i^2\right)}{\left(\dfrac{1}{2\pi\hat{\sigma}^2}\right)^{n/2} \exp\left(-\dfrac{n}{2}\right)} = \left(\dfrac{\hat{\sigma}^2}{1}\right)^{n/2} \exp\left(-\dfrac{n}{2}(\hat{\sigma}^2 - 1)\right)
+\]</span></p>
+<p>We reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\lambda(x) &lt; c\)</span>, which is equivalent to rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(|\hat{\sigma}^2 - 1| &gt; k\)</span> for some <span class="math inline">\(k\)</span>. This is the same as rejecting <span class="math inline">\(H_0\)</span> if <span class="math inline">\(\sum_{i=1}^n x_i^2 &lt; k_1\)</span> or <span class="math inline">\(\sum_{i=1}^n x_i^2 &gt; k_2\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\sum_{i=1}^n x_i^2 \sim \chi^2_n\)</span>, so we can find <span class="math inline">\(k_1\)</span> and <span class="math inline">\(k_2\)</span> such that <span class="math inline">\(P(\chi^2_n &lt; k_1) + P(\chi^2_n &gt; k_2) = \alpha\)</span>.</p>
+<ol start="4" type="a">
+<li><strong>UMP Tests</strong>:</li>
+</ol>
+<ul>
+<li><ol type="a">
+<li>The test is not UMP because the alternative hypothesis is simple, not composite.</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>The test is UMP because it is a one-sided test, and the likelihood ratio depends only on the sufficient statistic <span class="math inline">\(\sum_{i=1}^n x_i^2\)</span>.</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>The test is not UMP because it is a two-sided test.</li>
+</ol></li>
+</ul>
+<p><strong>Unbiased Tests</strong>:</p>
+<ul>
+<li><ol type="a">
+<li>The test is unbiased. The power function is <span class="math inline">\(P(\sum_{i=1}^n x_i^2 &gt; k \mid \sigma^2)\)</span>. Under <span class="math inline">\(H_0\)</span>, the power is <span class="math inline">\(\alpha\)</span>, and under <span class="math inline">\(H_A\)</span>, the power is <span class="math inline">\(P(\chi^2_n &gt; k/2)\)</span>, which is greater than <span class="math inline">\(\alpha\)</span>.</li>
+</ol></li>
+<li><ol start="2" type="a">
+<li>The test is unbiased. The power function is increasing in <span class="math inline">\(\sigma^2\)</span>, so the power is greater than <span class="math inline">\(\alpha\)</span> for all <span class="math inline">\(\sigma^2 &gt; 1\)</span>.</li>
+</ol></li>
+<li><ol start="3" type="a">
+<li>The test can be made unbiased by choosing <span class="math inline">\(k_1\)</span> and <span class="math inline">\(k_2\)</span> appropriately. The power function is <span class="math inline">\(P(\sum_{i=1}^n x_i^2 &lt; k_1 \text{ or } \sum_{i=1}^n x_i^2 &gt; k_2 \mid \sigma^2)\)</span>. We need to choose <span class="math inline">\(k_1\)</span> and <span class="math inline">\(k_2\)</span> such that the power is minimized at <span class="math inline">\(\sigma^2 = 1\)</span>.</li>
+</ol></li>
+</ul>
+<section class="level4" id="intuitive-explanation-6">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-6">Intuitive Explanation:</h4>
+<ol type="a">
+<li><p>The likelihood ratio test compares the likelihood of the data under the null hypothesis to the likelihood under the alternative hypothesis. We reject the null hypothesis if the likelihood under the alternative is significantly higher.</p></li>
+<li><p>For a one-sided alternative, we reject the null hypothesis if the sample variance is sufficiently large.</p></li>
+<li><p>For a two-sided alternative, we reject the null hypothesis if the sample variance is either too large or too small.</p></li>
+<li><p>A UMP test is the most powerful test among all tests of a given size. A one-sided test can be UMP, but a two-sided test generally is not. An unbiased test is one where the power is greater than or equal to the significance level for all values of the parameter in the alternative hypothesis.</p></li>
+</ol>
+</section>
+</section>
+<section class="level3" id="exercise-7-hypothesis-testing-with-equality-constraint">
+<h3 class="anchored" data-anchor-id="exercise-7-hypothesis-testing-with-equality-constraint">Exercise 7: Hypothesis Testing with Equality Constraint</h3>
+<p>Suppose that <span class="math inline">\(X_i \sim N\left(\mu, \sigma^2\right), i=1, \ldots, n\)</span>. Consider the null hypothesis</p>
+<p><span class="math display">\[
+H_0: \mu=\sigma^2=\theta .
+\]</span></p>
+<p>First of all, describe how to estimate the common parameter <span class="math inline">\(\theta\)</span> under the null hypothesis. You should write down the <strong>constrained likelihood function</strong> and explain how in practice you would find the estimator <span class="math inline">\(\hat{\theta}_{MLE}\)</span>. Next give the <strong>asymptotic distribution</strong> of <span class="math inline">\(\hat{\theta}_{MLE}\)</span> under the null hypothesis. Next, describe the three methods [<strong>Wald, Lagrange Multiplier, and Likelihood Ratio</strong>] of obtaining tests of this null hypothesis against the two-sided alternative that <span class="math inline">\(\mu \neq \sigma^2\)</span>. Finally, describe the corresponding <strong>confidence intervals</strong>.</p>
+</section>
+<section class="level3" id="solution-7">
+<h3 class="anchored" data-anchor-id="solution-7">Solution 7:</h3>
+<p>Under the null hypothesis <span class="math inline">\(H_0: \mu = \sigma^2 = \theta\)</span>, the pdf of <span class="math inline">\(X_i\)</span> is:</p>
+<p><span class="math display">\[
+f(x_i ; \theta) = \dfrac{1}{\sqrt{2\pi\theta}} \exp\left(-\dfrac{(x_i - \theta)^2}{2\theta}\right)
+\]</span></p>
+<p>The constrained likelihood function for a sample <span class="math inline">\(x = (x_1, \ldots, x_n)\)</span> is:</p>
+<p><span class="math display">\[
+L(\theta \mid x) = \prod_{i=1}^n \dfrac{1}{\sqrt{2\pi\theta}} \exp\left(-\dfrac{(x_i - \theta)^2}{2\theta}\right) = \left(\dfrac{1}{2\pi\theta}\right)^{n/2} \exp\left(-\sum_{i=1}^n \dfrac{(x_i - \theta)^2}{2\theta}\right)
+\]</span></p>
+<p>The constrained log-likelihood function is:</p>
+<p><span class="math display">\[
+\ell(\theta \mid x) = -\dfrac{n}{2} \log(2\pi) - \dfrac{n}{2} \log(\theta) - \sum_{i=1}^n \dfrac{(x_i - \theta)^2}{2\theta}
+\]</span></p>
+<p>To find the MLE <span class="math inline">\(\hat{\theta}_{MLE}\)</span>, we take the derivative of <span class="math inline">\(\ell(\theta \mid x)\)</span> with respect to <span class="math inline">\(\theta\)</span> and set it to zero:</p>
+<p><span class="math display">\[
+\dfrac{d\ell}{d\theta} = -\dfrac{n}{2\theta} - \sum_{i=1}^n \dfrac{2(x_i - \theta)(-1)\theta - (x_i - \theta)^2}{2\theta^2} = 0
+\]</span></p>
+<p><span class="math display">\[
+-\dfrac{n}{2\theta} + \sum_{i=1}^n \dfrac{(x_i - \theta)}{\theta} + \sum_{i=1}^n \dfrac{(x_i - \theta)^2}{2\theta^2} = 0
+\]</span></p>
+<p><span class="math display">\[
+-n\theta + 2\theta \sum_{i=1}^n (x_i - \theta) + \sum_{i=1}^n (x_i - \theta)^2 = 0
+\]</span></p>
+<p><span class="math display">\[
+-n\theta + 2\theta \sum_{i=1}^n x_i - 2n\theta^2 + \sum_{i=1}^n x_i^2 - 2\theta \sum_{i=1}^n x_i + n\theta^2 = 0
+\]</span></p>
+<p><span class="math display">\[
+\sum_{i=1}^n x_i^2 - n\theta - n\theta^2 = 0
+\]</span></p>
+<p>This is a quadratic equation in <span class="math inline">\(\theta\)</span>:</p>
+<p><span class="math display">\[
+n\theta^2 + n\theta - \sum_{i=1}^n x_i^2 = 0
+\]</span></p>
+<p>We can solve for <span class="math inline">\(\theta\)</span> using the quadratic formula:</p>
+<p><span class="math display">\[
+\theta = \dfrac{-n \pm \sqrt{n^2 + 4n\sum_{i=1}^n x_i^2}}{2n}
+\]</span></p>
+<p>Since <span class="math inline">\(\theta\)</span> must be positive, we take the positive root:</p>
+<p><span class="math display">\[
+\hat{\theta}_{MLE} = \dfrac{-n + \sqrt{n^2 + 4n\sum_{i=1}^n x_i^2}}{2n}
+\]</span></p>
+<p>In practice, we would compute <span class="math inline">\(\sum_{i=1}^n x_i^2\)</span> and then use the formula above to find <span class="math inline">\(\hat{\theta}_{MLE}\)</span>.</p>
+<p><strong>Asymptotic Distribution of <span class="math inline">\(\hat{\theta}_{MLE}\)</span></strong>:</p>
+<p>Under <span class="math inline">\(H_0\)</span>, the MLE <span class="math inline">\(\hat{\theta}_{MLE}\)</span> is consistent and asymptotically normal. The Fisher information is:</p>
+<p><span class="math display">\[
+I(\theta) = -E\left[\dfrac{d^2\ell}{d\theta^2}\right] = \dfrac{n}{2\theta^2} + \dfrac{3n}{2\theta^2} = \dfrac{2n}{\theta^2}
+\]</span></p>
+<p>Thus,</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\theta}_{MLE} - \theta) \xrightarrow{d} N\left(0, \dfrac{\theta^2}{2}\right)
+\]</span></p>
+<p><strong>Wald Test</strong>:</p>
+<p>The Wald test statistic is based on the unrestricted MLEs <span class="math inline">\(\hat{\mu} = \bar{x}\)</span> and <span class="math inline">\(\hat{\sigma}^2 = \dfrac{1}{n}\sum_{i=1}^n (x_i - \bar{x})^2\)</span>. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(\hat{\mu} - \hat{\sigma}^2\)</span> is asymptotically normal with mean 0. The Wald statistic is:</p>
+<p><span class="math display">\[
+W = \dfrac{(\hat{\mu} - \hat{\sigma}^2)^2}{\text{Var}(\hat{\mu} - \hat{\sigma}^2)}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(W \xrightarrow{d} \chi^2_1\)</span>.</p>
+<p><strong>Lagrange Multiplier Test</strong>:</p>
+<p>The LM test is based on the score function evaluated at the restricted MLE <span class="math inline">\(\hat{\theta}_{MLE}\)</span>. The score function is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+S(\mu, \sigma^2) &amp;= \left(\dfrac{\partial\ell}{\partial\mu}, \dfrac{\partial\ell}{\partial\sigma^2}\right) \\
+&amp;= \left(\sum_{i=1}^n \dfrac{x_i - \mu}{\sigma^2}, -\dfrac{n}{2\sigma^2} + \sum_{i=1}^n \dfrac{(x_i - \mu)^2}{2\sigma^4}\right)
+\end{aligned}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, the LM statistic is:</p>
+<p><span class="math display">\[
+LM = S(\hat{\theta}_{MLE}, \hat{\theta}_{MLE})^T I(\hat{\theta}_{MLE})^{-1} S(\hat{\theta}_{MLE}, \hat{\theta}_{MLE})
+\]</span></p>
+<p>where <span class="math inline">\(I(\theta)\)</span> is the Fisher information matrix. Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(LM \xrightarrow{d} \chi^2_1\)</span>.</p>
+<p><strong>Likelihood Ratio Test</strong>:</p>
+<p>The likelihood ratio test statistic is:</p>
+<p><span class="math display">\[
+LR = -2[\ell(\hat{\theta}_{MLE} \mid x) - \ell(\hat{\mu}, \hat{\sigma}^2 \mid x)]
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(LR \xrightarrow{d} \chi^2_1\)</span>.</p>
+<p><strong>Confidence Intervals</strong>:</p>
+<p>Confidence intervals can be constructed based on the asymptotic distributions of the test statistics. For example, a confidence interval for <span class="math inline">\(\theta\)</span> based on the MLE is:</p>
+<p><span class="math display">\[
+\hat{\theta}_{MLE} \pm z_{\alpha/2} \sqrt{\dfrac{\hat{\theta}_{MLE}^2}{2n}}
+\]</span></p>
+<section class="level4" id="intuitive-explanation-7">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-7">Intuitive Explanation:</h4>
+<p>The MLE under the null hypothesis is found by maximizing the likelihood function subject to the constraint <span class="math inline">\(\mu = \sigma^2 = \theta\)</span>. The Wald test compares the unrestricted estimates of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, the LM test evaluates the score function at the restricted estimate, and the likelihood ratio test compares the likelihoods under the restricted and unrestricted models. All three tests are asymptotically equivalent under the null hypothesis.</p>
+</section>
+</section>
+<section class="level3" id="exercise-8-asymptotically-optimal-estimator">
+<h3 class="anchored" data-anchor-id="exercise-8-asymptotically-optimal-estimator">Exercise 8: Asymptotically Optimal Estimator</h3>
+<p>Suppose that <span class="math inline">\(X_i \sim N(\theta, \theta), i=1, \ldots, n\)</span> as in question (2). Let <span class="math inline">\(\hat{\theta}_1=X\)</span> and <span class="math inline">\(\hat{\theta}_2=s^2\)</span> be estimators of <span class="math inline">\(\theta\)</span>. Calculate the <strong>joint asymptotic distribution</strong> of the vector <span class="math inline">\(\left(\hat{\theta}_1, \hat{\theta}_2\right)\)</span>. Consider the family of estimators</p>
+<p><span class="math display">\[
+\tilde{\theta}(\alpha)=\alpha \hat{\theta}_1+(1-\alpha) \hat{\theta}_2,
+\]</span></p>
+<p>and derive the asymptotic distribution of <span class="math inline">\(\tilde{\theta}(\alpha)\)</span> for each <span class="math inline">\(\alpha\)</span>. What is the optimal [according to <strong>asymptotic variance</strong>] choice of <span class="math inline">\(\alpha\)</span>? Suppose that <span class="math inline">\(\hat{\theta}_3\)</span> is the maximum likelihood estimator developed in question 2 and let now</p>
+<p><span class="math display">\[
+\tilde{\theta}(\alpha)=\alpha \hat{\theta}_1+\gamma \hat{\theta}_2+(1-\alpha-\gamma) \hat{\theta}_3 .
+\]</span></p>
+<p>What is the optimal choice of <span class="math inline">\(\alpha, \gamma\)</span>?</p>
+</section>
+<section class="level3" id="solution-8">
+<h3 class="anchored" data-anchor-id="solution-8">Solution 8:</h3>
+<p>We are given that <span class="math inline">\(X_i \sim N(\theta, \theta)\)</span> for <span class="math inline">\(i = 1, \ldots, n\)</span>. We have two estimators for <span class="math inline">\(\theta\)</span>: <span class="math inline">\(\hat{\theta}_1 = \bar{X}\)</span> and <span class="math inline">\(\hat{\theta}_2 = s^2\)</span>.</p>
+<p>The sample mean <span class="math inline">\(\bar{X}\)</span> and sample variance <span class="math inline">\(s^2\)</span> are given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\bar{X} &amp;= \dfrac{1}{n} \sum_{i=1}^n X_i \\
+s^2 &amp;= \dfrac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})^2
+\end{aligned}
+\]</span></p>
+<p><strong>Joint Asymptotic Distribution of <span class="math inline">\((\hat{\theta}_1, \hat{\theta}_2)\)</span></strong>:</p>
+<p>Since <span class="math inline">\(X_i \sim N(\theta, \theta)\)</span>, we have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\bar{X}] &amp;= \theta \\
+\text{Var}(\bar{X}) &amp;= \dfrac{\theta}{n}
+\end{aligned}
+\]</span></p>
+<p>Also,</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[s^2] &amp;= \theta \\
+\text{Var}(s^2) &amp;= \dfrac{2\theta^2}{n-1}
+\end{aligned}
+\]</span></p>
+<p>By the Central Limit Theorem, <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(s^2\)</span> are asymptotically normal:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sqrt{n}(\bar{X} - \theta) &amp;\xrightarrow{d} N(0, \theta) \\
+\sqrt{n}(s^2 - \theta) &amp;\xrightarrow{d} N(0, 2\theta^2)
+\end{aligned}
+\]</span></p>
+<p>The covariance between <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(s^2\)</span> is:</p>
+<p><span class="math display">\[
+\text{Cov}(\bar{X}, s^2) = \dfrac{E[(X_i - \theta)^3]}{n} = 0
+\]</span></p>
+<p>since the third central moment of a normal distribution is zero. Thus, <span class="math inline">\(\bar{X}\)</span> and <span class="math inline">\(s^2\)</span> are asymptotically independent. The joint asymptotic distribution is:</p>
+<p><span class="math display">\[
+\sqrt{n} \begin{pmatrix} \bar{X} - \theta \\ s^2 - \theta \end{pmatrix} \xrightarrow{d} N\left( \begin{pmatrix} 0 \\ 0 \end{pmatrix}, \begin{pmatrix} \theta &amp; 0 \\ 0 &amp; 2\theta^2 \end{pmatrix} \right)
+\]</span></p>
+<p><strong>Asymptotic Distribution of <span class="math inline">\(\tilde{\theta}(\alpha)\)</span></strong>:</p>
+<p><span class="math display">\[
+\tilde{\theta}(\alpha) = \alpha \bar{X} + (1-\alpha) s^2
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\tilde{\theta}(\alpha)] &amp;= \alpha E[\bar{X}] + (1-\alpha) E[s^2] = \alpha\theta + (1-\alpha)\theta = \theta \\
+\text{Var}(\tilde{\theta}(\alpha)) &amp;= \alpha^2 \text{Var}(\bar{X}) + (1-\alpha)^2 \text{Var}(s^2) + 2\alpha(1-\alpha) \text{Cov}(\bar{X}, s^2) \\
+&amp;= \alpha^2 \dfrac{\theta}{n} + (1-\alpha)^2 \dfrac{2\theta^2}{n-1}
+\end{aligned}
+\]</span></p>
+<p>Asymptotically,</p>
+<p><span class="math display">\[
+\sqrt{n}(\tilde{\theta}(\alpha) - \theta) \xrightarrow{d} N(0, \alpha^2 \theta + (1-\alpha)^2 2\theta^2)
+\]</span></p>
+<p><strong>Optimal Choice of <span class="math inline">\(\alpha\)</span></strong>:</p>
+<p>To find the optimal <span class="math inline">\(\alpha\)</span>, we minimize the asymptotic variance:</p>
+<p><span class="math display">\[
+V(\alpha) = \alpha^2 \theta + 2(1-\alpha)^2 \theta^2
+\]</span></p>
+<p><span class="math display">\[
+\dfrac{dV}{d\alpha} = 2\alpha\theta - 4(1-\alpha)\theta^2 = 0
+\]</span></p>
+<p><span class="math display">\[
+\alpha\theta = 2(1-\alpha)\theta^2
+\]</span></p>
+<p><span class="math display">\[
+\alpha = 2\theta - 2\alpha\theta
+\]</span></p>
+<p><span class="math display">\[
+\alpha(1+2\theta) = 2\theta
+\]</span></p>
+<p><span class="math display">\[
+\alpha = \dfrac{2\theta}{1+2\theta}
+\]</span></p>
+<p><strong>Optimal Choice of <span class="math inline">\(\alpha, \gamma\)</span> with <span class="math inline">\(\hat{\theta}_3\)</span></strong>:</p>
+<p>Let <span class="math inline">\(\hat{\theta}_3\)</span> be the MLE. From question 7, we have:</p>
+<p><span class="math display">\[
+\hat{\theta}_3 = \dfrac{-n + \sqrt{n^2 + 4n\sum_{i=1}^n x_i^2}}{2n}
+\]</span></p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\theta}_3 - \theta) \xrightarrow{d} N\left(0, \dfrac{\theta^2}{2}\right)
+\]</span></p>
+<p>Now consider:</p>
+<p><span class="math display">\[
+\tilde{\theta}(\alpha, \gamma) = \alpha \hat{\theta}_1 + \gamma \hat{\theta}_2 + (1-\alpha-\gamma) \hat{\theta}_3
+\]</span></p>
+<p>The optimal choice of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> will minimize the asymptotic variance of <span class="math inline">\(\tilde{\theta}(\alpha, \gamma)\)</span>. This requires finding the joint asymptotic distribution of <span class="math inline">\((\hat{\theta}_1, \hat{\theta}_2, \hat{\theta}_3)\)</span> and then minimizing the variance of the linear combination.</p>
+<p>The asymptotic variance of <span class="math inline">\(\tilde{\theta}(\alpha, \gamma)\)</span> is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Var}(\tilde{\theta}(\alpha, \gamma)) &amp;= \alpha^2 \text{Var}(\hat{\theta}_1) + \gamma^2 \text{Var}(\hat{\theta}_2) + (1-\alpha-\gamma)^2 \text{Var}(\hat{\theta}_3) \\
+&amp;+ 2\alpha\gamma \text{Cov}(\hat{\theta}_1, \hat{\theta}_2) + 2\alpha(1-\alpha-\gamma) \text{Cov}(\hat{\theta}_1, \hat{\theta}_3) \\
+&amp;+ 2\gamma(1-\alpha-\gamma) \text{Cov}(\hat{\theta}_2, \hat{\theta}_3)
+\end{aligned}
+\]</span></p>
+<p>The optimal values of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\gamma\)</span> can be found by solving the first-order conditions from minimizing the variance.</p>
+</section>
+<section class="level3" id="example-8-optimal-estimator">
+<h3 class="anchored" data-anchor-id="example-8-optimal-estimator">Example 8: Optimal Estimator</h3>
+<p>We have</p>
+<p><span class="math display">\[
+\sqrt{n}(\tilde{\theta}(\alpha)-\theta)=\alpha \sqrt{n}(\bar{X}-\theta)+(1-\alpha) \sqrt{n}\left(s^2-\theta\right)
+\]</span></p>
+<p><span class="math display">\[
+=\dfrac{1}{\sqrt{n}} \sum_i \alpha\left(X_i-\theta\right)+(1-\alpha)\left[\left(X_i-\theta\right)^2-\theta\right]+R_n,
+\]</span></p>
+<p>where <span class="math inline">\(R_n \xrightarrow{p} 0\)</span>. Let <span class="math inline">\(Z_i(\alpha)=\alpha\left(X_i-\theta\right)+(1-\alpha)\left[\left(X_i-\theta\right)^2-\theta\right]\)</span>. Then <span class="math inline">\(E Z_i(\alpha)=0\)</span> and</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{var}\left(Z_i\right) &amp; =E\left[\alpha\left(X_i-\theta\right)+(1-\alpha)\left[\left(X_i-\theta\right)^2-\theta\right]\right]^2 \\
+&amp; =\alpha^2 E\left[\left(X_i-\theta\right)^2\right]+(1-\alpha)^2 E\left[\left(\left(X_i-\theta\right)^2-\theta\right)^2\right] \\
+&amp; +2 \alpha(1-\alpha) E\left[\left(X_i-\theta\right)\left(\left(X_i-\theta\right)^2-\theta\right)\right] \\
+&amp; =\alpha^2 E\left[\left(X_i-\theta\right)^2\right]+(1-\alpha)^2 E\left[\left(\left(X_i-\theta\right)^2-\theta\right)^2\right] \\
+&amp; =\alpha^2 \theta+2(1-\alpha)^2 \theta^2=V(\alpha)
+\end{aligned}
+\]</span></p>
+<p>using the result for the sample variance of a normal distribution. Furthermore</p>
+<p><span class="math display">\[
+\dfrac{1}{\sqrt{n}} \sum_{i=1}^n Z_i(\alpha) \xrightarrow{d} N(0, V(\alpha))
+\]</span></p>
+<p>so that</p>
+<p><span class="math display">\[
+\sqrt{n}(\tilde{\theta}(\alpha)-\theta) \xrightarrow{d} N(0, V(\alpha)) .
+\]</span></p>
+<p>Optimal choice of <span class="math inline">\(\alpha\)</span> minimizes <span class="math inline">\(V(\alpha)\)</span> with respect to <span class="math inline">\(\alpha\)</span>-the first order condition is</p>
+<p><span class="math display">\[
+2 \alpha \theta=4(1-\alpha) \theta^2
+\]</span></p>
+<p>so that</p>
+<p><span class="math display">\[
+\tilde{\alpha}=\dfrac{2 \theta}{1+2 \theta} .
+\]</span></p>
+<section class="level4" id="intuitive-explanation-8">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-8">Intuitive Explanation:</h4>
+<p>The joint asymptotic distribution of the estimators helps us understand their behavior for large samples. By considering a linear combination of the estimators, we can find an optimal estimator that has a smaller variance than either of the individual estimators. The optimal weights depend on the variances and covariances of the estimators.</p>
+</section>
+</section>
+<section class="level3" id="exercise-9-enemy-tanks">
+<h3 class="anchored" data-anchor-id="exercise-9-enemy-tanks">Exercise 9: Enemy Tanks</h3>
+<p>You have captured <span class="math inline">\(k\)</span> enemy tanks from a population of unknown size <span class="math inline">\(N\)</span>, and you observe the “serial number” of each tank. That is, the enemy tanks are <span class="math inline">\(\{1,2, \ldots, N\}\)</span>, where <span class="math inline">\(N\)</span> is unknown, and you observe a sample <span class="math inline">\(X_1, \ldots, X_k\)</span> from this distribution. Given this data propose an <strong>unbiased estimate</strong> of the population size, i.e., how many of the blighters are there?</p>
+</section>
+<section class="level3" id="solution-9">
+<h3 class="anchored" data-anchor-id="solution-9">Solution 9:</h3>
+<p>Let <span class="math inline">\(Y = \max(X_1, X_2)\)</span>. The outcomes are <span class="math inline">\((i, j)\)</span> with <span class="math inline">\(i \neq j\)</span>, i.e., the sampling is without replacement.</p>
+<p><span class="math inline">\(Y = 2\)</span> when <span class="math inline">\(X_1 = 1\)</span> and <span class="math inline">\(X_2 = 2\)</span> or <span class="math inline">\(X_1 = 2\)</span> and <span class="math inline">\(X_2 = 1\)</span>, and each of these events occurs with probability <span class="math inline">\(1/N(N-1)\)</span>.</p>
+<p>In general, <span class="math inline">\(Y\)</span> takes values <span class="math inline">\(2, 3, \ldots, N\)</span> with</p>
+<p><span class="math display">\[
+\begin{aligned}
+P(Y=2) &amp;= \dfrac{2}{N(N-1)} \\
+P(Y=3) &amp;= \dfrac{4}{N(N-1)} \\
+\vdots \\
+P(Y=N) &amp;= \dfrac{2(N-1)}{N(N-1)}
+\end{aligned}
+\]</span></p>
+<p>Check these numbers add up to one. Then</p>
+<p><span class="math display">\[
+E[Y] = \dfrac{2}{N(N-1)} \sum_{i=1}^N i(i-1) = \dfrac{2}{3}N + \dfrac{1}{3}
+\]</span></p>
+<p>Therefore, take</p>
+<p><span class="math display">\[
+\hat{N} = \dfrac{3}{2}Y - 1
+\]</span></p>
+<p>which is unbiased.</p>
+<p>For a general <span class="math inline">\(k\)</span>, let <span class="math inline">\(Y = \max(X_1, \ldots, X_k)\)</span>. The probability that <span class="math inline">\(Y = y\)</span> is given by the number of ways to choose <span class="math inline">\(k-1\)</span> values from the set <span class="math inline">\(\{1, 2, \ldots, y-1\}\)</span> divided by the number of ways to choose <span class="math inline">\(k\)</span> values from the set <span class="math inline">\(\{1, 2, \ldots, N\}\)</span>:</p>
+<p><span class="math display">\[
+P(Y=y) = \dfrac{\binom{y-1}{k-1}}{\binom{N}{k}}, \quad y = k, k+1, \ldots, N
+\]</span></p>
+<p>The expected value of <span class="math inline">\(Y\)</span> is:</p>
+<p><span class="math display">\[
+E[Y] = \sum_{y=k}^N y \dfrac{\binom{y-1}{k-1}}{\binom{N}{k}} = \dfrac{k(N+1)}{k+1}
+\]</span></p>
+<p>To find an unbiased estimator for <span class="math inline">\(N\)</span>, we set:</p>
+<p><span class="math display">\[
+E[\hat{N}] = N
+\]</span></p>
+<p>Let <span class="math inline">\(\hat{N} = aY + b\)</span>. Then:</p>
+<p><span class="math display">\[
+E[\hat{N}] = aE[Y] + b = a\dfrac{k(N+1)}{k+1} + b = N
+\]</span></p>
+<p>We can choose <span class="math inline">\(a = \dfrac{k+1}{k}\)</span> and <span class="math inline">\(b = -\dfrac{k+1}{k}\)</span>. Then:</p>
+<p><span class="math display">\[
+\hat{N} = \dfrac{k+1}{k}Y - \dfrac{k+1}{k} = \dfrac{k+1}{k}(Y-1)
+\]</span></p>
+<p><span class="math display">\[
+E[\hat{N}] = \dfrac{k+1}{k} \left(\dfrac{k(N+1)}{k+1} - 1\right) = N+1- \dfrac{k+1}{k}
+\]</span></p>
+<p>This is not unbiased. However, we can adjust it slightly:</p>
+<p><span class="math display">\[
+\hat{N} = \dfrac{k+1}{k}Y - 1
+\]</span></p>
+<p><span class="math display">\[
+E[\hat{N}] = \dfrac{k+1}{k} \cdot \dfrac{k(N+1)}{k+1} - 1 = N+1-1 = N
+\]</span></p>
+<p>Thus, an unbiased estimator for <span class="math inline">\(N\)</span> is:</p>
+<p><span class="math display">\[
+\hat{N} = \dfrac{k+1}{k}Y - 1
+\]</span></p>
+<section class="level4" id="intuitive-explanation-9">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-9">Intuitive Explanation:</h4>
+<p>The maximum observed serial number is a biased estimator of the population size because it is always less than or equal to the true population size. To obtain an unbiased estimator, we need to adjust the maximum observed value upwards. The formula <span class="math inline">\(\hat{N} = \dfrac{k+1}{k}Y - 1\)</span> provides such an adjustment.</p>
+</section>
+</section>
+<section class="level3" id="exercise-10-uniform-distribution">
+<h3 class="anchored" data-anchor-id="exercise-10-uniform-distribution">Exercise 10: Uniform Distribution</h3>
+<p>Suppose that <span class="math inline">\(X_i, i=1,2, \ldots, n\)</span> are i.i.d. Uniform <span class="math inline">\(U(0, \theta)\)</span>. Show that the sample maximum</p>
+<p><span class="math display">\[
+\hat{\theta}=\max _{1 \leq i \leq n} X_i
+\]</span></p>
+<p>is <strong>consistent</strong>.</p>
+</section>
+<section class="level3" id="solution-10">
+<h3 class="anchored" data-anchor-id="solution-10">Solution 10:</h3>
+<p>Let <span class="math inline">\(Y = \max(X_1, \ldots, X_n)\)</span>. The cumulative distribution function (CDF) of <span class="math inline">\(Y\)</span> is:</p>
+<p><span class="math display">\[
+F_Y(y) = P(Y \leq y) = P(X_1 \leq y, \ldots, X_n \leq y) = \prod_{i=1}^n P(X_i \leq y)
+\]</span></p>
+<p>Since <span class="math inline">\(X_i \sim U(0, \theta)\)</span>, we have <span class="math inline">\(P(X_i \leq y) = \dfrac{y}{\theta}\)</span> for <span class="math inline">\(0 \leq y \leq \theta\)</span>. Thus,</p>
+<p><span class="math display">\[
+F_Y(y) = \left(\dfrac{y}{\theta}\right)^n, \quad 0 \leq y \leq \theta
+\]</span></p>
+<p>The probability density function (PDF) of <span class="math inline">\(Y\)</span> is:</p>
+<p><span class="math display">\[
+f_Y(y) = \dfrac{dF_Y(y)}{dy} = n \dfrac{y^{n-1}}{\theta^n}, \quad 0 \leq y \leq \theta
+\]</span></p>
+<p>To show that <span class="math inline">\(\hat{\theta} = Y\)</span> is consistent, we need to show that for any <span class="math inline">\(\epsilon &gt; 0\)</span>, <span class="math inline">\(P(|\hat{\theta} - \theta| &gt; \epsilon) \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span>.</p>
+<p><span class="math display">\[
+P(|\hat{\theta} - \theta| &gt; \epsilon) = P(\theta - Y &gt; \epsilon) = P(Y &lt; \theta - \epsilon)
+\]</span></p>
+<p><span class="math display">\[
+P(Y &lt; \theta - \epsilon) = F_Y(\theta - \epsilon) = \left(\dfrac{\theta - \epsilon}{\theta}\right)^n = \left(1 - \dfrac{\epsilon}{\theta}\right)^n
+\]</span></p>
+<p>As <span class="math inline">\(n \to \infty\)</span>, <span class="math inline">\(\left(1 - \dfrac{\epsilon}{\theta}\right)^n \to 0\)</span> since <span class="math inline">\(0 &lt; 1 - \dfrac{\epsilon}{\theta} &lt; 1\)</span>. Therefore, <span class="math inline">\(P(|\hat{\theta} - \theta| &gt; \epsilon) \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span>, and <span class="math inline">\(\hat{\theta}\)</span> is a consistent estimator of <span class="math inline">\(\theta\)</span>.</p>
+<section class="level4" id="intuitive-explanation-10">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-10">Intuitive Explanation:</h4>
+<p>The maximum of a sample from a uniform distribution is a consistent estimator of the upper bound of the distribution because as the sample size increases, the probability that the maximum is close to the upper bound approaches 1.</p>
+</section>
+</section>
+<section class="level3" id="exercise-11-parameter-identification">
+<h3 class="anchored" data-anchor-id="exercise-11-parameter-identification">Exercise 11: Parameter Identification</h3>
+<p>Suppose I have one observation <span class="math inline">\(X\)</span> from a Uniform on <span class="math inline">\(\left[\theta_0, \theta_1\right]\)</span>. Suppose that <span class="math inline">\(\theta_0=0\)</span> and <span class="math inline">\(\theta_1=1\)</span>. Is the parameter identified?</p>
+</section>
+<section class="level3" id="solution-11">
+<h3 class="anchored" data-anchor-id="solution-11">Solution 11:</h3>
+<p>According to the above definition these parameter values are identified because for any <span class="math inline">\(\theta \in(0,1)\)</span></p>
+<p><span class="math display">\[
+\operatorname{Pr}\left\{L(\theta, \theta+1 \mid X) \neq L(0,1 \mid X)\right\}=0&gt;0 .
+\]</span></p>
+<p>That is, for any alternative parameter values with the same range there is a set of data that would reject those parameter values. If I take any <span class="math inline">\([a, b]\)</span> for which <span class="math inline">\(b-a \neq 1\)</span>, then</p>
+<p><span class="math display">\[
+L(a, b \mid X)=\dfrac{1}{b-a} \mathbb{1}(X \in[a, b])
+\]</span></p>
+<p>and same argument holds. Maybe you think the answer is unreasonable in this case. We have for any <span class="math inline">\(\theta \in[0, X]\)</span></p>
+<p><span class="math display">\[
+L(0,1 \mid X)=\mathbb{1}(X \in[0,1])=\mathbb{1}(X \in[\theta, \theta+1])=L(\theta, \theta+1 \mid X) .
+\]</span></p>
+<p>Therefore, in sample there is a lack of identification. In this case, the issue is really “micronumerosity”, since as the number of observations increases this issue is resolved. Specifically, we have for any <span class="math inline">\(\theta \in(0,1)\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\lim _{n \rightarrow \infty} \dfrac{1}{n} \sum_{i=1}^n L\left(\theta, \theta+1 \mid X^n\right) &amp; =\int L(\theta, \theta+1 \mid X) f(X) d X \\
+&amp; =E[L(\theta, \theta+1 \mid X)] \\
+&amp; =E \mathbb{1}(X \in[\theta, \theta+1]) \\
+&amp; =1-\theta \\
+&amp; \neq E[L(0,1 \mid X)]=1 .
+\end{aligned}
+\]</span></p>
+<p>The parameter is not identified. For the parameter to be identified, we need that for any two distinct parameter values, the probability distributions of the observed data are different. In this case, the parameter is <span class="math inline">\(\theta = (\theta_0, \theta_1)\)</span>, and the distribution is <span class="math inline">\(U(\theta_0, \theta_1)\)</span>.</p>
+<p>Let <span class="math inline">\(\theta = (0, 1)\)</span> and <span class="math inline">\(\theta' = (\theta_0', \theta_1')\)</span> be two distinct parameter values. We need to show that there exists a set <span class="math inline">\(A\)</span> such that <span class="math inline">\(P(X \in A \mid \theta) \neq P(X \in A \mid \theta')\)</span>.</p>
+<p>If <span class="math inline">\(\theta_0' \neq 0\)</span> or <span class="math inline">\(\theta_1' \neq 1\)</span>, then there exists a set <span class="math inline">\(A\)</span> such that <span class="math inline">\(P(X \in A \mid \theta) \neq P(X \in A \mid \theta')\)</span>. For example, if <span class="math inline">\(\theta_0' &gt; 0\)</span>, we can choose <span class="math inline">\(A = [0, \theta_0')\)</span>. Then <span class="math inline">\(P(X \in A \mid \theta) = \theta_0'\)</span> and <span class="math inline">\(P(X \in A \mid \theta') = 0\)</span>.</p>
+<p>However, if we consider the likelihood function given a single observation <span class="math inline">\(X\)</span>, we have:</p>
+<p><span class="math display">\[
+L(\theta_0, \theta_1 \mid X) = \begin{cases}
+\dfrac{1}{\theta_1 - \theta_0} &amp; \text{if } \theta_0 \leq X \leq \theta_1 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>Given that <span class="math inline">\(\theta_0 = 0\)</span> and <span class="math inline">\(\theta_1 = 1\)</span>, we have <span class="math inline">\(L(0, 1 \mid X) = 1\)</span> for <span class="math inline">\(0 \leq X \leq 1\)</span>. If we choose any other values <span class="math inline">\(\theta_0'\)</span> and <span class="math inline">\(\theta_1'\)</span> such that <span class="math inline">\(\theta_0' \leq X \leq \theta_1'\)</span>, the likelihood function will be <span class="math inline">\(\dfrac{1}{\theta_1' - \theta_0'}\)</span>.</p>
+<p>If we have only one observation <span class="math inline">\(X\)</span>, we cannot distinguish between the parameters <span class="math inline">\((0, 1)\)</span> and any other <span class="math inline">\((\theta_0', \theta_1')\)</span> such that <span class="math inline">\(\theta_0' \leq X \leq \theta_1'\)</span>. Thus, the parameter is not identified with a single observation.</p>
+<section class="level4" id="intuitive-explanation-11">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-11">Intuitive Explanation:</h4>
+<p>With only one observation, we cannot uniquely determine the interval from which the observation was drawn. Any interval that contains the observation is a possible candidate. As the number of observations increases, the probability that the parameters are identified approaches 1.</p>
+</section>
+</section>
+<section class="level3" id="exercise-12-benfords-law">
+<h3 class="anchored" data-anchor-id="exercise-12-benfords-law">Exercise 12: Benford’s Law</h3>
+<p>A set of numbers is said to satisfy <strong>Benford’s law</strong> if the leading digit <span class="math inline">\(D\)</span> <span class="math inline">\((d \in\{1, \ldots, 9\})\)</span> occurs with probability</p>
+<p><span class="math display">\[
+P(d)=\log _{10}(d+1)-\log _{10}(d)
+\]</span></p>
+<p>Numerically, the leading digits have the following distribution in <strong>Benford’s law</strong>, where <span class="math inline">\(d\)</span> is the leading digit and <span class="math inline">\(P(d)\)</span> the probability. Show that</p>
+<p><span class="math display">\[
+\operatorname{Pr}(D \leq d)=\log _{10}(d+1) .
+\]</span></p>
+<p>Investigate whether some real dataset obeys this law.</p>
+</section>
+<section class="level3" id="solution-12">
+<h3 class="anchored" data-anchor-id="solution-12">Solution 12:</h3>
+<p>We are given that the probability of the leading digit <span class="math inline">\(D\)</span> being <span class="math inline">\(d\)</span> is:</p>
+<p><span class="math display">\[
+P(D=d) = \log_{10}(d+1) - \log_{10}(d)
+\]</span></p>
+<p>We want to find the probability that the leading digit is less than or equal to <span class="math inline">\(d\)</span>, i.e., <span class="math inline">\(\operatorname{Pr}(D \leq d)\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+\operatorname{Pr}(D \leq d) &amp;= \sum_{k=1}^d P(D=k) \\
+&amp;= \sum_{k=1}^d [\log_{10}(k+1) - \log_{10}(k)] \\
+&amp;= (\log_{10}(2) - \log_{10}(1)) + (\log_{10}(3) - \log_{10}(2)) + \cdots + (\log_{10}(d+1) - \log_{10}(d))
+\end{aligned}
+\]</span></p>
+<p>This is a telescoping sum, where most of the terms cancel out:</p>
+<p><span class="math display">\[
+\operatorname{Pr}(D \leq d) = \log_{10}(d+1) - \log_{10}(1)
+\]</span></p>
+<p>Since <span class="math inline">\(\log_{10}(1) = 0\)</span>, we have:</p>
+<p><span class="math display">\[
+\operatorname{Pr}(D \leq d) = \log_{10}(d+1)
+\]</span></p>
+<p>Calculate <span class="math inline">\(\hat{P}(d), d=1, \ldots, 9\)</span>. Suppose i.i.d. sampling. We have</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{P}(d)-P(d)) \xrightarrow{d} N(0, P(d)(1-P(d)))
+\]</span></p>
+<p>and <span class="math inline">\(\hat{P}(d), \hat{P}\left(d^{\prime}\right)\)</span> are asymptotically correlated so</p>
+<p><span class="math display">\[
+\operatorname{cov}\left(\sqrt{n} \hat{P}(d), \sqrt{n} \hat{P}\left(d^{\prime}\right)\right)=-P(d) P\left(d^{\prime}\right) .
+\]</span></p>
+<p>Could use t-statistics or Wald test.</p>
+<p>To investigate whether a real dataset obeys Benford’s law, we can follow these steps:</p>
+<ol type="1">
+<li><p><strong>Collect Data</strong>: Gather a large dataset of naturally occurring numbers. Examples include populations of cities, lengths of rivers, stock prices, or numbers appearing in a large text corpus.</p></li>
+<li><p><strong>Extract Leading Digits</strong>: For each number in the dataset, extract the leading digit.</p></li>
+<li><p><strong>Calculate Observed Frequencies</strong>: Count the number of times each leading digit (1 to 9) appears in the dataset. Calculate the observed frequencies by dividing each count by the total number of observations.</p></li>
+<li><p><strong>Calculate Theoretical Frequencies</strong>: Use the formula <span class="math inline">\(P(d) = \log_{10}(d+1) - \log_{10}(d)\)</span> to calculate the theoretical frequencies for each leading digit according to Benford’s law.</p></li>
+<li><p><strong>Compare Observed and Theoretical Frequencies</strong>: Use a statistical test, such as the chi-squared goodness-of-fit test, to compare the observed frequencies to the theoretical frequencies.</p>
+<ul>
+<li><strong>Chi-Squared Test</strong>:
+<ul>
+<li>Calculate the chi-squared statistic: <span class="math inline">\(\chi^2 = \sum_{d=1}^9 \dfrac{(O_d - E_d)^2}{E_d}\)</span>, where <span class="math inline">\(O_d\)</span> is the observed frequency of digit <span class="math inline">\(d\)</span> and <span class="math inline">\(E_d\)</span> is the expected frequency of digit <span class="math inline">\(d\)</span> according to Benford’s law.</li>
+<li>Determine the degrees of freedom: <span class="math inline">\(df = 9 - 1 = 8\)</span>.</li>
+<li>Choose a significance level (e.g., <span class="math inline">\(\alpha = 0.05\)</span>).</li>
+<li>Find the critical value from the chi-squared distribution table.</li>
+<li>Compare the calculated chi-squared statistic to the critical value. If the chi-squared statistic is greater than the critical value, reject the null hypothesis that the data follows Benford’s law.</li>
+</ul></li>
+</ul></li>
+<li><p><strong>Visualize the Results</strong>: Plot the observed and theoretical frequencies on a bar chart to visually compare them.</p></li>
+</ol>
+<section class="level4" id="intuitive-explanation-12">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-12">Intuitive Explanation:</h4>
+<p>Benford’s law describes the distribution of leading digits in many naturally occurring datasets. The probability that the leading digit is less than or equal to <span class="math inline">\(d\)</span> is given by the logarithm of <span class="math inline">\(d+1\)</span>. To test whether a dataset follows Benford’s law, we compare the observed frequencies of leading digits to the frequencies predicted by the law using a statistical test like the chi-squared test.</p>
+</section>
+</section>
+<section class="level3" id="exercise-13-hypothesis-testing-with-two-samples">
+<h3 class="anchored" data-anchor-id="exercise-13-hypothesis-testing-with-two-samples">Exercise 13: Hypothesis Testing with Two Samples</h3>
+<p>Suppose that <span class="math inline">\(X_i \sim N\left(\mu_X, 1\right)\)</span> and <span class="math inline">\(Y_i \sim N\left(\mu_Y, 1\right), i=1, \ldots, n\)</span>, where <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are mutually independent. Explain how to carry out a test of the hypothesis that <span class="math inline">\(\mu_X=0\)</span>. Now we want to test the hypothesis that <span class="math inline">\(\mu_X=\mu_Y=0\)</span>. Propose a method for testing this hypothesis based on t-statistics from the first part.</p>
+</section>
+<section class="level3" id="solution-13">
+<h3 class="anchored" data-anchor-id="solution-13">Solution 13:</h3>
+<p>We have <span class="math inline">\(X_i \sim N(\mu_X, 1)\)</span> and <span class="math inline">\(Y_i \sim N(\mu_Y, 1)\)</span> for <span class="math inline">\(i = 1, \ldots, n\)</span>, and <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are mutually independent.</p>
+<p><strong>Test for <span class="math inline">\(\mu_X = 0\)</span></strong>:</p>
+<p>To test the hypothesis <span class="math inline">\(H_0: \mu_X = 0\)</span> vs. <span class="math inline">\(H_A: \mu_X \neq 0\)</span>, we can use a t-test. The test statistic is:</p>
+<p><span class="math display">\[
+t_X = \dfrac{\bar{X} - 0}{s_X / \sqrt{n}} = \dfrac{\bar{X}}{1 / \sqrt{n}} = \sqrt{n}\bar{X}
+\]</span></p>
+<p>where <span class="math inline">\(\bar{X} = \dfrac{1}{n}\sum_{i=1}^n X_i\)</span> and <span class="math inline">\(s_X^2 = \dfrac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X})^2\)</span>. Since the variance is known to be 1, we have:</p>
+<p><span class="math display">\[
+t_X = \sqrt{n}\bar{X} \sim t(n-1)
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t_X \sim N(0, 1)\)</span>. We reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(|t_X| &gt; z_{\alpha/2}\)</span>, where <span class="math inline">\(z_{\alpha/2}\)</span> is the critical value from the standard normal distribution for a significance level of <span class="math inline">\(\alpha\)</span>.</p>
+<p><strong>Test for <span class="math inline">\(\mu_X = \mu_Y = 0\)</span></strong>:</p>
+<p>We want to test the hypothesis <span class="math inline">\(H_0: \mu_X = \mu_Y = 0\)</span> vs. <span class="math inline">\(H_A: \mu_X \neq 0 \text{ or } \mu_Y \neq 0\)</span>. We can use the t-statistics from the first part to construct a joint test.</p>
+<p>We have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+t_X &amp;= \sqrt{n}\bar{X} \\
+t_Y &amp;= \sqrt{n}\bar{Y}
+\end{aligned}
+\]</span></p>
+<p>Under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t_X \sim N(0, 1)\)</span> and <span class="math inline">\(t_Y \sim N(0, 1)\)</span>, and since <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are independent, <span class="math inline">\(t_X\)</span> and <span class="math inline">\(t_Y\)</span> are independent.</p>
+<p>We can construct a joint test based on the individual t-statistics. One approach is to use the Bonferroni correction. We reject <span class="math inline">\(H_0\)</span> if either <span class="math inline">\(|t_X| &gt; z_{\alpha/4}\)</span> or <span class="math inline">\(|t_Y| &gt; z_{\alpha/4}\)</span>, where <span class="math inline">\(z_{\alpha/4}\)</span> is the critical value from the standard normal distribution for a significance level of <span class="math inline">\(\alpha/2\)</span>. This ensures that the overall significance level is at most <span class="math inline">\(\alpha\)</span>.</p>
+<p>Alternatively, we can use the fact that under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(t_X^2 \sim \chi^2_1\)</span> and <span class="math inline">\(t_Y^2 \sim \chi^2_1\)</span>, and <span class="math inline">\(t_X^2 + t_Y^2 \sim \chi^2_2\)</span>. We can reject <span class="math inline">\(H_0\)</span> if <span class="math inline">\(t_X^2 + t_Y^2 &gt; \chi^2_{2, \alpha}\)</span>, where <span class="math inline">\(\chi^2_{2, \alpha}\)</span> is the critical value from the chi-squared distribution with 2 degrees of freedom for a significance level of <span class="math inline">\(\alpha\)</span>.</p>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \sqrt{n} \dfrac{\bar{X}}{s_X} \sim t(n-1) \\
+&amp; \sqrt{n} \dfrac{\bar{Y}}{s_Y} \sim t(n-1)
+\end{aligned}
+\]</span></p>
+<p>For the joint hypothesis we may consider the square critical region <span class="math inline">\(\pm t_{\alpha / 2}(n-1) \times \pm t_{\alpha / 2}(n-1)\)</span>. Then the rejection probability is <span class="math inline">\(1-(1-\alpha)^2\)</span>. Take <span class="math inline">\(\alpha\)</span> such that <span class="math inline">\(1-(1-\alpha)^2=\alpha\)</span>. Alternatively, do an F-test.</p>
+<section class="level4" id="intuitive-explanation-13">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-13">Intuitive Explanation:</h4>
+<p>To test whether the mean of a normally distributed variable with known variance is zero, we can use a z-test. To test whether the means of two independent normally distributed variables with known variances are both zero, we can use a joint test based on the individual z-statistics or a chi-squared test based on the sum of the squared z-statistics.</p>
+</section>
+</section>
+<section class="level3" id="exercise-14-confidence-interval-for-mortality-risk">
+<h3 class="anchored" data-anchor-id="exercise-14-confidence-interval-for-mortality-risk">Exercise 14: Confidence Interval for Mortality Risk</h3>
+<p>According to the British Parachute Association, between 1996-2015 there were a total of 43 fatalities from skydiving out of a total of 5,116,806 jumps. Provide a <strong>confidence interval</strong> for the true risk of mortality from such an activity. You may use either <strong>Binomial distribution</strong> or <strong>Poisson distribution</strong>.</p>
+</section>
+<section class="level3" id="solution-14">
+<h3 class="anchored" data-anchor-id="solution-14">Solution 14:</h3>
+<p>Let <span class="math inline">\(X\)</span> be the number of fatalities, and let <span class="math inline">\(n\)</span> be the total number of jumps. We have <span class="math inline">\(X = 43\)</span> and <span class="math inline">\(n = 5,116,806\)</span>. The observed fatality rate is:</p>
+<p><span class="math display">\[
+\hat{p} = \dfrac{X}{n} = \dfrac{43}{5,116,806} \approx 8.404 \times 10^{-6}
+\]</span></p>
+<p><strong>Using the Binomial Distribution</strong>:</p>
+<p>We can model the number of fatalities <span class="math inline">\(X\)</span> as a binomial random variable with parameters <span class="math inline">\(n\)</span> and <span class="math inline">\(p\)</span>, where <span class="math inline">\(p\)</span> is the true risk of mortality. The expected value and variance of <span class="math inline">\(X\)</span> are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[X] &amp;= np \\
+\text{Var}(X) &amp;= np(1-p)
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(n\)</span> is large and <span class="math inline">\(p\)</span> is small, we can use the normal approximation to the binomial distribution. The standard error of <span class="math inline">\(\hat{p}\)</span> is:</p>
+<p><span class="math display">\[
+SE(\hat{p}) = \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \approx \sqrt{\dfrac{8.404 \times 10^{-6}(1-8.404 \times 10^{-6})}{5,116,806}} \approx 1.278 \times 10^{-6}
+\]</span></p>
+<p>A 95% confidence interval for <span class="math inline">\(p\)</span> is given by:</p>
+<p><span class="math display">\[
+\hat{p} \pm 1.96 \cdot SE(\hat{p})
+\]</span></p>
+<p><span class="math display">\[
+8.404 \times 10^{-6} \pm 1.96 \cdot 1.278 \times 10^{-6}
+\]</span></p>
+<p><span class="math display">\[
+(5.899 \times 10^{-6}, 1.091 \times 10^{-5})
+\]</span></p>
+<p><strong>Using the Poisson Distribution</strong>:</p>
+<p>Since <span class="math inline">\(n\)</span> is large and <span class="math inline">\(p\)</span> is small, we can also approximate the binomial distribution with a Poisson distribution with parameter <span class="math inline">\(\lambda = np\)</span>. The observed value of <span class="math inline">\(\lambda\)</span> is:</p>
+<p><span class="math display">\[
+\hat{\lambda} = n\hat{p} = 43
+\]</span></p>
+<p>The standard error of <span class="math inline">\(\hat{\lambda}\)</span> is:</p>
+<p><span class="math display">\[
+SE(\hat{\lambda}) = \sqrt{\hat{\lambda}} = \sqrt{43} \approx 6.557
+\]</span></p>
+<p>A 95% confidence interval for <span class="math inline">\(\lambda\)</span> is given by:</p>
+<p><span class="math display">\[
+\hat{\lambda} \pm 1.96 \cdot SE(\hat{\lambda})
+\]</span></p>
+<p><span class="math display">\[
+43 \pm 1.96 \cdot 6.557
+\]</span></p>
+<p><span class="math display">\[
+(30.148, 55.852)
+\]</span></p>
+<p>To obtain a confidence interval for <span class="math inline">\(p\)</span>, we divide the confidence interval for <span class="math inline">\(\lambda\)</span> by <span class="math inline">\(n\)</span>:</p>
+<p><span class="math display">\[
+\left(\dfrac{30.148}{5,116,806}, \dfrac{55.852}{5,116,806}\right)
+\]</span></p>
+<p><span class="math display">\[
+(5.892 \times 10^{-6}, 1.092 \times 10^{-5})
+\]</span></p>
+<section class="level4" id="intuitive-explanation-14">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-14">Intuitive Explanation:</h4>
+<p>We can estimate the true risk of mortality using either the binomial distribution or the Poisson approximation. The confidence interval provides a range of plausible values for the true risk based on the observed data.</p>
+</section>
+</section>
+<section class="level3" id="exercise-15-bootstrap-method-for-coefficient-of-variation">
+<h3 class="anchored" data-anchor-id="exercise-15-bootstrap-method-for-coefficient-of-variation">Exercise 15: Bootstrap Method for Coefficient of Variation</h3>
+<p>Suppose that <span class="math inline">\(X_1, \ldots, X_n\)</span> are independent and identically distributed with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. The <strong>coefficient of variation</strong> may be defined as <span class="math inline">\(c v=\sigma / \mu\)</span>. Propose a <strong>bootstrap method</strong> for approximating the distribution of</p>
+<p><span class="math display">\[
+\sqrt{n}(\widehat{cv} - cv)
+\]</span></p>
+<p>where <span class="math inline">\(\widehat{c v}=\dfrac{s}{\bar{X}}\)</span> and <span class="math inline">\(\bar{X}=\dfrac{1}{n} \sum_{i=1}^n X_i / n\)</span> and <span class="math inline">\(s^2=\dfrac{1}{n}\sum_{i=1}^n\left(X_i-\bar{X}\right)^2 / n\)</span>. How can you obtain a confidence interval for the parameter <span class="math inline">\(cv\)</span>?</p>
+</section>
+<section class="level3" id="solution-15">
+<h3 class="anchored" data-anchor-id="solution-15">Solution 15:</h3>
+<p>Let <span class="math inline">\(X_1^*, \ldots, X_n^*\)</span> be drawn without replacement from the sample <span class="math inline">\(X_1, \ldots, X_n\)</span>. Then compute</p>
+<p><span class="math display">\[
+\begin{aligned}
+\bar{X}^* &amp; =\dfrac{1}{n} \sum_{i=1}^n X_i^* \\
+s^{*2} &amp; =\dfrac{1}{n} \sum_{i=1}^n\left(X_i^*-\bar{X}^*\right)^2 \\
+\widehat{c v}^* &amp; =\dfrac{s^*}{\bar{X}^*}
+\end{aligned}
+\]</span></p>
+<p>Then we calculate the distribution of</p>
+<p><span class="math display">\[
+T^*=\sqrt{n}\left(\widehat{c v}^*-\widehat{c v}\right)
+\]</span></p>
+<p>across the bootstrap samples. Let <span class="math inline">\(c_{\alpha / 2}\)</span> and <span class="math inline">\(c_{1-\alpha / 2}\)</span> be the corresponding quantiles of this distribution. Then by the <strong>bootstrap theory</strong> we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp; \operatorname{Pr}\left[\sqrt{n}(\widehat{c v}-c v) \leq c_{\alpha / 2}\right] \approx \dfrac{\alpha}{2} \\
+&amp; \operatorname{Pr}\left[\sqrt{n}(\widehat{c v}-c v) \geq c_{1-\alpha / 2}\right] \approx \dfrac{\alpha}{2}
+\end{aligned}
+\]</span></p>
+<p>Therefore, the interval we need is</p>
+<p><span class="math display">\[
+\left[\widehat{c v}-\dfrac{c_{\alpha / 2}}{\sqrt{n}}, \widehat{c v}+\dfrac{c_{1-\alpha / 2}}{\sqrt{n}}\right] .
+\]</span></p>
+<p>To approximate the distribution of <span class="math inline">\(\sqrt{n}(\widehat{cv} - cv)\)</span> using the bootstrap method, we follow these steps:</p>
+<ol type="1">
+<li><p><strong>Calculate the sample coefficient of variation</strong>: <span class="math display">\[
+\widehat{cv} = \dfrac{s}{\bar{X}}
+\]</span></p></li>
+<li><p><strong>Resample with replacement</strong>: Draw <span class="math inline">\(B\)</span> bootstrap samples of size <span class="math inline">\(n\)</span> from the original sample <span class="math inline">\(X_1, \ldots, X_n\)</span>. Let <span class="math inline">\(X_{1,b}^*, \ldots, X_{n,b}^*\)</span> denote the <span class="math inline">\(b\)</span>-th bootstrap sample, for <span class="math inline">\(b = 1, \ldots, B\)</span>.</p></li>
+<li><p><strong>Calculate the bootstrap statistic</strong>: For each bootstrap sample, calculate the sample mean <span class="math inline">\(\bar{X}_b^*\)</span>, sample standard deviation <span class="math inline">\(s_b^*\)</span>, and the bootstrap coefficient of variation <span class="math inline">\(\widehat{cv}_b^*\)</span>: <span class="math display">\[
+\begin{aligned}
+\bar{X}_b^* &amp;= \dfrac{1}{n} \sum_{i=1}^n X_{i,b}^* \\
+s_b^{*2} &amp;= \dfrac{1}{n} \sum_{i=1}^n (X_{i,b}^* - \bar{X}_b^*)^2 \\
+\widehat{cv}_b^* &amp;= \dfrac{s_b^*}{\bar{X}_b^*}
+\end{aligned}
+\]</span></p></li>
+<li><p><strong>Calculate the bootstrap distribution</strong>: Calculate the bootstrap statistic <span class="math inline">\(T_b^* = \sqrt{n}(\widehat{cv}_b^* - \widehat{cv})\)</span> for each bootstrap sample <span class="math inline">\(b = 1, \ldots, B\)</span>. The distribution of <span class="math inline">\(T_1^*, \ldots, T_B^*\)</span> approximates the distribution of <span class="math inline">\(\sqrt{n}(\widehat{cv} - cv)\)</span>.</p></li>
+<li><p><strong>Obtain a confidence interval</strong>: To obtain a <span class="math inline">\((1-\alpha)\)</span> confidence interval for <span class="math inline">\(cv\)</span>, find the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution of <span class="math inline">\(T_b^*\)</span>. Let <span class="math inline">\(q_{\alpha/2}\)</span> and <span class="math inline">\(q_{1-\alpha/2}\)</span> be these quantiles. Then the confidence interval is given by: <span class="math display">\[
+\left( \widehat{cv} - \dfrac{q_{1-\alpha/2}}{\sqrt{n}}, \widehat{cv} - \dfrac{q_{\alpha/2}}{\sqrt{n}} \right)
+\]</span></p></li>
+</ol>
+<section class="level4" id="intuitive-explanation-15">
+<h4 class="anchored" data-anchor-id="intuitive-explanation-15">Intuitive Explanation:</h4>
+<p>The bootstrap method allows us to approximate the distribution of a statistic by resampling from the original sample. By calculating the statistic for each bootstrap sample, we can estimate its distribution and obtain confidence intervals. In this case, we are interested in the distribution of the coefficient of variation, which is a measure of relative variability.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

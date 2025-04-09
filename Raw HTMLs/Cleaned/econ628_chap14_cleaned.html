@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 14: Asymptotic Tests and the Bootstrap – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap15.html" rel="next"/>
+<link href="../chapters/chap13.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 14: Asymptotic Tests and the Bootstrap</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="simulation-methods">
+<h2 class="anchored" data-anchor-id="simulation-methods">14.1 SIMULATION METHODS</h2>
+<p>Suppose that <span class="math inline">\(X_i\)</span> is i.i.d. from some distribution <span class="math inline">\(F(\cdot|\theta)\)</span> and we want to calculate the distribution of some statistic <span class="math inline">\(T(X^n, \theta)\)</span>, which is complicated. That is, we seek</p>
+<p><span class="math display">\[
+H_n(x; \theta) = \text{Pr}[T(X^n, \theta) \le x].
+\]</span></p>
+<p>And suppose that <span class="math inline">\(n\)</span> is small, say <span class="math inline">\(n = 2\)</span>, so we can’t rely on large samples.</p>
+<p>Suppose that <span class="math inline">\(\theta\)</span> is known. Then</p>
+<ol type="1">
+<li><p>Generate a sample of data <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> from <span class="math inline">\(F(\cdot|\theta)\)</span></p></li>
+<li><p>Compute <span class="math inline">\(T(X^{n*}, \theta)\)</span></p></li>
+<li><p>Repeat <span class="math inline">\(S\)</span> times and let <span class="math inline">\(T_s^*\)</span> denote the value of <span class="math inline">\(T(X^{n*}, \theta)\)</span> for the <span class="math inline">\(s\)</span>th sample</p></li>
+<li><p>Calculate the (empirical) distribution of <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span> and use this distribution in place of <span class="math inline">\(H_n(x; \theta)\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\hat{H}(x; \theta) = \hat{H}_S(x; \theta) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+</ol>
+<p>By the LLN as <span class="math inline">\(S \to \infty\)</span> we have</p>
+<p><span class="math display">\[
+\hat{H}_S(x; \theta) \overset{P}{\to} H_n(x; \theta)
+\]</span></p>
+<p>for every <span class="math inline">\(n\)</span> and every <span class="math inline">\(x\)</span>.</p>
+<p>For example, suppose that <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(0, 1)\)</span> and <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n \cos(X_i)\)</span> with <span class="math inline">\(n = 2\)</span>. The distribution of <span class="math inline">\(T\)</span> is hard to obtain analytically, but very easy to describe by simulation methods. See Figure 14.1.</p>
+<p>Now suppose that we don’t know <span class="math inline">\(\theta\)</span>, how do we proceed?</p>
+<ol type="1">
+<li>Estimate <span class="math inline">\(\theta\)</span> from the data by <span class="math inline">\(\hat{\theta}\)</span></li>
+<li>Generate a sample of data <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> from <span class="math inline">\(F(\cdot|\hat{\theta})\)</span></li>
+<li>Compute <span class="math inline">\(T(X^{n*}, \hat{\theta})\)</span></li>
+<li>Repeat <span class="math inline">\(S\)</span> times and let <span class="math inline">\(T_s^*\)</span> denote the value of <span class="math inline">\(T(X^{n*}, \hat{\theta})\)</span> for the <span class="math inline">\(s\)</span>th sample</li>
+<li>Calculate the (empirical) distribution of <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span> and use this distribution.</li>
+</ol>
+<p>Does it work? Under general conditions we expect that</p>
+<p><span class="math display">\[
+\sup_{x \in \mathbb{R}} |F(x|\hat{\theta}) - F(x|\theta_0)| \overset{P}{\to} 0,
+\]</span></p>
+<p>see below, and so we expect that the estimated distribution is close to the true one. For example <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(\mu, 1)\)</span> (with <span class="math inline">\(\mu = 0\)</span>) but we estimate <span class="math inline">\(\mu\)</span> by <span class="math inline">\(\bar{X}\)</span>.</p>
+</section>
+<section class="level2" id="bootstrap">
+<h2 class="anchored" data-anchor-id="bootstrap">14.2 BOOTSTRAP</h2>
+<p>We next consider a more general setting where that <span class="math inline">\(X_1, \dots, X_n\)</span> are i.i.d. with distribution function <span class="math inline">\(F\)</span> that is unknown. We have a statistic <span class="math inline">\(T(\theta; X^n)\)</span>, which is a function of the data <span class="math inline">\(X_1, \dots, X_n\)</span> and a parameter value <span class="math inline">\(\theta\)</span> that is estimated by <span class="math inline">\(\hat{\theta}(X^n)\)</span>. As before we seek</p>
+<p><span class="math display">\[
+H_n(x; \theta) = \text{Pr}[T(X^n, \theta) \le x],
+\]</span></p>
+<p>but now we can’t simulate from the distribution <span class="math inline">\(F\)</span> or can we?</p>
+<p>The <strong>Bootstrap principle</strong> is to treat the empirical distribution <span class="math inline">\(F_n\)</span> as the population and then to sample from the new population, which we know. This is called <strong>The Russian Doll Principle</strong>, and like the actual dolls, it can be iterated many times, although we only consider the basic method.</p>
+<p>The <strong>Bootstrap</strong> is a very popular method for obtaining confidence intervals or performing hypothesis tests. It is related to the <strong>Jackknife</strong> and to <strong>Permutation</strong> tests, which historically precede it. There can be computational reasons why this method is preferred to the usual approach based on estimating the unknown quantities of the asymptotic distribution. There can also be statistical reasons why the bootstrap is better than the asymptotic plug-in approach. The bootstrap has been shown to work in a large variety of situations; we are just going to look at the simplest i.i.d. cases.</p>
+<section class="level3" id="bootstrap-algorithm">
+<h3 class="anchored" data-anchor-id="bootstrap-algorithm">Bootstrap Algorithm</h3>
+<ol type="1">
+<li><p>Generate a sample of data <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> from the empirical distribution <span class="math inline">\(F_n\)</span>, that is, drawn with replacement from <span class="math inline">\(\{X_1, \dots, X_n\}\)</span></p></li>
+<li><p>Compute <span class="math inline">\(T(X^{n*}, \hat{\theta})\)</span>, where <span class="math inline">\(\hat{\theta}\)</span> is the sample estimate</p></li>
+<li><p>Repeat <span class="math inline">\(S\)</span> times and let <span class="math inline">\(T_s^*\)</span> denote the value of <span class="math inline">\(T(X^{n*}, \hat{\theta})\)</span> for the <span class="math inline">\(s\)</span>th sample</p></li>
+<li><p>Calculate the (empirical) distribution of <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span> and use this distribution in place of <span class="math inline">\(H_n(x; \hat{\theta})\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\hat{H}_B(x; \hat{\theta}) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x). \qquad (14.1)
+\]</span></p></li>
+</ol>
+<p>For example a critical value can be calculated as quantiles of this distribution e.g., <span class="math inline">\(\hat{H}_B^{-1}(\alpha; \hat{\theta})\)</span>. Does it work? We first consider how this works for a small sample where it is possible to write out all the outcomes.</p>
+</section>
+<section class="level3" id="example-14.1">
+<h3 class="anchored" data-anchor-id="example-14.1">Example 14.1</h3>
+<p>Suppose that <span class="math inline">\(n = 2\)</span> and the sample is <span class="math inline">\(X_1, X_2\)</span>. Then the bootstrap samples of size <span class="math inline">\(n = 2\)</span> are</p>
+<p><span class="math display">\[
+\{\{X_1, X_1\}, \{X_2, X_2\}, \{X_1, X_2\}, \{X_2, X_1\}\},
+\]</span></p>
+<p>each of which are equally likely with probability <span class="math inline">\(\dfrac{1}{4}\)</span>. The bootstrap distribution of</p>
+<p><span class="math display">\[
+T_s^* = \dfrac{1}{2}(\cos(X_1^*) + \cos(X_2^*)) = \begin{cases}
+\dfrac{1}{2}(\cos(X_1) + \cos(X_1)) &amp; \text{prob } \dfrac{1}{4} \\
+\dfrac{1}{2}(\cos(X_1) + \cos(X_2)) &amp; \text{prob } \dfrac{1}{2} \\
+\dfrac{1}{2}(\cos(X_2) + \cos(X_2)) &amp; \text{prob } \dfrac{1}{4}
+\end{cases}.
+\]</span></p>
+<p>In this case not enough <span class="math inline">\(n\)</span> to make a good approximation. However, when the sample size <span class="math inline">\(n\)</span> increases, this discreteness issue disappears. Consider now the case where <span class="math inline">\(n = 10\)</span>. The distribution of <span class="math inline">\(T\)</span> is shown in Figure 14.2, it is quite smooth and almost bell-shaped. The distribution of <span class="math inline">\(T^*\)</span> is shown in Figure 14.3.</p>
+<p>It is better but no cigar: the shape is about right, but the mean and variance seem off, i.e., they don’t match those of <span class="math inline">\(T\)</span>. So what is wrong? We next give some analysis.</p>
+<p>Suppose that <span class="math inline">\(X_i\)</span> are i.i.d. with distribution <span class="math inline">\(F\)</span> and take <span class="math inline">\(T = \bar{X}\)</span> to be the statistic of interest. We calculate the first two (conditional moments) of</p>
+<p><span class="math display">\[
+T_s^* = \bar{X}^*.
+\]</span></p>
+<p>First notice that <span class="math inline">\(X_i^*\)</span> are drawn independently from</p>
+<p><span class="math display">\[
+X^* = \begin{cases}
+X_1 &amp; \text{prob } \dfrac{1}{n} \\
+\vdots &amp; \\
+X_n &amp; \text{prob } \dfrac{1}{n}
+\end{cases}.
+\]</span></p>
+<p>Conditioning on the sample, this is just a generalized multinomial distribution whose mean and variance are easy to obtain. In particular</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X^*|X^n) &amp;= \bar{X} \\
+\text{Var}(X^*|X^n) &amp;= \dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2 \\
+\kappa_3(X^*|X^n) &amp;= \dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^3
+\end{aligned}
+\]</span></p>
+<p>etc.</p>
+<p>It follows that:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(\bar{X}^*|X^n) &amp;= \dfrac{1}{n} \sum_{i=1}^n E(X_i^*|X^n) \\
+&amp;= E(X^*|X^n) = \bar{X}, \\
+\text{Var}(\bar{X}^*|X^n) &amp;= \dfrac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i^*|X^n) \\
+&amp;= \dfrac{1}{n} \text{Var}(X^*|X^n) \\
+&amp;= \dfrac{1}{n^2} \sum_{i=1}^n (X_i - \bar{X})^2 = \dfrac{1}{n} s^2.
+\end{aligned}
+\]</span></p>
+<p>This says that the random variable</p>
+<p><span class="math display">\[
+T^* = \sqrt{n}(\bar{X}^* - \bar{X})
+\]</span></p>
+<p>has conditional mean zero and conditional variance given by the sample variance of the original data. When <span class="math inline">\(n\)</span> is large, <span class="math inline">\(s^2\)</span> converges to the population variance <span class="math inline">\(\sigma^2\)</span>, and we furthermore can show that <span class="math inline">\(T_n^*\)</span> is asymptotically normal (conditional on the sample it is a sum of i.i.d. random variables with mean zero and finite variance) and has the same distribution as</p>
+<p><span class="math display">\[
+T = \sqrt{n}(\bar{X} - \mu) \overset{D}{\to} N(0, \sigma^2)
+\]</span></p>
+<p>i.e.,</p>
+<p><span class="math display">\[
+T^* = \sqrt{n}(\bar{X}^* - \bar{X}) \overset{D}{\to} N(0, \sigma^2).
+\]</span></p>
+</section>
+<section class="level3" id="theorem-14.1">
+<h3 class="anchored" data-anchor-id="theorem-14.1">Theorem 14.1</h3>
+<p>(Bickel and Freedman, 1981) Suppose that <span class="math inline">\(X_1, \dots, X_n\)</span> are i.i.d. with finite mean <span class="math inline">\(\mu\)</span> and positive variance <span class="math inline">\(\sigma^2\)</span>. Then, along almost all sample sequences <span class="math inline">\(\{X_1, \dots, X_n\}\)</span>, as <span class="math inline">\(n, m \to \infty\)</span></p>
+<p><span class="math display">\[
+\text{Pr}(T^* \le x|X_1, \dots, X_n) \to \text{Pr}(U \le x),
+\]</span></p>
+<p>where <span class="math inline">\(U \sim N(0, \sigma^2)\)</span>.</p>
+<p>Therefore, we can show that for large <span class="math inline">\(n\)</span> that</p>
+<p><span class="math display">\[
+\begin{aligned}
+T_n &amp;= \dfrac{1}{\sqrt{n}} \sum_{i=1}^n \{\cos(X_i) - E[\cos(X_i)]\} \\
+T_n^* &amp;= \dfrac{1}{\sqrt{n}} \sum_{i=1}^n \{\cos(X_i^*) - \cos(X_i)\}
+\end{aligned}
+\]</span></p>
+<p>have the same distribution. We don’t know <span class="math inline">\(E[\cos(X_i)]\)</span>, so that we can’t translate this theory back to our original example – this doesn’t say that the distributions of</p>
+<p><span class="math display">\[
+\dfrac{1}{n} \sum_{i=1}^n \cos(X_i) \quad \text{and} \quad \dfrac{1}{n} \sum_{i=1}^n \cos(X_i^*)
+\]</span></p>
+<p>are the same. Instead let’s work with <span class="math inline">\(\sin(X_i)\)</span>, which we know to have mean zero. The theory predicts that the following have the same distribution</p>
+<p><span class="math display">\[
+\begin{aligned}
+T_n &amp;= \dfrac{1}{\sqrt{n}} \sum_{i=1}^n \sin(X_i) \\
+T_n^* &amp;= \dfrac{1}{\sqrt{n}} \sum_{i=1}^n \{\sin(X_i^*) - \sin(\bar{X})\}.
+\end{aligned}
+\]</span></p>
+<p>In fact, the approximation is quite good. See Figure 14.4.</p>
+<p><strong>General principle of bootstrap.</strong> It needs to be applied to a statistic that is asymptotically normal. If so, then gives good approximation when sample size is large.</p>
+<p>This idea can be used to obtain confidence intervals or to obtain critical values for tests. Recall that the asymptotic approach calculates the confidence interval as follows. For a one-sided interval of coverage <span class="math inline">\(1 - \alpha\)</span></p>
+<p><span class="math display">\[
+C_\alpha(X^n) = \{t : T(X^n; t) \le \hat{H}_A^{-1}(1 - \alpha)\}.
+\]</span></p>
+<p>This then ensures that <span class="math inline">\(\text{Pr}(\theta \in C_\alpha(X^n)) \to 1 - \alpha\)</span>. For the Bootstrap, we just replace the asymptotic critical value <span class="math inline">\(\hat{H}_A^{-1}(\alpha)\)</span> by the bootstrap critical value <span class="math inline">\(\hat{H}_B^{-1}(\alpha; \hat{\theta})\)</span> obtained from the bootstrap samples of <span class="math inline">\(T^*\)</span>, i.e.,</p>
+<p><span class="math display">\[
+C_\alpha^*(X^n) = \{t : T(X^n; t) \le \hat{H}_B^{-1}(1 - \alpha; \hat{\theta})\}.
+\]</span></p>
+<p>Then also <span class="math inline">\(\text{Pr}(\theta \in C_\alpha^*(X^n)) \to 1 - \alpha\)</span>. For a two-sided interval of coverage <span class="math inline">\(1 - \alpha\)</span></p>
+<p><span class="math display">\[
+C_\alpha(X^n) = \{t : \hat{H}_A^{-1}(\alpha/2) \le T(X^n; t) \le \hat{H}_A^{-1}(1 - \alpha/2)\}.
+\]</span></p>
+<p>Usually, <span class="math inline">\(\hat{H}_A(\cdot)\)</span> is symmetric about zero and <span class="math inline">\(\hat{H}_A^{-1}(\alpha/2) = -\hat{H}_A^{-1}(1 - \alpha/2)\)</span>. For the Bootstrap, we take</p>
+<p><span class="math display">\[
+C_\alpha^*(X^n) = \{t : \hat{H}_B^{-1}(\alpha/2; \hat{\theta}) \le T(X^n; t) \le \hat{H}_B^{-1}(1 - \alpha/2; \hat{\theta})\}.
+\]</span></p>
+<p>In this case, there is no reason to expect <span class="math inline">\(\hat{H}_B(\cdot; \hat{\theta})\)</span> to be exactly symmetric about zero and so one typically calculates the two separate critical values.</p>
+<p>To carry out a test of the hypothesis that <span class="math inline">\(\theta = \theta_0\)</span>: reject if <span class="math inline">\(\theta_0 \notin C_\alpha^*(X^n)\)</span> or <span class="math inline">\(C_\alpha(X^n)\)</span>. In some cases <span class="math inline">\(H(x, F)\)</span> does not depend on <span class="math inline">\(F\)</span>, in which cases <span class="math inline">\(T\)</span> is called a <strong>pivot</strong> or an <strong>asymptotic pivot</strong>.</p>
+</section>
+<section class="level3" id="example-14.2">
+<h3 class="anchored" data-anchor-id="example-14.2">Example 14.2</h3>
+<p>Suppose that <span class="math inline">\(X_i\)</span> is i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. The usual <span class="math inline">\(t\)</span> test statistic satisfies</p>
+<p><span class="math display">\[
+T = \dfrac{\sqrt{n}(\bar{X} - \mu)}{s} \overset{D}{\to} N(0, 1).
+\]</span></p>
+<p>In that case <span class="math inline">\(\hat{H}_A(x) = \Phi(x)\)</span> is a known quantity and we can test the hypothesis that <span class="math inline">\(\mu = \mu_0\)</span> using the standard normal critical values which are defined as <span class="math inline">\(z_\alpha = \Phi^{-1}(1 - \alpha)\)</span>. The bootstrap confidence interval can be based on <span class="math inline">\(\hat{H}_B^{-1}(\alpha; \hat{\theta})\)</span> from any of the following statistics:</p>
+<p><span class="math display">\[
+\begin{aligned}
+T^* &amp;= \sqrt{n}(\bar{X}^* - \bar{X}) \\
+T^{**} &amp;= \dfrac{\sqrt{n}(\bar{X}^* - \bar{X})}{s} \\
+T^{***} &amp;= \dfrac{\sqrt{n}(\bar{X}^* - \bar{X})}{s^*}
+\end{aligned}
+\]</span></p>
+<p>The bootstrap can be a useful alternative to conduct inference in settings where the large sample theory is complicated or just tedious to carry out.</p>
+</section>
+<section class="level3" id="example-14.3">
+<h3 class="anchored" data-anchor-id="example-14.3">Example 14.3</h3>
+<p>Test of skewness. Suppose that <span class="math inline">\(X_i\)</span> is i.i.d. with <span class="math inline">\(E X_i^6 &lt; \infty\)</span> and consider the problem of testing whether <span class="math inline">\(\kappa_3 = 0\)</span> versus the two sided alternative for some specific <span class="math inline">\(\theta \in \mathbb{R}\)</span>. The sample skewness</p>
+<p><span class="math display">\[
+\hat{\kappa}_3 = \dfrac{\dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^3}{\left[ \dfrac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2 \right]^{3/2}}
+\]</span></p>
+<p>can be shown to be asymptotically normal but the asymptotic variance is very complicated to write down. Let</p>
+<p><span class="math display">\[
+\begin{aligned}
+T &amp;= \sqrt{n}(\hat{\kappa}_3 - \theta); \\
+T^* &amp;= \sqrt{n}(\hat{\kappa}_3^* - \hat{\kappa}_3),
+\end{aligned}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\hat{\kappa}_3^* = \dfrac{\dfrac{1}{n} \sum_{i=1}^n (X_i^* - \bar{X}^*)^3}{\left[ \dfrac{1}{n} \sum_{i=1}^n (X_i^* - \bar{X}^*)^2 \right]^{3/2}}.
+\]</span></p>
+<p>To approximate the distribution of <span class="math inline">\(T\)</span> we use the distribution of <span class="math inline">\(T^*\)</span>, which does not require any analytical effort.</p>
+<p>To calculate the distribution <span class="math inline">\(\hat{H}_B\)</span> in practice we use simulations. How to choose the number of simulations? In practice it is not necessary to take <span class="math inline">\(S = \infty\)</span>. Take <span class="math inline">\(\alpha(S + 1)\)</span> to be an integer, so that the relevant quantiles of the bootstrap distribution are uniquely defined. For example take <span class="math inline">\(S = 199\)</span>, which works for <span class="math inline">\(\alpha = 0.01\)</span> and <span class="math inline">\(\alpha = 0.05\)</span> etc.</p>
+</section>
+<section class="level3" id="subsampling">
+<h3 class="anchored" data-anchor-id="subsampling">14.2.1 Subsampling</h3>
+<p><strong>Subsampling</strong> is an alternative resampling type idea that achieves similar objectives to the bootstrap. Let <span class="math inline">\(b\)</span> be an integer with <span class="math inline">\(1 &lt; b &lt; n\)</span>. Then let</p>
+<p><span class="math display">\[
+X_i^b = \{X_{i+1}, \dots, X_{i+b}\}.
+\]</span></p>
+<p>This is a subsample of the original dataset of size <span class="math inline">\(b\)</span> starting at <span class="math inline">\(i\)</span>. There are <span class="math inline">\(n - b + 1\)</span> such subsamples: <span class="math inline">\(X_1^b, \dots, X_{n-b+1}^b\)</span>. We may construct estimators and test statistics based on each subsample and then learn about their distribution by the cross subsample variation. For example, let</p>
+<p><span class="math display">\[
+\bar{X}_{i,b} = \dfrac{1}{b} \sum_{j=1}^b X_{i+j}
+\]</span></p>
+<p>for each <span class="math inline">\(i = 1, \dots, n-b+1\)</span>. We argue that we can estimate</p>
+<p><span class="math display">\[
+G_n(t) = \text{Pr}(\sqrt{n}(\bar{X} - \mu) \le t)
+\]</span></p>
+<p>by the empirical distribution of <span class="math inline">\(\bar{X}_{i,b}\)</span> across the samples <span class="math inline">\(i = 1, \dots, n-b+1\)</span>, that is</p>
+<p><span class="math display">\[
+\hat{G}_{n,b}(t) = \dfrac{1}{n-b+1} \sum_{i=1}^{n-b+1} \mathbb{1} \left( \sqrt{b}(\bar{X}_{i,b} - \mu) \le t \right).
+\]</span></p>
+<p>By the CLT we know that as <span class="math inline">\(b \to \infty\)</span></p>
+<p><span class="math display">\[
+\sqrt{b}(\bar{X}_{i,b} - \mu) \overset{D}{\to} N(0, \sigma^2),
+\]</span></p>
+<p>so this idea seems plausible. In fact one can work with overlapping blocks or nonoverlapping blocks; generally, overlapping blocks are more efficient.</p>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch14exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise1">Exercise 1</h3>
+<p><a href="#sec-ch14solution1">Solution 1</a></p>
+<p>Consider a statistic <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n X_i^2\)</span>, where <span class="math inline">\(X_i\)</span> are i.i.d. from a distribution <span class="math inline">\(F(\cdot|\theta)\)</span> with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. You want to approximate the distribution <span class="math inline">\(H_n(x; \theta) = \text{Pr}[T(X^n, \theta) \le x]\)</span> using simulation methods. Assuming <span class="math inline">\(\theta\)</span> is known, describe the steps you would take to simulate this distribution and write the formula for the empirical distribution <span class="math inline">\(\hat{H}_S(x; \theta)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch14exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise2">Exercise 2</h3>
+<p><a href="#sec-ch14solution2">Solution 2</a></p>
+<p>Using the same scenario as in Exercise 1, but now assuming that <span class="math inline">\(\theta\)</span> is unknown, explain how you would modify the simulation procedure. How does the estimation of <span class="math inline">\(\theta\)</span> affect the simulation process?</p>
+</section>
+<section class="level3" id="sec-ch14exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise3">Exercise 3</h3>
+<p><a href="#sec-ch14solution3">Solution 3</a></p>
+<p>Let <span class="math inline">\(X_i\)</span> be i.i.d. <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known and <span class="math inline">\(\mu\)</span> unknown. Suppose you estimate <span class="math inline">\(\mu\)</span> by the sample mean <span class="math inline">\(\bar{X}\)</span>. If you want to simulate the distribution of the statistic <span class="math inline">\(T(X^n, \hat{\mu}) = \sqrt{n}(\bar{X} - \hat{\mu})\)</span>, where <span class="math inline">\(\hat{\mu}\)</span> is an estimate of <span class="math inline">\(\mu\)</span>, what distribution would you sample from and why?</p>
+</section>
+<section class="level3" id="sec-ch14exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise4">Exercise 4</h3>
+<p><a href="#sec-ch14solution4">Solution 4</a></p>
+<p>Explain the <strong>Bootstrap principle</strong> in your own words. How does it relate to the concept of treating the empirical distribution as the population?</p>
+</section>
+<section class="level3" id="sec-ch14exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise5">Exercise 5</h3>
+<p><a href="#sec-ch14solution5">Solution 5</a></p>
+<p>Describe the <strong>Russian Doll Principle</strong> in the context of the bootstrap method. Why is it called that, and what does it imply about the iterative nature of the method?</p>
+</section>
+<section class="level3" id="sec-ch14exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise6">Exercise 6</h3>
+<p><a href="#sec-ch14solution6">Solution 6</a></p>
+<p>Outline the steps of the <strong>Bootstrap Algorithm</strong> for a general statistic <span class="math inline">\(T(X^n, \theta)\)</span>. What is the role of the empirical distribution <span class="math inline">\(F_n\)</span> in this algorithm?</p>
+</section>
+<section class="level3" id="sec-ch14exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise7">Exercise 7</h3>
+<p><a href="#sec-ch14solution7">Solution 7</a></p>
+<p>Suppose you have a sample of size <span class="math inline">\(n=3\)</span> with values <span class="math inline">\(\{X_1, X_2, X_3\}\)</span>. List all possible bootstrap samples of size <span class="math inline">\(n=3\)</span> and calculate their probabilities.</p>
+</section>
+<section class="level3" id="sec-ch14exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise8">Exercise 8</h3>
+<p><a href="#sec-ch14solution8">Solution 8</a></p>
+<p>Consider a statistic <span class="math inline">\(T(X^n, \theta) = \text{median}(X_1, \dots, X_n)\)</span>, where <span class="math inline">\(X_i\)</span> are i.i.d. from a continuous distribution. Explain how the discreteness issue of the bootstrap distribution diminishes as the sample size <span class="math inline">\(n\)</span> increases.</p>
+</section>
+<section class="level3" id="sec-ch14exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise9">Exercise 9</h3>
+<p><a href="#sec-ch14solution9">Solution 9</a></p>
+<p>Given <span class="math inline">\(X_i\)</span> i.i.d. with distribution <span class="math inline">\(F\)</span>, and <span class="math inline">\(T = \bar{X}\)</span>, calculate the conditional mean and variance of the bootstrap sample mean <span class="math inline">\(\bar{X}^*\)</span> given the original sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch14exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise10">Exercise 10</h3>
+<p><a href="#sec-ch14solution10">Solution 10</a></p>
+<p>Explain why the random variable <span class="math inline">\(T^* = \sqrt{n}(\bar{X}^* - \bar{X})\)</span> has a conditional mean of zero and a conditional variance equal to the sample variance of the original data.</p>
+</section>
+<section class="level3" id="sec-ch14exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise11">Exercise 11</h3>
+<p><a href="#sec-ch14solution11">Solution 11</a></p>
+<p>State <strong>Theorem 14.1</strong> (Bickel and Freedman, 1981) and explain its significance in the context of the bootstrap method.</p>
+</section>
+<section class="level3" id="sec-ch14exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise12">Exercise 12</h3>
+<p><a href="#sec-ch14solution12">Solution 12</a></p>
+<p>Describe how the bootstrap method can be used to construct a one-sided confidence interval for a parameter <span class="math inline">\(\theta\)</span>. How does this compare to the asymptotic approach?</p>
+</section>
+<section class="level3" id="sec-ch14exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise13">Exercise 13</h3>
+<p><a href="#sec-ch14solution13">Solution 13</a></p>
+<p>Explain how to construct a two-sided confidence interval using the bootstrap method. What is the role of the quantiles of the bootstrap distribution in this construction?</p>
+</section>
+<section class="level3" id="sec-ch14exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise14">Exercise 14</h3>
+<p><a href="#sec-ch14solution14">Solution 14</a></p>
+<p>What is a <strong>pivot</strong> or <strong>asymptotic pivot</strong> in the context of hypothesis testing? Provide an example of a statistic that is an asymptotic pivot.</p>
+</section>
+<section class="level3" id="sec-ch14exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise15">Exercise 15</h3>
+<p><a href="#sec-ch14solution15">Solution 15</a></p>
+<p>Suppose <span class="math inline">\(X_i\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. Explain how you would use the bootstrap to test the hypothesis that <span class="math inline">\(\mu = \mu_0\)</span>. What statistic would you use, and how would you determine the critical values?</p>
+</section>
+<section class="level3" id="sec-ch14exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise16">Exercise 16</h3>
+<p><a href="#sec-ch14solution16">Solution 16</a></p>
+<p>Describe the concept of <strong>subsampling</strong> and how it can be used as an alternative to the bootstrap. What are the advantages and disadvantages of using overlapping versus non-overlapping blocks in subsampling?</p>
+</section>
+<section class="level3" id="sec-ch14exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise17">Exercise 17</h3>
+<p><a href="#sec-ch14solution17">Solution 17</a></p>
+<p>Explain how to estimate the distribution <span class="math inline">\(G_n(t) = \text{Pr}(\sqrt{n}(\bar{X} - \mu) \le t)\)</span> using subsampling. How does the empirical distribution of <span class="math inline">\(\bar{X}_{i,b}\)</span> across the subsamples relate to <span class="math inline">\(G_n(t)\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch14exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise18">Exercise 18</h3>
+<p><a href="#sec-ch14solution18">Solution 18</a></p>
+<p>Discuss the practical considerations when choosing the number of simulations <span class="math inline">\(S\)</span> in the bootstrap method. How does the choice of <span class="math inline">\(S\)</span> affect the accuracy of the bootstrap distribution?</p>
+</section>
+<section class="level3" id="sec-ch14exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise19">Exercise 19</h3>
+<p><a href="#sec-ch14solution19">Solution 19</a></p>
+<p>Consider a statistic <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n \cos(X_i)\)</span>, where <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(0,1)\)</span>. Explain why simulating the distribution of <span class="math inline">\(T(X^n, \theta)\)</span> directly might be challenging, and how using the sine function instead of cosine can help in the context of bootstrap.</p>
+</section>
+<section class="level3" id="sec-ch14exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch14exercise20">Exercise 20</h3>
+<p><a href="#sec-ch14solution20">Solution 20</a></p>
+<p>Suppose <span class="math inline">\(X_i\)</span> are i.i.d. with an unknown distribution <span class="math inline">\(F\)</span>. You want to estimate the distribution of the sample median <span class="math inline">\(M_n = \text{median}(X_1, \dots, X_n)\)</span> using the bootstrap. Describe the steps you would take to apply the bootstrap method in this case, and discuss any potential issues you might encounter.</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch14solution1">
+<h3 class="anchored" data-anchor-id="sec-ch14solution1">Solution 1</h3>
+<p><a href="#sec-ch14exercise1">Exercise 1</a></p>
+<p>To simulate the distribution <span class="math inline">\(H_n(x; \theta) = \text{Pr}[T(X^n, \theta) \le x]\)</span> where <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n X_i^2\)</span> and <span class="math inline">\(\theta\)</span> is known, we would follow these steps:</p>
+<ol type="1">
+<li><p><strong>Generate a sample:</strong> Draw a sample <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> of size <span class="math inline">\(n\)</span> from the distribution <span class="math inline">\(F(\cdot|\theta)\)</span>. Each <span class="math inline">\(X_i^*\)</span> is drawn independently.</p></li>
+<li><p><strong>Compute the statistic:</strong> Calculate the value of the statistic <span class="math inline">\(T(X^{n*}, \theta) = \dfrac{1}{n} \sum_{i=1}^n (X_i^*)^2\)</span> for this sample.</p></li>
+<li><p><strong>Repeat:</strong> Repeat steps 1 and 2 a large number of times, say <span class="math inline">\(S\)</span> times. This gives us a set of simulated values <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span>, where <span class="math inline">\(T_s^* = T(X_s^{n*}, \theta)\)</span> is the value of the statistic for the <span class="math inline">\(s\)</span>th simulated sample.</p></li>
+<li><p><strong>Empirical distribution:</strong> The empirical distribution <span class="math inline">\(\hat{H}_S(x; \theta)\)</span> is given by the proportion of simulated statistics that are less than or equal to <span class="math inline">\(x\)</span>:</p>
+<p><span class="math display">\[
+\hat{H}_S(x; \theta) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+</ol>
+<p><strong>Intuitive explanation:</strong> We are creating many “pseudo-samples” from the known distribution, computing the statistic for each, and then using the distribution of these computed statistics as an approximation of the true distribution of the statistic. This approach leverages the known parameter <span class="math inline">\(\theta\)</span> to simulate data directly from the underlying distribution.</p>
+</section>
+<section class="level3" id="sec-ch14solution2">
+<h3 class="anchored" data-anchor-id="sec-ch14solution2">Solution 2</h3>
+<p><a href="#sec-ch14exercise2">Exercise 2</a></p>
+<p>If <span class="math inline">\(\theta\)</span> is unknown, we need to modify the simulation procedure as follows:</p>
+<ol type="1">
+<li><p><strong>Estimate <span class="math inline">\(\theta\)</span>:</strong> First, use the original sample data <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span> to obtain an estimate <span class="math inline">\(\hat{\theta}\)</span> of <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p><strong>Generate a sample:</strong> Draw a sample <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> of size <span class="math inline">\(n\)</span> from the distribution <span class="math inline">\(F(\cdot|\hat{\theta})\)</span>, using the estimated parameter <span class="math inline">\(\hat{\theta}\)</span>.</p></li>
+<li><p><strong>Compute the statistic:</strong> Calculate the value of the statistic <span class="math inline">\(T(X^{n*}, \hat{\theta}) = \dfrac{1}{n} \sum_{i=1}^n (X_i^*)^2\)</span> for this sample.</p></li>
+<li><p><strong>Repeat:</strong> Repeat steps 2 and 3 a large number of times, say <span class="math inline">\(S\)</span> times, to get a set of simulated values <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span>.</p></li>
+<li><p><strong>Empirical distribution:</strong> The empirical distribution is again given by</p>
+<p><span class="math display">\[
+\hat{H}_S(x; \hat{\theta}) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+</ol>
+<p><strong>Intuitive explanation:</strong> Since we don’t know the true <span class="math inline">\(\theta\)</span>, we estimate it from the data we have. We then use this estimated value as if it were the true parameter to generate new samples. The accuracy of our simulated distribution now depends on how good our estimate <span class="math inline">\(\hat{\theta}\)</span> is. This is an application of the <strong>plug-in principle</strong>, where we substitute the estimated parameter into the theoretical procedure.</p>
+</section>
+<section class="level3" id="sec-ch14solution3">
+<h3 class="anchored" data-anchor-id="sec-ch14solution3">Solution 3</h3>
+<p><a href="#sec-ch14exercise3">Exercise 3</a></p>
+<p>If <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(\mu, \sigma^2)\)</span> with <span class="math inline">\(\sigma^2\)</span> known and <span class="math inline">\(\mu\)</span> is estimated by <span class="math inline">\(\bar{X}\)</span>, and we want to simulate the distribution of <span class="math inline">\(T(X^n, \hat{\mu}) = \sqrt{n}(\bar{X} - \hat{\mu})\)</span>, we would sample from <span class="math inline">\(N(\bar{X}, \sigma^2)\)</span>.</p>
+<p><strong>Steps:</strong></p>
+<ol type="1">
+<li><strong>Estimate <span class="math inline">\(\mu\)</span>:</strong> Calculate the sample mean <span class="math inline">\(\bar{X} = \dfrac{1}{n} \sum_{i=1}^n X_i\)</span> from the original sample.</li>
+<li><strong>Generate samples:</strong> Draw samples <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> from the <span class="math inline">\(N(\bar{X}, \sigma^2)\)</span> distribution. This means each <span class="math inline">\(X_i^*\)</span> is drawn from a normal distribution with mean <span class="math inline">\(\bar{X}\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li><strong>Compute <span class="math inline">\(\bar{X}^*\)</span>:</strong> For each simulated sample, compute the sample mean <span class="math inline">\(\bar{X}^* = \dfrac{1}{n} \sum_{i=1}^n X_i^*\)</span>.</li>
+<li><strong>Compute <span class="math inline">\(T\)</span>:</strong> Calculate <span class="math inline">\(T^* = \sqrt{n}(\bar{X}^* - \bar{X})\)</span>.</li>
+<li><strong>Repeat:</strong> Repeat steps 2-4 <span class="math inline">\(S\)</span> times to obtain <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span>.</li>
+<li><strong>Empirical distribution:</strong> Approximate the distribution of <span class="math inline">\(T\)</span> using the empirical distribution of <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span>.</li>
+</ol>
+<p><strong>Intuitive explanation:</strong> We are sampling from a normal distribution centered at our estimate of <span class="math inline">\(\mu\)</span> (<span class="math inline">\(\bar{X}\)</span>) with the known variance <span class="math inline">\(\sigma^2\)</span>. This simulates the scenario where <span class="math inline">\(\bar{X}\)</span> is the true mean, allowing us to approximate the distribution of <span class="math inline">\(\sqrt{n}(\bar{X} - \hat{\mu})\)</span> by simulating <span class="math inline">\(\sqrt{n}(\bar{X}^* - \bar{X})\)</span>. This approach aligns with the idea that under the null hypothesis, the sample mean is the best estimate of the population mean.</p>
+</section>
+<section class="level3" id="sec-ch14solution4">
+<h3 class="anchored" data-anchor-id="sec-ch14solution4">Solution 4</h3>
+<p><a href="#sec-ch14exercise4">Exercise 4</a></p>
+<p>The <strong>Bootstrap principle</strong> is a fundamental concept in statistical inference that suggests using the empirical distribution of the observed data as a proxy for the true underlying population distribution. In simpler terms, it means treating your sample data as if it were the entire population from which it was drawn.</p>
+<p><strong>Relation to empirical distribution:</strong></p>
+<p>The empirical distribution <span class="math inline">\(F_n\)</span> is a discrete distribution that assigns a probability of <span class="math inline">\(\dfrac{1}{n}\)</span> to each observed data point <span class="math inline">\(X_i\)</span> in the sample. By treating <span class="math inline">\(F_n\)</span> as the population, we are essentially saying that we believe the characteristics of our sample (as captured by <span class="math inline">\(F_n\)</span>) are representative of the population. When we sample from <span class="math inline">\(F_n\)</span>, we are resampling from our original data with replacement, which mimics the process of drawing a new sample from the true population.</p>
+<p><strong>Intuitive explanation:</strong> Imagine you have a bag of marbles (your sample) and you want to understand the properties of a much larger collection of marbles (the population) that your bag was drawn from. The bootstrap principle says that you can learn about the larger collection by repeatedly drawing marbles from your bag with replacement, assuming the proportions of different types of marbles in your bag are representative of the larger collection.</p>
+</section>
+<section class="level3" id="sec-ch14solution5">
+<h3 class="anchored" data-anchor-id="sec-ch14solution5">Solution 5</h3>
+<p><a href="#sec-ch14exercise5">Exercise 5</a></p>
+<p>The <strong>Russian Doll Principle</strong> in the context of the bootstrap method refers to the idea that the resampling process can be nested or iterated multiple times, just like the famous Russian nesting dolls where each doll contains a smaller version of itself.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Why it’s called that:</strong> The name comes from the visual analogy of Russian nesting dolls. In the bootstrap, we treat the sample as the population (first doll). Then we resample from this sample to get new samples (smaller dolls inside the first one). This process can theoretically be repeated multiple times, creating layers of resampling, similar to how each Russian doll contains a smaller one.</li>
+<li><strong>Iterative nature:</strong> The principle implies that just as we can treat the original sample as a population and resample from it, we could also treat one of the resampled data sets as a new “population” and resample from that, and so on. Each level of resampling can be seen as a new layer of inference, potentially allowing for more refined estimates or a way to assess the stability of the bootstrap results.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong> Imagine you have a set of Russian nesting dolls. You open the largest one and find a smaller one inside. You can then open that smaller one to find an even smaller one, and so on. Similarly, in the bootstrap, you start with your original sample, resample from it to get new samples, and you could theoretically keep resampling from these new samples to create further layers of samples, just like opening nested dolls.</p>
+</section>
+<section class="level3" id="sec-ch14solution6">
+<h3 class="anchored" data-anchor-id="sec-ch14solution6">Solution 6</h3>
+<p><a href="#sec-ch14exercise6">Exercise 6</a></p>
+<p>The <strong>Bootstrap Algorithm</strong> for a general statistic <span class="math inline">\(T(X^n, \theta)\)</span> involves the following steps:</p>
+<ol type="1">
+<li><p><strong>Estimate <span class="math inline">\(\theta\)</span>:</strong> Use the original sample data <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span> to obtain an estimate <span class="math inline">\(\hat{\theta}\)</span> of <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p><strong>Resample:</strong> Generate a bootstrap sample <span class="math inline">\(X^{n*} = \{X_1^*, \dots, X_n^*\}\)</span> by sampling with replacement from the empirical distribution <span class="math inline">\(F_n\)</span>. This means drawing <span class="math inline">\(n\)</span> values from the original sample <span class="math inline">\(\{X_1, \dots, X_n\}\)</span>, where each <span class="math inline">\(X_i\)</span> has an equal probability (<span class="math inline">\(\dfrac{1}{n}\)</span>) of being selected at each draw.</p></li>
+<li><p><strong>Compute the bootstrap statistic:</strong> Calculate the value of the statistic <span class="math inline">\(T(X^{n*}, \hat{\theta})\)</span> using the bootstrap sample and the estimated parameter <span class="math inline">\(\hat{\theta}\)</span>.</p></li>
+<li><p><strong>Repeat:</strong> Repeat steps 2 and 3 a large number of times, say <span class="math inline">\(S\)</span> times. This yields a set of bootstrap statistics <span class="math inline">\(\{T_1^*, \dots, T_S^*\}\)</span>, where <span class="math inline">\(T_s^* = T(X_s^{n*}, \hat{\theta})\)</span> is the value of the statistic for the <span class="math inline">\(s\)</span>th bootstrap sample.</p></li>
+<li><p><strong>Empirical distribution:</strong> Approximate the distribution of <span class="math inline">\(T(X^n, \theta)\)</span> by the empirical distribution of the bootstrap statistics:</p>
+<p><span class="math display">\[
+\hat{H}_B(x; \hat{\theta}) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+</ol>
+<p><strong>Role of <span class="math inline">\(F_n\)</span>:</strong> The empirical distribution <span class="math inline">\(F_n\)</span> plays a crucial role as it serves as the “population” from which we draw the bootstrap samples. By resampling from <span class="math inline">\(F_n\)</span>, we simulate the process of drawing new samples from the true underlying population, but since we don’t know the true population distribution, we use the empirical distribution of our observed data as the best available approximation.</p>
+<p><strong>Intuitive explanation:</strong> The bootstrap algorithm is like creating many “parallel universes” (bootstrap samples) based on our observed data (empirical distribution). We then compute our statistic of interest in each of these universes and use the resulting distribution of the statistic to make inferences about the true population.</p>
+</section>
+<section class="level3" id="sec-ch14solution7">
+<h3 class="anchored" data-anchor-id="sec-ch14solution7">Solution 7</h3>
+<p><a href="#sec-ch14exercise7">Exercise 7</a></p>
+<p>Given a sample of size <span class="math inline">\(n=3\)</span> with values <span class="math inline">\(\{X_1, X_2, X_3\}\)</span>, we can list all possible bootstrap samples of size <span class="math inline">\(n=3\)</span> by considering all possible combinations of drawing with replacement from the set.</p>
+<p><strong>Possible bootstrap samples:</strong></p>
+<p>There are <span class="math inline">\(3^3 = 27\)</span> possible bootstrap samples:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\{X_1, X_1, X_1\}, \{X_1, X_1, X_2\}, \{X_1, X_1, X_3\}, \{X_1, X_2, X_1\}, \{X_1, X_2, X_2\}, \{X_1, X_2, X_3\}, \{X_1, X_3, X_1\}, \{X_1, X_3, X_2\}, \{X_1, X_3, X_3\}, \\
+&amp;\{X_2, X_1, X_1\}, \{X_2, X_1, X_2\}, \{X_2, X_1, X_3\}, \{X_2, X_2, X_1\}, \{X_2, X_2, X_2\}, \{X_2, X_2, X_3\}, \{X_2, X_3, X_1\}, \{X_2, X_3, X_2\}, \{X_2, X_3, X_3\}, \\
+&amp;\{X_3, X_1, X_1\}, \{X_3, X_1, X_2\}, \{X_3, X_1, X_3\}, \{X_3, X_2, X_1\}, \{X_3, X_2, X_2\}, \{X_3, X_2, X_3\}, \{X_3, X_3, X_1\}, \{X_3, X_3, X_2\}, \{X_3, X_3, X_3\}.
+\end{aligned}
+\]</span></p>
+<p><strong>Probabilities:</strong></p>
+<p>Since each element in the original sample has a probability of <span class="math inline">\(\dfrac{1}{3}\)</span> of being selected in each draw, and the draws are independent, each of these 27 bootstrap samples has a probability of <span class="math inline">\(\left(\dfrac{1}{3}\right)^3 = \dfrac{1}{27}\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> We are listing all possible “worlds” we can create by sampling with replacement from our original data. Each of these worlds is equally likely under the bootstrap assumption that our sample accurately represents the population.</p>
+</section>
+<section class="level3" id="sec-ch14solution8">
+<h3 class="anchored" data-anchor-id="sec-ch14solution8">Solution 8</h3>
+<p><a href="#sec-ch14exercise8">Exercise 8</a></p>
+<p>When <span class="math inline">\(X_i\)</span> are i.i.d. from a continuous distribution and <span class="math inline">\(T(X^n, \theta) = \text{median}(X_1, \dots, X_n)\)</span>, the discreteness issue of the bootstrap distribution diminishes as the sample size <span class="math inline">\(n\)</span> increases.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li><strong>Discreteness with small <span class="math inline">\(n\)</span>:</strong> With a small sample size, the number of possible distinct bootstrap samples is limited. Consequently, the bootstrap distribution of the median can only take a limited number of distinct values, leading to a discrete distribution with noticeable “gaps.”</li>
+<li><strong>Increasing <span class="math inline">\(n\)</span>:</strong> As <span class="math inline">\(n\)</span> increases, the number of possible distinct bootstrap samples grows exponentially (<span class="math inline">\(n^n\)</span>). This means there are many more possible values that the bootstrap median can take.</li>
+<li><strong>Continuous distribution:</strong> Since the original <span class="math inline">\(X_i\)</span> come from a continuous distribution, the sample median can theoretically take any value within a certain range. With a large <span class="math inline">\(n\)</span>, the many possible bootstrap medians will “fill in” the gaps, making the bootstrap distribution appear more and more continuous.</li>
+<li><strong>Central Limit Theorem:</strong> The distribution of the sample median for large samples from a continuous distribution is approximately normal, which is a continuous distribution. The bootstrap distribution will also tend towards this normal distribution as <span class="math inline">\(n\)</span> increases, further reducing the discreteness.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong> Imagine you’re trying to approximate a smooth curve (the true distribution of the median) by placing dots (bootstrap medians). With only a few dots (small <span class="math inline">\(n\)</span>), the curve will look jagged and discontinuous. But as you add more and more dots (large <span class="math inline">\(n\)</span>), the dots will start to blend together, and the curve will appear smoother and more continuous.</p>
+</section>
+<section class="level3" id="sec-ch14solution9">
+<h3 class="anchored" data-anchor-id="sec-ch14solution9">Solution 9</h3>
+<p><a href="#sec-ch14exercise9">Exercise 9</a></p>
+<p>Given <span class="math inline">\(X_i\)</span> i.i.d. with distribution <span class="math inline">\(F\)</span>, and <span class="math inline">\(T = \bar{X}\)</span>, we want to calculate the conditional mean and variance of the bootstrap sample mean <span class="math inline">\(\bar{X}^*\)</span> given the original sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span>.</p>
+<p><strong>Conditional mean:</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+E(\bar{X}^*|X^n) &amp;= E\left(\dfrac{1}{n} \sum_{i=1}^n X_i^* \Big| X^n\right) \\
+&amp;= \dfrac{1}{n} \sum_{i=1}^n E(X_i^*|X^n) \\
+&amp;= \dfrac{1}{n} \sum_{i=1}^n \bar{X} \\
+&amp;= \bar{X}.
+\end{aligned}
+\]</span></p>
+<p><strong>Conditional variance:</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Var}(\bar{X}^*|X^n) &amp;= \text{Var}\left(\dfrac{1}{n} \sum_{i=1}^n X_i^* \Big| X^n\right) \\
+&amp;= \dfrac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i^*|X^n) \\
+&amp;= \dfrac{1}{n^2} \sum_{i=1}^n \left( \dfrac{1}{n} \sum_{j=1}^n (X_j - \bar{X})^2 \right) \\
+&amp;= \dfrac{1}{n} \left( \dfrac{1}{n} \sum_{j=1}^n (X_j - \bar{X})^2 \right) \\
+&amp;= \dfrac{1}{n} s^2,
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(s^2\)</span> is the sample variance of the original data.</p>
+<p><strong>Intuitive explanation:</strong></p>
+<ul>
+<li><strong>Conditional mean:</strong> The expected value of the bootstrap sample mean, given the original sample, is simply the mean of the original sample. This makes sense because we are resampling from the original sample, so on average, the resampled values should center around the original sample mean.</li>
+<li><strong>Conditional variance:</strong> The variance of the bootstrap sample mean is the variance of the original sample divided by <span class="math inline">\(n\)</span>. This reflects the fact that the bootstrap sample mean is an average of <span class="math inline">\(n\)</span> values drawn from the original sample, and the variance of an average is typically smaller than the variance of individual observations.</li>
+</ul>
+</section>
+<section class="level3" id="sec-ch14solution10">
+<h3 class="anchored" data-anchor-id="sec-ch14solution10">Solution 10</h3>
+<p><a href="#sec-ch14exercise10">Exercise 10</a></p>
+<p>The random variable <span class="math inline">\(T^* = \sqrt{n}(\bar{X}^* - \bar{X})\)</span> has a conditional mean of zero and a conditional variance equal to the sample variance of the original data.</p>
+<p><strong>Conditional mean:</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+E(T^*|X^n) &amp;= E(\sqrt{n}(\bar{X}^* - \bar{X})|X^n) \\
+&amp;= \sqrt{n} (E(\bar{X}^*|X^n) - E(\bar{X}|X^n)) \\
+&amp;= \sqrt{n} (\bar{X} - \bar{X}) \\
+&amp;= 0.
+\end{aligned}
+\]</span></p>
+<p><strong>Conditional variance:</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{Var}(T^*|X^n) &amp;= \text{Var}(\sqrt{n}(\bar{X}^* - \bar{X})|X^n) \\
+&amp;= n \text{Var}(\bar{X}^* - \bar{X}|X^n) \\
+&amp;= n \text{Var}(\bar{X}^*|X^n) \\
+&amp;= n \left( \dfrac{1}{n} s^2 \right) \\
+&amp;= s^2.
+\end{aligned}
+\]</span></p>
+<p><strong>Intuitive explanation:</strong></p>
+<ul>
+<li><strong>Conditional mean:</strong> <span class="math inline">\(T^*\)</span> measures the difference between the bootstrap sample mean and the original sample mean, scaled by <span class="math inline">\(\sqrt{n}\)</span>. Since the bootstrap samples are centered around the original sample mean (as we saw in Solution 9), the expected difference is zero.</li>
+<li><strong>Conditional variance:</strong> The variance of <span class="math inline">\(T^*\)</span> is equal to the sample variance <span class="math inline">\(s^2\)</span>. This is because <span class="math inline">\(T^*\)</span> is essentially a standardized version of the bootstrap sample mean, and the scaling by <span class="math inline">\(\sqrt{n}\)</span> accounts for the fact that we are dealing with a sample mean rather than individual observations. The variance of the bootstrap sample mean (given the original sample) is <span class="math inline">\(s^2/n\)</span>, so multiplying by <span class="math inline">\(n\)</span> gives us the sample variance <span class="math inline">\(s^2\)</span>.</li>
+</ul>
+</section>
+<section class="level3" id="sec-ch14solution11">
+<h3 class="anchored" data-anchor-id="sec-ch14solution11">Solution 11</h3>
+<p><a href="#sec-ch14exercise11">Exercise 11</a></p>
+<p><strong>Theorem 14.1 (Bickel and Freedman, 1981):</strong> Suppose that <span class="math inline">\(X_1, \dots, X_n\)</span> are i.i.d. with finite mean <span class="math inline">\(\mu\)</span> and positive variance <span class="math inline">\(\sigma^2\)</span>. Then, along almost all sample sequences <span class="math inline">\(\{X_1, \dots, X_n\}\)</span>, as <span class="math inline">\(n, m \to \infty\)</span></p>
+<p><span class="math display">\[
+\text{Pr}(T^* \le x|X_1, \dots, X_n) \to \text{Pr}(U \le x),
+\]</span></p>
+<p>where <span class="math inline">\(U \sim N(0, \sigma^2)\)</span> and <span class="math inline">\(T^* = \sqrt{n}(\bar{X}^* - \bar{X})\)</span>.</p>
+<p><strong>Significance in the context of the bootstrap method:</strong></p>
+<ul>
+<li><strong>Asymptotic normality:</strong> The theorem establishes that the conditional distribution of the standardized bootstrap sample mean (<span class="math inline">\(T^*\)</span>) converges to a standard normal distribution as the sample size <span class="math inline">\(n\)</span> goes to infinity. This is a crucial result because it provides a theoretical justification for using the bootstrap to approximate the distribution of the sample mean.</li>
+<li><strong>Consistency:</strong> It implies that the bootstrap distribution is a consistent estimator of the true sampling distribution of the sample mean, at least for large samples. This means that as the sample size increases, the bootstrap distribution will more and more closely resemble the true distribution.</li>
+<li><strong>Foundation for inference:</strong> This theorem forms the basis for many bootstrap-based inference procedures, such as constructing confidence intervals and performing hypothesis tests. It provides the theoretical underpinning for the idea that we can use the bootstrap distribution to make inferences about the population parameters.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong> The theorem essentially says that if you have a large enough sample, the distribution of the bootstrap sample mean (after proper standardization) will look very similar to a normal distribution, regardless of the original distribution of the data. This allows us to use the well-understood properties of the normal distribution to make inferences about the population mean, even when we don’t know the true distribution of the data.</p>
+</section>
+<section class="level3" id="sec-ch14solution12">
+<h3 class="anchored" data-anchor-id="sec-ch14solution12">Solution 12</h3>
+<p><a href="#sec-ch14exercise12">Exercise 12</a></p>
+<p>The bootstrap method can be used to construct a one-sided confidence interval for a parameter <span class="math inline">\(\theta\)</span> as follows:</p>
+<ol type="1">
+<li><p><strong>Estimate <span class="math inline">\(\theta\)</span>:</strong> Obtain an estimate <span class="math inline">\(\hat{\theta}\)</span> of <span class="math inline">\(\theta\)</span> from the original sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span>.</p></li>
+<li><p><strong>Bootstrap samples:</strong> Generate <span class="math inline">\(S\)</span> bootstrap samples <span class="math inline">\(X^{n*}_s = \{X_{s1}^*, \dots, X_{sn}^*\}\)</span> for <span class="math inline">\(s = 1, \dots, S\)</span> by resampling with replacement from the original sample.</p></li>
+<li><p><strong>Bootstrap statistics:</strong> Compute the statistic of interest <span class="math inline">\(T_s^* = T(X^{n*}_s, \hat{\theta})\)</span> for each bootstrap sample.</p></li>
+<li><p><strong>Bootstrap distribution:</strong> Form the empirical distribution of the bootstrap statistics:</p>
+<p><span class="math display">\[
+\hat{H}_B(x; \hat{\theta}) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+<li><p><strong>Critical value:</strong> Find the <span class="math inline">\((1-\alpha)\)</span> quantile of the bootstrap distribution, denoted by <span class="math inline">\(\hat{H}_B^{-1}(1-\alpha; \hat{\theta})\)</span>. This is the value such that <span class="math inline">\(1-\alpha\)</span> of the bootstrap statistics are less than or equal to it.</p></li>
+<li><p><strong>Confidence interval:</strong> The one-sided bootstrap confidence interval for <span class="math inline">\(\theta\)</span> with coverage <span class="math inline">\(1-\alpha\)</span> is given by</p>
+<p><span class="math display">\[
+C_\alpha^*(X^n) = \{t : T(X^n; t) \le \hat{H}_B^{-1}(1-\alpha; \hat{\theta})\}.
+\]</span></p></li>
+</ol>
+<p><strong>Comparison with the asymptotic approach:</strong></p>
+<ul>
+<li><strong>Asymptotic approach:</strong> The asymptotic approach typically relies on finding an asymptotic distribution for <span class="math inline">\(T(X^n; \theta)\)</span> and using its quantiles to construct the confidence interval. This often involves assuming normality or using other large-sample approximations.</li>
+<li><strong>Bootstrap approach:</strong> The bootstrap approach avoids making explicit distributional assumptions about <span class="math inline">\(T(X^n; \theta)\)</span>. Instead, it directly approximates the distribution of <span class="math inline">\(T(X^n; \theta)\)</span> using the bootstrap samples. This can be advantageous when the asymptotic distribution is difficult to derive or when the sample size is not large enough for the asymptotic approximations to be reliable.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong> The bootstrap confidence interval is constructed by finding the range of parameter values that are consistent with the observed data, as reflected by the bootstrap distribution. We are essentially asking: “For which values of <span class="math inline">\(t\)</span> would our observed statistic <span class="math inline">\(T(X^n; t)\)</span> be considered ‘typical’ under the bootstrap distribution?” The critical value from the bootstrap distribution helps us define what we mean by “typical” in this context.</p>
+</section>
+<section class="level3" id="sec-ch14solution13">
+<h3 class="anchored" data-anchor-id="sec-ch14solution13">Solution 13</h3>
+<p><a href="#sec-ch14exercise13">Exercise 13</a></p>
+<p>To construct a two-sided confidence interval for a parameter <span class="math inline">\(\theta\)</span> using the bootstrap method, we follow these steps:</p>
+<ol type="1">
+<li><p><strong>Estimate <span class="math inline">\(\theta\)</span>:</strong> Obtain an estimate <span class="math inline">\(\hat{\theta}\)</span> of <span class="math inline">\(\theta\)</span> from the original sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span>.</p></li>
+<li><p><strong>Bootstrap samples:</strong> Generate <span class="math inline">\(S\)</span> bootstrap samples <span class="math inline">\(X^{n*}_s = \{X_{s1}^*, \dots, X_{sn}^*\}\)</span> for <span class="math inline">\(s = 1, \dots, S\)</span> by resampling with replacement from the original sample.</p></li>
+<li><p><strong>Bootstrap statistics:</strong> Compute the statistic of interest <span class="math inline">\(T_s^* = T(X^{n*}_s, \hat{\theta})\)</span> for each bootstrap sample.</p></li>
+<li><p><strong>Bootstrap distribution:</strong> Form the empirical distribution of the bootstrap statistics:</p>
+<p><span class="math display">\[
+\hat{H}_B(x; \hat{\theta}) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+<li><p><strong>Critical values:</strong> Find the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution, denoted by <span class="math inline">\(\hat{H}_B^{-1}(\alpha/2; \hat{\theta})\)</span> and <span class="math inline">\(\hat{H}_B^{-1}(1-\alpha/2; \hat{\theta})\)</span>, respectively.</p></li>
+<li><p><strong>Confidence interval:</strong> The two-sided bootstrap confidence interval for <span class="math inline">\(\theta\)</span> with coverage <span class="math inline">\(1-\alpha\)</span> is given by</p>
+<p><span class="math display">\[
+C_\alpha^*(X^n) = \{t : \hat{H}_B^{-1}(\alpha/2; \hat{\theta}) \le T(X^n; t) \le \hat{H}_B^{-1}(1-\alpha/2; \hat{\theta})\}.
+\]</span></p></li>
+</ol>
+<p><strong>Role of the quantiles:</strong></p>
+<p>The quantiles <span class="math inline">\(\hat{H}_B^{-1}(\alpha/2; \hat{\theta})\)</span> and <span class="math inline">\(\hat{H}_B^{-1}(1-\alpha/2; \hat{\theta})\)</span> define the lower and upper bounds of the confidence interval, respectively. They are chosen such that a proportion <span class="math inline">\(\alpha/2\)</span> of the bootstrap statistics lie below the lower bound, and a proportion <span class="math inline">\(\alpha/2\)</span> lie above the upper bound. This leaves a proportion <span class="math inline">\(1-\alpha\)</span> of the bootstrap statistics within the interval, which corresponds to the desired confidence level.</p>
+<p><strong>Intuitive explanation:</strong> The two-sided bootstrap confidence interval captures the range of parameter values that are most consistent with the observed data, based on the bootstrap distribution. We are essentially identifying the middle <span class="math inline">\(1-\alpha\)</span> portion of the bootstrap distribution, which represents the range of values for <span class="math inline">\(T(X^n; t)\)</span> that are considered “plausible” under the bootstrap assumption. The quantiles serve as cut-off points that define this plausible range.</p>
+</section>
+<section class="level3" id="sec-ch14solution14">
+<h3 class="anchored" data-anchor-id="sec-ch14solution14">Solution 14</h3>
+<p><a href="#sec-ch14exercise14">Exercise 14</a></p>
+<p>In the context of hypothesis testing, a <strong>pivot</strong> or <strong>asymptotic pivot</strong> is a function of the data and the parameter of interest whose distribution does not depend on any unknown parameters, at least asymptotically.</p>
+<p><strong>Definition:</strong></p>
+<ul>
+<li><strong>Pivot:</strong> A statistic <span class="math inline">\(T(X^n, \theta)\)</span> is a pivot if its distribution is the same for all values of <span class="math inline">\(\theta\)</span>.</li>
+<li><strong>Asymptotic pivot:</strong> A statistic <span class="math inline">\(T(X^n, \theta)\)</span> is an asymptotic pivot if its distribution converges to a fixed distribution that does not depend on <span class="math inline">\(\theta\)</span> as the sample size <span class="math inline">\(n\)</span> goes to infinity.</li>
+</ul>
+<p><strong>Example:</strong></p>
+<p>The t-statistic is an example of an asymptotic pivot. Suppose <span class="math inline">\(X_i\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. The t-statistic for testing the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> is given by</p>
+<p><span class="math display">\[
+T(X^n, \mu_0) = \dfrac{\sqrt{n}(\bar{X} - \mu_0)}{s},
+\]</span></p>
+<p>where <span class="math inline">\(\bar{X}\)</span> is the sample mean and <span class="math inline">\(s\)</span> is the sample standard deviation. Under the null hypothesis, as <span class="math inline">\(n \to \infty\)</span>, the distribution of <span class="math inline">\(T(X^n, \mu_0)\)</span> converges to a standard normal distribution <span class="math inline">\(N(0,1)\)</span>, which does not depend on the true values of <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma^2\)</span>. Therefore, the t-statistic is an asymptotic pivot.</p>
+<p><strong>Intuitive explanation:</strong></p>
+<p>A pivot or asymptotic pivot is a useful quantity because its known distribution (at least asymptotically) allows us to construct hypothesis tests and confidence intervals without needing to know the values of any unknown parameters. It’s like having a measuring tool whose calibration is known and doesn’t change depending on the specific object being measured.</p>
+</section>
+<section class="level3" id="sec-ch14solution15">
+<h3 class="anchored" data-anchor-id="sec-ch14solution15">Solution 15</h3>
+<p><a href="#sec-ch14exercise15">Exercise 15</a></p>
+<p>Suppose <span class="math inline">\(X_i\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. To use the bootstrap to test the hypothesis that <span class="math inline">\(\mu = \mu_0\)</span>, you would follow these steps:</p>
+<ol type="1">
+<li><p><strong>Test statistic:</strong> A suitable test statistic is the t-statistic:</p>
+<p><span class="math display">\[
+T(X^n, \mu_0) = \dfrac{\sqrt{n}(\bar{X} - \mu_0)}{s},
+\]</span></p>
+<p>where <span class="math inline">\(\bar{X}\)</span> is the sample mean and <span class="math inline">\(s\)</span> is the sample standard deviation.</p></li>
+<li><p><strong>Bootstrap samples:</strong> Generate <span class="math inline">\(S\)</span> bootstrap samples <span class="math inline">\(X^{n*}_s = \{X_{s1}^*, \dots, X_{sn}^*\}\)</span> for <span class="math inline">\(s = 1, \dots, S\)</span> by resampling with replacement from the original sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span>.</p></li>
+<li><p><strong>Bootstrap test statistics:</strong> Compute the bootstrap version of the t-statistic for each bootstrap sample. However, since we are testing the hypothesis that <span class="math inline">\(\mu = \mu_0\)</span>, we center the bootstrap sample means around <span class="math inline">\(\mu_0\)</span> instead of the overall sample mean <span class="math inline">\(\bar{X}\)</span>:</p>
+<p><span class="math display">\[
+T_s^* = \dfrac{\sqrt{n}(\bar{X}_s^* - \bar{X} + \mu_0 - \mu_0)}{s^*} = \dfrac{\sqrt{n}(\bar{X}_s^* - \bar{X})}{s^*},
+\]</span></p>
+<p>where <span class="math inline">\(\bar{X}_s^*\)</span> is the mean of the <span class="math inline">\(s\)</span>th bootstrap sample and <span class="math inline">\(s^*\)</span> is the standard deviation of the <span class="math inline">\(s\)</span>th bootstrap sample. Note that we subtract <span class="math inline">\(\mu_0\)</span> and add it back to ensure the bootstrap distribution is centered around the null hypothesis. Here, we made an assumption that the bootstrap samples are drawn from a population with mean <span class="math inline">\(\bar{X}\)</span> rather than <span class="math inline">\(\mu_0\)</span>. This is for convenience and it has no impact on the final result under the null hypothesis.</p></li>
+<li><p><strong>Bootstrap distribution:</strong> Form the empirical distribution of the bootstrap t-statistics:</p>
+<p><span class="math display">\[
+\hat{H}_B(x) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x).
+\]</span></p></li>
+<li><p><strong>Critical values:</strong> Find the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution, denoted by <span class="math inline">\(\hat{H}_B^{-1}(\alpha/2)\)</span> and <span class="math inline">\(\hat{H}_B^{-1}(1-\alpha/2)\)</span>, respectively. These will serve as the critical values for the test.</p></li>
+<li><p><strong>Decision rule:</strong> Reject the null hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> if <span class="math inline">\(T(X^n, \mu_0) &lt; \hat{H}_B^{-1}(\alpha/2)\)</span> or <span class="math inline">\(T(X^n, \mu_0) &gt; \hat{H}_B^{-1}(1-\alpha/2)\)</span>.</p></li>
+</ol>
+<p><strong>Intuitive explanation:</strong></p>
+<p>We are using the bootstrap to approximate the distribution of the t-statistic under the null hypothesis. By comparing the observed t-statistic to the critical values from the bootstrap distribution, we can determine whether the observed value is extreme enough to reject the null hypothesis. The bootstrap distribution provides a way to assess the “unusualness” of the observed t-statistic under the assumption that the null hypothesis is true.</p>
+</section>
+<section class="level3" id="sec-ch14solution16">
+<h3 class="anchored" data-anchor-id="sec-ch14solution16">Solution 16</h3>
+<p><a href="#sec-ch14exercise16">Exercise 16</a></p>
+<p><strong>Subsampling</strong> is a resampling technique similar to the bootstrap, but instead of resampling with replacement from the original sample, it involves taking subsamples (smaller samples) without replacement from the original data.</p>
+<p><strong>Procedure:</strong></p>
+<ol type="1">
+<li><p><strong>Choose subsample size:</strong> Decide on a subsample size <span class="math inline">\(b\)</span>, where <span class="math inline">\(1 &lt; b &lt; n\)</span> (and <span class="math inline">\(n\)</span> is the original sample size).</p></li>
+<li><p><strong>Form subsamples:</strong> Create multiple subsamples of size <span class="math inline">\(b\)</span> by sampling without replacement from the original data. Let <span class="math inline">\(X_i^b = \{X_{i+1}, \dots, X_{i+b}\}\)</span> denote a subsample starting at index <span class="math inline">\(i\)</span>. There are <span class="math inline">\(n-b+1\)</span> such subsamples.</p></li>
+<li><p><strong>Compute statistic:</strong> For each subsample, compute the statistic of interest. For example, if we are interested in the sample mean, we would compute the mean of each subsample:</p>
+<p><span class="math display">\[
+\bar{X}_{i,b} = \dfrac{1}{b} \sum_{j=1}^b X_{i+j}.
+\]</span></p></li>
+<li><p><strong>Empirical distribution:</strong> Use the empirical distribution of the statistic across the subsamples to approximate its true distribution.</p></li>
+</ol>
+<p><strong>Overlapping vs. non-overlapping blocks:</strong></p>
+<ul>
+<li><strong>Overlapping blocks:</strong> Subsamples can be overlapping, meaning that the same data point can appear in multiple subsamples. For example, if <span class="math inline">\(b=3\)</span> and <span class="math inline">\(n=5\)</span>, the subsamples would be <span class="math inline">\(\{X_1, X_2, X_3\}\)</span>, <span class="math inline">\(\{X_2, X_3, X_4\}\)</span>, and <span class="math inline">\(\{X_3, X_4, X_5\}\)</span>. Overlapping blocks are generally more efficient because they use more of the available data.</li>
+<li><strong>Non-overlapping blocks:</strong> Subsamples can be non-overlapping, meaning that each data point appears in only one subsample. For example, if <span class="math inline">\(b=2\)</span> and <span class="math inline">\(n=5\)</span>, the subsamples could be <span class="math inline">\(\{X_1, X_2\}\)</span> and <span class="math inline">\(\{X_3, X_4\}\)</span> (with <span class="math inline">\(X_5\)</span> left out). Non-overlapping blocks are simpler to implement but may be less efficient.</li>
+</ul>
+<p><strong>Advantages of subsampling:</strong></p>
+<ul>
+<li>Can be used in situations where the bootstrap is not consistent.</li>
+<li>Can be applied to a wider range of problems, including time series data.</li>
+</ul>
+<p><strong>Disadvantages of subsampling:</strong></p>
+<ul>
+<li>Can be less efficient than the bootstrap when the bootstrap is consistent.</li>
+<li>The choice of subsample size <span class="math inline">\(b\)</span> can be critical and may require careful consideration.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong></p>
+<p>Subsampling is like taking smaller snapshots of the original data to get an idea of the variability of the statistic of interest. By looking at how the statistic changes across different subsamples, we can infer its overall distribution. It’s similar to the bootstrap in that it uses resampling to approximate the sampling distribution, but it does so by taking smaller samples without replacement instead of resampling with replacement.</p>
+</section>
+<section class="level3" id="sec-ch14solution17">
+<h3 class="anchored" data-anchor-id="sec-ch14solution17">Solution 17</h3>
+<p><a href="#sec-ch14exercise17">Exercise 17</a></p>
+<p>To estimate the distribution <span class="math inline">\(G_n(t) = \text{Pr}(\sqrt{n}(\bar{X} - \mu) \le t)\)</span> using subsampling, we follow these steps:</p>
+<ol type="1">
+<li><p><strong>Choose subsample size:</strong> Select an integer <span class="math inline">\(b\)</span> such that <span class="math inline">\(1 &lt; b &lt; n\)</span>.</p></li>
+<li><p><strong>Form subsamples:</strong> Create <span class="math inline">\(n-b+1\)</span> overlapping subsamples of size <span class="math inline">\(b\)</span> from the original data: <span class="math inline">\(X_i^b = \{X_{i+1}, \dots, X_{i+b}\}\)</span> for <span class="math inline">\(i = 1, \dots, n-b+1\)</span>.</p></li>
+<li><p><strong>Compute subsample means:</strong> Calculate the mean of each subsample:</p>
+<p><span class="math display">\[
+\bar{X}_{i,b} = \dfrac{1}{b} \sum_{j=1}^b X_{i+j}.
+\]</span></p></li>
+<li><p><strong>Standardize:</strong> Standardize the subsample means using the true population mean <span class="math inline">\(\mu\)</span> (or an estimate of <span class="math inline">\(\mu\)</span> if it is unknown):</p>
+<p><span class="math display">\[
+Z_{i,b} = \sqrt{b}(\bar{X}_{i,b} - \mu).
+\]</span></p></li>
+<li><p><strong>Empirical distribution:</strong> Form the empirical distribution of the standardized subsample means:</p>
+<p><span class="math display">\[
+\hat{G}_{n,b}(t) = \dfrac{1}{n-b+1} \sum_{i=1}^{n-b+1} \mathbb{1}(Z_{i,b} \le t).
+\]</span></p></li>
+</ol>
+<p><strong>Relation to <span class="math inline">\(G_n(t)\)</span>:</strong></p>
+<p>The empirical distribution <span class="math inline">\(\hat{G}_{n,b}(t)\)</span> is an estimator of <span class="math inline">\(G_n(t)\)</span>. Under certain regularity conditions, and if <span class="math inline">\(b\)</span> grows with <span class="math inline">\(n\)</span> at an appropriate rate (<span class="math inline">\(b \to \infty\)</span> and <span class="math inline">\(b/n \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span>), then <span class="math inline">\(\hat{G}_{n,b}(t)\)</span> converges to <span class="math inline">\(G_n(t)\)</span> as <span class="math inline">\(n\)</span> goes to infinity. This means that the empirical distribution of the standardized subsample means provides a good approximation to the true distribution of the standardized sample mean when the sample size is large.</p>
+<p><strong>Intuitive explanation:</strong></p>
+<p>We are using the subsamples to create many “mini experiments” where we compute the sample mean. By standardizing these subsample means and looking at their distribution, we are essentially trying to mimic the behavior of the standardized sample mean from the full sample. The empirical distribution <span class="math inline">\(\hat{G}_{n,b}(t)\)</span> captures the variability of the subsample means, which, under appropriate conditions, reflects the variability of the full sample mean.</p>
+</section>
+<section class="level3" id="sec-ch14solution18">
+<h3 class="anchored" data-anchor-id="sec-ch14solution18">Solution 18</h3>
+<p><a href="#sec-ch14exercise18">Exercise 18</a></p>
+<p><strong>Practical considerations when choosing the number of simulations <span class="math inline">\(S\)</span> in the bootstrap method:</strong></p>
+<ul>
+<li><strong>Accuracy:</strong> Larger values of <span class="math inline">\(S\)</span> generally lead to more accurate approximations of the bootstrap distribution. As <span class="math inline">\(S\)</span> increases, the empirical distribution of the bootstrap statistics converges to the true bootstrap distribution.</li>
+<li><strong>Computational cost:</strong> Increasing <span class="math inline">\(S\)</span> also increases the computational burden, as each additional simulation requires computing the statistic of interest for a new bootstrap sample.</li>
+<li><strong>Quantile estimation:</strong> The choice of <span class="math inline">\(S\)</span> can affect the accuracy of quantile estimates, which are often used for constructing confidence intervals. To ensure that quantiles are well-defined, it is recommended to choose <span class="math inline">\(S\)</span> such that <span class="math inline">\(\alpha(S+1)\)</span> is an integer, where <span class="math inline">\(\alpha\)</span> is the significance level. For example, if <span class="math inline">\(\alpha = 0.05\)</span>, choosing <span class="math inline">\(S = 199, 399, 599, \dots\)</span> would ensure that the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles correspond to specific order statistics of the bootstrap distribution.</li>
+<li><strong>Rule of thumb:</strong> A common rule of thumb is to use <span class="math inline">\(S \ge 1000\)</span> for general purposes and <span class="math inline">\(S \ge 10000\)</span> when high accuracy is needed, such as for constructing confidence intervals.</li>
+<li><strong>Diminishing returns:</strong> The improvement in accuracy diminishes as <span class="math inline">\(S\)</span> gets very large. Going from <span class="math inline">\(S=100\)</span> to <span class="math inline">\(S=1000\)</span> will typically yield a much larger improvement than going from <span class="math inline">\(S=10000\)</span> to <span class="math inline">\(S=20000\)</span>.</li>
+</ul>
+<p><strong>How the choice of <span class="math inline">\(S\)</span> affects the accuracy of the bootstrap distribution:</strong></p>
+<ul>
+<li><strong>Small <span class="math inline">\(S\)</span>:</strong> If <span class="math inline">\(S\)</span> is too small, the empirical distribution of the bootstrap statistics may be a poor approximation of the true bootstrap distribution. The estimated distribution may be “bumpy” or have gaps, especially in the tails.</li>
+<li><strong>Large <span class="math inline">\(S\)</span>:</strong> As <span class="math inline">\(S\)</span> increases, the empirical distribution becomes smoother and more closely resembles the true bootstrap distribution. The tails are better represented, and the overall shape of the distribution is more accurately captured.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong></p>
+<p>Imagine you’re trying to estimate the shape of a curve by plotting points. If you only plot a few points (small <span class="math inline">\(S\)</span>), your estimate of the curve will be rough and may not capture all the details. As you plot more points (large <span class="math inline">\(S\)</span>), your estimate will become smoother and more accurate. However, there’s a trade-off: plotting more points takes more time and effort. In the bootstrap, we want to choose <span class="math inline">\(S\)</span> large enough to get a good estimate of the distribution but not so large that the computational cost becomes prohibitive.</p>
+</section>
+<section class="level3" id="sec-ch14solution19">
+<h3 class="anchored" data-anchor-id="sec-ch14solution19">Solution 19</h3>
+<p><a href="#sec-ch14exercise19">Exercise 19</a></p>
+<p>Consider the statistic <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n \cos(X_i)\)</span>, where <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(0,1)\)</span>.</p>
+<p><strong>Challenges in simulating the distribution of <span class="math inline">\(T(X^n, \theta)\)</span> directly:</strong></p>
+<ul>
+<li>The distribution of <span class="math inline">\(\cos(X_i)\)</span> when <span class="math inline">\(X_i \sim N(0,1)\)</span> is not a standard, well-known distribution. It is a nonlinear transformation of a normal random variable, making it difficult to derive its exact distribution analytically.</li>
+<li>Even though we know the distribution of <span class="math inline">\(X_i\)</span>, simulating the distribution of <span class="math inline">\(T(X^n, \theta)\)</span> directly would require generating many samples from <span class="math inline">\(N(0,1)\)</span>, applying the cosine transformation, and then averaging. This can be computationally intensive, especially if we need a large number of simulations to obtain an accurate estimate of the distribution.</li>
+</ul>
+<p><strong>How using the sine function instead of cosine can help in the context of bootstrap:</strong></p>
+<ul>
+<li><strong>Zero mean:</strong> The sine function has a special property when applied to a symmetrically distributed random variable like <span class="math inline">\(X_i \sim N(0,1)\)</span>. Since <span class="math inline">\(\sin(-x) = -\sin(x)\)</span> (odd function) and <span class="math inline">\(N(0,1)\)</span> is symmetric around zero, we have <span class="math inline">\(E[\sin(X_i)] = 0\)</span>. This is not necessarily true for the cosine function.</li>
+<li><strong>Simplification for bootstrap:</strong> When using the bootstrap, we often work with statistics that have been centered by subtracting their mean. If we use <span class="math inline">\(\sin(X_i)\)</span> instead of <span class="math inline">\(\cos(X_i)\)</span>, we know that the mean is zero, which simplifies the calculations. We can work with the statistic <span class="math inline">\(T'(X^n) = \dfrac{1}{n} \sum_{i=1}^n \sin(X_i)\)</span> directly without needing to estimate and subtract the mean.</li>
+<li><strong>Theorem 14.1:</strong> This relates to <strong>Theorem 14.1</strong> (Bickel and Freedman, 1981), which states that the standardized bootstrap sample mean converges to a standard normal distribution. When we use <span class="math inline">\(\sin(X_i)\)</span>, we can apply a similar result to the statistic <span class="math inline">\(T'(X^n)\)</span>, knowing that its mean is zero.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong></p>
+<p>Using the sine function instead of cosine is like choosing a more convenient coordinate system for our problem. Since <span class="math inline">\(\sin(X_i)\)</span> has a mean of zero when <span class="math inline">\(X_i\)</span> is standard normal, it simplifies the calculations and makes it easier to apply theoretical results like <strong>Theorem 14.1</strong>. It’s like aligning our measurement tool in a way that makes the readings easier to interpret.</p>
+</section>
+<section class="level3" id="sec-ch14solution20">
+<h3 class="anchored" data-anchor-id="sec-ch14solution20">Solution 20</h3>
+<p><a href="#sec-ch14exercise20">Exercise 20</a></p>
+<p>Suppose <span class="math inline">\(X_i\)</span> are i.i.d. with an unknown distribution <span class="math inline">\(F\)</span>. To estimate the distribution of the sample median <span class="math inline">\(M_n = \text{median}(X_1, \dots, X_n)\)</span> using the bootstrap, we would take the following steps:</p>
+<ol type="1">
+<li><p><strong>Original sample:</strong> We have a sample <span class="math inline">\(X^n = (X_1, \dots, X_n)\)</span> of size <span class="math inline">\(n\)</span> from the unknown distribution <span class="math inline">\(F\)</span>.</p></li>
+<li><p><strong>Bootstrap samples:</strong> Generate <span class="math inline">\(S\)</span> bootstrap samples <span class="math inline">\(X^{n*}_s = \{X_{s1}^*, \dots, X_{sn}^*\}\)</span> for <span class="math inline">\(s = 1, \dots, S\)</span> by resampling with replacement from the original sample <span class="math inline">\(X^n\)</span>.</p></li>
+<li><p><strong>Bootstrap medians:</strong> Compute the median of each bootstrap sample:</p>
+<p><span class="math display">\[
+M_{n,s}^* = \text{median}(X_{s1}^*, \dots, X_{sn}^*).
+\]</span></p></li>
+<li><p><strong>Bootstrap distribution:</strong> Form the empirical distribution of the bootstrap medians:</p>
+<p><span class="math display">\[
+\hat{H}_B(x) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(M_{n,s}^* \le x).
+\]</span></p>
+<p>This distribution serves as an estimate of the sampling distribution of the sample median <span class="math inline">\(M_n\)</span>.</p></li>
+</ol>
+<p><strong>Potential issues:</strong></p>
+<ul>
+<li><strong>Discreteness:</strong> The bootstrap distribution of the median can be quite discrete, especially for small samples. This is because the median of a small sample can only take a limited number of values. As the sample size <span class="math inline">\(n\)</span> increases, this issue becomes less pronounced.</li>
+<li><strong>Non-normality:</strong> The sampling distribution of the median is not always approximately normal, even for large samples. This depends on the shape of the underlying distribution <span class="math inline">\(F\)</span>. If <span class="math inline">\(F\)</span> is heavily skewed or has thick tails, the distribution of the median may also be non-normal.</li>
+<li><strong>Bias:</strong> The bootstrap estimate of the median’s bias can be biased itself. This means that the average difference between the bootstrap medians and the original sample median may not accurately reflect the true bias of the sample median as an estimator of the population median.</li>
+<li><strong>Computational cost:</strong> Computing the median for each bootstrap sample can be computationally more expensive than computing the mean, especially for large samples.</li>
+</ul>
+<p><strong>Intuitive explanation:</strong></p>
+<p>We are using the bootstrap to create many “pseudo-samples” from our original data and computing the median of each pseudo-sample. The distribution of these bootstrap medians gives us an idea of how much the sample median might vary if we were to draw different samples from the true population. However, we need to be aware of the potential issues, such as the discreteness and possible non-normality of the bootstrap distribution, and interpret the results with caution.</p>
+</section>
+</section>
+<section class="level2" id="r-scripts">
+<h2 class="anchored" data-anchor-id="r-scripts">R Scripts</h2>
+<section class="level3" id="r-script-1-simulating-the-distribution-of-a-statistic">
+<h3 class="anchored" data-anchor-id="r-script-1-simulating-the-distribution-of-a-statistic">R Script 1: Simulating the Distribution of a Statistic</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a aria-hidden="true" href="#cb3-4" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb3-5"><a aria-hidden="true" href="#cb3-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Sample size</span></span>
+<span id="cb3-6"><a aria-hidden="true" href="#cb3-6" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">0</span>   <span class="co"># Population mean</span></span>
+<span id="cb3-7"><a aria-hidden="true" href="#cb3-7" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Population standard deviation</span></span>
+<span id="cb3-8"><a aria-hidden="true" href="#cb3-8" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># Number of simulations</span></span>
+<span id="cb3-9"><a aria-hidden="true" href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a aria-hidden="true" href="#cb3-10" tabindex="-1"></a><span class="co"># Function to calculate the statistic T(X^n, theta) = (1/n) * sum(X_i^2)</span></span>
+<span id="cb3-11"><a aria-hidden="true" href="#cb3-11" tabindex="-1"></a>calculate_statistic <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb3-12"><a aria-hidden="true" href="#cb3-12" tabindex="-1"></a>  <span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-13"><a aria-hidden="true" href="#cb3-13" tabindex="-1"></a>}</span>
+<span id="cb3-14"><a aria-hidden="true" href="#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a aria-hidden="true" href="#cb3-15" tabindex="-1"></a><span class="co"># Simulate the distribution of the statistic</span></span>
+<span id="cb3-16"><a aria-hidden="true" href="#cb3-16" tabindex="-1"></a>simulated_statistics <span class="ot">&lt;-</span> <span class="fu">replicate</span>(S, {</span>
+<span id="cb3-17"><a aria-hidden="true" href="#cb3-17" tabindex="-1"></a>  <span class="co"># Generate a sample from N(mu, sigma^2)</span></span>
+<span id="cb3-18"><a aria-hidden="true" href="#cb3-18" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb3-19"><a aria-hidden="true" href="#cb3-19" tabindex="-1"></a>  <span class="co"># Calculate the statistic for the sample</span></span>
+<span id="cb3-20"><a aria-hidden="true" href="#cb3-20" tabindex="-1"></a>  <span class="fu">calculate_statistic</span>(x)</span>
+<span id="cb3-21"><a aria-hidden="true" href="#cb3-21" tabindex="-1"></a>})</span>
+<span id="cb3-22"><a aria-hidden="true" href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a aria-hidden="true" href="#cb3-23" tabindex="-1"></a><span class="co"># Create a tibble for plotting</span></span>
+<span id="cb3-24"><a aria-hidden="true" href="#cb3-24" tabindex="-1"></a>simulation_results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb3-25"><a aria-hidden="true" href="#cb3-25" tabindex="-1"></a>  <span class="at">statistic =</span> simulated_statistics</span>
+<span id="cb3-26"><a aria-hidden="true" href="#cb3-26" tabindex="-1"></a>)</span>
+<span id="cb3-27"><a aria-hidden="true" href="#cb3-27" tabindex="-1"></a></span>
+<span id="cb3-28"><a aria-hidden="true" href="#cb3-28" tabindex="-1"></a><span class="co"># Plot the empirical distribution</span></span>
+<span id="cb3-29"><a aria-hidden="true" href="#cb3-29" tabindex="-1"></a><span class="fu">ggplot</span>(simulation_results, <span class="fu">aes</span>(<span class="at">x =</span> statistic)) <span class="sc">+</span></span>
+<span id="cb3-30"><a aria-hidden="true" href="#cb3-30" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb3-31"><a aria-hidden="true" href="#cb3-31" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-32"><a aria-hidden="true" href="#cb3-32" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated Distribution of T(X^n, </span><span class="sc">\\</span><span class="st">theta) = (1/n) * </span><span class="sc">\\</span><span class="st">sum X_i^2"</span>,</span>
+<span id="cb3-33"><a aria-hidden="true" href="#cb3-33" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Statistic"</span>,</span>
+<span id="cb3-34"><a aria-hidden="true" href="#cb3-34" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb3-35"><a aria-hidden="true" href="#cb3-35" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap14_files/figure-html/unnamed-chunk-1-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="co"># Calculate and print the empirical cumulative distribution function (ECDF) at x = 1</span></span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a>ecdf_value <span class="ot">&lt;-</span> <span class="fu">mean</span>(simulated_statistics <span class="sc">&lt;=</span> x)</span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Empirical CDF at x ="</span>, x, <span class="st">":"</span>, ecdf_value, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Empirical CDF at x = 1 : 0.504 </code></pre>
+</div>
+</div>
+<p><strong>Intuitive explanation:</strong></p>
+<p>This script demonstrates the <strong>simulation method</strong> described in Section 14.1 of the text.</p>
+<ol type="1">
+<li><strong>Setup:</strong> We load the <code>tidyverse</code> library for data manipulation and visualization. We also set a seed for reproducibility.</li>
+<li><strong>Parameters:</strong> We define the sample size <code>n</code>, population mean <code>mu</code>, population standard deviation <code>sigma</code>, and the number of simulations <code>S</code>.</li>
+<li><strong>Statistic function:</strong> We define a function <code>calculate_statistic</code> that computes the statistic <span class="math inline">\(T(X^n, \theta) = \dfrac{1}{n} \sum_{i=1}^n X_i^2\)</span> for a given sample.</li>
+<li><strong>Simulation loop:</strong> We use the <code>replicate</code> function to repeat the simulation process <code>S</code> times. In each iteration:
+<ul>
+<li>We generate a sample of size <code>n</code> from a normal distribution with mean <code>mu</code> and standard deviation <code>sigma</code>.</li>
+<li>We calculate the statistic for the generated sample using <code>calculate_statistic</code>.</li>
+</ul></li>
+<li><strong>Plotting:</strong>
+<ul>
+<li>We create a <code>tibble</code> to store the simulated statistics.</li>
+<li>We use <code>ggplot2</code> to create a histogram of the simulated statistics, overlaid with a density curve. This visualizes the empirical distribution of the statistic.</li>
+</ul></li>
+<li><strong>ECDF:</strong> We calculate and print the value of the empirical cumulative distribution function (ECDF) at <span class="math inline">\(x=1\)</span>. The ECDF at a point <span class="math inline">\(x\)</span> is the proportion of simulated statistics that are less than or equal to <span class="math inline">\(x\)</span>, which corresponds to the formula for <span class="math inline">\(\hat{H}_S(x; \theta)\)</span> in the text.</li>
+</ol>
+<p><strong>Relation to the text:</strong></p>
+<p>This script directly implements the simulation method outlined in Section 14.1. It demonstrates how to generate samples from a known distribution, compute a statistic of interest, and use the empirical distribution of the simulated statistics to approximate the true distribution of the statistic. The histogram and density curve visualize the empirical distribution <span class="math inline">\(\hat{H}_S(x; \theta)\)</span>, and the ECDF calculation shows how to estimate the probability <span class="math inline">\(\text{Pr}[T(X^n, \theta) \le x]\)</span> using simulation.</p>
+</section>
+<section class="level3" id="r-script-2-bootstrap-distribution-of-the-sample-mean">
+<h3 class="anchored" data-anchor-id="r-script-2-bootstrap-distribution-of-the-sample-mean">R Script 2: Bootstrap Distribution of the Sample Mean</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a aria-hidden="true" href="#cb7-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb7-5"><a aria-hidden="true" href="#cb7-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb7-6"><a aria-hidden="true" href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a aria-hidden="true" href="#cb7-7" tabindex="-1"></a><span class="co"># Generate a sample from a known distribution (e.g., exponential)</span></span>
+<span id="cb7-8"><a aria-hidden="true" href="#cb7-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span> <span class="co"># Sample size</span></span>
+<span id="cb7-9"><a aria-hidden="true" href="#cb7-9" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="fl">0.5</span> <span class="co"># Rate parameter for exponential distribution</span></span>
+<span id="cb7-10"><a aria-hidden="true" href="#cb7-10" tabindex="-1"></a>original_sample <span class="ot">&lt;-</span> <span class="fu">rexp</span>(n, <span class="at">rate =</span> lambda)</span>
+<span id="cb7-11"><a aria-hidden="true" href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a aria-hidden="true" href="#cb7-12" tabindex="-1"></a><span class="co"># Function to calculate the sample mean</span></span>
+<span id="cb7-13"><a aria-hidden="true" href="#cb7-13" tabindex="-1"></a>calculate_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb7-14"><a aria-hidden="true" href="#cb7-14" tabindex="-1"></a>  <span class="fu">mean</span>(x)</span>
+<span id="cb7-15"><a aria-hidden="true" href="#cb7-15" tabindex="-1"></a>}</span>
+<span id="cb7-16"><a aria-hidden="true" href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a aria-hidden="true" href="#cb7-17" tabindex="-1"></a><span class="co"># Number of bootstrap samples</span></span>
+<span id="cb7-18"><a aria-hidden="true" href="#cb7-18" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb7-19"><a aria-hidden="true" href="#cb7-19" tabindex="-1"></a></span>
+<span id="cb7-20"><a aria-hidden="true" href="#cb7-20" tabindex="-1"></a><span class="co"># Generate bootstrap samples and calculate the bootstrap distribution of the mean</span></span>
+<span id="cb7-21"><a aria-hidden="true" href="#cb7-21" tabindex="-1"></a>bootstrap_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb7-22"><a aria-hidden="true" href="#cb7-22" tabindex="-1"></a>  <span class="co"># Resample with replacement from the original sample</span></span>
+<span id="cb7-23"><a aria-hidden="true" href="#cb7-23" tabindex="-1"></a>  bootstrap_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(original_sample, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-24"><a aria-hidden="true" href="#cb7-24" tabindex="-1"></a>  <span class="co"># Calculate the mean of the bootstrap sample</span></span>
+<span id="cb7-25"><a aria-hidden="true" href="#cb7-25" tabindex="-1"></a>  <span class="fu">calculate_mean</span>(bootstrap_sample)</span>
+<span id="cb7-26"><a aria-hidden="true" href="#cb7-26" tabindex="-1"></a>})</span>
+<span id="cb7-27"><a aria-hidden="true" href="#cb7-27" tabindex="-1"></a></span>
+<span id="cb7-28"><a aria-hidden="true" href="#cb7-28" tabindex="-1"></a><span class="co"># Create a tibble for plotting</span></span>
+<span id="cb7-29"><a aria-hidden="true" href="#cb7-29" tabindex="-1"></a>bootstrap_results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb7-30"><a aria-hidden="true" href="#cb7-30" tabindex="-1"></a>  <span class="at">bootstrap_mean =</span> bootstrap_means</span>
+<span id="cb7-31"><a aria-hidden="true" href="#cb7-31" tabindex="-1"></a>)</span>
+<span id="cb7-32"><a aria-hidden="true" href="#cb7-32" tabindex="-1"></a></span>
+<span id="cb7-33"><a aria-hidden="true" href="#cb7-33" tabindex="-1"></a><span class="co"># Plot the bootstrap distribution</span></span>
+<span id="cb7-34"><a aria-hidden="true" href="#cb7-34" tabindex="-1"></a><span class="fu">ggplot</span>(bootstrap_results, <span class="fu">aes</span>(<span class="at">x =</span> bootstrap_mean)) <span class="sc">+</span></span>
+<span id="cb7-35"><a aria-hidden="true" href="#cb7-35" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-36"><a aria-hidden="true" href="#cb7-36" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-37"><a aria-hidden="true" href="#cb7-37" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Bootstrap Distribution of the Sample Mean"</span>,</span>
+<span id="cb7-38"><a aria-hidden="true" href="#cb7-38" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Bootstrap Sample Mean"</span>,</span>
+<span id="cb7-39"><a aria-hidden="true" href="#cb7-39" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb7-40"><a aria-hidden="true" href="#cb7-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap14_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" href="#cb8-1" tabindex="-1"></a><span class="co"># Calculate a 95% bootstrap confidence interval</span></span>
+<span id="cb8-2"><a aria-hidden="true" href="#cb8-2" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb8-3"><a aria-hidden="true" href="#cb8-3" tabindex="-1"></a>confidence_interval <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootstrap_means, <span class="fu">c</span>(alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>))</span>
+<span id="cb8-4"><a aria-hidden="true" href="#cb8-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% Bootstrap Confidence Interval for the Mean:"</span>, confidence_interval, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% Bootstrap Confidence Interval for the Mean: 1.396221 2.268351 </code></pre>
+</div>
+</div>
+<p><strong>Intuitive explanation:</strong></p>
+<p>This script demonstrates the <strong>bootstrap method</strong> for estimating the distribution of the sample mean, as described in Section 14.2 of the text.</p>
+<ol type="1">
+<li><strong>Setup:</strong> We load the <code>tidyverse</code> library and set a seed.</li>
+<li><strong>Sample generation:</strong> We generate a sample of size <code>n</code> from an exponential distribution with rate parameter <code>lambda</code>.</li>
+<li><strong>Mean function:</strong> We define a function <code>calculate_mean</code> to compute the sample mean.</li>
+<li><strong>Bootstrap loop:</strong> We use <code>replicate</code> to generate <code>B</code> bootstrap samples. In each iteration:
+<ul>
+<li>We resample with replacement from the <code>original_sample</code> using <code>sample()</code>.</li>
+<li>We calculate the mean of the bootstrap sample using <code>calculate_mean</code>.</li>
+</ul></li>
+<li><strong>Plotting:</strong>
+<ul>
+<li>We create a <code>tibble</code> to store the bootstrap means.</li>
+<li>We use <code>ggplot2</code> to plot the histogram and density curve of the bootstrap distribution of the sample mean.</li>
+</ul></li>
+<li><strong>Confidence interval:</strong> We calculate a 95% bootstrap confidence interval for the population mean using the <code>quantile</code> function. This corresponds to finding the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution, as described in the text for constructing two-sided confidence intervals.</li>
+</ol>
+<p><strong>Relation to the text:</strong></p>
+<p>This script implements the <strong>Bootstrap Algorithm</strong> outlined in Section 14.2. It demonstrates how to generate bootstrap samples by resampling with replacement from the original sample, compute the statistic of interest (sample mean) for each bootstrap sample, and use the empirical distribution of the bootstrap statistics to approximate the sampling distribution of the statistic. The histogram and density curve visualize the bootstrap distribution <span class="math inline">\(\hat{H}_B(x; \hat{\theta})\)</span>, and the confidence interval calculation illustrates how to use the quantiles of the bootstrap distribution for inference, as described in the text.</p>
+</section>
+<section class="level3" id="r-script-3-bootstrap-distribution-of-the-sample-median">
+<h3 class="anchored" data-anchor-id="r-script-3-bootstrap-distribution-of-the-sample-median">R Script 3: Bootstrap Distribution of the Sample Median</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" href="#cb10-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb10-2"><a aria-hidden="true" href="#cb10-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb10-3"><a aria-hidden="true" href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a aria-hidden="true" href="#cb10-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb10-5"><a aria-hidden="true" href="#cb10-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>)</span>
+<span id="cb10-6"><a aria-hidden="true" href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a aria-hidden="true" href="#cb10-7" tabindex="-1"></a><span class="co"># Generate a sample from a known distribution (e.g., chi-squared)</span></span>
+<span id="cb10-8"><a aria-hidden="true" href="#cb10-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">75</span> <span class="co"># Sample size</span></span>
+<span id="cb10-9"><a aria-hidden="true" href="#cb10-9" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co"># Degrees of freedom for chi-squared distribution</span></span>
+<span id="cb10-10"><a aria-hidden="true" href="#cb10-10" tabindex="-1"></a>original_sample <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(n, <span class="at">df =</span> df)</span>
+<span id="cb10-11"><a aria-hidden="true" href="#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a aria-hidden="true" href="#cb10-12" tabindex="-1"></a><span class="co"># Function to calculate the sample median</span></span>
+<span id="cb10-13"><a aria-hidden="true" href="#cb10-13" tabindex="-1"></a>calculate_median <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb10-14"><a aria-hidden="true" href="#cb10-14" tabindex="-1"></a>  <span class="fu">median</span>(x)</span>
+<span id="cb10-15"><a aria-hidden="true" href="#cb10-15" tabindex="-1"></a>}</span>
+<span id="cb10-16"><a aria-hidden="true" href="#cb10-16" tabindex="-1"></a></span>
+<span id="cb10-17"><a aria-hidden="true" href="#cb10-17" tabindex="-1"></a><span class="co"># Number of bootstrap samples</span></span>
+<span id="cb10-18"><a aria-hidden="true" href="#cb10-18" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb10-19"><a aria-hidden="true" href="#cb10-19" tabindex="-1"></a></span>
+<span id="cb10-20"><a aria-hidden="true" href="#cb10-20" tabindex="-1"></a><span class="co"># Generate bootstrap samples and calculate the bootstrap distribution of the median</span></span>
+<span id="cb10-21"><a aria-hidden="true" href="#cb10-21" tabindex="-1"></a>bootstrap_medians <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb10-22"><a aria-hidden="true" href="#cb10-22" tabindex="-1"></a>  <span class="co"># Resample with replacement from the original sample</span></span>
+<span id="cb10-23"><a aria-hidden="true" href="#cb10-23" tabindex="-1"></a>  bootstrap_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(original_sample, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-24"><a aria-hidden="true" href="#cb10-24" tabindex="-1"></a>  <span class="co"># Calculate the median of the bootstrap sample</span></span>
+<span id="cb10-25"><a aria-hidden="true" href="#cb10-25" tabindex="-1"></a>  <span class="fu">calculate_median</span>(bootstrap_sample)</span>
+<span id="cb10-26"><a aria-hidden="true" href="#cb10-26" tabindex="-1"></a>})</span>
+<span id="cb10-27"><a aria-hidden="true" href="#cb10-27" tabindex="-1"></a></span>
+<span id="cb10-28"><a aria-hidden="true" href="#cb10-28" tabindex="-1"></a><span class="co"># Create a tibble for plotting</span></span>
+<span id="cb10-29"><a aria-hidden="true" href="#cb10-29" tabindex="-1"></a>bootstrap_results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-30"><a aria-hidden="true" href="#cb10-30" tabindex="-1"></a>  <span class="at">bootstrap_median =</span> bootstrap_medians</span>
+<span id="cb10-31"><a aria-hidden="true" href="#cb10-31" tabindex="-1"></a>)</span>
+<span id="cb10-32"><a aria-hidden="true" href="#cb10-32" tabindex="-1"></a></span>
+<span id="cb10-33"><a aria-hidden="true" href="#cb10-33" tabindex="-1"></a><span class="co"># Plot the bootstrap distribution</span></span>
+<span id="cb10-34"><a aria-hidden="true" href="#cb10-34" tabindex="-1"></a><span class="fu">ggplot</span>(bootstrap_results, <span class="fu">aes</span>(<span class="at">x =</span> bootstrap_median)) <span class="sc">+</span></span>
+<span id="cb10-35"><a aria-hidden="true" href="#cb10-35" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb10-36"><a aria-hidden="true" href="#cb10-36" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-37"><a aria-hidden="true" href="#cb10-37" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Bootstrap Distribution of the Sample Median"</span>,</span>
+<span id="cb10-38"><a aria-hidden="true" href="#cb10-38" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Bootstrap Sample Median"</span>,</span>
+<span id="cb10-39"><a aria-hidden="true" href="#cb10-39" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb10-40"><a aria-hidden="true" href="#cb10-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap14_files/figure-html/unnamed-chunk-3-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" href="#cb11-1" tabindex="-1"></a><span class="co"># Calculate a 90% bootstrap confidence interval</span></span>
+<span id="cb11-2"><a aria-hidden="true" href="#cb11-2" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb11-3"><a aria-hidden="true" href="#cb11-3" tabindex="-1"></a>confidence_interval <span class="ot">&lt;-</span> <span class="fu">quantile</span>(bootstrap_medians, <span class="fu">c</span>(alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>))</span>
+<span id="cb11-4"><a aria-hidden="true" href="#cb11-4" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"90% Bootstrap Confidence Interval for the Median:"</span>, confidence_interval, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>90% Bootstrap Confidence Interval for the Median: 3.166534 4.635917 </code></pre>
+</div>
+</div>
+<p><strong>Intuitive explanation:</strong></p>
+<p>This script demonstrates the <strong>bootstrap method</strong> for estimating the distribution of the sample median.</p>
+<ol type="1">
+<li><strong>Setup:</strong> We load the <code>tidyverse</code> library and set a seed.</li>
+<li><strong>Sample generation:</strong> We generate a sample of size <code>n</code> from a chi-squared distribution with <code>df</code> degrees of freedom.</li>
+<li><strong>Median function:</strong> We define a function <code>calculate_median</code> to compute the sample median.</li>
+<li><strong>Bootstrap loop:</strong> We use <code>replicate</code> to generate <code>B</code> bootstrap samples. In each iteration:
+<ul>
+<li>We resample with replacement from the <code>original_sample</code>.</li>
+<li>We calculate the median of the bootstrap sample using <code>calculate_median</code>.</li>
+</ul></li>
+<li><strong>Plotting:</strong>
+<ul>
+<li>We create a <code>tibble</code> to store the bootstrap medians.</li>
+<li>We use <code>ggplot2</code> to plot the histogram and density curve of the bootstrap distribution of the sample median.</li>
+</ul></li>
+<li><strong>Confidence interval:</strong> We calculate a 90% bootstrap confidence interval for the population median using the <code>quantile</code> function, finding the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution.</li>
+</ol>
+<p><strong>Relation to the text:</strong></p>
+<p>Similar to R Script 2, this script implements the <strong>Bootstrap Algorithm</strong> from Section 14.2, but this time for the sample median instead of the sample mean. It illustrates how the bootstrap can be used to approximate the sampling distribution of a statistic other than the mean. The visualization and confidence interval calculation are analogous to those in R Script 2, demonstrating the general applicability of the bootstrap method.</p>
+</section>
+<section class="level3" id="r-script-4-subsampling-to-estimate-the-distribution-of-the-sample-mean">
+<h3 class="anchored" data-anchor-id="r-script-4-subsampling-to-estimate-the-distribution-of-the-sample-mean">R Script 4: Subsampling to Estimate the Distribution of the Sample Mean</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" href="#cb13-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb13-2"><a aria-hidden="true" href="#cb13-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb13-3"><a aria-hidden="true" href="#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a aria-hidden="true" href="#cb13-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb13-5"><a aria-hidden="true" href="#cb13-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb13-6"><a aria-hidden="true" href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a aria-hidden="true" href="#cb13-7" tabindex="-1"></a><span class="co"># Generate a sample from a known distribution (e.g., normal)</span></span>
+<span id="cb13-8"><a aria-hidden="true" href="#cb13-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># Sample size</span></span>
+<span id="cb13-9"><a aria-hidden="true" href="#cb13-9" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">5</span>  <span class="co"># Population mean</span></span>
+<span id="cb13-10"><a aria-hidden="true" href="#cb13-10" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="co"># Population standard deviation</span></span>
+<span id="cb13-11"><a aria-hidden="true" href="#cb13-11" tabindex="-1"></a>original_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb13-12"><a aria-hidden="true" href="#cb13-12" tabindex="-1"></a></span>
+<span id="cb13-13"><a aria-hidden="true" href="#cb13-13" tabindex="-1"></a><span class="co"># Function to calculate the sample mean</span></span>
+<span id="cb13-14"><a aria-hidden="true" href="#cb13-14" tabindex="-1"></a>calculate_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb13-15"><a aria-hidden="true" href="#cb13-15" tabindex="-1"></a>  <span class="fu">mean</span>(x)</span>
+<span id="cb13-16"><a aria-hidden="true" href="#cb13-16" tabindex="-1"></a>}</span>
+<span id="cb13-17"><a aria-hidden="true" href="#cb13-17" tabindex="-1"></a></span>
+<span id="cb13-18"><a aria-hidden="true" href="#cb13-18" tabindex="-1"></a><span class="co"># Subsample size</span></span>
+<span id="cb13-19"><a aria-hidden="true" href="#cb13-19" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">20</span></span>
+<span id="cb13-20"><a aria-hidden="true" href="#cb13-20" tabindex="-1"></a></span>
+<span id="cb13-21"><a aria-hidden="true" href="#cb13-21" tabindex="-1"></a><span class="co"># Number of subsamples</span></span>
+<span id="cb13-22"><a aria-hidden="true" href="#cb13-22" tabindex="-1"></a>num_subsamples <span class="ot">&lt;-</span> n <span class="sc">-</span> b <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb13-23"><a aria-hidden="true" href="#cb13-23" tabindex="-1"></a></span>
+<span id="cb13-24"><a aria-hidden="true" href="#cb13-24" tabindex="-1"></a><span class="co"># Generate subsamples and calculate the subsample means</span></span>
+<span id="cb13-25"><a aria-hidden="true" href="#cb13-25" tabindex="-1"></a>subsample_means <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span>num_subsamples, <span class="cf">function</span>(i) {</span>
+<span id="cb13-26"><a aria-hidden="true" href="#cb13-26" tabindex="-1"></a>  <span class="co"># Create a subsample starting at index i</span></span>
+<span id="cb13-27"><a aria-hidden="true" href="#cb13-27" tabindex="-1"></a>  subsample <span class="ot">&lt;-</span> original_sample[i<span class="sc">:</span>(i <span class="sc">+</span> b <span class="sc">-</span> <span class="dv">1</span>)]</span>
+<span id="cb13-28"><a aria-hidden="true" href="#cb13-28" tabindex="-1"></a>  <span class="co"># Calculate the mean of the subsample</span></span>
+<span id="cb13-29"><a aria-hidden="true" href="#cb13-29" tabindex="-1"></a>  <span class="fu">calculate_mean</span>(subsample)</span>
+<span id="cb13-30"><a aria-hidden="true" href="#cb13-30" tabindex="-1"></a>})</span>
+<span id="cb13-31"><a aria-hidden="true" href="#cb13-31" tabindex="-1"></a></span>
+<span id="cb13-32"><a aria-hidden="true" href="#cb13-32" tabindex="-1"></a><span class="co"># Create a tibble for plotting</span></span>
+<span id="cb13-33"><a aria-hidden="true" href="#cb13-33" tabindex="-1"></a>subsample_results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-34"><a aria-hidden="true" href="#cb13-34" tabindex="-1"></a>  <span class="at">subsample_mean =</span> subsample_means</span>
+<span id="cb13-35"><a aria-hidden="true" href="#cb13-35" tabindex="-1"></a>)</span>
+<span id="cb13-36"><a aria-hidden="true" href="#cb13-36" tabindex="-1"></a></span>
+<span id="cb13-37"><a aria-hidden="true" href="#cb13-37" tabindex="-1"></a><span class="co"># Plot the distribution of subsample means</span></span>
+<span id="cb13-38"><a aria-hidden="true" href="#cb13-38" tabindex="-1"></a><span class="fu">ggplot</span>(subsample_results, <span class="fu">aes</span>(<span class="at">x =</span> subsample_mean)) <span class="sc">+</span></span>
+<span id="cb13-39"><a aria-hidden="true" href="#cb13-39" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb13-40"><a aria-hidden="true" href="#cb13-40" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb13-41"><a aria-hidden="true" href="#cb13-41" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Subsample Means"</span>,</span>
+<span id="cb13-42"><a aria-hidden="true" href="#cb13-42" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Subsample Mean"</span>,</span>
+<span id="cb13-43"><a aria-hidden="true" href="#cb13-43" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb13-44"><a aria-hidden="true" href="#cb13-44" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap14_files/figure-html/unnamed-chunk-4-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" href="#cb14-1" tabindex="-1"></a><span class="co"># Estimate G_n(t) at t = 0.5 using the empirical distribution of standardized subsample means</span></span>
+<span id="cb14-2"><a aria-hidden="true" href="#cb14-2" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb14-3"><a aria-hidden="true" href="#cb14-3" tabindex="-1"></a>standardized_subsample_means <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(b) <span class="sc">*</span> (subsample_means <span class="sc">-</span> <span class="fu">mean</span>(original_sample))</span>
+<span id="cb14-4"><a aria-hidden="true" href="#cb14-4" tabindex="-1"></a>Gn_estimate <span class="ot">&lt;-</span> <span class="fu">mean</span>(standardized_subsample_means <span class="sc">&lt;=</span> t)</span>
+<span id="cb14-5"><a aria-hidden="true" href="#cb14-5" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estimate of G_n(t) at t ="</span>, t, <span class="st">":"</span>, Gn_estimate, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimate of G_n(t) at t = 0.5 : 0.6666667 </code></pre>
+</div>
+</div>
+<p><strong>Intuitive explanation:</strong></p>
+<p>This script demonstrates the <strong>subsampling method</strong> described in Section 14.2.1 for estimating the distribution of the sample mean.</p>
+<ol type="1">
+<li><strong>Setup:</strong> We load the <code>tidyverse</code> library and set a seed.</li>
+<li><strong>Sample generation:</strong> We generate a sample of size <code>n</code> from a normal distribution with mean <code>mu</code> and standard deviation <code>sigma</code>.</li>
+<li><strong>Mean function:</strong> We define a function <code>calculate_mean</code> to compute the sample mean.</li>
+<li><strong>Subsampling parameters:</strong> We choose a subsample size <code>b</code> and calculate the number of possible overlapping subsamples <code>num_subsamples</code>.</li>
+<li><strong>Subsampling loop:</strong> We use <code>sapply</code> to iterate through possible starting indices for the subsamples. In each iteration:
+<ul>
+<li>We create a subsample of size <code>b</code> starting at index <code>i</code>.</li>
+<li>We calculate the mean of the subsample using <code>calculate_mean</code>.</li>
+</ul></li>
+<li><strong>Plotting:</strong>
+<ul>
+<li>We create a <code>tibble</code> to store the subsample means.</li>
+<li>We use <code>ggplot2</code> to plot the histogram and density curve of the distribution of subsample means.</li>
+</ul></li>
+<li><strong>Estimating <span class="math inline">\(G_n(t)\)</span>:</strong>
+<ul>
+<li>We choose a value <code>t</code> at which to estimate <span class="math inline">\(G_n(t)\)</span>.</li>
+<li>We standardize the subsample means by subtracting the overall sample mean and multiplying by <span class="math inline">\(\sqrt{b}\)</span>.</li>
+<li>We estimate <span class="math inline">\(G_n(t)\)</span> using the proportion of standardized subsample means that are less than or equal to <code>t</code>, which corresponds to the formula for <span class="math inline">\(\hat{G}_{n,b}(t)\)</span> in the text.</li>
+</ul></li>
+</ol>
+<p><strong>Relation to the text:</strong></p>
+<p>This script implements the <strong>subsampling method</strong> outlined in Section 14.2.1. It demonstrates how to create overlapping subsamples from the original data, compute the statistic of interest (sample mean) for each subsample, and use the empirical distribution of the subsample statistics to approximate the distribution of the sample mean. The histogram and density curve visualize the distribution of the subsample means, and the calculation of <code>Gn_estimate</code> shows how to estimate <span class="math inline">\(G_n(t) = \text{Pr}(\sqrt{n}(\bar{X} - \mu) \le t)\)</span> using subsampling, as described in the text.</p>
+</section>
+<section class="level3" id="r-script-5-comparing-bootstrap-and-asymptotic-distributions">
+<h3 class="anchored" data-anchor-id="r-script-5-comparing-bootstrap-and-asymptotic-distributions">R Script 5: Comparing Bootstrap and Asymptotic Distributions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" href="#cb16-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb16-2"><a aria-hidden="true" href="#cb16-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-3"><a aria-hidden="true" href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a aria-hidden="true" href="#cb16-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb16-5"><a aria-hidden="true" href="#cb16-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">202</span>)</span>
+<span id="cb16-6"><a aria-hidden="true" href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a aria-hidden="true" href="#cb16-7" tabindex="-1"></a><span class="co"># Generate a sample from a known distribution (e.g., normal)</span></span>
+<span id="cb16-8"><a aria-hidden="true" href="#cb16-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># Sample size</span></span>
+<span id="cb16-9"><a aria-hidden="true" href="#cb16-9" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">0</span>  <span class="co"># Population mean</span></span>
+<span id="cb16-10"><a aria-hidden="true" href="#cb16-10" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># Population standard deviation</span></span>
+<span id="cb16-11"><a aria-hidden="true" href="#cb16-11" tabindex="-1"></a>original_sample <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb16-12"><a aria-hidden="true" href="#cb16-12" tabindex="-1"></a></span>
+<span id="cb16-13"><a aria-hidden="true" href="#cb16-13" tabindex="-1"></a><span class="co"># Function to calculate the sample mean</span></span>
+<span id="cb16-14"><a aria-hidden="true" href="#cb16-14" tabindex="-1"></a>calculate_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb16-15"><a aria-hidden="true" href="#cb16-15" tabindex="-1"></a>  <span class="fu">mean</span>(x)</span>
+<span id="cb16-16"><a aria-hidden="true" href="#cb16-16" tabindex="-1"></a>}</span>
+<span id="cb16-17"><a aria-hidden="true" href="#cb16-17" tabindex="-1"></a></span>
+<span id="cb16-18"><a aria-hidden="true" href="#cb16-18" tabindex="-1"></a><span class="co"># Number of bootstrap samples</span></span>
+<span id="cb16-19"><a aria-hidden="true" href="#cb16-19" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb16-20"><a aria-hidden="true" href="#cb16-20" tabindex="-1"></a></span>
+<span id="cb16-21"><a aria-hidden="true" href="#cb16-21" tabindex="-1"></a><span class="co"># Generate bootstrap samples and calculate the bootstrap distribution of the standardized sample mean</span></span>
+<span id="cb16-22"><a aria-hidden="true" href="#cb16-22" tabindex="-1"></a>bootstrap_standardized_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(B, {</span>
+<span id="cb16-23"><a aria-hidden="true" href="#cb16-23" tabindex="-1"></a>  <span class="co"># Resample with replacement from the original sample</span></span>
+<span id="cb16-24"><a aria-hidden="true" href="#cb16-24" tabindex="-1"></a>  bootstrap_sample <span class="ot">&lt;-</span> <span class="fu">sample</span>(original_sample, <span class="at">size =</span> n, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-25"><a aria-hidden="true" href="#cb16-25" tabindex="-1"></a>  <span class="co"># Calculate the standardized mean of the bootstrap sample</span></span>
+<span id="cb16-26"><a aria-hidden="true" href="#cb16-26" tabindex="-1"></a>  (<span class="fu">calculate_mean</span>(bootstrap_sample) <span class="sc">-</span> <span class="fu">mean</span>(original_sample)) <span class="sc">/</span> (<span class="fu">sd</span>(bootstrap_sample) <span class="sc">/</span> <span class="fu">sqrt</span>(n))</span>
+<span id="cb16-27"><a aria-hidden="true" href="#cb16-27" tabindex="-1"></a>})</span>
+<span id="cb16-28"><a aria-hidden="true" href="#cb16-28" tabindex="-1"></a></span>
+<span id="cb16-29"><a aria-hidden="true" href="#cb16-29" tabindex="-1"></a><span class="co"># Create a tibble for plotting</span></span>
+<span id="cb16-30"><a aria-hidden="true" href="#cb16-30" tabindex="-1"></a>bootstrap_results <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb16-31"><a aria-hidden="true" href="#cb16-31" tabindex="-1"></a>  <span class="at">bootstrap_standardized_mean =</span> bootstrap_standardized_means</span>
+<span id="cb16-32"><a aria-hidden="true" href="#cb16-32" tabindex="-1"></a>)</span>
+<span id="cb16-33"><a aria-hidden="true" href="#cb16-33" tabindex="-1"></a></span>
+<span id="cb16-34"><a aria-hidden="true" href="#cb16-34" tabindex="-1"></a><span class="co"># Theoretical quantiles of the standard normal distribution</span></span>
+<span id="cb16-35"><a aria-hidden="true" href="#cb16-35" tabindex="-1"></a>theoretical_quantiles <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fu">ppoints</span>(n))</span>
+<span id="cb16-36"><a aria-hidden="true" href="#cb16-36" tabindex="-1"></a></span>
+<span id="cb16-37"><a aria-hidden="true" href="#cb16-37" tabindex="-1"></a><span class="co"># QQ plot comparing bootstrap distribution to standard normal</span></span>
+<span id="cb16-38"><a aria-hidden="true" href="#cb16-38" tabindex="-1"></a><span class="fu">ggplot</span>(bootstrap_results, <span class="fu">aes</span>(<span class="at">sample =</span> bootstrap_standardized_mean)) <span class="sc">+</span></span>
+<span id="cb16-39"><a aria-hidden="true" href="#cb16-39" tabindex="-1"></a>  <span class="fu">stat_qq</span>(<span class="at">distribution =</span> qnorm) <span class="sc">+</span></span>
+<span id="cb16-40"><a aria-hidden="true" href="#cb16-40" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>(<span class="at">distribution =</span> qnorm) <span class="sc">+</span></span>
+<span id="cb16-41"><a aria-hidden="true" href="#cb16-41" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"QQ Plot: Bootstrap vs. Standard Normal"</span>,</span>
+<span id="cb16-42"><a aria-hidden="true" href="#cb16-42" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Theoretical Quantiles (Standard Normal)"</span>,</span>
+<span id="cb16-43"><a aria-hidden="true" href="#cb16-43" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Sample Quantiles (Bootstrap)"</span>) <span class="sc">+</span></span>
+<span id="cb16-44"><a aria-hidden="true" href="#cb16-44" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap14_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" href="#cb17-1" tabindex="-1"></a><span class="co"># Calculate 95% confidence intervals using both bootstrap and asymptotic methods</span></span>
+<span id="cb17-2"><a aria-hidden="true" href="#cb17-2" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb17-3"><a aria-hidden="true" href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a aria-hidden="true" href="#cb17-4" tabindex="-1"></a><span class="co"># Bootstrap CI</span></span>
+<span id="cb17-5"><a aria-hidden="true" href="#cb17-5" tabindex="-1"></a>bootstrap_ci <span class="ot">&lt;-</span> <span class="fu">mean</span>(original_sample) <span class="sc">+</span> <span class="fu">quantile</span>(bootstrap_standardized_means, <span class="fu">c</span>(alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">*</span> (<span class="fu">sd</span>(original_sample) <span class="sc">/</span> <span class="fu">sqrt</span>(n))</span>
+<span id="cb17-6"><a aria-hidden="true" href="#cb17-6" tabindex="-1"></a></span>
+<span id="cb17-7"><a aria-hidden="true" href="#cb17-7" tabindex="-1"></a><span class="co"># Asymptotic CI</span></span>
+<span id="cb17-8"><a aria-hidden="true" href="#cb17-8" tabindex="-1"></a>asymptotic_ci <span class="ot">&lt;-</span> <span class="fu">mean</span>(original_sample) <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(alpha <span class="sc">/</span> <span class="dv">2</span>, <span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>)) <span class="sc">*</span> (<span class="fu">sd</span>(original_sample) <span class="sc">/</span> <span class="fu">sqrt</span>(n))</span>
+<span id="cb17-9"><a aria-hidden="true" href="#cb17-9" tabindex="-1"></a></span>
+<span id="cb17-10"><a aria-hidden="true" href="#cb17-10" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% Bootstrap Confidence Interval:"</span>, bootstrap_ci, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% Bootstrap Confidence Interval: -0.08789055 0.2870275 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" href="#cb19-1" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"95% Asymptotic Confidence Interval:"</span>, asymptotic_ci, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>95% Asymptotic Confidence Interval: -0.1061413 0.283717 </code></pre>
+</div>
+</div>
+<p><strong>Intuitive explanation:</strong></p>
+<p>This script compares the <strong>bootstrap distribution</strong> of the standardized sample mean to the <strong>asymptotic distribution</strong> (standard normal) and constructs confidence intervals using both methods.</p>
+<ol type="1">
+<li><strong>Setup:</strong> We load the <code>tidyverse</code> library and set a seed.</li>
+<li><strong>Sample generation:</strong> We generate a sample of size <code>n</code> from a normal distribution with mean <code>mu</code> and standard deviation <code>sigma</code>.</li>
+<li><strong>Mean function:</strong> We define a function <code>calculate_mean</code> to compute the sample mean.</li>
+<li><strong>Bootstrap loop:</strong> We use <code>replicate</code> to generate <code>B</code> bootstrap samples. In each iteration:
+<ul>
+<li>We resample with replacement from the <code>original_sample</code>.</li>
+<li>We calculate the <em>standardized</em> mean of the bootstrap sample by subtracting the original sample mean and dividing by the bootstrap sample standard deviation (scaled by <span class="math inline">\(\sqrt{n}\)</span>).</li>
+</ul></li>
+<li><strong>QQ plot:</strong>
+<ul>
+<li>We create a <code>tibble</code> to store the bootstrap standardized means.</li>
+<li>We use <code>ggplot2</code> to create a QQ plot comparing the quantiles of the bootstrap distribution to the theoretical quantiles of the standard normal distribution. This visually assesses how well the bootstrap distribution approximates the asymptotic normal distribution.</li>
+</ul></li>
+<li><strong>Confidence intervals:</strong>
+<ul>
+<li>We calculate a 95% confidence interval using the bootstrap quantiles, adjusting for the standardization.</li>
+<li>We calculate a 95% confidence interval using the asymptotic method, based on the standard normal quantiles.</li>
+</ul></li>
+</ol>
+<p><strong>Relation to the text:</strong></p>
+<p>This script relates to several concepts in the text:</p>
+<ul>
+<li><strong>Bootstrap Algorithm:</strong> It implements the bootstrap method to generate an empirical distribution of the standardized sample mean.</li>
+<li><strong>Theorem 14.1:</strong> The QQ plot visually assesses the convergence described in <strong>Theorem 14.1</strong> (Bickel and Freedman, 1981), which states that the standardized bootstrap sample mean converges in distribution to a standard normal.</li>
+<li><strong>Asymptotic pivot:</strong> The standardized sample mean is an <strong>asymptotic pivot</strong> because its asymptotic distribution (standard normal) does not depend on unknown parameters.</li>
+<li><strong>Confidence intervals:</strong> The script demonstrates how to construct confidence intervals using both the bootstrap and asymptotic methods, as discussed in Section 14.2. The comparison of the two confidence intervals illustrates the potential differences between the two approaches, especially for smaller sample sizes.</li>
+</ul>
+</section>
+</section>
+<section class="level2" id="youtube-videos">
+<h2 class="anchored" data-anchor-id="youtube-videos">YouTube Videos</h2>
+<p>Here are some YouTube videos that explain concepts related to Chapter 14 of the provided text, “Asymptotic Tests and the Bootstrap”:</p>
+<section class="level3" id="videos-on-simulation-methods">
+<h3 class="anchored" data-anchor-id="videos-on-simulation-methods">Videos on Simulation Methods</h3>
+<ol type="1">
+<li><p><strong>Title:</strong> Simulation Methods - Part 1<br/>
+<strong>Channel:</strong> ritvikmath<br/>
+<strong>Link:</strong> <a href="https://www.youtube.com/watch?v=S_fYR7Mo0pA">https://www.youtube.com/watch?v=S_fYR7Mo0pA</a></p>
+<p><strong>Relation to the text:</strong> This video provides a general introduction to <strong>simulation methods</strong> in statistics, covering concepts like Monte Carlo simulations and random number generation. It aligns with Section 14.1 of the text, which discusses how to use simulation to approximate the distribution of a statistic when the true distribution is difficult to derive analytically.</p></li>
+<li><p><strong>Title:</strong> Monte Carlo Simulation With Python: A Beginner’s Guide <strong>Channel:</strong> Keith Galli <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=s5েকেরd_bA">https://www.youtube.com/watch?v=s5েকেরd_bA</a></p>
+<p><strong>Relation to the text:</strong> This video offers a practical demonstration of implementing Monte Carlo simulations using Python. It illustrates how to generate random samples from a specified distribution and use those samples to estimate quantities of interest, such as probabilities or expected values. It complements Section 14.1 by providing a concrete example of how simulation methods can be applied.</p></li>
+</ol>
+</section>
+<section class="level3" id="videos-on-the-bootstrap">
+<h3 class="anchored" data-anchor-id="videos-on-the-bootstrap">Videos on the Bootstrap</h3>
+<ol type="1">
+<li><p><strong>Title:</strong> Bootstrapping <strong>Channel:</strong> StatQuest with Josh Starmer <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=Xz0x-8-cgaQ">https://www.youtube.com/watch?v=Xz0x-8-cgaQ</a></p>
+<p><strong>Relation to the text:</strong> This video from StatQuest provides a clear and intuitive explanation of the <strong>bootstrap method</strong>. It covers the core idea of resampling with replacement from the original sample to create many “bootstrap samples” and using the distribution of the statistic across these samples to approximate its sampling distribution. This video aligns closely with the conceptual introduction to the bootstrap in Section 14.2.</p></li>
+<li><p><strong>Title:</strong> Bootstrap Confidence Intervals <strong>Channel:</strong> StatQuest with Josh Starmer <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=k8j_ORsellA">https://www.youtube.com/watch?v=k8j_ORsellA</a></p>
+<p><strong>Relation to the text:</strong> This video specifically addresses how to use the <strong>bootstrap</strong> to construct <strong>confidence intervals</strong>. It explains how to find the appropriate quantiles of the bootstrap distribution to create intervals with the desired coverage level. This directly relates to the discussion of bootstrap confidence intervals in the latter part of Section 14.2.</p></li>
+<li><p><strong>Title:</strong> Bootstrap method in Statistics - explained Bootstrap resampling <strong>Channel:</strong> Statistics Mentor <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=m-7x-Y-S-iA">https://www.youtube.com/watch?v=m-7x-Y-S-iA</a></p>
+<p><strong>Relation to the text:</strong> This video provides another explanation of the <strong>bootstrap method</strong>, covering aspects like how to create bootstrap samples, compute the bootstrap distribution of a statistic, and construct confidence intervals. It reinforces the concepts introduced in Section 14.2 and offers a slightly different perspective.</p></li>
+<li><p><strong>Title:</strong> The Bootstrap - Computer Age Statistical Inference <strong>Channel:</strong> Efron and Tibshirani <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=s_7n5-o_p4">https://www.youtube.com/watch?v=s_7n5-o_p4</a></p>
+<p><strong>Relation to the text:</strong> This lecture given by Efron (the inventor of the <strong>Bootstrap</strong>) and Tibshirani offers a more in-depth discussion of the <strong>Bootstrap</strong>. It explains the fundamental concepts of <strong>Bootstrap</strong> and it connects <strong>Bootstrap</strong> to the general field of statistical inference. It also offers intuitive explanations of the subject. This video is a great resource to gain a comprehensive understanding of the main concepts in Section 14.2.</p></li>
+</ol>
+</section>
+<section class="level3" id="videos-on-subsampling">
+<h3 class="anchored" data-anchor-id="videos-on-subsampling">Videos on Subsampling</h3>
+<ol type="1">
+<li><p><strong>Title:</strong> Subsampling <strong>Channel:</strong> Shai Shen-Orr <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=c_B-iN-eXFY">https://www.youtube.com/watch?v=c_B-iN-eXFY</a></p>
+<p><strong>Relation to the text:</strong> This video introduces the concept of <strong>subsampling</strong> as a method for estimating the distribution of a statistic. It explains how to create subsamples from the original data and use the empirical distribution of the statistic across the subsamples to approximate its true distribution. It aligns with the brief discussion of subsampling in Section 14.2.1.</p></li>
+</ol>
+</section>
+<section class="level3" id="additional-videos">
+<h3 class="anchored" data-anchor-id="additional-videos">Additional Videos</h3>
+<ol type="1">
+<li><p><strong>Title:</strong> Introduction to sampling distributions <strong>Channel:</strong> Khan Academy <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=z0F-LQ_gZEU">https://www.youtube.com/watch?v=z0F-LQ_gZEU</a></p>
+<p><strong>Relation to the text:</strong> Although not directly about the bootstrap or subsampling, this video provides a good foundation on the concept of <strong>sampling distributions</strong>. Understanding sampling distributions is essential for grasping the motivation behind both the bootstrap and simulation methods discussed in the text.</p></li>
+<li><p><strong>Title:</strong> Confidence intervals <strong>Channel:</strong> Khan Academy <strong>Link:</strong> <a href="https://www.youtube.com/watch?v=yDEvXB6ApWc">https://www.youtube.com/watch?v=yDEvXB6ApWc</a></p>
+<p><strong>Relation to the text:</strong> This video explains the general concept of <strong>confidence intervals</strong>. While it doesn’t cover bootstrap confidence intervals specifically, it provides a good background for understanding how confidence intervals are constructed and interpreted, which is relevant to the latter part of Section 14.2.</p></li>
+</ol>
+<p>These videos offer a mix of conceptual explanations, practical demonstrations, and theoretical insights related to the topics covered in Chapter 14 of the text. They can be valuable resources for students seeking to deepen their understanding of simulation methods, the bootstrap, and subsampling.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch14mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch14mcsolution1">MC Solution 1</a></p>
+<p>What is the primary goal of <strong>simulation methods</strong> in the context of Section 14.1?</p>
+<ol type="a">
+<li>To generate random numbers</li>
+<li>To approximate the distribution of a statistic</li>
+<li>To estimate population parameters</li>
+<li>To perform hypothesis tests</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch14mcsolution2">MC Solution 2</a></p>
+<p>When simulating the distribution of a statistic <span class="math inline">\(T(X^n, \theta)\)</span> with a known parameter <span class="math inline">\(\theta\)</span>, how is the empirical distribution <span class="math inline">\(\hat{H}_S(x; \theta)\)</span> calculated?</p>
+<ol type="a">
+<li><span class="math inline">\(\hat{H}_S(x; \theta) = \dfrac{1}{S} \sum_{s=1}^S T_s^*\)</span></li>
+<li><span class="math inline">\(\hat{H}_S(x; \theta) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x)\)</span></li>
+<li><span class="math inline">\(\hat{H}_S(x; \theta) = \dfrac{1}{n} \sum_{i=1}^n \mathbb{1}(X_i \le x)\)</span></li>
+<li><span class="math inline">\(\hat{H}_S(x; \theta) = \dfrac{1}{n} \sum_{i=1}^n X_i^*\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch14mcsolution3">MC Solution 3</a></p>
+<p>If <span class="math inline">\(\theta\)</span> is unknown and needs to be estimated from the data, how does this affect the simulation procedure described in Section 14.1?</p>
+<ol type="a">
+<li>The simulation cannot be performed</li>
+<li>The true distribution <span class="math inline">\(F(\cdot|\theta)\)</span> is used for sampling</li>
+<li>The estimated distribution <span class="math inline">\(F(\cdot|\hat{\theta})\)</span> is used for sampling</li>
+<li>The empirical distribution <span class="math inline">\(F_n\)</span> is used for sampling</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch14mcsolution4">MC Solution 4</a></p>
+<p>What is the <strong>Bootstrap principle</strong>?</p>
+<ol type="a">
+<li>Treating the sample as the population</li>
+<li>Using the normal distribution to approximate the sampling distribution</li>
+<li>Estimating parameters using maximum likelihood</li>
+<li>Performing hypothesis tests using p-values</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch14mcsolution5">MC Solution 5</a></p>
+<p>The <strong>Russian Doll Principle</strong> refers to:</p>
+<ol type="a">
+<li>The nested structure of confidence intervals</li>
+<li>The iterative nature of the bootstrap method</li>
+<li>The process of subsampling</li>
+<li>The use of simulation in statistical inference</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch14mcsolution6">MC Solution 6</a></p>
+<p>In the <strong>Bootstrap Algorithm</strong>, what does <span class="math inline">\(X^{n*}\)</span> represent?</p>
+<ol type="a">
+<li>A sample from the true population</li>
+<li>A sample from the empirical distribution <span class="math inline">\(F_n\)</span></li>
+<li>A sample from a normal distribution</li>
+<li>The original sample data</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch14mcsolution7">MC Solution 7</a></p>
+<p>When generating a bootstrap sample of size <span class="math inline">\(n=2\)</span> from a sample <span class="math inline">\(\{X_1, X_2\}\)</span>, what is the probability of obtaining the bootstrap sample <span class="math inline">\(\{X_1, X_2\}\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(\dfrac{1}{4}\)</span></li>
+<li><span class="math inline">\(\dfrac{1}{2}\)</span></li>
+<li><span class="math inline">\(\dfrac{1}{8}\)</span></li>
+<li><span class="math inline">\(\dfrac{1}{3}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch14mcsolution8">MC Solution 8</a></p>
+<p>Why does the discreteness issue in the bootstrap distribution diminish as the sample size <span class="math inline">\(n\)</span> increases?</p>
+<ol type="a">
+<li>The number of possible bootstrap samples decreases</li>
+<li>The number of possible bootstrap samples increases</li>
+<li>The bootstrap distribution converges to a normal distribution</li>
+<li>Both b) and c)</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch14mcsolution9">MC Solution 9</a></p>
+<p>Given <span class="math inline">\(X_i\)</span> i.i.d. with distribution <span class="math inline">\(F\)</span>, what is the conditional expectation <span class="math inline">\(E(\bar{X}^*|X^n)\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(\mu\)</span></li>
+<li><span class="math inline">\(\sigma^2\)</span></li>
+<li><span class="math inline">\(\bar{X}\)</span></li>
+<li><span class="math inline">\(s^2\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch14mcsolution10">MC Solution 10</a></p>
+<p>What is the conditional variance <span class="math inline">\(\text{Var}(\sqrt{n}(\bar{X}^* - \bar{X})|X^n)\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(\sigma^2\)</span></li>
+<li><span class="math inline">\(s^2\)</span></li>
+<li><span class="math inline">\(\dfrac{\sigma^2}{n}\)</span></li>
+<li><span class="math inline">\(\dfrac{s^2}{n}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch14mcsolution11">MC Solution 11</a></p>
+<p><strong>Theorem 14.1</strong> (Bickel and Freedman, 1981) states that, under certain conditions, the distribution of <span class="math inline">\(\sqrt{n}(\bar{X}^* - \bar{X})\)</span> converges to:</p>
+<ol type="a">
+<li><span class="math inline">\(N(\mu, \sigma^2)\)</span></li>
+<li><span class="math inline">\(N(0, \sigma^2)\)</span></li>
+<li><span class="math inline">\(t_n\)</span></li>
+<li><span class="math inline">\(\chi_n^2\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch14mcsolution12">MC Solution 12</a></p>
+<p>In the context of bootstrap confidence intervals, what does <span class="math inline">\(\hat{H}_B^{-1}(1-\alpha; \hat{\theta})\)</span> represent?</p>
+<ol type="a">
+<li>The <span class="math inline">\((1-\alpha)\)</span> quantile of the true sampling distribution</li>
+<li>The <span class="math inline">\((1-\alpha)\)</span> quantile of the bootstrap distribution</li>
+<li>The <span class="math inline">\(\alpha\)</span> quantile of the bootstrap distribution</li>
+<li>The sample mean</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch14mcsolution13">MC Solution 13</a></p>
+<p>For a two-sided bootstrap confidence interval with coverage <span class="math inline">\(1-\alpha\)</span>, which quantiles of the bootstrap distribution are used?</p>
+<ol type="a">
+<li><span class="math inline">\(\alpha\)</span> and <span class="math inline">\(1-\alpha\)</span></li>
+<li><span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span></li>
+<li><span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span></li>
+<li><span class="math inline">\(-\alpha\)</span> and <span class="math inline">\(\alpha\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch14mcsolution14">MC Solution 14</a></p>
+<p>A statistic <span class="math inline">\(T(X^n, \theta)\)</span> is called an <strong>asymptotic pivot</strong> if its asymptotic distribution:</p>
+<ol type="a">
+<li>Depends on <span class="math inline">\(\theta\)</span></li>
+<li>Does not depend on <span class="math inline">\(\theta\)</span></li>
+<li>Is normal</li>
+<li>Is t-distributed</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch14mcsolution15">MC Solution 15</a></p>
+<p>When using the bootstrap to test the hypothesis <span class="math inline">\(\mu = \mu_0\)</span>, the bootstrap test statistic <span class="math inline">\(T_s^*\)</span> is calculated as:</p>
+<ol type="a">
+<li><span class="math inline">\(T_s^* = \sqrt{n}(\bar{X}_s^* - \mu_0)\)</span></li>
+<li><span class="math inline">\(T_s^* = \dfrac{\sqrt{n}(\bar{X}_s^* - \mu_0)}{s^*}\)</span></li>
+<li><span class="math inline">\(T_s^* = \dfrac{\sqrt{n}(\bar{X}_s^* - \bar{X})}{s^*}\)</span></li>
+<li><span class="math inline">\(T_s^* = \sqrt{n}(\bar{X}_s^* - \bar{X})\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch14mcsolution16">MC Solution 16</a></p>
+<p><strong>Subsampling</strong> involves:</p>
+<ol type="a">
+<li>Sampling with replacement from the original sample</li>
+<li>Sampling without replacement from the original sample</li>
+<li>Sampling from a normal distribution</li>
+<li>Sampling from the true population</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch14mcsolution17">MC Solution 17</a></p>
+<p>In <strong>subsampling</strong>, if <span class="math inline">\(b\)</span> is the subsample size and <span class="math inline">\(n\)</span> is the original sample size, the number of overlapping subsamples is:</p>
+<ol type="a">
+<li><span class="math inline">\(b\)</span></li>
+<li><span class="math inline">\(n\)</span></li>
+<li><span class="math inline">\(n-b+1\)</span></li>
+<li><span class="math inline">\(n/b\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch14mcsolution18">MC Solution 18</a></p>
+<p>How does the choice of <span class="math inline">\(S\)</span> (number of simulations) affect the accuracy of the bootstrap distribution?</p>
+<ol type="a">
+<li>Larger <span class="math inline">\(S\)</span> leads to lower accuracy</li>
+<li>Larger <span class="math inline">\(S\)</span> leads to higher accuracy</li>
+<li><span class="math inline">\(S\)</span> does not affect accuracy</li>
+<li>Accuracy depends only on the sample size <span class="math inline">\(n\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch14mcsolution19">MC Solution 19</a></p>
+<p>Why might using <span class="math inline">\(\sin(X_i)\)</span> be preferred over <span class="math inline">\(\cos(X_i)\)</span> when <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(0,1)\)</span> in the context of simulation or bootstrap?</p>
+<ol type="a">
+<li><span class="math inline">\(\cos(X_i)\)</span> has a known distribution</li>
+<li><span class="math inline">\(E[\sin(X_i)] = 0\)</span></li>
+<li><span class="math inline">\(E[\cos(X_i)] = 0\)</span></li>
+<li><span class="math inline">\(\sin(X_i)\)</span> is easier to compute</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch14mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch14mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch14mcsolution20">MC Solution 20</a></p>
+<p>When applying the bootstrap to estimate the distribution of the sample median, which of the following is a potential issue?</p>
+<ol type="a">
+<li>The bootstrap distribution may be continuous</li>
+<li>The bootstrap distribution may be discrete</li>
+<li>The bootstrap distribution will always be normal</li>
+<li>The bootstrap distribution will always be uniform</li>
+</ol>
+</section>
+</section>
+<section class="level2" id="solutions-1">
+<h2 class="anchored" data-anchor-id="solutions-1">Solutions</h2>
+<section class="level3" id="sec-ch14mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch14mcexercise1">MC Exercise 1</a></p>
+<p><strong>Correct answer:</strong> b) To approximate the distribution of a statistic</p>
+<p><strong>Explanation:</strong></p>
+<p>Section 14.1 discusses <strong>simulation methods</strong> as a way to approximate the distribution of a statistic <span class="math inline">\(T(X^n, \theta)\)</span> when it is difficult to derive the distribution analytically. While simulation methods involve generating random numbers (a), estimating parameters (c), and can be used in hypothesis testing (d), the primary goal in this context is to approximate the distribution of the statistic.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch14mcexercise2">MC Exercise 2</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(\hat{H}_S(x; \theta) = \dfrac{1}{S} \sum_{s=1}^S \mathbb{1}(T_s^* \le x)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The empirical distribution <span class="math inline">\(\hat{H}_S(x; \theta)\)</span> is calculated as the proportion of simulated statistics <span class="math inline">\(T_s^*\)</span> that are less than or equal to <span class="math inline">\(x\)</span>. Here, <span class="math inline">\(S\)</span> is the number of simulations, and <span class="math inline">\(\mathbb{1}(T_s^* \le x)\)</span> is an indicator function that equals 1 if <span class="math inline">\(T_s^* \le x\)</span> and 0 otherwise. This formula directly corresponds to the definition given in Section 14.1.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch14mcexercise3">MC Exercise 3</a></p>
+<p><strong>Correct answer:</strong> c) The estimated distribution <span class="math inline">\(F(\cdot|\hat{\theta})\)</span> is used for sampling</p>
+<p><strong>Explanation:</strong></p>
+<p>When <span class="math inline">\(\theta\)</span> is unknown, it is estimated from the data by <span class="math inline">\(\hat{\theta}\)</span>. The simulation procedure is then modified to sample from the distribution <span class="math inline">\(F(\cdot|\hat{\theta})\)</span>, using the estimated parameter value. This is described in the latter part of Section 14.1.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch14mcexercise4">MC Exercise 4</a></p>
+<p><strong>Correct answer:</strong> a) Treating the sample as the population</p>
+<p><strong>Explanation:</strong></p>
+<p>The <strong>Bootstrap principle</strong>, introduced in Section 14.2, involves treating the empirical distribution <span class="math inline">\(F_n\)</span> (which is based on the sample) as the population distribution. This allows us to resample from the sample as if we were sampling from the true population.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch14mcexercise5">MC Exercise 5</a></p>
+<p><strong>Correct answer:</strong> b) The iterative nature of the bootstrap method</p>
+<p><strong>Explanation:</strong></p>
+<p>The <strong>Russian Doll Principle</strong> is a metaphor for the iterative nature of the bootstrap. Just like Russian nesting dolls, where each doll contains a smaller version of itself, the bootstrap can be applied repeatedly, with each level of resampling building upon the previous one. This is mentioned in Section 14.2.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch14mcexercise6">MC Exercise 6</a></p>
+<p><strong>Correct answer:</strong> b) A sample from the empirical distribution <span class="math inline">\(F_n\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>In the <strong>Bootstrap Algorithm</strong>, <span class="math inline">\(X^{n*}\)</span> represents a bootstrap sample, which is obtained by sampling with replacement from the empirical distribution <span class="math inline">\(F_n\)</span>. This means drawing <span class="math inline">\(n\)</span> values from the original sample <span class="math inline">\(\{X_1, \dots, X_n\}\)</span>, where each <span class="math inline">\(X_i\)</span> has an equal probability of being selected.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch14mcexercise7">MC Exercise 7</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(\dfrac{1}{2}\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>When generating a bootstrap sample of size <span class="math inline">\(n=2\)</span> from a sample <span class="math inline">\(\{X_1, X_2\}\)</span>, there are four equally likely possibilities: <span class="math inline">\(\{X_1, X_1\}\)</span>, <span class="math inline">\(\{X_1, X_2\}\)</span>, <span class="math inline">\(\{X_2, X_1\}\)</span>, and <span class="math inline">\(\{X_2, X_2\}\)</span>. Each of these has a probability of <span class="math inline">\(\left(\dfrac{1}{2}\right)^2 = \dfrac{1}{4}\)</span>. Since <span class="math inline">\(\{X_1, X_2\}\)</span> and <span class="math inline">\(\{X_2, X_1\}\)</span> are both considered as bootstrap samples with <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, the total probability of obtaining a bootstrap sample with both <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> is <span class="math inline">\(\dfrac{1}{4} + \dfrac{1}{4} = \dfrac{1}{2}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch14mcexercise8">MC Exercise 8</a></p>
+<p><strong>Correct answer:</strong> d) Both b) and c)</p>
+<p><strong>Explanation:</strong></p>
+<p>As the sample size <span class="math inline">\(n\)</span> increases, the number of possible distinct bootstrap samples increases significantly. This leads to a more refined bootstrap distribution. Additionally, for many statistics, the bootstrap distribution converges to a normal distribution as <span class="math inline">\(n\)</span> increases (due to the Central Limit Theorem). Both of these factors contribute to the reduction of the discreteness issue.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch14mcexercise9">MC Exercise 9</a></p>
+<p><strong>Correct answer:</strong> c) <span class="math inline">\(\bar{X}\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The conditional expectation <span class="math inline">\(E(\bar{X}^*|X^n)\)</span> is the expected value of the bootstrap sample mean given the original sample. Since the bootstrap samples are drawn from the original sample with replacement, the expected value of each <span class="math inline">\(X_i^*\)</span> is the sample mean <span class="math inline">\(\bar{X}\)</span>. Therefore, <span class="math inline">\(E(\bar{X}^*|X^n) = \bar{X}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch14mcexercise10">MC Exercise 10</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(s^2\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The conditional variance <span class="math inline">\(\text{Var}(\sqrt{n}(\bar{X}^* - \bar{X})|X^n)\)</span> simplifies to <span class="math inline">\(n \cdot \text{Var}(\bar{X}^*|X^n)\)</span>. Since <span class="math inline">\(\text{Var}(\bar{X}^*|X^n) = \dfrac{s^2}{n}\)</span>, we have <span class="math inline">\(n \cdot \text{Var}(\bar{X}^*|X^n) = n \cdot \dfrac{s^2}{n} = s^2\)</span>, where <span class="math inline">\(s^2\)</span> is the sample variance of the original data.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch14mcexercise11">MC Exercise 11</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(N(0, \sigma^2)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p><strong>Theorem 14.1</strong> states that under certain conditions, the distribution of <span class="math inline">\(\sqrt{n}(\bar{X}^* - \bar{X})\)</span> given the data converges to a normal distribution with mean 0 and variance <span class="math inline">\(\sigma^2\)</span>, where <span class="math inline">\(\sigma^2\)</span> is the population variance.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch14mcexercise12">MC Exercise 12</a></p>
+<p><strong>Correct answer:</strong> b) The <span class="math inline">\((1-\alpha)\)</span> quantile of the bootstrap distribution</p>
+<p><strong>Explanation:</strong></p>
+<p><span class="math inline">\(\hat{H}_B^{-1}(1-\alpha; \hat{\theta})\)</span> represents the <span class="math inline">\((1-\alpha)\)</span> quantile of the bootstrap distribution. It is the value such that a proportion <span class="math inline">\((1-\alpha)\)</span> of the bootstrap statistics <span class="math inline">\(T_s^*\)</span> are less than or equal to it.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch14mcexercise13">MC Exercise 13</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>For a two-sided bootstrap confidence interval with coverage <span class="math inline">\(1-\alpha\)</span>, the <span class="math inline">\(\alpha/2\)</span> and <span class="math inline">\(1-\alpha/2\)</span> quantiles of the bootstrap distribution are used as the lower and upper bounds, respectively. This ensures that the interval contains the middle <span class="math inline">\(1-\alpha\)</span> proportion of the bootstrap statistics.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch14mcexercise14">MC Exercise 14</a></p>
+<p><strong>Correct answer:</strong> b) Does not depend on <span class="math inline">\(\theta\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>A statistic <span class="math inline">\(T(X^n, \theta)\)</span> is called an <strong>asymptotic pivot</strong> if its asymptotic distribution does not depend on any unknown parameters, including <span class="math inline">\(\theta\)</span>. This property is useful for constructing hypothesis tests and confidence intervals.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch14mcexercise15">MC Exercise 15</a></p>
+<p><strong>Correct answer:</strong> c) <span class="math inline">\(T_s^* = \dfrac{\sqrt{n}(\bar{X}_s^* - \bar{X})}{s^*}\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>When testing the hypothesis <span class="math inline">\(\mu = \mu_0\)</span>, we center the bootstrap sample means around <span class="math inline">\(\bar{X}\)</span> instead of <span class="math inline">\(\mu_0\)</span>. Therefore, the correct formula for the bootstrap test statistic is <span class="math inline">\(T_s^* = \dfrac{\sqrt{n}(\bar{X}_s^* - \bar{X})}{s^*}\)</span>, where <span class="math inline">\(\bar{X}_s^*\)</span> is the mean of the <span class="math inline">\(s\)</span>th bootstrap sample and <span class="math inline">\(s^*\)</span> is its standard deviation.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch14mcexercise16">MC Exercise 16</a></p>
+<p><strong>Correct answer:</strong> b) Sampling without replacement from the original sample</p>
+<p><strong>Explanation:</strong></p>
+<p><strong>Subsampling</strong> involves creating smaller samples (subsamples) by sampling <em>without</em> replacement from the original sample. This is in contrast to the bootstrap, which samples <em>with</em> replacement.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch14mcexercise17">MC Exercise 17</a></p>
+<p><strong>Correct answer:</strong> c) <span class="math inline">\(n-b+1\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>If <span class="math inline">\(b\)</span> is the subsample size and <span class="math inline">\(n\)</span> is the original sample size, there are <span class="math inline">\(n-b+1\)</span> overlapping subsamples. Each subsample starts at a different index, from 1 to <span class="math inline">\(n-b+1\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch14mcexercise18">MC Exercise 18</a></p>
+<p><strong>Correct answer:</strong> b) Larger <span class="math inline">\(S\)</span> leads to higher accuracy</p>
+<p><strong>Explanation:</strong></p>
+<p>As the number of simulations <span class="math inline">\(S\)</span> increases, the empirical distribution of the bootstrap statistics converges to the true bootstrap distribution. Therefore, a larger <span class="math inline">\(S\)</span> generally leads to a more accurate approximation.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch14mcexercise19">MC Exercise 19</a></p>
+<p><strong>Correct answer:</strong> b) <span class="math inline">\(E[\sin(X_i)] = 0\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>When <span class="math inline">\(X_i\)</span> are i.i.d. <span class="math inline">\(N(0,1)\)</span>, <span class="math inline">\(E[\sin(X_i)] = 0\)</span> because the sine function is an odd function and the standard normal distribution is symmetric around zero. This property can simplify calculations in simulation or bootstrap, as we often work with statistics that have been centered by subtracting their mean.</p>
+</section>
+<section class="level3" id="sec-ch14mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch14mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch14mcexercise20">MC Exercise 20</a></p>
+<p><strong>Correct answer:</strong> b) The bootstrap distribution may be discrete</p>
+<p><strong>Explanation:</strong></p>
+<p>When applying the bootstrap to estimate the distribution of the sample median, the bootstrap distribution may be quite <strong>discrete</strong>, especially for small samples. This is because the median can only take a limited number of distinct values in a small sample. The other options are not generally true: the bootstrap distribution can be discrete or continuous, and it is not always normal or uniform.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

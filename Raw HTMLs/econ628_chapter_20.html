@@ -1,0 +1,2069 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 20: Hypothesis Testing for Linear Regression – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap21.html" rel="next"/>
+<link href="../chapters/chap19.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 20: Hypothesis Testing for Linear Regression</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="hypotheses-of-interest">
+<h2 class="anchored" data-anchor-id="hypotheses-of-interest">20.1 Hypotheses of Interest</h2>
+<p>We will work with the classical assumption that, conditional on <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[
+y \sim N(X\beta, \sigma^2 I)
+\]</span></p>
+<p>This allows the derivation of exact tests. Later, we will relax this assumption and consider asymptotic approximations. We are interested in the following types of hypotheses:</p>
+<ol type="1">
+<li><strong>Single (Linear) Hypothesis</strong>: <span class="math inline">\(c^T \beta = \gamma\)</span>, e.g., <span class="math inline">\(\beta_2 = 0\)</span> (<em>t</em>-test).</li>
+<li><strong>Multiple (Linear) Hypothesis</strong>: <span class="math inline">\(R_{q \times K} \beta_{K \times 1} = r_{q \times 1}, q \leq K\)</span>, e.g., <span class="math inline">\(\beta_2 = \beta_3 = \dots = \beta_K = 0\)</span>.</li>
+<li><strong>Single Non-linear Hypothesis</strong>: <span class="math inline">\(\beta_1^2 + \beta_2^2 + \dots + \beta_K^2 = 1\)</span>.</li>
+</ol>
+<p>Note that these are all composite hypotheses, i.e., there are nuisance parameters like <span class="math inline">\(\sigma^2\)</span> that are not specified by the null hypothesis.</p>
+<section class="level3" id="example-20.1">
+<h3 class="anchored" data-anchor-id="example-20.1">Example 20.1</h3>
+<ol type="a">
+<li>The theoretical model is the Cobb-Douglas production function <span class="math inline">\(Q = AK^{\alpha}L^{\beta}\)</span>. Empirical version: take logs and add an error term to give a linear regression.</li>
+</ol>
+<p><span class="math display">\[
+q = a + \alpha k + \beta l + \epsilon
+\]</span></p>
+<p>It is often of interest whether constant returns to scale operate, i.e., would like to test whether <span class="math inline">\(\alpha + \beta = 1\)</span> is true. We may specify the alternative as <span class="math inline">\(\alpha + \beta &lt; 1\)</span>, because we can rule out increasing returns to scale.</p>
+<p><strong>Intuition:</strong> The Cobb-Douglas production function is widely used in economics to represent the relationship between inputs (capital <span class="math inline">\(K\)</span> and labor <span class="math inline">\(L\)</span>) and output <span class="math inline">\(Q\)</span>. The coefficients <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> represent the output elasticities of capital and labor, respectively. Constant returns to scale means that if we double both capital and labor, we double output. This translates mathematically to <span class="math inline">\(\alpha + \beta = 1\)</span>.</p>
+</section>
+<section class="level3" id="example-20.2">
+<h3 class="anchored" data-anchor-id="example-20.2">Example 20.2</h3>
+<ol start="2" type="a">
+<li>Market efficiency</li>
+</ol>
+<p><span class="math display">\[
+r_t = \mu + \gamma^T I_{t-1} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(r_t\)</span> are returns on some asset held between period <span class="math inline">\(t-1\)</span> and <span class="math inline">\(t\)</span>, while <span class="math inline">\(I_t\)</span> is public information at time <span class="math inline">\(t\)</span>. Theory predicts that <span class="math inline">\(\gamma = 0\)</span>; there is no particular reason to restrict the alternative here.</p>
+<p><strong>Intuition:</strong> The efficient market hypothesis states that asset prices fully reflect all available information. If past information (<span class="math inline">\(I_{t-1}\)</span>) could predict returns (<span class="math inline">\(r_t\)</span>), then the market would not be efficient because investors could use that information to earn abnormal profits. Therefore, the coefficient <span class="math inline">\(\gamma\)</span> linking past information to current returns should be zero.</p>
+</section>
+<section class="level3" id="example-20.3">
+<h3 class="anchored" data-anchor-id="example-20.3">Example 20.3</h3>
+<ol start="3" type="a">
+<li>Structural change</li>
+</ol>
+<p><span class="math display">\[
+y = \alpha + \beta x_t + \gamma D_t + \epsilon_t
+\]</span></p>
+<p>where <span class="math display">\[
+D_t =
+\begin{cases}
+0, &amp; t &lt; 1974 \\
+1, &amp; t \geq 1974
+\end{cases}
+\]</span></p>
+<p>Would like to test <span class="math inline">\(\gamma = 0\)</span>.</p>
+<p><strong>Intuition:</strong> This model allows for a change in the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> after 1974. The dummy variable <span class="math inline">\(D_t\)</span> captures this change. If <span class="math inline">\(\gamma = 0\)</span>, then there is no structural change, meaning the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> is the same before and after 1974.</p>
+</section>
+</section>
+<section class="level2" id="test-of-a-single-linear-hypothesis">
+<h2 class="anchored" data-anchor-id="test-of-a-single-linear-hypothesis">20.2 Test of a Single Linear Hypothesis</h2>
+<p>We wish to test the hypothesis <span class="math inline">\(c^T \beta = \gamma\)</span>, e.g., <span class="math inline">\(\beta_2 = 0\)</span>. Suppose that <span class="math inline">\(y \sim N(X\beta, \sigma^2 I)\)</span>. Then,</p>
+<p><span class="math display">\[
+\frac{c^T \hat{\beta} - \gamma}{\sigma \sqrt{c^T (X^T X)^{-1} c}} \sim N(0, 1)
+\]</span></p>
+<p>We don’t know <span class="math inline">\(\sigma\)</span> and must replace it by an estimate. There are two widely used estimates:</p>
+<p><span class="math display">\[
+\hat{\sigma}_{mle}^2 = \frac{\hat{\epsilon}^T \hat{\epsilon}}{n}
+\]</span></p>
+<p><span class="math display">\[
+s_*^2 = \frac{\hat{\epsilon}^T \hat{\epsilon}}{n - K}
+\]</span> The first estimate is the maximum likelihood estimator of <span class="math inline">\(\sigma^2\)</span>, which can be easily verified. The second estimate is a modification of the MLE, which happens to be unbiased. Now define the test statistic</p>
+<p><span class="math display">\[
+T = \frac{c^T \hat{\beta} - \gamma}{s_* \sqrt{c^T (X^T X)^{-1} c}}
+\]</span></p>
+<section class="level3" id="theorem-20.1">
+<h3 class="anchored" data-anchor-id="theorem-20.1">Theorem 20.1</h3>
+<p>Suppose that A4 and <span class="math inline">\(H_0\)</span> hold. Then, <span class="math inline">\(T \sim t(n - K)\)</span>.</p>
+<p><strong>Proof:</strong></p>
+<p>We show that:</p>
+<p><span class="math display">\[
+\frac{(n - K)s_*^2}{\sigma^2} \sim \chi^2(n - K) \qquad (20.2)
+\]</span></p>
+<p><span class="math display">\[
+s_*, c^T \hat{\beta} - \gamma \text{ are independent}.  \qquad (20.3)
+\]</span> This establishes the theorem by the defining property of a <em>t</em>-random variable. Recall that</p>
+<p><span class="math display">\[
+\frac{\hat{\epsilon}^T \hat{\epsilon}}{\sigma^2} = \sum_{i=1}^{n} \frac{\epsilon_i^2}{\sigma^2} \sim \chi^2(n)
+\]</span></p>
+<p>But <span class="math inline">\(\hat{\epsilon}\)</span> are residuals that use <span class="math inline">\(K\)</span> parameter estimates. Furthermore, <span class="math inline">\(\hat{\epsilon}^T \hat{\epsilon} = \epsilon^T M_X \epsilon\)</span> and</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\epsilon^T M_X \epsilon] &amp;= E[tr M_X \epsilon \epsilon^T] = tr M_X E(\epsilon \epsilon^T) \\
+&amp;= \sigma^2 tr M_X = \sigma^2 (n - tr P_X) \\
+&amp;= \sigma^2 (n - K) \\
+tr(X(X^T X)^{-1} X^T) &amp;= tr X^T X (X^T X)^{-1} = tr I_K = K
+\end{aligned}
+\]</span> These calculations show that <span class="math inline">\(E \hat{\epsilon}^T \hat{\epsilon} = n - K\)</span>, which suggests that <span class="math inline">\(\hat{\epsilon}^T \hat{\epsilon}\)</span> cannot be <span class="math inline">\(\chi^2(n)\)</span> [and incidentally that <span class="math inline">\(E s_*^2 = \sigma^2\)</span>]. Note that <span class="math inline">\(M_X\)</span> is a symmetric idempotent matrix, which means that it can be written <span class="math inline">\(M_X = U \Lambda U^T\)</span>, where <span class="math inline">\(U U^T = I\)</span> and <span class="math inline">\(\Lambda\)</span> is a diagonal matrix of eigenvalues, which in this case are either zero (<span class="math inline">\(K\)</span> times) or one (<span class="math inline">\(n - K\)</span> times). Furthermore, by a property of the normal distribution, <span class="math inline">\(U \epsilon = \epsilon^*\)</span> has exactly the same distribution as <span class="math inline">\(\epsilon\)</span> [it has the same mean and variance, which is sufficient to determine the normal distribution]. Therefore,</p>
+<p><span class="math display">\[
+\hat{\epsilon}^T \hat{\epsilon} = \sum_{i=1}^{n-K} \epsilon_i^{*2} \qquad (20.4)
+\]</span></p>
+<p>for some i.i.d. standard normal random variables <span class="math inline">\(\epsilon_i^*\)</span>. Therefore, (20.4) is <span class="math inline">\(\chi^2(n - K)\)</span> by the definition of a chi-squared random variable.</p>
+<p>Furthermore, under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(c^T \hat{\beta} - \gamma = c^T (X^T X)^{-1} X^T \epsilon\)</span> is uncorrelated with <span class="math inline">\(\hat{\epsilon} = M_X \epsilon\)</span>, since</p>
+<p><span class="math display">\[
+E[M_X \epsilon \epsilon^T X (X^T X)^{-1} c] = \sigma^2 M_X X (X^T X)^{-1} c = 0
+\]</span> Under normality, uncorrelatedness is equivalent to independence.</p>
+<p>We can now base the test of <span class="math inline">\(H_0\)</span> on</p>
+<p><span class="math display">\[
+T = \frac{c^T \hat{\beta} - \gamma}{s_* \sqrt{c^T (X^T X)^{-1} c}}
+\]</span></p>
+<p>using the <span class="math inline">\(t(n - k)\)</span> distribution for an exact test under normality. Can test either one-sided and two-sided alternatives, i.e., reject if <span class="math inline">\(|T| \geq t_{\alpha/2}(n - K)\)</span> [two-sided alternative] or if <span class="math inline">\(T \geq t_{\alpha}(n - K)\)</span> [one-sided alternative].</p>
+<p>Above is a general rule and would require some additional computations in addition to <span class="math inline">\(\hat{\beta}\)</span>. Sometimes one can avoid this: if the computer automatically prints out results of the hypothesis for <span class="math inline">\(\beta_i = 0\)</span>, and one can redesign the null regression suitably. For example, suppose that</p>
+<p><span class="math display">\[
+H_0: \beta_2 + \beta_3 = 1
+\]</span> Substitute the restriction into the regression <span class="math inline">\(y_i = \beta_1 + \beta_2 x_i + \beta_3 z_i + \epsilon_i\)</span>, which gives the restricted regression <span class="math inline">\(y_i - z_i = \beta_1 + \beta_2 (x_i - z_i) + \epsilon_i\)</span>. Now test whether <span class="math inline">\(\beta_3 = 0\)</span> in the regression <span class="math inline">\(y_i - z_i = \beta_1 + \beta_2 (x_i - z_i) + \beta_3 z_i+ \epsilon_i\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="test-of-multiple-linear-hypothesis">
+<h2 class="anchored" data-anchor-id="test-of-multiple-linear-hypothesis">20.3 Test of Multiple Linear Hypothesis</h2>
+<p>We now consider a test of the multiple hypothesis <span class="math inline">\(R\beta = r\)</span>. Define the quadratic form</p>
+<p><span class="math display">\[
+F = \frac{(R \hat{\beta} - r)^T [s_*^2 R (X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r) / q}{(n-K)s_*^2/(n-K)} = \frac{(R \hat{\beta} - r)^T [R (X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r) / q}{(n-K)s_*^2 / (n - K)} \qquad (20.5)
+\]</span></p>
+<p>If <span class="math inline">\(y \sim N(X\beta, \sigma^2 I)\)</span>, then</p>
+<p><span class="math display">\[
+F = \frac{\chi^2(q) / q}{\chi^2(n - K) / (n - K)} \sim F(q, n - K)
+\]</span></p>
+<p>under <span class="math inline">\(H_0\)</span>. The rule is that if</p>
+<p><span class="math display">\[
+F \geq F_{\alpha}(q, n - K)
+\]</span></p>
+<p>then reject <span class="math inline">\(H_0\)</span> at level <span class="math inline">\(\alpha\)</span>. Note that we can only test against a two-sided alternative <span class="math inline">\(R \beta \neq r\)</span> because we have squared value in (20.5).</p>
+<section class="level3" id="example-20.4">
+<h3 class="anchored" data-anchor-id="example-20.4">Example 20.4</h3>
+<p>Standard <em>F</em>-test, which is outputted from the computer, is of the hypothesis</p>
+<p><span class="math display">\[
+\beta_2 = 0, \dots, \beta_K = 0
+\]</span></p>
+<p>where the intercept <span class="math inline">\(\beta_1\)</span> is included in the regression but exempt from the restriction. In this case, <span class="math inline">\(q = K - 1\)</span>, and <span class="math inline">\(H_0: R\beta = 0\)</span>, where</p>
+<p><span class="math display">\[
+R = \begin{bmatrix} 0_{K-1} &amp; I_{K-1} \end{bmatrix}
+\]</span></p>
+<p>The test statistic is compared with the critical value from the <span class="math inline">\(F(K - 1, n - K)\)</span> distribution.</p>
+</section>
+<section class="level3" id="example-20.5">
+<h3 class="anchored" data-anchor-id="example-20.5">Example 20.5</h3>
+<p>Structural Change. Null hypothesis is <span class="math inline">\(y = X\beta + \epsilon\)</span>. Alternative is</p>
+<p><span class="math display">\[
+\begin{aligned}
+y_1 &amp;= X_1 \beta_1 + \epsilon_1, \quad 1 \leq i \leq n_1 \\
+y_2 &amp;= X_2 \beta_2 + \epsilon_2, \quad n_1 &lt; i \leq n
+\end{aligned}
+\]</span> where <span class="math inline">\(n = n_1 + n_2\)</span>. Let</p>
+<p><span class="math display">\[
+y = \begin{bmatrix} y_1 \\ y_2 \end{bmatrix}, X = \begin{bmatrix} X_1 &amp; 0 \\ 0 &amp; X_2 \end{bmatrix}, \beta = \begin{bmatrix} \beta_1 \\ \beta_{2_{2K \times 1}} \end{bmatrix}, \epsilon = \begin{bmatrix} \epsilon_1 \\ \epsilon_{2_{n \times 1}} \end{bmatrix}
+\]</span></p>
+<p>Then, we can write the alternative regression as</p>
+<p><span class="math display">\[
+y = X\beta + \epsilon
+\]</span></p>
+<p>Consider the null hypothesis <span class="math inline">\(H_0: \beta_1 = \beta_2\)</span>. Let <span class="math inline">\(R_{K \times 2K} = [I_K : -I_K]\)</span>. Compare with <span class="math inline">\(F(K, n - 2K)\)</span>.</p>
+<p>A confidence interval is just a critical region centered not at <span class="math inline">\(H_0\)</span>, but at a function of parameter estimates. For example,</p>
+<p><span class="math display">\[
+c^T \hat{\beta} \pm t_{\alpha/2}(n - K) s_* \{ c^T (X^T X)^{-1} c \}^{1/2}
+\]</span></p>
+<p>is a two-sided confidence interval for the scalar quantity <span class="math inline">\(c^T \beta\)</span>. One can also construct one-sided confidence intervals and multivariate confidence intervals, which are ellipses geometrically.</p>
+</section>
+</section>
+<section class="level2" id="test-of-multiple-linear-hypothesis-based-on-fit">
+<h2 class="anchored" data-anchor-id="test-of-multiple-linear-hypothesis-based-on-fit">20.4 Test of Multiple Linear Hypothesis Based on Fit</h2>
+<p>The idea behind the <em>F</em> test is that under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(R\beta - r\)</span> should be stochastically small, but under the alternative hypothesis, it will not be so. An alternative approach is based on fit. Suppose we estimate <span class="math inline">\(\beta\)</span> subject to the restriction <span class="math inline">\(R\beta = r\)</span>, then the sum of squared residuals from that regression should be close to that from the unconstrained regression when the null hypothesis is true [but if it is false, the two regressions will have different fitting power]. To understand this we must investigate the restricted least squares estimation procedure.</p>
+<ol type="1">
+<li><strong>Unrestricted regression:</strong></li>
+</ol>
+<p><span class="math display">\[
+\hat{\beta} = \text{arg min}_b (y - Xb)^T (y - Xb)
+\]</span></p>
+<p>and let <span class="math inline">\(\hat{\epsilon} = y - X \hat{\beta}\)</span> and <span class="math inline">\(Q = \hat{\epsilon}^T \hat{\epsilon}\)</span>.</p>
+<ol start="2" type="1">
+<li><strong>Restricted regression:</strong></li>
+</ol>
+<p><span class="math display">\[
+\beta^* = \text{arg min}_b (y - Xb)^T (y - Xb) \text{ s.t. } Rb = r
+\]</span></p>
+<p>and let <span class="math inline">\(\epsilon^* = y - X \beta^*\)</span> and <span class="math inline">\(Q^* = \epsilon^{*T} \epsilon^*\)</span>.</p>
+<p>To solve the restricted least squares problem we use the Lagrangian method. We know that <span class="math inline">\(\beta^*\)</span> and <span class="math inline">\(\lambda^*\)</span> solve the first-order condition of the Lagrangian</p>
+<p><span class="math display">\[
+\mathcal{L}(b, \lambda) = \frac{1}{2} (y - Xb)^T (y - Xb) + \lambda^T (Rb - r)
+\]</span> The first-order conditions are:</p>
+<p><span class="math display">\[
+\begin{aligned}
+-X^T y + X^T X \beta^* + R^T \lambda^* &amp;= 0 \qquad (20.6) \\
+R \beta^* &amp;= r \qquad (20.7)
+\end{aligned}
+\]</span></p>
+<p>Now, from (20.6), <span class="math inline">\(R^T \lambda^* = X^T y - X^T X \beta^* = X^T \epsilon^*\)</span>, which implies that</p>
+<p><span class="math display">\[
+(X^T X)^{-1} R^T \lambda^* = (X^T X)^{-1} X^T y - (X^T X)^{-1} X^T X \beta^* = \hat{\beta} - \beta^*
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+R (X^T X)^{-1} R^T \lambda^* = R \hat{\beta} - R \beta^* = R \hat{\beta} - r
+\]</span> Therefore, <span class="math inline">\(\lambda^* = [R(X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r)\)</span>, and</p>
+<p><span class="math display">\[
+\beta^* = \hat{\beta} - (X^T X)^{-1} R^T [R (X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r) \qquad (20.8)
+\]</span></p>
+<p>This gives the restricted least squares estimator in terms of the restrictions and the unrestricted least squares estimator. From this relation, we can derive the statistical properties of the estimator <span class="math inline">\(\beta^*\)</span>.</p>
+<p>We now return to the testing question. The idea is that under <span class="math inline">\(H_0\)</span>, <span class="math inline">\(Q^* \approx Q\)</span>, but under the alternative, the two quantities differ. The following theorem makes this more precise.</p>
+<section class="level3" id="theorem-20.2">
+<h3 class="anchored" data-anchor-id="theorem-20.2">Theorem 20.2</h3>
+<p>Suppose that A4 and <span class="math inline">\(H_0\)</span> hold. Then,</p>
+<p><span class="math display">\[
+\frac{Q^* - Q}{q} \frac{n - K}{Q} = F \sim F(q, n - K)
+\]</span></p>
+<p><strong>Proof:</strong></p>
+<p>We show that</p>
+<p><span class="math display">\[
+Q^* - Q = (R \hat{\beta} - r)^T [R (X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r)
+\]</span> Then, since <span class="math inline">\(s_*^2 = Q / (n - K)\)</span> the result is established.</p>
+<p>First, write <span class="math inline">\(\beta^* = \hat{\beta} + \beta^* - \hat{\beta}\)</span> and</p>
+<p><span class="math display">\[
+\begin{aligned}
+(y - X \beta^*)^T (y - X \beta^*) &amp;= [y - X \hat{\beta} - X(\beta^* - \hat{\beta})]^T [y - X \hat{\beta} - X(\beta^* - \hat{\beta})] \\
+&amp;= (y - X \hat{\beta})^T (y - X \hat{\beta}) + (\hat{\beta} - \beta^*)^T X^T X (\hat{\beta} - \beta^*) - (y - X \hat{\beta})^T X (\beta^* - \hat{\beta}) \\
+&amp;= \hat{\epsilon}^T \hat{\epsilon} + (\hat{\beta} - \beta^*)^T X^T X (\hat{\beta} - \beta^*)
+\end{aligned}
+\]</span></p>
+<p>using the orthogonality property of the unrestricted least squares estimator. Therefore,</p>
+<p><span class="math display">\[
+Q^* - Q = (\hat{\beta} - \beta^*)^T X^T X (\hat{\beta} - \beta^*)
+\]</span> Substituting our formulae for <span class="math inline">\(\hat{\beta} - \beta^*\)</span> and <span class="math inline">\(\lambda^*\)</span> obtained above and canceling out, we get</p>
+<p><span class="math display">\[
+Q^* - Q = (R \hat{\beta} - r)^T [R (X^T X)^{-1} R^T]^{-1} (R \hat{\beta} - r)
+\]</span></p>
+<p>as required.</p>
+<p>An intermediate representation is</p>
+<p><span class="math display">\[
+Q^* - Q = \lambda^{*T} R (X^T X)^{-1} R^T \lambda^*
+\]</span> This brings out the use of the Lagrange Multipliers in defining the test statistic and leads to the use of this name.</p>
+<p>Importance of the result: the fit version was easier to apply in the old days, before fast computers, because one can just do two separate regressions and use the sum of squared residuals.</p>
+</section>
+<section class="level3" id="example-20.6">
+<h3 class="anchored" data-anchor-id="example-20.6">Example 20.6</h3>
+<p>Zero restrictions</p>
+<p><span class="math display">\[
+\beta_2 = \dots = \beta_K = 0
+\]</span></p>
+<p>Then restricted regression is easy. In this case, <span class="math inline">\(q = K - 1\)</span>. Note that the <span class="math inline">\(R^2\)</span> can be used to do an <em>F</em>-test of this hypothesis. We have</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{Q}{Q^*} = \frac{Q^* - Q}{Q^*}
+\]</span></p>
+<p>which implies that</p>
+<p><span class="math display">\[
+F = \frac{R^2 / (K - 1)}{(1 - R^2) / (n - k)} \qquad (20.9)
+\]</span></p>
+</section>
+<section class="level3" id="example-20.7">
+<h3 class="anchored" data-anchor-id="example-20.7">Example 20.7</h3>
+<p>Structural change. Allow coefficients to be different in two periods. Partition</p>
+<p><span class="math display">\[
+y = \begin{bmatrix} y_{1_{n_1}} \\ y_{2_{n_2}} \end{bmatrix} \quad y_1 = X_1 \beta_1 + \epsilon_1 \quad \text{ or } y = \begin{bmatrix} X_1 &amp; 0 \\ 0 &amp; X_2 \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \end{bmatrix} + \epsilon
+\]</span> Null is of no structural change, i.e., <span class="math inline">\(H_0: \beta_1 = \beta_2, R = (I : -I)\)</span>.</p>
+<p>Consider the more general linear restriction</p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_1 + \beta_2 - 3\beta_4 &amp;= 1 \\
+\beta_6 + \beta_1 &amp;= 2
+\end{aligned}
+\]</span> Harder to work with. Nevertheless, can always reparameterize to obtain a restricted model as a simple regression.</p>
+</section>
+<section class="level3" id="example-20.8">
+<h3 class="anchored" data-anchor-id="example-20.8">Example 20.8</h3>
+<p>Chow Tests: Structural change with intercepts. The unrestricted model is</p>
+<p><span class="math display">\[
+\begin{bmatrix} y_1 \\ y_2 \end{bmatrix} = \begin{bmatrix} i_1 &amp; 0 &amp; X_1 &amp; 0 \\ 0 &amp; i_2 &amp; 0 &amp; X_2 \end{bmatrix} \begin{bmatrix} \alpha_1 \\ \alpha_2 \\ \beta_1 \\ \beta_2 \end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \end{bmatrix}
+\]</span></p>
+<p>and let <span class="math inline">\(\theta = (\alpha_1, \alpha_2, \beta_1, \beta_2) \in \mathbb{R}^{2K + 2}\)</span>. Different slopes and intercepts allowed. The first null hypothesis is that the slopes are the same, i.e., for some <span class="math inline">\(\beta \in \mathbb{R}^K\)</span></p>
+<p><span class="math display">\[
+H_0: \beta_1 = \beta_2 = \beta \qquad (20.10)
+\]</span></p>
+<p>The restricted regression is</p>
+<p><span class="math display">\[
+\begin{bmatrix} y_1 \\ y_2 \end{bmatrix} = \begin{bmatrix} i_1 &amp; 0 &amp; X_1 \\ 0 &amp; i_2 &amp; X_2 \end{bmatrix} \begin{bmatrix} \alpha_1 \\ \alpha_2 \\ \beta \end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \end{bmatrix}
+\]</span></p>
+<p>The test statistic is</p>
+<p><span class="math display">\[
+F = \frac{(\epsilon^{*T} \epsilon^* - \hat{\epsilon}^T \hat{\epsilon}) / K}{\hat{\epsilon}^T \hat{\epsilon} / (n - (2K + 2))}
+\]</span></p>
+<p>which is compared with the quantiles from the <span class="math inline">\(F(K, n - 2K - 2)\)</span> distribution.</p>
+</section>
+<section class="level3" id="example-20.9">
+<h3 class="anchored" data-anchor-id="example-20.9">Example 20.9</h3>
+<p>The second null hypothesis is that the intercepts are the same, i.e.,</p>
+<p><span class="math display">\[
+H_0: \alpha_1 = \alpha_2 = \alpha \qquad (20.11)
+\]</span></p>
+<p>Restricted regression <span class="math inline">\((\alpha, \beta_1, \beta_2)\)</span></p>
+<p><span class="math display">\[
+\begin{bmatrix} y_1 \\ y_2 \end{bmatrix} = \begin{bmatrix} i_1 &amp; X_1 &amp; 0 \\ i_2 &amp; 0 &amp; X_2 \end{bmatrix} \begin{bmatrix} \alpha \\ \beta_1 \\ \beta_2 \end{bmatrix} + \begin{bmatrix} \epsilon_1 \\ \epsilon_2 \end{bmatrix}
+\]</span></p>
+<p>Now suppose that <span class="math inline">\(n_2 &lt; K\)</span>. The restricted regression is ok, but the unrestricted regression runs into problems in the second period because <span class="math inline">\(n_2\)</span> is too small. In fact, <span class="math inline">\(\hat{\epsilon}_2 = 0\)</span>. In this case, we must simply acknowledge the fact that the degrees of freedom lost are <span class="math inline">\(n_2\)</span> not <span class="math inline">\(K\)</span>. Thus</p>
+<p><span class="math display">\[
+F = \frac{(Q^* - Q) / n_2}{Q / (n_1 - K)} \sim F(n_2, n_1 - K)
+\]</span></p>
+<p>is a valid test in this case.</p>
+</section>
+</section>
+<section class="level2" id="likelihood-based-testing">
+<h2 class="anchored" data-anchor-id="likelihood-based-testing">20.5 Likelihood Based Testing</h2>
+<p>We have considered several different approaches which all led to the <em>F</em> test in linear regression. We now consider a general class of test statistics based on the Likelihood function. In principle, these apply to any parametric model, but we shall at this stage just consider its application to linear regression.</p>
+<p>The Likelihood is denoted <span class="math inline">\(L(y, X; \theta)\)</span>, where <span class="math inline">\(y, X\)</span> are the observed data and <span class="math inline">\(\theta\)</span> is a vector of unknown parameters. The maximum likelihood estimator can be determined from <span class="math inline">\(L(y, X; \theta)\)</span>, as we have already discussed. This quantity is also useful for testing. Consider again the linear restrictions</p>
+<p><span class="math display">\[
+H_0: R\theta = r
+\]</span></p>
+<p>where <span class="math inline">\(R\)</span> is of full rank <span class="math inline">\(q\)</span>. The maximum likelihood estimator of <span class="math inline">\(\theta\)</span> is denoted by <span class="math inline">\(\hat{\theta}\)</span>, while the restricted MLE is denoted by <span class="math inline">\(\theta^*\)</span>, [this is maximizes <span class="math inline">\(L\)</span> subject to the restrictions <span class="math inline">\(R \theta - r = 0\)</span>]. Now define the following test statistics:</p>
+<p><span class="math display">\[
+\begin{aligned}
+LR: 2 \left[ \log \frac{L(\hat{\theta})}{L(\theta^*)} \right] &amp;= 2 [\log L(\hat{\theta}) - \log L(\theta^*)] \\
+\text{Wald}: (R \hat{\theta} - r)^T \left[ R \left. \frac{\partial^2 \log L}{\partial \theta \partial \theta^T} \right|_{\hat{\theta}}^{-1} R^T \right]^{-1} (R \hat{\theta} - r) \\
+LM: \left. \frac{\partial \log L}{\partial \theta} \right|_{\theta^*}^T \left[ -\left. \frac{\partial^2 \log L}{\partial \theta \partial \theta^T} \right|_{\theta^*} \right]^{-1} \left. \frac{\partial \log L}{\partial \theta} \right|_{\theta^*}
+\end{aligned}
+\]</span> The Wald test only requires computation of the unrestricted estimator, while the Lagrange Multiplier only requires computation of the restricted estimator. The Likelihood ratio requires computation of both. There are circumstances where the restricted estimator is easier to compute, and there are situations where the unrestricted estimator is easier to compute. These computational differences are what has motivated the use of either the Wald or the LM test. The LR test has certain advantages, but computationally it is the most demanding. Under the null hypothesis, we may show that</p>
+<p><span class="math display">\[
+T \overset{D}{\to} \chi^2(q) \qquad (20.12)
+\]</span> for all three test statistics, which yields an asymptotic test. In some cases, the exact distribution of <span class="math inline">\(T\)</span> is known and we may perform an exact test.</p>
+<p>In the linear regression case, <span class="math inline">\(\theta = (\beta, \sigma^2)\)</span>. We consider the case where the restrictions only apply to <span class="math inline">\(\beta\)</span>, so that <span class="math inline">\(R \beta = r\)</span>. Furthermore, we can replace the derivatives with respect to <span class="math inline">\(\theta\)</span> by derivatives with respect to <span class="math inline">\(\beta\)</span> only [this requires additional justification, which we will not discuss here]. The log-likelihood is repeated here</p>
+<p><span class="math display">\[
+\log L(\theta) = -\frac{n}{2} \log 2 \pi - \frac{n}{2} \log \sigma^2 - \frac{1}{2 \sigma^2} \epsilon(\beta)^T \epsilon(\beta)
+\]</span></p>
+<p>and its derivatives are</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial \log L}{\partial \beta} &amp;= \frac{1}{\sigma^2} X^T \epsilon(\beta) \\
+\frac{\partial \log L}{\partial \sigma^2} &amp;= -\frac{n}{2 \sigma^2} + \frac{1}{2 \sigma^4} \epsilon(\beta)^T \epsilon(\beta) \\
+\frac{\partial^2 \log L}{\partial \beta \partial \beta^T} &amp;= -\frac{1}{\sigma^2} X^T X \\
+\frac{\partial^2 \log L}{\partial (\sigma^2)^2} &amp;= \frac{n}{2 \sigma^4} - \frac{1}{\sigma^6} \epsilon(\beta)^T \epsilon(\beta) \\
+\frac{\partial^2 \log L}{\partial \beta \partial \sigma^2} &amp;= -\frac{1}{\sigma^4} X^T \epsilon(\beta)
+\end{aligned}
+\]</span></p>
+<p>The Wald test is</p>
+<p><span class="math display">\[
+W = (R \hat{\beta} - r)^T [R(X^T X)^{-1} R^T \hat{\sigma}^2]^{-1} (R \hat{\beta} - r) = \frac{Q^* - Q}{(Q/n)} \qquad (20.13)
+\]</span></p>
+<p>where <span class="math inline">\(\hat{\sigma}^2 = Q/n\)</span> is the MLE of <span class="math inline">\(\sigma^2\)</span>, and so is very similar to the <em>F</em>-test apart from the use of <span class="math inline">\(\hat{\sigma}^2\)</span> instead of <span class="math inline">\(s_*^2\)</span> and a multiplicative factor <span class="math inline">\(q\)</span>. In fact,</p>
+<p><span class="math display">\[
+W = q F \frac{n}{n-k}
+\]</span></p>
+<p>This is approximately equal to <span class="math inline">\(qF\)</span> when the sample size is large. The Lagrange Multiplier or Score or Rao test statistic is</p>
+<p><span class="math display">\[
+LM = \frac{\epsilon^{*T} X}{\sigma^{*2}} \left[ \frac{X^T X}{\sigma^{*2}} \right]^{-1} \frac{X^T \epsilon^*}{\sigma^{*2}} \qquad (20.14)
+\]</span></p>
+<p>where <span class="math inline">\(\sigma^{*2} = Q^* / n\)</span>. This can be rewritten in the form</p>
+<p><span class="math display">\[
+LM = \frac{\lambda^{*T} R (X^T X)^{-1} R^T \lambda^*}{\sigma^{*2}}
+\]</span></p>
+<p>where <span class="math inline">\(\lambda^*\)</span> is the vector of Lagrange Multipliers evaluated at the optimum [Recall that <span class="math inline">\(X^T \epsilon^* = R \lambda^*\)</span>]. Furthermore, we can write the score test as</p>
+<p><span class="math display">\[
+LM = \frac{Q^* - Q}{(Q^*/n)} = n \left( 1 - \frac{Q}{Q^*} \right)
+\]</span></p>
+<p>When the restrictions are the standard zero ones, the test statistic is <span class="math inline">\(n\)</span> times the <span class="math inline">\(R^2\)</span> from the unrestricted regression. The unrestricted and restricted Likelihoods are</p>
+<p><span class="math display">\[
+\begin{aligned}
+\log L(\hat{\beta}, \hat{\sigma}^2) &amp;= -\frac{n}{2} \log 2 \pi - \frac{n}{2} \log \hat{\sigma}^2 - \frac{1}{2 \hat{\sigma}^2} \hat{\epsilon}^T \hat{\epsilon} \\
+&amp;=  -\frac{n}{2} \log 2 \pi - \frac{n}{2} \log \frac{\hat{\epsilon}^T \hat{\epsilon}}{n} - \frac{n}{2} \\
+\log L(\beta^*, \sigma^{*2}) &amp;= -\frac{n}{2} \log 2 \pi - \frac{n}{2} \log \sigma^{*2} - \frac{1}{2 \sigma^{*2}} \epsilon^{*T} \epsilon^* \\
+&amp;= -\frac{n}{2} \log 2 \pi - \frac{n}{2} \log \frac{\epsilon^{*T} \epsilon^*}{n} - \frac{n}{2}
+\end{aligned}
+\]</span></p>
+<p>These two lines follow because <span class="math inline">\(\hat{\sigma}^2 = \hat{\epsilon}^T \hat{\epsilon} / n\)</span> and <span class="math inline">\(\sigma^{*2} = \epsilon^{*T} \epsilon^* / n\)</span>. Therefore,</p>
+<p><span class="math display">\[
+LR = 2 \log \frac{L(\hat{\beta}, \hat{\sigma}^2)}{L(\beta^*, \sigma^{*2})} = n \left[ \log \frac{Q^*}{n} - \log \frac{Q}{n} \right] = n [\log Q^* - \log Q]
+\]</span></p>
+<p>Note that W, LM, and LR are all monotonic functions of F, in fact</p>
+<p><span class="math display">\[
+W = F \frac{qn}{n-k}, \quad LM = \frac{W}{1 + W/n}, \quad LR = n \log \left( 1 + \frac{W}{n} \right) \qquad (20.15)
+\]</span> If we knew the exact distribution of any of them we can obtain the distributions of the others and the test result will be the same. However, in practice one uses asymptotic critical values, which lead to differences in outcomes. We have</p>
+<p><span class="math display">\[
+LM \leq LR \leq W
+\]</span></p>
+<p>so that the Wald test will reject more frequently than the LR test and the LM tests, supposing that the same critical values are used.</p>
+</section>
+<section class="level2" id="bayesian-approach">
+<h2 class="anchored" data-anchor-id="bayesian-approach">20.6 Bayesian Approach</h2>
+<p>In the Bayesian approach, we require a prior distribution for the unknown parameters <span class="math inline">\(\beta, \sigma^2\)</span>. Combining the prior and the likelihood we obtain the posterior for <span class="math inline">\(\beta, \sigma^2\)</span> from which we can do inference. We just consider the simplest case where we treat <span class="math inline">\(\sigma^2\)</span> as known for which the algebra is simple. We have the following result.</p>
+<section class="level3" id="theorem-20.3">
+<h3 class="anchored" data-anchor-id="theorem-20.3">Theorem 20.3</h3>
+<p>Suppose that A4 holds with <span class="math inline">\(\sigma^2\)</span> known, and that the prior for <span class="math inline">\(\beta\)</span> is <span class="math inline">\(N(\beta_0, \Sigma_0)\)</span> for some vector <span class="math inline">\(\beta_0\)</span> and covariance matrix <span class="math inline">\(\Sigma_0\)</span>. The posterior distribution of <span class="math inline">\(\beta | y, X\)</span> is <span class="math inline">\(N(b, \Omega)\)</span> with</p>
+<p><span class="math display">\[
+\begin{aligned}
+b &amp;= \left( \frac{1}{\sigma^2} X^T X + \Sigma_0^{-1} \right)^{-1} \left( \frac{1}{\sigma^2} X^T y + \Sigma_0^{-1} \beta_0 \right) \\
+\Omega &amp;= \left( \frac{1}{\sigma^2} X^T X + \Sigma_0^{-1} \right)^{-1}
+\end{aligned}
+\]</span></p>
+<p>This result allows one to provide a Bayesian confidence interval or hypothesis test by just inverting the posterior distribution. For example, for <span class="math inline">\(c^T \beta\)</span>, the posterior is normal with mean <span class="math inline">\(c^T b\)</span> and variance <span class="math inline">\(c^T \Omega c\)</span> and so the Bayesian confidence interval is <span class="math inline">\(c^T b \pm z_{\alpha/2} \sqrt{c^T \Omega c}\)</span>, which has Bayesian coverage probability <span class="math inline">\(1 - \alpha\)</span>.</p>
+<p>It is possible to derive explicit results also for the case that <span class="math inline">\(\sigma^2\)</span> is unknown and has a prior distribution such as a Gamma distribution on <span class="math inline">\(\mathbb{R}^+\)</span>, however, the algebra is more complicated. It is not clear where the normal prior comes from, nor for example why <span class="math inline">\(\beta_0, \Sigma_0\)</span> are themselves known and not subject to uncertainty like <span class="math inline">\(\beta, \sigma^2\)</span>. It is possible to further “priorize” these quantities, but at some point one has to take something we might call a parameter as a fixed known quantity.</p>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch20exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise1">Exercise 1</h3>
+<p><a href="#sec-ch20solution1">Solution 1</a></p>
+<p>Consider the Cobb-Douglas production function <span class="math inline">\(Q = AK^\alpha L^\beta\)</span>. Suppose you have collected data on output, capital, and labor for a sample of firms. Explain how you would test the hypothesis of constant returns to scale using a linear regression. Specifically, state the null and alternative hypotheses, and describe the regression you would run.</p>
+</section>
+<section class="level3" id="sec-ch20exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise2">Exercise 2</h3>
+<p><a href="#sec-ch20solution2">Solution 2</a></p>
+<p>In the context of market efficiency, you are given the following model:</p>
+<p><span class="math display">\[
+r_t = \mu + \gamma^T I_{t-1} + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(r_t\)</span> represents stock returns, and <span class="math inline">\(I_{t-1}\)</span> is a vector of publicly available information variables at time <span class="math inline">\(t-1\)</span>. Explain what the efficient market hypothesis implies about the value of <span class="math inline">\(\gamma\)</span>. How would you test this hypothesis?</p>
+</section>
+<section class="level3" id="sec-ch20exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise3">Exercise 3</h3>
+<p><a href="#sec-ch20solution3">Solution 3</a></p>
+<p>Consider the model with a structural change:</p>
+<p><span class="math display">\[
+y_t = \alpha + \beta x_t + \gamma D_t + \epsilon_t
+\]</span></p>
+<p>where <span class="math inline">\(D_t = 1\)</span> if <span class="math inline">\(t \geq T\)</span> and <span class="math inline">\(D_t = 0\)</span> if <span class="math inline">\(t &lt; T\)</span>. Explain in words what the null hypothesis <span class="math inline">\(\gamma = 0\)</span> means in this context.</p>
+</section>
+<section class="level3" id="sec-ch20exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise4">Exercise 4</h3>
+<p><a href="#sec-ch20solution4">Solution 4</a></p>
+<p>Derive the formula for the <em>t</em>-statistic for testing the hypothesis <span class="math inline">\(c^T\beta = \gamma\)</span> in the classical linear regression model <span class="math inline">\(y = X\beta + \epsilon\)</span>, where <span class="math inline">\(\epsilon \sim N(0, \sigma^2 I)\)</span>. Start from the distribution of <span class="math inline">\(c^T\hat\beta\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise5">Exercise 5</h3>
+<p><a href="#sec-ch20solution5">Solution 5</a></p>
+<p>Explain why <span class="math inline">\(s_*^2 = \frac{\hat{\epsilon}^T \hat{\epsilon}}{n - K}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span> in the classical linear regression model.</p>
+</section>
+<section class="level3" id="sec-ch20exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise6">Exercise 6</h3>
+<p><a href="#sec-ch20solution6">Solution 6</a></p>
+<p>Describe the steps involved in constructing a (1-<span class="math inline">\(\alpha\)</span>)% confidence interval for a single linear combination of regression coefficients, <span class="math inline">\(c^T \beta\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise7">Exercise 7</h3>
+<p><a href="#sec-ch20solution7">Solution 7</a></p>
+<p>Explain, in intuitive terms, why the F-statistic for testing multiple linear restrictions follows an F-distribution under the null hypothesis.</p>
+</section>
+<section class="level3" id="sec-ch20exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise8">Exercise 8</h3>
+<p><a href="#sec-ch20solution8">Solution 8</a></p>
+<p>Given a linear regression model, suppose you want to test the joint hypothesis that <span class="math inline">\(\beta_2 = 0\)</span> and <span class="math inline">\(\beta_3 + \beta_4 = 1\)</span>. Write down the matrix <span class="math inline">\(R\)</span> and the vector <span class="math inline">\(r\)</span> for this test, such that the null hypothesis can be expressed as <span class="math inline">\(R\beta = r\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise9">Exercise 9</h3>
+<p><a href="#sec-ch20solution9">Solution 9</a></p>
+<p>Explain the difference between the restricted least squares estimator, <span class="math inline">\(\beta^*\)</span>, and the unrestricted least squares estimator, <span class="math inline">\(\hat{\beta}\)</span>, in the context of testing linear hypotheses.</p>
+</section>
+<section class="level3" id="sec-ch20exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise10">Exercise 10</h3>
+<p><a href="#sec-ch20solution10">Solution 10</a></p>
+<p>Derive the restricted least squares estimator, <span class="math inline">\(\beta^*\)</span>, by minimizing the sum of squared errors subject to the linear constraint <span class="math inline">\(R\beta = r\)</span>, using the method of Lagrange multipliers.</p>
+</section>
+<section class="level3" id="sec-ch20exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise11">Exercise 11</h3>
+<p><a href="#sec-ch20solution11">Solution 11</a></p>
+<p>Show that the difference between the restricted and unrestricted sum of squared residuals, <span class="math inline">\(Q^* - Q\)</span>, can be expressed as <span class="math inline">\((R\hat{\beta} - r)^T[R(X^TX)^{-1}R^T]^{-1}(R\hat{\beta} - r)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise12">Exercise 12</h3>
+<p><a href="#sec-ch20solution12">Solution 12</a></p>
+<p>Explain how the <span class="math inline">\(R^2\)</span> value from a regression can be used to conduct an F-test for the hypothesis that all slope coefficients are zero.</p>
+</section>
+<section class="level3" id="sec-ch20exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise13">Exercise 13</h3>
+<p><a href="#sec-ch20solution13">Solution 13</a></p>
+<p>In the context of structural change (Example 20.7), explain the null hypothesis being tested and how to set up the restricted regression under the null.</p>
+</section>
+<section class="level3" id="sec-ch20exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise14">Exercise 14</h3>
+<p><a href="#sec-ch20solution14">Solution 14</a></p>
+<p>Describe the difference between the Wald, Likelihood Ratio (LR), and Lagrange Multiplier (LM) tests. What are the computational advantages of each?</p>
+</section>
+<section class="level3" id="sec-ch20exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise15">Exercise 15</h3>
+<p><a href="#sec-ch20solution15">Solution 15</a></p>
+<p>For the linear regression model, write down the log-likelihood function and its first derivative with respect to <span class="math inline">\(\beta\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise16">Exercise 16</h3>
+<p><a href="#sec-ch20solution16">Solution 16</a></p>
+<p>Express the Wald statistic for testing <span class="math inline">\(R\beta = r\)</span> in terms of the difference in restricted and unrestricted sum of squared residuals, <span class="math inline">\(Q^*-Q\)</span> and other relevant quantities.</p>
+</section>
+<section class="level3" id="sec-ch20exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise17">Exercise 17</h3>
+<p><a href="#sec-ch20solution17">Solution 17</a></p>
+<p>Express the Lagrange Multiplier (LM) statistic in terms of <span class="math inline">\(Q\)</span> and <span class="math inline">\(Q^*\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise18">Exercise 18</h3>
+<p><a href="#sec-ch20solution18">Solution 18</a></p>
+<p>Explain the relationship between the F-statistic and the Wald, LM, and LR statistics. Under what conditions are they approximately equal?</p>
+</section>
+<section class="level3" id="sec-ch20exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise19">Exercise 19</h3>
+<p><a href="#sec-ch20solution19">Solution 19</a></p>
+<p>What are the general steps in a Bayesian approach to inference in the linear regression model?</p>
+</section>
+<section class="level3" id="sec-ch20exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch20exercise20">Exercise 20</h3>
+<p><a href="#sec-ch20solution20">Solution 20</a></p>
+<p>If the prior for <span class="math inline">\(\beta\)</span> is <span class="math inline">\(N(\beta_0, \Sigma_0)\)</span> and the likelihood is based on the classical linear regression model with known <span class="math inline">\(\sigma^2\)</span>, what is the posterior distribution of <span class="math inline">\(\beta\)</span>?</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch20solution1">
+<h3 class="anchored" data-anchor-id="sec-ch20solution1">Solution 1</h3>
+<p><a href="#sec-ch20exercise1">Exercise 1</a></p>
+<p>Taking logs of the Cobb-Douglas production function, we get:</p>
+<p><span class="math display">\[
+\log(Q) = \log(A) + \alpha \log(K) + \beta \log(L)
+\]</span></p>
+<p>Let <span class="math inline">\(q = \log(Q)\)</span>, <span class="math inline">\(a = \log(A)\)</span>, <span class="math inline">\(k = \log(K)\)</span>, and <span class="math inline">\(l = \log(L)\)</span>. We can then write a linear regression model:</p>
+<p><span class="math display">\[
+q_i = a + \alpha k_i + \beta l_i + \epsilon_i
+\]</span></p>
+<p><strong>Constant returns to scale</strong> implies that if we multiply both inputs by a constant, output is multiplied by the same constant. Mathematically, this means <span class="math inline">\(\alpha + \beta = 1\)</span>.</p>
+<ul>
+<li><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: <span class="math inline">\(\alpha + \beta = 1\)</span></li>
+<li><strong>Alternative Hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: <span class="math inline">\(\alpha + \beta \neq 1\)</span> (or <span class="math inline">\(\alpha + \beta &lt; 1\)</span> if we rule out increasing returns to scale)</li>
+</ul>
+<p>To test this, we would run the regression above and use a <em>t</em>-test or an <em>F</em>-test to test the restriction on the coefficients. We are testing a <strong>single linear hypothesis</strong> here. This relates to Section 20.1 of the text, where hypotheses of interest for linear regression are introduced.</p>
+</section>
+<section class="level3" id="sec-ch20solution2">
+<h3 class="anchored" data-anchor-id="sec-ch20solution2">Solution 2</h3>
+<p><a href="#sec-ch20exercise2">Exercise 2</a></p>
+<p>The <strong>efficient market hypothesis</strong> states that asset prices fully reflect all available information. This implies that past information, <span class="math inline">\(I_{t-1}\)</span>, should not be able to predict future returns, <span class="math inline">\(r_t\)</span>, beyond the average return, <span class="math inline">\(\mu\)</span>. Therefore, the efficient market hypothesis implies that <span class="math inline">\(\gamma = 0\)</span>.</p>
+<p>To test this hypothesis, we would run the given regression and perform a <em>t</em>-test (or a Wald test if <span class="math inline">\(\gamma\)</span> is a vector) on the coefficient vector <span class="math inline">\(\gamma\)</span>.</p>
+<ul>
+<li><strong>Null Hypothesis (<span class="math inline">\(H_0\)</span>)</strong>: <span class="math inline">\(\gamma = 0\)</span></li>
+<li><strong>Alternative Hypothesis (<span class="math inline">\(H_1\)</span>)</strong>: <span class="math inline">\(\gamma \neq 0\)</span></li>
+</ul>
+<p>This test relates to Section 20.1 of the text as an example of a hypothesis of interest and to section 20.2, which is about testing a <strong>single linear hypothesis</strong>.</p>
+</section>
+<section class="level3" id="sec-ch20solution3">
+<h3 class="anchored" data-anchor-id="sec-ch20solution3">Solution 3</h3>
+<p><a href="#sec-ch20exercise3">Exercise 3</a></p>
+<p>The null hypothesis <span class="math inline">\(\gamma = 0\)</span> means that there is <strong>no structural change</strong> in the relationship between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> at time <span class="math inline">\(T\)</span>. In other words, the relationship between <span class="math inline">\(y_t\)</span> and <span class="math inline">\(x_t\)</span> is the same before and after time <span class="math inline">\(T\)</span>, and is fully captured by <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. If <span class="math inline">\(\gamma \neq 0\)</span>, there <em>is</em> a structural break at time T. This test is an example of testing a <strong>single linear hypothesis</strong>.</p>
+</section>
+<section class="level3" id="sec-ch20solution4">
+<h3 class="anchored" data-anchor-id="sec-ch20solution4">Solution 4</h3>
+<p><a href="#sec-ch20exercise4">Exercise 4</a></p>
+<p>In the classical linear regression model, the OLS estimator <span class="math inline">\(\hat{\beta}\)</span> is normally distributed:</p>
+<p><span class="math display">\[
+\hat{\beta} \sim N(\beta, \sigma^2 (X^T X)^{-1})
+\]</span></p>
+<p>Therefore, any linear combination of <span class="math inline">\(\hat{\beta}\)</span> is also normally distributed:</p>
+<p><span class="math display">\[
+c^T \hat{\beta} \sim N(c^T \beta, \sigma^2 c^T (X^T X)^{-1} c)
+\]</span></p>
+<p>Subtracting the hypothesized value <span class="math inline">\(c^T \beta = \gamma\)</span> and dividing by the standard error, we get a standard normal variable under the null hypothesis:</p>
+<p><span class="math display">\[
+\frac{c^T \hat{\beta} - \gamma}{\sqrt{\sigma^2 c^T (X^T X)^{-1} c}} \sim N(0, 1)
+\]</span></p>
+<p>However, we don’t know <span class="math inline">\(\sigma^2\)</span>, so we replace it with its unbiased estimator <span class="math inline">\(s_*^2 = \frac{\hat{\epsilon}^T \hat{\epsilon}}{n - K}\)</span>. This gives us the <em>t</em>-statistic:</p>
+<p><span class="math display">\[
+t = \frac{c^T \hat{\beta} - \gamma}{\sqrt{s_*^2 c^T (X^T X)^{-1} c}} = \frac{c^T \hat{\beta} - \gamma}{s_* \sqrt{c^T (X^T X)^{-1} c}} \sim t(n - K)
+\]</span></p>
+<p>This derivation follows the steps outlined in Section 20.2 of the text. The resulting <em>t</em>-statistic follows a <em>t</em>-distribution with <span class="math inline">\(n-K\)</span> degrees of freedom under the null hypothesis.</p>
+</section>
+<section class="level3" id="sec-ch20solution5">
+<h3 class="anchored" data-anchor-id="sec-ch20solution5">Solution 5</h3>
+<p><a href="#sec-ch20exercise5">Exercise 5</a></p>
+<p>The residuals are given by <span class="math inline">\(\hat{\epsilon} = y - X \hat{\beta} = y - X(X^T X)^{-1} X^T y = (I - X(X^T X)^{-1} X^T) y = M_X y = M_X \epsilon\)</span>. The sum of squared residuals is:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\epsilon}^T \hat{\epsilon} &amp;= \epsilon^T M_X^T M_X \epsilon = \epsilon^T M_X \epsilon = tr(\epsilon^T M_X \epsilon)\\
+&amp;= tr(M_X \epsilon \epsilon^T)
+\end{aligned}
+\]</span></p>
+<p>Taking expectations:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\epsilon}^T \hat{\epsilon}] &amp;= E[tr(M_X \epsilon \epsilon^T)] = tr(M_X E[\epsilon \epsilon^T]) = tr(M_X \sigma^2 I) \\
+&amp;= \sigma^2 tr(M_X) = \sigma^2 tr(I_n - X(X^T X)^{-1}X^T) \\
+&amp;= \sigma^2 (tr(I_n) - tr(X(X^T X)^{-1}X^T)) = \sigma^2 (n - tr((X^T X)^{-1}X^T X)) \\
+&amp;= \sigma^2 (n - tr(I_K)) = \sigma^2 (n - K)
+\end{aligned}
+\]</span></p>
+<p>Therefore, <span class="math inline">\(E[\hat{\epsilon}^T \hat{\epsilon}] = (n - K) \sigma^2\)</span>. To obtain an unbiased estimator, we divide by <span class="math inline">\((n - K)\)</span>:</p>
+<p><span class="math display">\[
+E[s_*^2] = E\left[ \frac{\hat{\epsilon}^T \hat{\epsilon}}{n - K} \right] = \frac{1}{n - K} E[\hat{\epsilon}^T \hat{\epsilon}] = \frac{1}{n - K} (n - K) \sigma^2 = \sigma^2
+\]</span></p>
+<p>This proof uses the properties of the trace operator and the idempotent matrix <span class="math inline">\(M_X\)</span>, as shown in Section 20.2.</p>
+</section>
+<section class="level3" id="sec-ch20solution6">
+<h3 class="anchored" data-anchor-id="sec-ch20solution6">Solution 6</h3>
+<p><a href="#sec-ch20exercise6">Exercise 6</a></p>
+<ol type="1">
+<li><p><strong>Estimate the regression model:</strong> Obtain the OLS estimator <span class="math inline">\(\hat{\beta}\)</span> and the unbiased variance estimator <span class="math inline">\(s_*^2 = \frac{\hat{\epsilon}^T \hat{\epsilon}}{n - K}\)</span>.</p></li>
+<li><p><strong>Calculate the standard error:</strong> The standard error of <span class="math inline">\(c^T \hat{\beta}\)</span> is <span class="math inline">\(s.e.(c^T \hat{\beta}) = s_* \sqrt{c^T (X^T X)^{-1} c}\)</span>.</p></li>
+<li><p><strong>Find the critical value:</strong> Find the critical value <span class="math inline">\(t_{\alpha/2}(n - K)\)</span> from the <em>t</em>-distribution with <span class="math inline">\(n - K\)</span> degrees of freedom, corresponding to the desired confidence level (1-<span class="math inline">\(\alpha\)</span>).</p></li>
+<li><p><strong>Construct the confidence interval:</strong> The (1-<span class="math inline">\(\alpha\)</span>)% confidence interval is given by:</p></li>
+</ol>
+<p><span class="math display">\[
+c^T \hat{\beta} \pm t_{\alpha/2}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}
+\]</span></p>
+<p>This process is described at the end of Section 20.2 and the beginning of 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20solution7">
+<h3 class="anchored" data-anchor-id="sec-ch20solution7">Solution 7</h3>
+<p><a href="#sec-ch20exercise7">Exercise 7</a></p>
+<p>The F-statistic is the ratio of two independent chi-squared random variables, each divided by their respective degrees of freedom. Under the null hypothesis, the numerator of the F-statistic, which represents the variation explained by the restrictions, follows a chi-squared distribution with degrees of freedom equal to the number of restrictions (<span class="math inline">\(q\)</span>). The denominator, which represents the unexplained variation, follows a chi-squared distribution with degrees of freedom equal to <span class="math inline">\(n-K\)</span>. The ratio of these two independent <span class="math inline">\(\chi^2\)</span> variables, each divided by their respective degrees of freedom, defines the F-distribution. This relates to section 20.3 of the text, and the definition of F-statistic shown in equation (20.5).</p>
+</section>
+<section class="level3" id="sec-ch20solution8">
+<h3 class="anchored" data-anchor-id="sec-ch20solution8">Solution 8</h3>
+<p><a href="#sec-ch20exercise8">Exercise 8</a></p>
+<p>We can write the null hypothesis as a system of two linear equations:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\beta_2 &amp;= 0 \\
+\beta_3 + \beta_4 &amp;= 1
+\end{aligned}
+\]</span></p>
+<p>In matrix form, <span class="math inline">\(R\beta = r\)</span>, this becomes:</p>
+<p><span class="math display">\[
+\begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 1 &amp; \dots &amp; 0 \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \\ \beta_3 \\ \beta_4 \\ \vdots \\ \beta_K \end{bmatrix} = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\]</span></p>
+<p>So,</p>
+<p><span class="math display">\[
+R = \begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 &amp; \dots &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 1 &amp; \dots &amp; 0 \end{bmatrix}, \quad r = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\]</span></p>
+<p>This example illustrates how to express <strong>multiple linear hypotheses</strong> in matrix form, as discussed in Section 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20solution9">
+<h3 class="anchored" data-anchor-id="sec-ch20solution9">Solution 9</h3>
+<p><a href="#sec-ch20exercise9">Exercise 9</a></p>
+<p>The <strong>unrestricted least squares estimator</strong>, <span class="math inline">\(\hat{\beta}\)</span>, minimizes the sum of squared residuals without any constraints on the coefficients. The <strong>restricted least squares estimator</strong>, <span class="math inline">\(\beta^*\)</span>, minimizes the sum of squared residuals <em>subject to</em> the linear constraints imposed by the null hypothesis, <span class="math inline">\(R\beta = r\)</span>. If the null hypothesis is true, <span class="math inline">\(\beta^*\)</span> will be close to <span class="math inline">\(\hat{\beta}\)</span>. If the null hypothesis is false, <span class="math inline">\(\beta^*\)</span> will be significantly different from <span class="math inline">\(\hat{\beta}\)</span>. This corresponds to the approach of testing a <strong>multiple linear hypothesis based on fit</strong> described in section 20.4.</p>
+</section>
+<section class="level3" id="sec-ch20solution10">
+<h3 class="anchored" data-anchor-id="sec-ch20solution10">Solution 10</h3>
+<p><a href="#sec-ch20exercise10">Exercise 10</a></p>
+<p>We want to minimize <span class="math inline">\((y - Xb)^T(y - Xb)\)</span> subject to <span class="math inline">\(Rb = r\)</span>. Set up the Lagrangian:</p>
+<p><span class="math display">\[
+\mathcal{L}(b, \lambda) = \frac{1}{2}(y - Xb)^T(y - Xb) + \lambda^T(Rb - r)
+\]</span></p>
+<p>Take the derivatives with respect to <span class="math inline">\(b\)</span> and <span class="math inline">\(\lambda\)</span> and set them equal to zero:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\partial \mathcal{L}}{\partial b} &amp;= -X^T(y - Xb) + R^T\lambda = 0 \\
+\frac{\partial \mathcal{L}}{\partial \lambda} &amp;= Rb - r = 0
+\end{aligned}
+\]</span></p>
+<p>From the first equation:</p>
+<p><span class="math display">\[
+X^T X b = X^T y - R^T \lambda
+\]</span></p>
+<p><span class="math display">\[
+b = (X^T X)^{-1} X^T y - (X^T X)^{-1} R^T \lambda = \hat{\beta} - (X^T X)^{-1} R^T \lambda
+\]</span></p>
+<p>This <span class="math inline">\(b\)</span> is <span class="math inline">\(\beta^*\)</span>. Multiply by <span class="math inline">\(R\)</span>:</p>
+<p><span class="math display">\[
+R\beta^* = R\hat{\beta} - R(X^T X)^{-1} R^T \lambda
+\]</span></p>
+<p>Since <span class="math inline">\(R\beta^* = r\)</span>:</p>
+<p><span class="math display">\[
+r = R\hat{\beta} - R(X^T X)^{-1} R^T \lambda
+\]</span></p>
+<p><span class="math display">\[
+R(X^T X)^{-1} R^T \lambda = R\hat{\beta} - r
+\]</span></p>
+<p><span class="math display">\[
+\lambda = [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)
+\]</span></p>
+<p>Substituting back into the expression for <span class="math inline">\(b = \beta^*\)</span>:</p>
+<p><span class="math display">\[
+\beta^* = \hat{\beta} - (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)
+\]</span></p>
+<p>This is the same derivation as in Section 20.4, equations (20.6), (20.7) and (20.8).</p>
+</section>
+<section class="level3" id="sec-ch20solution11">
+<h3 class="anchored" data-anchor-id="sec-ch20solution11">Solution 11</h3>
+<p><a href="#sec-ch20exercise11">Exercise 11</a></p>
+<p>We know that <span class="math inline">\(Q = (y - X\hat{\beta})^T(y - X\hat{\beta})\)</span> and <span class="math inline">\(Q^* = (y - X\beta^*)^T(y - X\beta^*)\)</span>. From Solution 10, we also know <span class="math inline">\(\beta^* = \hat{\beta} - (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)\)</span>. Let <span class="math inline">\(A = (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1}\)</span>. Then <span class="math inline">\(\beta^* = \hat{\beta} - A(R\hat{\beta} - r)\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q^* &amp;= (y - X\beta^*)^T(y - X\beta^*) \\
+&amp;= (y - X(\hat{\beta} - A(R\hat{\beta} - r)))^T(y - X(\hat{\beta} - A(R\hat{\beta} - r))) \\
+&amp;= (y - X\hat{\beta} + XA(R\hat{\beta} - r))^T(y - X\hat{\beta} + XA(R\hat{\beta} - r)) \\
+&amp;= ((y - X\hat{\beta}) + XA(R\hat{\beta} - r))^T((y - X\hat{\beta}) + XA(R\hat{\beta} - r)) \\
+&amp;= (y - X\hat{\beta})^T(y - X\hat{\beta}) + 2(R\hat{\beta} - r)^T A^T X^T (y - X\hat{\beta}) + (R\hat{\beta} - r)^T A^T X^T X A (R\hat{\beta} - r)
+\end{aligned}
+\]</span></p>
+<p>Since <span class="math inline">\(y - X\hat{\beta}\)</span> is the vector of OLS residuals, it is orthogonal to the columns of <span class="math inline">\(X\)</span>, so <span class="math inline">\(X^T(y - X\hat{\beta}) = 0\)</span>. Thus,</p>
+<p><span class="math display">\[
+Q^* = Q + (R\hat{\beta} - r)^T A^T X^T X A (R\hat{\beta} - r)
+\]</span></p>
+<p><span class="math display">\[
+Q^* - Q = (R\hat{\beta} - r)^T A^T X^T X A (R\hat{\beta} - r)
+\]</span></p>
+<p>Now, substitute the expression for <span class="math inline">\(A\)</span>:</p>
+<p><span class="math display">\[
+A^T X^T X A = [R(X^T X)^{-1} R^T]^{-1} R (X^T X)^{-1} X^T X (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1}
+\]</span> <span class="math display">\[
+= [R(X^T X)^{-1} R^T]^{-1} R (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} = [R(X^T X)^{-1} R^T]^{-1}
+\]</span> So, <span class="math inline">\(Q^* - Q = (R\hat{\beta} - r)^T[R(X^TX)^{-1}R^T]^{-1}(R\hat{\beta} - r)\)</span>. This is the derivation shown in Section 20.4.</p>
+</section>
+<section class="level3" id="sec-ch20solution12">
+<h3 class="anchored" data-anchor-id="sec-ch20solution12">Solution 12</h3>
+<p><a href="#sec-ch20exercise12">Exercise 12</a></p>
+<p>The <span class="math inline">\(R^2\)</span> value measures the proportion of the total variation in <span class="math inline">\(y\)</span> that is explained by the regression model. The F-test for the hypothesis that all slope coefficients are zero tests whether the model explains a significant portion of the variation in <span class="math inline">\(y\)</span>.</p>
+<p>The F-statistic for this test is given by:</p>
+<p><span class="math display">\[
+F = \frac{R^2 / (K - 1)}{(1 - R^2) / (n - K)}
+\]</span></p>
+<p>where <span class="math inline">\(K\)</span> is the total number of coefficients (including the intercept) and <span class="math inline">\(n\)</span> is the number of observations. This F-statistic follows an <span class="math inline">\(F(K-1, n-K)\)</span> distribution under the null hypothesis. This corresponds to Example 20.6 and equation (20.9).</p>
+</section>
+<section class="level3" id="sec-ch20solution13">
+<h3 class="anchored" data-anchor-id="sec-ch20solution13">Solution 13</h3>
+<p><a href="#sec-ch20exercise13">Exercise 13</a></p>
+<p>The null hypothesis is that there is <strong>no structural change</strong>, meaning that the coefficients are the same for both subsamples: <span class="math inline">\(\beta_1 = \beta_2\)</span>.</p>
+<p>The unrestricted model is: <span class="math display">\[
+y = \begin{bmatrix} X_1 &amp; 0 \\ 0 &amp; X_2 \end{bmatrix} \begin{bmatrix} \beta_1 \\ \beta_2 \end{bmatrix} + \epsilon
+\]</span> The restricted model, under the null hypothesis, imposes the constraint <span class="math inline">\(\beta_1 = \beta_2 = \beta\)</span>. The restricted model is: <span class="math display">\[
+y = \begin{bmatrix} X_1 \\ X_2 \end{bmatrix} \beta + \epsilon = X \beta + \epsilon
+\]</span> Where <span class="math inline">\(X = \begin{bmatrix} X_1 \\ X_2 \end{bmatrix}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20solution14">
+<h3 class="anchored" data-anchor-id="sec-ch20solution14">Solution 14</h3>
+<p><a href="#sec-ch20exercise14">Exercise 14</a></p>
+<ul>
+<li><p><strong>Wald Test:</strong> Uses the <strong>unrestricted</strong> estimator <span class="math inline">\(\hat{\theta}\)</span>. It measures the “distance” between <span class="math inline">\(R\hat{\theta}\)</span> and <span class="math inline">\(r\)</span>. Its computational advantage is that it only requires estimating the unrestricted model.</p></li>
+<li><p><strong>Likelihood Ratio (LR) Test:</strong> Compares the likelihood of the <strong>unrestricted</strong> model, <span class="math inline">\(L(\hat{\theta})\)</span>, to the likelihood of the <strong>restricted</strong> model, <span class="math inline">\(L(\theta^*)\)</span>. Its advantage is that it often has better small sample properties but requires estimating both the restricted and unrestricted models.</p></li>
+<li><p><strong>Lagrange Multiplier (LM) Test:</strong> Uses the <strong>restricted</strong> estimator <span class="math inline">\(\theta^*\)</span>. It examines the slope of the log-likelihood function at the restricted estimator. Its computational advantage is that it only needs the restricted estimator. This is particularly useful when the restricted model is easier to estimate. This is covered in section 20.5.</p></li>
+</ul>
+</section>
+<section class="level3" id="sec-ch20solution15">
+<h3 class="anchored" data-anchor-id="sec-ch20solution15">Solution 15</h3>
+<p><a href="#sec-ch20exercise15">Exercise 15</a></p>
+<p>The log-likelihood function for the linear regression model <span class="math inline">\(y = X\beta + \epsilon\)</span>, where <span class="math inline">\(\epsilon \sim N(0, \sigma^2 I)\)</span>, is:</p>
+<p><span class="math display">\[
+\log L(\beta, \sigma^2) = -\frac{n}{2} \log(2\pi) - \frac{n}{2} \log(\sigma^2) - \frac{1}{2\sigma^2}(y - X\beta)^T(y - X\beta)
+\]</span></p>
+<p>The first derivative with respect to <span class="math inline">\(\beta\)</span> is:</p>
+<p><span class="math display">\[
+\frac{\partial \log L}{\partial \beta} = -\frac{1}{2\sigma^2} [ -2X^T y + 2X^T X \beta] = \frac{1}{\sigma^2} X^T (y - X\beta) = \frac{1}{\sigma^2} X^T \epsilon
+\]</span></p>
+<p>This is consistent with the content in Section 20.5.</p>
+</section>
+<section class="level3" id="sec-ch20solution16">
+<h3 class="anchored" data-anchor-id="sec-ch20solution16">Solution 16</h3>
+<p><a href="#sec-ch20solution16">Exercise 16</a></p>
+<p>The Wald statistic is given by:</p>
+<p><span class="math display">\[
+W = (R\hat{\beta} - r)^T [R(X^T X)^{-1} R^T \hat{\sigma}^2]^{-1} (R\hat{\beta} - r)
+\]</span></p>
+<p>where <span class="math inline">\(\hat{\sigma}^2 = \frac{Q}{n}\)</span> is the MLE of <span class="math inline">\(\sigma^2\)</span>. We know from Exercise 11 that <span class="math inline">\(Q^* - Q = (R\hat{\beta} - r)^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)\)</span>. Therefore,</p>
+<p><span class="math display">\[
+W = \frac{(R\hat{\beta} - r)^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)}{\hat{\sigma}^2} = \frac{Q^* - Q}{Q/n} = n \frac{Q^* - Q}{Q}
+\]</span> This corresponds to equation (20.13).</p>
+</section>
+<section class="level3" id="sec-ch20solution17">
+<h3 class="anchored" data-anchor-id="sec-ch20solution17">Solution 17</h3>
+<p><a href="#sec-ch20solution17">Exercise 17</a></p>
+<p>The LM statistic can be written as (See solution to Exercise 16 for definition of <span class="math inline">\(Q\)</span> and <span class="math inline">\(Q^*\)</span>):</p>
+<p><span class="math display">\[
+LM = n \frac{Q^* - Q}{Q^*}
+\]</span></p>
+<p>This expression is derived in Section 20.5.</p>
+</section>
+<section class="level3" id="sec-ch20solution18">
+<h3 class="anchored" data-anchor-id="sec-ch20solution18">Solution 18</h3>
+<p><a href="#sec-ch20exercise18">Exercise 18</a></p>
+<p>The F-statistic is:</p>
+<p><span class="math display">\[
+F = \frac{(Q^* - Q)/q}{Q/(n - K)}
+\]</span></p>
+<p>The Wald statistic is <span class="math inline">\(W = n \frac{Q^* - Q}{Q}\)</span>, the LM statistic is <span class="math inline">\(LM = n \frac{Q^* - Q}{Q^*}\)</span>, and the Likelihood Ratio statistic is <span class="math inline">\(LR = n \log \frac{Q^*}{Q}\)</span>. The relationships are</p>
+<p><span class="math display">\[
+W = qF \frac{n}{n-k}, \quad LM = \frac{W}{1 + \frac{W}{n}}, \quad LR= n\log\left(1 + \frac{W}{n}\right)
+\]</span> As <span class="math inline">\(n \to \infty\)</span>, <span class="math inline">\(W/(n-K) \to 0\)</span>. Then <span class="math inline">\(\dfrac{n}{n-k} \approx 1\)</span>, and we can use the approximation <span class="math inline">\(\log(1+x) \approx x\)</span> for small x to get <span class="math inline">\(LM\approx LR \approx W \approx qF\)</span>. This corresponds to equation (20.15).</p>
+</section>
+<section class="level3" id="sec-ch20solution19">
+<h3 class="anchored" data-anchor-id="sec-ch20solution19">Solution 19</h3>
+<p><a href="#sec-ch20solution19">Exercise 19</a></p>
+<ol type="1">
+<li><strong>Specify a prior distribution:</strong> Define a prior distribution for the parameters, <span class="math inline">\(p(\beta, \sigma^2)\)</span>.</li>
+<li><strong>Formulate the likelihood function:</strong> Write down the likelihood function of the data, <span class="math inline">\(L(y | X, \beta, \sigma^2)\)</span>.</li>
+<li><strong>Calculate the posterior distribution:</strong> Use Bayes’ theorem to combine the prior and the likelihood to obtain the posterior distribution, <span class="math inline">\(p(\beta, \sigma^2 | y, X)\)</span>.</li>
+<li><strong>Make inferences</strong>: Base inferences (e.g., point estimates, confidence intervals, hypothesis tests) on the posterior distribution.</li>
+</ol>
+<p>This is described briefly in section 20.6.</p>
+</section>
+<section class="level3" id="sec-ch20solution20">
+<h3 class="anchored" data-anchor-id="sec-ch20solution20">Solution 20</h3>
+<p><a href="#sec-ch20solution20">Exercise 20</a></p>
+<p>The posterior distribution of <span class="math inline">\(\beta\)</span> is also normal:</p>
+<p><span class="math display">\[
+\beta | y, X \sim N(b, \Omega)
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\begin{aligned}
+b &amp;= \left( \frac{1}{\sigma^2} X^T X + \Sigma_0^{-1} \right)^{-1} \left( \frac{1}{\sigma^2} X^T y + \Sigma_0^{-1} \beta_0 \right) \\
+\Omega &amp;= \left( \frac{1}{\sigma^2} X^T X + \Sigma_0^{-1} \right)^{-1}
+\end{aligned}
+\]</span></p>
+<p>This is stated in Theorem 20.3.</p>
+</section>
+</section>
+<section class="level2" id="r-scripts">
+<h2 class="anchored" data-anchor-id="r-scripts">R scripts</h2>
+<section class="level3" id="r-script-1-testing-for-constant-returns-to-scale-in-a-cobb-douglas-production-function">
+<h3 class="anchored" data-anchor-id="r-script-1-testing-for-constant-returns-to-scale-in-a-cobb-douglas-production-function">R Script 1: Testing for Constant Returns to Scale in a Cobb-Douglas Production Function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(car)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+The following object is masked from 'package:purrr':
+
+    some</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="co"># Simulate data for a Cobb-Douglas production function</span></span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-5"><a aria-hidden="true" href="#cb5-5" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.6</span></span>
+<span id="cb5-6"><a aria-hidden="true" href="#cb5-6" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fl">0.4</span>  <span class="co"># Set parameters such that alpha + beta = 1 (constant returns to scale)</span></span>
+<span id="cb5-7"><a aria-hidden="true" href="#cb5-7" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb5-8"><a aria-hidden="true" href="#cb5-8" tabindex="-1"></a>L <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">1</span>, <span class="dv">10</span>)</span>
+<span id="cb5-9"><a aria-hidden="true" href="#cb5-9" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.5</span>)</span>
+<span id="cb5-10"><a aria-hidden="true" href="#cb5-10" tabindex="-1"></a>Q <span class="ot">&lt;-</span> A <span class="sc">*</span> K<span class="sc">^</span>alpha <span class="sc">*</span> L<span class="sc">^</span>beta <span class="sc">*</span> <span class="fu">exp</span>(epsilon)</span>
+<span id="cb5-11"><a aria-hidden="true" href="#cb5-11" tabindex="-1"></a></span>
+<span id="cb5-12"><a aria-hidden="true" href="#cb5-12" tabindex="-1"></a><span class="co"># Take logs</span></span>
+<span id="cb5-13"><a aria-hidden="true" href="#cb5-13" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="fu">log</span>(Q)</span>
+<span id="cb5-14"><a aria-hidden="true" href="#cb5-14" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="fu">log</span>(K)</span>
+<span id="cb5-15"><a aria-hidden="true" href="#cb5-15" tabindex="-1"></a>l <span class="ot">&lt;-</span> <span class="fu">log</span>(L)</span>
+<span id="cb5-16"><a aria-hidden="true" href="#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a aria-hidden="true" href="#cb5-17" tabindex="-1"></a><span class="co"># Create a data frame</span></span>
+<span id="cb5-18"><a aria-hidden="true" href="#cb5-18" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(q, k, l)</span>
+<span id="cb5-19"><a aria-hidden="true" href="#cb5-19" tabindex="-1"></a></span>
+<span id="cb5-20"><a aria-hidden="true" href="#cb5-20" tabindex="-1"></a><span class="co"># Estimate the linear regression model</span></span>
+<span id="cb5-21"><a aria-hidden="true" href="#cb5-21" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(q <span class="sc">~</span> k <span class="sc">+</span> l, <span class="at">data =</span> df)</span>
+<span id="cb5-22"><a aria-hidden="true" href="#cb5-22" tabindex="-1"></a></span>
+<span id="cb5-23"><a aria-hidden="true" href="#cb5-23" tabindex="-1"></a><span class="co"># Test the hypothesis of constant returns to scale (alpha + beta = 1)</span></span>
+<span id="cb5-24"><a aria-hidden="true" href="#cb5-24" tabindex="-1"></a><span class="co"># Using a linear restriction, we create the restriction matrix R and vector r</span></span>
+<span id="cb5-25"><a aria-hidden="true" href="#cb5-25" tabindex="-1"></a>R <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">1</span>)  <span class="co"># We are testing the restriction on coefficients of k and l.</span></span>
+<span id="cb5-26"><a aria-hidden="true" href="#cb5-26" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb5-27"><a aria-hidden="true" href="#cb5-27" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">linearHypothesis</span>(model, R, r) <span class="co">#Ho: R*beta = r</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Linear hypothesis test:
+k  + l = 1
+
+Model 1: restricted model
+Model 2: q ~ k + l
+
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     98 23.143                           
+2     97 23.108  1  0.034859 0.1463 0.7029</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Alternatively we can use</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a><span class="co"># car::linearHypothesis(model, "k + l = 1")</span></span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a aria-hidden="true" href="#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a aria-hidden="true" href="#cb7-5" tabindex="-1"></a><span class="co"># # Visualize the data and the fitted plane in 3D (optional)</span></span>
+<span id="cb7-6"><a aria-hidden="true" href="#cb7-6" tabindex="-1"></a><span class="co"># # install.packages("plotly") # Uncomment to install plotly</span></span>
+<span id="cb7-7"><a aria-hidden="true" href="#cb7-7" tabindex="-1"></a><span class="co"># library(plotly)</span></span>
+<span id="cb7-8"><a aria-hidden="true" href="#cb7-8" tabindex="-1"></a><span class="co"># vis_3d &lt;- plot_ly(df, x = ~k, y = ~l, z = ~q, type = "scatter3d", mode = "markers", name = "Data") %&gt;%</span></span>
+<span id="cb7-9"><a aria-hidden="true" href="#cb7-9" tabindex="-1"></a><span class="co">#   add_trace(x = ~k, y = ~l, z = fitted(model), type = "mesh3d", name = "Fitted Plane")</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><p><strong>Simulate Data:</strong> We simulate data from a Cobb-Douglas production function with constant returns to scale (<span class="math inline">\(\alpha + \beta = 1\)</span>). We generate random values for capital (<code>K</code>), labor (<code>L</code>), and an error term (<code>epsilon</code>).</p></li>
+<li><p><strong>Log Transformation:</strong> We take the natural logarithm of the production function to linearize it: <span class="math inline">\(q = \log(A) + \alpha k + \beta l + \epsilon\)</span>.</p></li>
+<li><p><strong>Linear Regression:</strong> We estimate the linear regression model <code>q ~ k + l</code> using <code>lm()</code>.</p></li>
+<li><p><strong>Hypothesis Test:</strong> We use the <code>linearHypothesis()</code> function from the <code>lmtest</code> package to test the null hypothesis <span class="math inline">\(H_0: \alpha + \beta = 1\)</span>. The <code>R</code> matrix and <code>r</code> vector represent the linear restriction. The function returns an F-statistic and p-value.</p></li>
+<li><p><strong>(Optional) 3D Visualization:</strong> We use the <code>plotly</code> package to create an interactive 3D plot showing the simulated data points and the fitted regression plane.</p></li>
+</ol>
+<p><strong>Connection to the text:</strong> This script directly implements Example 20.1(a) from the text, demonstrating how to test for constant returns to scale using a linear regression and hypothesis test. We are testing a <strong>single linear hypothesis</strong>.</p>
+</section>
+<section class="level3" id="r-script-2-testing-for-market-efficiency">
+<h3 class="anchored" data-anchor-id="r-script-2-testing-for-market-efficiency">R Script 2: Testing for Market Efficiency</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" href="#cb8-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb8-2"><a aria-hidden="true" href="#cb8-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-3"><a aria-hidden="true" href="#cb8-3" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: zoo</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'zoo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" href="#cb12-1" tabindex="-1"></a><span class="co"># Simulate data for a market efficiency test</span></span>
+<span id="cb12-2"><a aria-hidden="true" href="#cb12-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb12-3"><a aria-hidden="true" href="#cb12-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb12-4"><a aria-hidden="true" href="#cb12-4" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fl">0.01</span>  <span class="co"># Average return</span></span>
+<span id="cb12-5"><a aria-hidden="true" href="#cb12-5" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="dv">0</span>   <span class="co"># Set gamma = 0 to simulate under the null hypothesis</span></span>
+<span id="cb12-6"><a aria-hidden="true" href="#cb12-6" tabindex="-1"></a>It_minus_1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n) <span class="co"># Simulate public information</span></span>
+<span id="cb12-7"><a aria-hidden="true" href="#cb12-7" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fl">0.02</span>)</span>
+<span id="cb12-8"><a aria-hidden="true" href="#cb12-8" tabindex="-1"></a>rt <span class="ot">&lt;-</span> mu <span class="sc">+</span> gamma <span class="sc">*</span> It_minus_1 <span class="sc">+</span> epsilon</span>
+<span id="cb12-9"><a aria-hidden="true" href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a aria-hidden="true" href="#cb12-10" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb12-11"><a aria-hidden="true" href="#cb12-11" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(rt, It_minus_1)</span>
+<span id="cb12-12"><a aria-hidden="true" href="#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a aria-hidden="true" href="#cb12-13" tabindex="-1"></a><span class="co"># Estimate the linear regression model</span></span>
+<span id="cb12-14"><a aria-hidden="true" href="#cb12-14" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(rt <span class="sc">~</span> It_minus_1, <span class="at">data =</span> df)</span>
+<span id="cb12-15"><a aria-hidden="true" href="#cb12-15" tabindex="-1"></a></span>
+<span id="cb12-16"><a aria-hidden="true" href="#cb12-16" tabindex="-1"></a><span class="co"># Test the hypothesis of market efficiency (gamma = 0)</span></span>
+<span id="cb12-17"><a aria-hidden="true" href="#cb12-17" tabindex="-1"></a><span class="fu">coeftest</span>(model)  <span class="co"># t-test for gamma = 0</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.0123360  0.0013092  9.4228   &lt;2e-16 ***
+It_minus_1  0.0018201  0.0013239  1.3747   0.1708    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" href="#cb14-1" tabindex="-1"></a><span class="co"># Visualize the relationship (or lack thereof)</span></span>
+<span id="cb14-2"><a aria-hidden="true" href="#cb14-2" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> It_minus_1, <span class="at">y =</span> rt)) <span class="sc">+</span></span>
+<span id="cb14-3"><a aria-hidden="true" href="#cb14-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a aria-hidden="true" href="#cb14-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a aria-hidden="true" href="#cb14-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Market Efficiency Test Simulation"</span>,</span>
+<span id="cb14-6"><a aria-hidden="true" href="#cb14-6" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Public Information (t-1)"</span>,</span>
+<span id="cb14-7"><a aria-hidden="true" href="#cb14-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Return (t)"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap20_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><p><strong>Simulate Data:</strong> We simulate data under the null hypothesis of market efficiency (<span class="math inline">\(\gamma = 0\)</span>). We generate random returns (<code>rt</code>), public information (<code>It_minus_1</code>), and an error term (<code>epsilon</code>).</p></li>
+<li><p><strong>Linear Regression:</strong> We estimate the linear regression <code>rt ~ It_minus_1</code>.</p></li>
+<li><p><strong>Hypothesis Test:</strong> We use <code>coeftest()</code> from <code>lmtest</code> to obtain the <em>t</em>-test for the coefficient of <code>It_minus_1</code> (which is <span class="math inline">\(\gamma\)</span>). The output provides the <em>t</em>-statistic, p-value, and other relevant information.</p></li>
+<li><p><strong>Visualization:</strong> We create a scatter plot of <code>rt</code> against <code>It_minus_1</code> and add a regression line. Under the null hypothesis, we expect no clear relationship.</p></li>
+</ol>
+<p><strong>Connection to the text:</strong> This script implements Example 20.2(b), demonstrating the test for market efficiency. We are testing a <strong>single linear hypothesis</strong>, as in Section 20.2.</p>
+</section>
+<section class="level3" id="r-script-3-testing-for-structural-change">
+<h3 class="anchored" data-anchor-id="r-script-3-testing-for-structural-change">R Script 3: Testing for Structural Change</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" href="#cb16-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb16-2"><a aria-hidden="true" href="#cb16-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb16-3"><a aria-hidden="true" href="#cb16-3" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb16-4"><a aria-hidden="true" href="#cb16-4" tabindex="-1"></a></span>
+<span id="cb16-5"><a aria-hidden="true" href="#cb16-5" tabindex="-1"></a><span class="co"># Simulate data with a structural change</span></span>
+<span id="cb16-6"><a aria-hidden="true" href="#cb16-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>)</span>
+<span id="cb16-7"><a aria-hidden="true" href="#cb16-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">150</span></span>
+<span id="cb16-8"><a aria-hidden="true" href="#cb16-8" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb16-9"><a aria-hidden="true" href="#cb16-9" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb16-10"><a aria-hidden="true" href="#cb16-10" tabindex="-1"></a>gamma <span class="ot">&lt;-</span> <span class="dv">2</span>  <span class="co"># Significant structural change (gamma != 0)</span></span>
+<span id="cb16-11"><a aria-hidden="true" href="#cb16-11" tabindex="-1"></a>T_change <span class="ot">&lt;-</span> <span class="dv">75</span></span>
+<span id="cb16-12"><a aria-hidden="true" href="#cb16-12" tabindex="-1"></a>xt <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">5</span>)</span>
+<span id="cb16-13"><a aria-hidden="true" href="#cb16-13" tabindex="-1"></a>Dt <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="dv">1</span><span class="sc">:</span>n <span class="sc">&gt;=</span> T_change, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb16-14"><a aria-hidden="true" href="#cb16-14" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb16-15"><a aria-hidden="true" href="#cb16-15" tabindex="-1"></a>yt <span class="ot">&lt;-</span> alpha <span class="sc">+</span> beta <span class="sc">*</span> xt <span class="sc">+</span> gamma <span class="sc">*</span> Dt <span class="sc">+</span> epsilon</span>
+<span id="cb16-16"><a aria-hidden="true" href="#cb16-16" tabindex="-1"></a></span>
+<span id="cb16-17"><a aria-hidden="true" href="#cb16-17" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb16-18"><a aria-hidden="true" href="#cb16-18" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(yt, xt, Dt)</span>
+<span id="cb16-19"><a aria-hidden="true" href="#cb16-19" tabindex="-1"></a></span>
+<span id="cb16-20"><a aria-hidden="true" href="#cb16-20" tabindex="-1"></a><span class="co"># Estimate the linear regression model</span></span>
+<span id="cb16-21"><a aria-hidden="true" href="#cb16-21" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(yt <span class="sc">~</span> xt <span class="sc">+</span> Dt, <span class="at">data =</span> df)</span>
+<span id="cb16-22"><a aria-hidden="true" href="#cb16-22" tabindex="-1"></a></span>
+<span id="cb16-23"><a aria-hidden="true" href="#cb16-23" tabindex="-1"></a><span class="co"># Test for structural change (gamma = 0)</span></span>
+<span id="cb16-24"><a aria-hidden="true" href="#cb16-24" tabindex="-1"></a><span class="fu">summary</span>(model)  <span class="co"># Look at the t-test for the coefficient of Dt</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = yt ~ xt + Dt, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.0109 -0.6494  0.0864  0.6415  3.1698 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.12835    0.18755   11.35   &lt;2e-16 ***
+xt           0.93244    0.06375   14.63   &lt;2e-16 ***
+Dt           1.86220    0.17599   10.58   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.066 on 147 degrees of freedom
+Multiple R-squared:  0.7204,    Adjusted R-squared:  0.7166 
+F-statistic: 189.3 on 2 and 147 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" href="#cb18-1" tabindex="-1"></a><span class="co"># Visualize the structural change</span></span>
+<span id="cb18-2"><a aria-hidden="true" href="#cb18-2" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> xt, <span class="at">y =</span> yt, <span class="at">color =</span> <span class="fu">factor</span>(Dt))) <span class="sc">+</span></span>
+<span id="cb18-3"><a aria-hidden="true" href="#cb18-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb18-4"><a aria-hidden="true" href="#cb18-4" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-5"><a aria-hidden="true" href="#cb18-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Structural Change Test Simulation"</span>,</span>
+<span id="cb18-6"><a aria-hidden="true" href="#cb18-6" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb18-7"><a aria-hidden="true" href="#cb18-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"y"</span>,</span>
+<span id="cb18-8"><a aria-hidden="true" href="#cb18-8" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Period"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap20_files/figure-html/unnamed-chunk-3-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><p><strong>Simulate Data:</strong> We simulate data <em>with</em> a structural change (<span class="math inline">\(\gamma \neq 0\)</span>). We create a dummy variable <code>Dt</code> that indicates whether the observation is before or after the structural change point (<code>T_change</code>).</p></li>
+<li><p><strong>Linear Regression:</strong> We estimate the model <code>yt ~ xt + Dt</code>.</p></li>
+<li><p><strong>Hypothesis Test:</strong> We examine the <em>t</em>-test for the coefficient of <code>Dt</code> in the <code>summary(model)</code> output. A significant <em>t</em>-statistic suggests evidence of a structural change.</p></li>
+<li><p><strong>Visualization:</strong> We create a scatter plot of <code>yt</code> against <code>xt</code>, coloring the points by <code>Dt</code>. This visually highlights the different relationships before and after the structural change.</p></li>
+</ol>
+<p><strong>Connection to the text:</strong> This script illustrates Example 20.3(c) on testing for structural change. We are testing a <strong>single linear hypothesis</strong>.</p>
+</section>
+<section class="level3" id="r-script-4-f-test-for-multiple-linear-restrictions">
+<h3 class="anchored" data-anchor-id="r-script-4-f-test-for-multiple-linear-restrictions">R Script 4: F-test for Multiple Linear Restrictions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" href="#cb20-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb20-2"><a aria-hidden="true" href="#cb20-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-3"><a aria-hidden="true" href="#cb20-3" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb20-4"><a aria-hidden="true" href="#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a aria-hidden="true" href="#cb20-5" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb20-6"><a aria-hidden="true" href="#cb20-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1011</span>)</span>
+<span id="cb20-7"><a aria-hidden="true" href="#cb20-7" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb20-8"><a aria-hidden="true" href="#cb20-8" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb20-9"><a aria-hidden="true" href="#cb20-9" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb20-10"><a aria-hidden="true" href="#cb20-10" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb20-11"><a aria-hidden="true" href="#cb20-11" tabindex="-1"></a>beta0 <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb20-12"><a aria-hidden="true" href="#cb20-12" tabindex="-1"></a>beta1 <span class="ot">&lt;-</span> <span class="fl">0.5</span></span>
+<span id="cb20-13"><a aria-hidden="true" href="#cb20-13" tabindex="-1"></a>beta2 <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># restricting to zero under the null</span></span>
+<span id="cb20-14"><a aria-hidden="true" href="#cb20-14" tabindex="-1"></a>beta3 <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># restricting to zero under the null</span></span>
+<span id="cb20-15"><a aria-hidden="true" href="#cb20-15" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-16"><a aria-hidden="true" href="#cb20-16" tabindex="-1"></a>y <span class="ot">&lt;-</span> beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> x1 <span class="sc">+</span> beta2 <span class="sc">*</span> x2 <span class="sc">+</span> beta3 <span class="sc">*</span> x3 <span class="sc">+</span> epsilon</span>
+<span id="cb20-17"><a aria-hidden="true" href="#cb20-17" tabindex="-1"></a></span>
+<span id="cb20-18"><a aria-hidden="true" href="#cb20-18" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb20-19"><a aria-hidden="true" href="#cb20-19" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(y, x1, x2, x3)</span>
+<span id="cb20-20"><a aria-hidden="true" href="#cb20-20" tabindex="-1"></a></span>
+<span id="cb20-21"><a aria-hidden="true" href="#cb20-21" tabindex="-1"></a><span class="co"># Estimate the full model</span></span>
+<span id="cb20-22"><a aria-hidden="true" href="#cb20-22" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1 <span class="sc">+</span> x2 <span class="sc">+</span> x3, <span class="at">data =</span> df)</span>
+<span id="cb20-23"><a aria-hidden="true" href="#cb20-23" tabindex="-1"></a></span>
+<span id="cb20-24"><a aria-hidden="true" href="#cb20-24" tabindex="-1"></a><span class="co"># Estimate the restricted model (beta2 = beta3 = 0)</span></span>
+<span id="cb20-25"><a aria-hidden="true" href="#cb20-25" tabindex="-1"></a>restricted_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x1, <span class="at">data =</span> df)</span>
+<span id="cb20-26"><a aria-hidden="true" href="#cb20-26" tabindex="-1"></a></span>
+<span id="cb20-27"><a aria-hidden="true" href="#cb20-27" tabindex="-1"></a><span class="co"># Perform the F-test</span></span>
+<span id="cb20-28"><a aria-hidden="true" href="#cb20-28" tabindex="-1"></a><span class="fu">anova</span>(restricted_model, full_model) <span class="co"># Comparing restricted and unrestricted models.</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Variance Table
+
+Model 1: y ~ x1
+Model 2: y ~ x1 + x2 + x3
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     98 115.05                           
+2     96 113.73  2    1.3188 0.5566  0.575</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" href="#cb22-1" tabindex="-1"></a><span class="co">#Alternatively: using linearHypothesis()</span></span>
+<span id="cb22-2"><a aria-hidden="true" href="#cb22-2" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">rbind</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">0</span>),</span>
+<span id="cb22-3"><a aria-hidden="true" href="#cb22-3" tabindex="-1"></a>          <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span>
+<span id="cb22-4"><a aria-hidden="true" href="#cb22-4" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>)</span>
+<span id="cb22-5"><a aria-hidden="true" href="#cb22-5" tabindex="-1"></a></span>
+<span id="cb22-6"><a aria-hidden="true" href="#cb22-6" tabindex="-1"></a><span class="fu">linearHypothesis</span>(full_model, R, r)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Linear hypothesis test:
+x2 = 0
+x3 = 0
+
+Model 1: restricted model
+Model 2: y ~ x1 + x2 + x3
+
+  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
+1     98 115.05                           
+2     96 113.73  2    1.3188 0.5566  0.575</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><p><strong>Simulate Data:</strong> We simulate data where the true coefficients <span class="math inline">\(\beta_2\)</span> and <span class="math inline">\(\beta_3\)</span> are zero.</p></li>
+<li><p><strong>Full Model:</strong> We estimate the full model, including all variables.</p></li>
+<li><p><strong>Restricted Model:</strong> We estimate the restricted model, imposing the null hypothesis (<span class="math inline">\(\beta_2 = \beta_3 = 0\)</span>).</p></li>
+<li><p><strong>F-test:</strong> We use the <code>anova()</code> function to compare the restricted and unrestricted models. This performs an F-test for the joint hypothesis that <span class="math inline">\(\beta_2 = \beta_3 = 0\)</span>. The output provides the F-statistic and p-value. Alternatively, we can use the <code>linearHypothesis</code> function by specifying <span class="math inline">\(R\)</span> and <span class="math inline">\(r\)</span> appropriately.</p></li>
+</ol>
+<p><strong>Connection to the text:</strong> This script demonstrates how to test <strong>multiple linear hypotheses</strong> using an F-test, as discussed in Section 20.3.</p>
+</section>
+<section class="level3" id="r-script-5-chow-test-for-structural-break">
+<h3 class="anchored" data-anchor-id="r-script-5-chow-test-for-structural-break">R Script 5: Chow Test for Structural Break</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" href="#cb24-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb24-2"><a aria-hidden="true" href="#cb24-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-3"><a aria-hidden="true" href="#cb24-3" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: sandwich</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'strucchange'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:stringr':
+
+    boundary</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" href="#cb28-1" tabindex="-1"></a><span class="co"># Simulate data with a structural break in both intercept and slope</span></span>
+<span id="cb28-2"><a aria-hidden="true" href="#cb28-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1112</span>)</span>
+<span id="cb28-3"><a aria-hidden="true" href="#cb28-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb28-4"><a aria-hidden="true" href="#cb28-4" tabindex="-1"></a>breakpoint <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Breakpoint at observation 100</span></span>
+<span id="cb28-5"><a aria-hidden="true" href="#cb28-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb28-6"><a aria-hidden="true" href="#cb28-6" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n)</span>
+<span id="cb28-7"><a aria-hidden="true" href="#cb28-7" tabindex="-1"></a></span>
+<span id="cb28-8"><a aria-hidden="true" href="#cb28-8" tabindex="-1"></a><span class="co"># Before breakpoint</span></span>
+<span id="cb28-9"><a aria-hidden="true" href="#cb28-9" tabindex="-1"></a>y[<span class="dv">1</span><span class="sc">:</span>breakpoint] <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> x[<span class="dv">1</span><span class="sc">:</span>breakpoint] <span class="sc">+</span> <span class="fu">rnorm</span>(breakpoint, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb28-10"><a aria-hidden="true" href="#cb28-10" tabindex="-1"></a><span class="co"># After breakpoint</span></span>
+<span id="cb28-11"><a aria-hidden="true" href="#cb28-11" tabindex="-1"></a>y[(breakpoint <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n] <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> x[(breakpoint <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>n] <span class="sc">+</span> <span class="fu">rnorm</span>(n <span class="sc">-</span> breakpoint, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb28-12"><a aria-hidden="true" href="#cb28-12" tabindex="-1"></a></span>
+<span id="cb28-13"><a aria-hidden="true" href="#cb28-13" tabindex="-1"></a><span class="co"># Create a data frame</span></span>
+<span id="cb28-14"><a aria-hidden="true" href="#cb28-14" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(y, x)</span>
+<span id="cb28-15"><a aria-hidden="true" href="#cb28-15" tabindex="-1"></a></span>
+<span id="cb28-16"><a aria-hidden="true" href="#cb28-16" tabindex="-1"></a><span class="co"># Perform the Chow test using the strucchange package</span></span>
+<span id="cb28-17"><a aria-hidden="true" href="#cb28-17" tabindex="-1"></a><span class="co"># sctest() tests for structural change using F-statistic</span></span>
+<span id="cb28-18"><a aria-hidden="true" href="#cb28-18" tabindex="-1"></a>chow_test <span class="ot">&lt;-</span> <span class="fu">sctest</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">type =</span> <span class="st">"Chow"</span>, <span class="at">point =</span> breakpoint)</span>
+<span id="cb28-19"><a aria-hidden="true" href="#cb28-19" tabindex="-1"></a><span class="fu">print</span>(chow_test)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Chow test
+
+data:  y ~ x
+F = 1478, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" href="#cb30-1" tabindex="-1"></a><span class="co"># Visualize the data and the breakpoint</span></span>
+<span id="cb30-2"><a aria-hidden="true" href="#cb30-2" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb30-3"><a aria-hidden="true" href="#cb30-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb30-4"><a aria-hidden="true" href="#cb30-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(x[<span class="dv">1</span><span class="sc">:</span>breakpoint]), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb30-5"><a aria-hidden="true" href="#cb30-5" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> df[<span class="dv">1</span><span class="sc">:</span>breakpoint, ], <span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color=</span><span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb30-6"><a aria-hidden="true" href="#cb30-6" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">data =</span> df[(breakpoint<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span>n, ], <span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"green"</span>) <span class="sc">+</span></span>
+<span id="cb30-7"><a aria-hidden="true" href="#cb30-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Chow Test Simulation"</span>,</span>
+<span id="cb30-8"><a aria-hidden="true" href="#cb30-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb30-9"><a aria-hidden="true" href="#cb30-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"y"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap20_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><p><strong>Simulate Data:</strong> We simulate data with a clear structural break at observation 100. Both the intercept and slope change after the breakpoint.</p></li>
+<li><p><strong>Chow Test:</strong> We use the <code>sctest()</code> function from the <code>strucchange</code> package, specifying <code>type = "Chow"</code> and the <code>point</code> of the suspected breakpoint.</p></li>
+<li><p><strong>Visualization:</strong> The plot helps visualize the structural break and the different regression lines before and after the breakpoint.</p></li>
+</ol>
+<p><strong>Connection to the Text:</strong> This example demonstrates the <strong>Chow test</strong>, which is mentioned in examples 20.8 and 20.9, as a specific case of structural change analysis. The Chow test is a special type of F-test, used to check whether coefficients in two linear regressions on different data sets are equal.</p>
+</section>
+</section>
+<section class="level2" id="youtube-videos-for-hypothesis-testing-in-linear-regression">
+<h2 class="anchored" data-anchor-id="youtube-videos-for-hypothesis-testing-in-linear-regression">YouTube Videos for Hypothesis Testing in Linear Regression</h2>
+<p>Here are some YouTube videos that explain the concepts mentioned in the attached text, along with their relevance and verification of availability:</p>
+<section class="level3" id="hypothesis-testing-in-the-multiple-regression-model">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-in-the-multiple-regression-model">1. Hypothesis Testing in the Multiple regression model</h3>
+<ul>
+<li><strong>Video Title:</strong> Hypothesis Testing in the Multiple regression model</li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=k2jTkR0eB8M">https://www.youtube.com/watch?v=k2jTkR0eB8M</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023).</li>
+<li><strong>Relevance:</strong> This video focuses specifically on hypothesis testing within the multiple regression framework. It covers both t-tests for individual coefficients and F-tests for joint hypotheses, aligning well with Sections 20.2 and 20.3 of the text. It explains the concepts clearly and uses visual aids. The presenter uses matrix notation, as in the text.</li>
+</ul>
+</section>
+<section class="level3" id="f-statistic-for-joint-significance">
+<h3 class="anchored" data-anchor-id="f-statistic-for-joint-significance">2. F-statistic for joint significance</h3>
+<ul>
+<li><strong>Video Title:</strong> 1.2 - F-statistic for joint significance</li>
+<li><strong>Channel:</strong> Pat Obi</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=t_f5-bJqL5Y">https://www.youtube.com/watch?v=t_f5-bJqL5Y</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023).</li>
+<li><strong>Relevance:</strong> This video is specifically dedicated to explaining the F-statistic and its use in testing the joint significance of multiple coefficients in a regression model. This directly relates to Section 20.3 (Test of Multiple Linear Hypothesis) and Example 20.4 (Standard F-test).</li>
+</ul>
+</section>
+<section class="level3" id="hypothesis-tests-and-confidence-intervals-in-multiple-regression-frm-part-1-book-2-chapter-8">
+<h3 class="anchored" data-anchor-id="hypothesis-tests-and-confidence-intervals-in-multiple-regression-frm-part-1-book-2-chapter-8">3. Hypothesis Tests and Confidence Intervals in Multiple Regression (FRM Part 1 – Book 2 – Chapter 8)</h3>
+<ul>
+<li><strong>Video title</strong>: Hypothesis Tests and Confidence Intervals in Multiple Regression (FRM Part 1 – Book 2 – Chapter 8)</li>
+<li><strong>Channel:</strong> AnalystPrep</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=FhLcpCkKk4s">https://www.youtube.com/watch?v=FhLcpCkKk4s</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023).</li>
+<li><strong>Relevance:</strong> This video clearly explains constructing confidence intervals for regression coefficients. It also discusses hypothesis tests, including t-tests, in the context of multiple regression. This connects to the discussion of confidence intervals near the end of Section 20.3.</li>
+</ul>
+</section>
+<section class="level3" id="simple-linear-regression-and-hypothesis-testing">
+<h3 class="anchored" data-anchor-id="simple-linear-regression-and-hypothesis-testing">4. Simple Linear Regression and Hypothesis Testing</h3>
+<ul>
+<li><strong>Video Title:</strong> Hypothesis Testing and p-values: Inferential statistics | Khan Academy</li>
+<li><strong>Channel:</strong> Khan Academy</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=KS6KEWaoOOE">https://www.youtube.com/watch?v=KS6KEWaoOOE</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023)</li>
+<li><strong>Relevance:</strong> While a more general statistics video, it gives a good foundational understanding of hypothesis testing, p-values, and their interpretation. It’s a useful prerequisite for understanding the more specific hypothesis tests in the regression context. The concepts in this video are used throughout chapter 20.</li>
+</ul>
+</section>
+<section class="level3" id="structural-breaks-and-chow-test">
+<h3 class="anchored" data-anchor-id="structural-breaks-and-chow-test">5. Structural breaks and Chow test</h3>
+<ul>
+<li><strong>Video Title:</strong> Econometrics: Structural breaks and Chow test, F-test</li>
+<li><strong>Channel:</strong> JDEConomics</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=EQ5I2_eMR7w">https://www.youtube.com/watch?v=EQ5I2_eMR7w</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023)</li>
+<li><strong>Relevance:</strong> The video discusses structural breaks and introduces the Chow test. The video complements examples 20.5, 20.7, 20.8 and 20.9.</li>
+</ul>
+</section>
+<section class="level3" id="lagrange-multiplier-likelihood-ratio-and-wald-tests-large-sample-tests">
+<h3 class="anchored" data-anchor-id="lagrange-multiplier-likelihood-ratio-and-wald-tests-large-sample-tests">6. Lagrange Multiplier, Likelihood Ratio and Wald tests (large sample tests)</h3>
+<ul>
+<li><strong>Video title:</strong> Lagrange Multiplier, Likelihood Ratio and Wald tests (large sample tests)</li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=5JopxA_EdlQ">https://www.youtube.com/watch?v=5JopxA_EdlQ</a></li>
+<li><strong>Availability:</strong> Verified (as of October 26, 2023)</li>
+<li><strong>Relevance:</strong> This video introduces the three asymptotically equivalent tests: Wald, LM and LR tests. It shows the intuition behind each of the tests. This video closely matches section 20.5.</li>
+</ul>
+<p>These videos, taken together, provide a strong visual and auditory complement to the material presented in Chapter 20 of the text. They cover single and multiple hypothesis testing, the F-test, structural change analysis, and the principles behind different testing approaches.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch20mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch20mcsolution1">MC Solution 1</a></p>
+<p>In the Cobb-Douglas production function <span class="math inline">\(Q = AK^\alpha L^\beta\)</span>, constant returns to scale implies:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\alpha = \beta\)</span></p></li>
+<li><p><span class="math inline">\(\alpha + \beta = 1\)</span></p></li>
+<li><p><span class="math inline">\(\alpha + \beta = 0\)</span></p></li>
+<li><p><span class="math inline">\(\alpha \cdot \beta = 1\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch20mcsolution2">MC Solution 2</a></p>
+<p>In the market efficiency model <span class="math inline">\(r_t = \mu + \gamma^T I_{t-1} + \epsilon_t\)</span>, the efficient market hypothesis predicts:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\mu = 0\)</span></p></li>
+<li><p><span class="math inline">\(\gamma = 0\)</span></p></li>
+<li><p><span class="math inline">\(\epsilon_t = 0\)</span></p></li>
+<li><p><span class="math inline">\(I_{t-1} = 0\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch20mcsolution3">MC Solution 3</a></p>
+<p>In the model <span class="math inline">\(y_t = \alpha + \beta x_t + \gamma D_t + \epsilon_t\)</span>, where <span class="math inline">\(D_t\)</span> is a dummy variable for a structural change, the null hypothesis <span class="math inline">\(\gamma = 0\)</span> implies:</p>
+<ol type="a">
+<li><p>There is no relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p></li>
+<li><p>There is no structural change.</p></li>
+<li><p>The intercept is zero.</p></li>
+<li><p>The slope is zero.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch20mcsolution4">MC Solution 4</a></p>
+<p>The t-statistic for testing <span class="math inline">\(c^T\beta = \gamma\)</span> in the linear regression model is given by:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\frac{c^T \hat{\beta} - \gamma}{\sigma \sqrt{c^T (X^T X)^{-1} c}}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{c^T \hat{\beta} - \gamma}{s_* \sqrt{c^T (X^T X)^{-1} c}}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{c^T \hat{\beta} - \gamma}{s_*^2 c^T (X^T X)^{-1} c}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{c^T \hat{\beta} - \gamma}{\sigma^2 c^T (X^T X)^{-1} c}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch20mcsolution5">MC Solution 5</a></p>
+<p><span class="math inline">\(s_*^2 = \frac{\hat{\epsilon}^T\hat{\epsilon}}{n - K}\)</span> is an unbiased estimator of <span class="math inline">\(\sigma^2\)</span> because:</p>
+<ol type="a">
+<li><p><span class="math inline">\(E[\hat{\epsilon}^T\hat{\epsilon}] = n\sigma^2\)</span></p></li>
+<li><p><span class="math inline">\(E[\hat{\epsilon}^T\hat{\epsilon}] = (n-K)\sigma^2\)</span></p></li>
+<li><p><span class="math inline">\(E[\hat{\epsilon}^T\hat{\epsilon}] = K\sigma^2\)</span></p></li>
+<li><p><span class="math inline">\(E[\hat{\epsilon}^T\hat{\epsilon}] = \sigma^2\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch20mcsolution6">MC Solution 6</a></p>
+<p>A 95% confidence interval for <span class="math inline">\(c^T\beta\)</span> is given by:</p>
+<ol type="a">
+<li><p><span class="math inline">\(c^T \hat{\beta} \pm t_{0.05}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}\)</span></p></li>
+<li><p><span class="math inline">\(c^T \hat{\beta} \pm t_{0.025}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}\)</span></p></li>
+<li><p><span class="math inline">\(c^T \hat{\beta} \pm t_{0.95}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}\)</span></p></li>
+<li><p><span class="math inline">\(c^T \hat{\beta} \pm t_{0.975}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch20mcsolution7">MC Solution 7</a></p>
+<p>The F-statistic for testing multiple linear restrictions follows an F-distribution because, under the null hypothesis, it is the ratio of:</p>
+<ol type="a">
+<li><p>Two normal random variables.</p></li>
+<li><p>A chi-squared random variable and a normal random variable.</p></li>
+<li><p>Two chi-squared random variables, each divided by their degrees of freedom.</p></li>
+<li><p>Two t-distributed random variables.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch20mcsolution8">MC Solution 8</a></p>
+<p>To test the hypothesis <span class="math inline">\(\beta_1 = 0\)</span> and <span class="math inline">\(\beta_2 = \beta_3\)</span> in a regression with three independent variables, the <em>R</em> matrix in <span class="math inline">\(R\beta = r\)</span> would be:</p>
+<ol type="a">
+<li><p><span class="math inline">\(R = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; -1 \end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(R = \begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; -1 \end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(R = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 &amp; 0\end{bmatrix}\)</span></p></li>
+<li><p><span class="math inline">\(R = \begin{bmatrix} 1 &amp; 1 &amp; 1 \end{bmatrix}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch20mcsolution9">MC Solution 9</a></p>
+<p>The restricted least squares estimator, <span class="math inline">\(\beta^*\)</span>, minimizes the sum of squared residuals:</p>
+<ol type="a">
+<li><p>Without any constraints.</p></li>
+<li><p>Subject to the constraint <span class="math inline">\(R\beta = r\)</span>.</p></li>
+<li><p>Subject to the constraint <span class="math inline">\(\beta = 0\)</span>.</p></li>
+<li><p>Subject to the constraint that the residuals sum to zero.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch20mcsolution10">MC Solution 10</a></p>
+<p>The formula for the restricted least squares estimator <span class="math inline">\(\beta^*\)</span> is:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\beta^* = \hat{\beta} + (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)\)</span></p></li>
+<li><p><span class="math inline">\(\beta^* = \hat{\beta} - (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)\)</span></p></li>
+<li><p><span class="math inline">\(\beta^* = (X^T X)^{-1} X^T y\)</span></p></li>
+<li><p><span class="math inline">\(\beta^* = R(X^T X)^{-1} X^T y\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch20mcsolution11">MC Solution 11</a></p>
+<p><span class="math inline">\(Q^* - Q\)</span>, the difference between the restricted and unrestricted sum of squared residuals, can be expressed as:</p>
+<ol type="a">
+<li><p><span class="math inline">\((R\hat{\beta} - r)^T[R(X^TX)^{-1}R^T]^{-1}(R\hat{\beta} - r)\)</span></p></li>
+<li><p><span class="math inline">\((R\hat{\beta} - r)^T(R\hat{\beta} - r)\)</span></p></li>
+<li><p><span class="math inline">\((R\hat{\beta} - r)^T(X^TX)(R\hat{\beta} - r)\)</span></p></li>
+<li><p><span class="math inline">\(r^T[R(X^TX)^{-1}R^T]^{-1}r\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch20mcsolution12">MC Solution 12</a></p>
+<p>To test if all slope coefficients are zero using <span class="math inline">\(R^2\)</span>, the F-statistic is:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\frac{R^2 / K}{(1 - R^2) / (n - K - 1)}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{R^2 / (K-1)}{(1 - R^2) / (n - K)}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{R^2}{(1 - R^2)}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{(1 - R^2) / (n - K)}{R^2 / K}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch20mcsolution13">MC Solution 13</a></p>
+<p>In the context of structural change with two subsamples, the null hypothesis of no structural change implies:</p>
+<ol type="a">
+<li><p>The intercepts are different, but the slopes are the same.</p></li>
+<li><p>The slopes are different, but the intercepts are the same.</p></li>
+<li><p>Both the intercepts and slopes are the same across the two subsamples.</p></li>
+<li><p>Both the intercepts and slopes are different across the two subsamples.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch20mcsolution14">MC Solution 14</a></p>
+<p>Which of the following statements about the Wald, LR, and LM tests is FALSE?</p>
+<ol type="a">
+<li><p>The Wald test only requires estimating the unrestricted model.</p></li>
+<li><p>The LM test only requires estimating the restricted model.</p></li>
+<li><p>The LR test requires estimating both the restricted and unrestricted models.</p></li>
+<li><p>The Wald, LR, and LM tests are asymptotically equivalent, but always produce identical results in finite samples.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch20mcsolution15">MC Solution 15</a></p>
+<p>The first derivative of the log-likelihood function with respect to <span class="math inline">\(\beta\)</span> in the linear regression model is:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\frac{1}{\sigma^2} X^T (y - X\beta)\)</span></p></li>
+<li><p><span class="math inline">\(-\frac{1}{\sigma^2} X^T (y - X\beta)\)</span></p></li>
+<li><p><span class="math inline">\(X^T (y - X\beta)\)</span></p></li>
+<li><p><span class="math inline">\(\frac{1}{2\sigma^2} X^T (y - X\beta)\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch20mcsolution16">MC Solution 16</a></p>
+<p>The Wald statistic for testing <span class="math inline">\(R\beta = r\)</span> can be expressed in terms of <span class="math inline">\(Q^* - Q\)</span> as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\frac{Q^* - Q}{q}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{Q^* - Q}{Q / (n - K)}\)</span></p></li>
+<li><p><span class="math inline">\(n \frac{Q^* - Q}{Q}\)</span></p></li>
+<li><p><span class="math inline">\(\frac{Q^* - Q}{Q^* / (n - K)}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch20mcsolution17">MC Solution 17</a></p>
+<p>The LM statistic can be expressed in terms of Q and Q* as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(n\frac{Q}{Q^*}\)</span></p></li>
+<li><p><span class="math inline">\(n\frac{Q^*}{Q}\)</span></p></li>
+<li><p><span class="math inline">\(n \frac{Q^* - Q}{Q^*}\)</span></p></li>
+<li><p><span class="math inline">\(n \frac{Q^* - Q}{Q}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch20mcsolution18">MC Solution 18</a></p>
+<p>Which of the following statements about the relationship between the F, Wald (W), LM, and LR statistics is generally TRUE?</p>
+<ol type="a">
+<li><p><span class="math inline">\(F = W = LM = LR\)</span> for all sample sizes.</p></li>
+<li><p><span class="math inline">\(LM \le LR \le W\)</span> and they are asymptotically equivalent as <span class="math inline">\(n \to \infty\)</span>.</p></li>
+<li><p><span class="math inline">\(W \le LR \le LM\)</span> and they are asymptotically equivalent as <span class="math inline">\(n \to \infty\)</span>.</p></li>
+<li><p>The F-statistic is unrelated to the W, LM, and LR statistics.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch20mcsolution19">MC Solution 19</a></p>
+<p>The Bayesian approach to inference in the linear regression model involves:</p>
+<ol type="a">
+<li><p>Only using the likelihood function.</p></li>
+<li><p>Combining a prior distribution with the likelihood to obtain a posterior distribution.</p></li>
+<li><p>Only using the prior distribution.</p></li>
+<li><p>Maximizing the sum of squared residuals.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch20mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch20mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch20mcsolution20">MC Solution 20</a></p>
+<p>If the prior for <span class="math inline">\(\beta\)</span> is <span class="math inline">\(N(\beta_0, \Sigma_0)\)</span> and the likelihood is from the classical linear regression model with known <span class="math inline">\(\sigma^2\)</span>, the posterior distribution of <span class="math inline">\(\beta\)</span> is:</p>
+<ol type="a">
+<li><p>t-distributed</p></li>
+<li><p>F-distributed</p></li>
+<li><p>Normal</p></li>
+<li><p>Chi-squared</p></li>
+</ol>
+</section>
+</section>
+<section class="level2" id="multiple-choice-solutions">
+<h2 class="anchored" data-anchor-id="multiple-choice-solutions">Multiple Choice Solutions</h2>
+<section class="level3" id="sec-ch20mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch20mcexercise1">MC Exercise 1</a></p>
+<p><strong>(b) <span class="math inline">\(\alpha + \beta = 1\)</span></strong></p>
+<p>Constant returns to scale means that doubling all inputs doubles the output. This is mathematically represented as <span class="math inline">\(\alpha + \beta = 1\)</span>. This is directly from Example 20.1.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch20mcexercise2">MC Exercise 2</a></p>
+<p><strong>(b) <span class="math inline">\(\gamma = 0\)</span></strong></p>
+<p>The efficient market hypothesis implies that past information (<span class="math inline">\(I_{t-1}\)</span>) should not predict returns (<span class="math inline">\(r_t\)</span>). Thus, the coefficient vector <span class="math inline">\(\gamma\)</span> should be zero. This is directly from Example 20.2.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch20mcexercise3">MC Exercise 3</a></p>
+<p><strong>(b) There is no structural change.</strong></p>
+<p>If <span class="math inline">\(\gamma = 0\)</span>, the dummy variable <span class="math inline">\(D_t\)</span> has no effect, meaning the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span> is the same regardless of the value of <span class="math inline">\(D_t\)</span> (i.e., before and after the potential structural break). This is directly from Example 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch20mcexercise4">MC Exercise 4</a></p>
+<p><strong>(b) <span class="math inline">\(\frac{c^T \hat{\beta} - \gamma}{s_* \sqrt{c^T (X^T X)^{-1} c}}\)</span></strong></p>
+<p>We use the unbiased estimator of the variance, <span class="math inline">\(s_*\)</span>, in the denominator. This is derived and presented in Section 20.2.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch20mcexercise5">MC Exercise 5</a></p>
+<p><strong>(b) <span class="math inline">\(E[\hat{\epsilon}^T\hat{\epsilon}] = (n-K)\sigma^2\)</span></strong></p>
+<p>As shown in the derivation in Section 20.2, the expected value of the sum of squared residuals is <span class="math inline">\((n-K)\sigma^2\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch20mcexercise6">MC Exercise 6</a></p>
+<p><strong>(b) <span class="math inline">\(c^T \hat{\beta} \pm t_{0.025}(n - K) \cdot s_* \sqrt{c^T (X^T X)^{-1} c}\)</span></strong></p>
+<p>For a 95% confidence interval, we use the critical value from the t-distribution with <span class="math inline">\(n-K\)</span> degrees of freedom that corresponds to a two-tailed test with <span class="math inline">\(\alpha/2 = 0.025\)</span> in each tail. This concept is described at the end of Section 20.2 and in the beginning of Section 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch20mcexercise7">MC Exercise 7</a></p>
+<p><strong>(c) Two chi-squared random variables, each divided by their degrees of freedom.</strong></p>
+<p>This is the definition of an F-distributed random variable, as discussed in Section 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch20mcexercise8">MC Exercise 8</a></p>
+<ol start="2" type="a">
+<li><span class="math inline">\(R = \begin{bmatrix} 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; -1 \end{bmatrix}\)</span></li>
+</ol>
+<p>Assuming the regression model includes an intercept, <span class="math inline">\(\beta = [\beta_0, \beta_1, \beta_2, \beta_3]^T\)</span>. The first row of <span class="math inline">\(R\)</span> corresponds to <span class="math inline">\(\beta_1=0\)</span> and the second row of R to <span class="math inline">\(\beta_2-\beta_3 = 0\)</span> (or <span class="math inline">\(\beta_2 = \beta_3\)</span>). This illustrates setting up a matrix for testing <strong>multiple linear hypotheses</strong> as in section 20.3.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch20mcexercise9">MC Exercise 9</a></p>
+<p><strong>(b) Subject to the constraint <span class="math inline">\(R\beta = r\)</span>.</strong></p>
+<p>The restricted least squares estimator imposes the restrictions of the null hypothesis. This is the core concept of Section 20.4.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch20mcexercise10">MC Exercise 10</a></p>
+<p><strong>(b) <span class="math inline">\(\beta^* = \hat{\beta} - (X^T X)^{-1} R^T [R(X^T X)^{-1} R^T]^{-1} (R\hat{\beta} - r)\)</span></strong></p>
+<p>This is the formula derived using Lagrange multipliers in Section 20.4, equation (20.8).</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch20mcexercise11">MC Exercise 11</a></p>
+<p><strong>(a) <span class="math inline">\((R\hat{\beta} - r)^T[R(X^TX)^{-1}R^T]^{-1}(R\hat{\beta} - r)\)</span></strong></p>
+<p>This is shown in the proof of Theorem 20.2 in Section 20.4.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch20mcexercise12">MC Exercise 12</a></p>
+<p><strong>(b) <span class="math inline">\(\frac{R^2 / (K-1)}{(1 - R^2) / (n - K)}\)</span></strong></p>
+<p>This is the F-statistic for testing the overall significance of the regression, where <span class="math inline">\(K-1\)</span> is the number of slope coefficients (excluding the intercept) and <span class="math inline">\(n-K\)</span> is the degrees of freedom for the residuals. This is discussed in Example 20.6.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch20mcexercise13">MC Exercise 13</a></p>
+<p><strong>(c) Both the intercepts and slopes are the same across the two subsamples.</strong></p>
+<p>No structural change implies that the entire regression relationship is the same for both groups. This relates to Examples 20.7, 20.8 and 20.9.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch20mcexercise14">MC Exercise 14</a></p>
+<p><strong>(d) The Wald, LR, and LM tests are asymptotically equivalent, but always produce identical results in finite samples.</strong></p>
+<p>The tests are asymptotically equivalent, but their values and resulting decisions can differ in finite samples. The inequalities <span class="math inline">\(LM \le LR \le W\)</span> are generally true. This is discussed in Section 20.5.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch20mcexercise15">MC Exercise 15</a></p>
+<p><strong>(a) <span class="math inline">\(\frac{1}{\sigma^2} X^T (y - X\beta)\)</span></strong></p>
+<p>This is derived in Section 20.5.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch20mcexercise16">MC Exercise 16</a></p>
+<p><strong>(c) <span class="math inline">\(n \frac{Q^* - Q}{Q}\)</span></strong></p>
+<p>This comes from expressing the Wald statistic in terms of the MLE of <span class="math inline">\(\sigma^2\)</span> which is <span class="math inline">\(Q/n\)</span>, as shown in Equation (20.13).</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch20mcexercise17">MC Exercise 17</a></p>
+<p><strong>(c) <span class="math inline">\(n \frac{Q^* - Q}{Q^*}\)</span></strong></p>
+<p>This is the form of the LM statistic derived in Section 20.5.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch20mcexercise18">MC Exercise 18</a></p>
+<p><strong>(b) <span class="math inline">\(LM \le LR \le W\)</span> and they are asymptotically equivalent as <span class="math inline">\(n \to \infty\)</span>.</strong></p>
+<p>This is the general relationship discussed in Section 20.5, and equation (20.15).</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch20mcexercise19">MC Exercise 19</a></p>
+<p><strong>(b) Combining a prior distribution with the likelihood to obtain a posterior distribution.</strong></p>
+<p>This is the fundamental principle of Bayesian inference, as mentioned in Section 20.6.</p>
+</section>
+<section class="level3" id="sec-ch20mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch20mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch20mcexercise20">MC Exercise 20</a></p>
+<p><strong>(c) Normal</strong></p>
+<p>With a normal prior and a normal likelihood (from the classical linear regression model), the posterior distribution is also normal. This is stated in Theorem 20.3.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

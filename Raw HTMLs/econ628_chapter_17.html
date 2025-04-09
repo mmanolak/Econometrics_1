@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 17: The Least Squares Procedure – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap18.html" rel="next"/>
+<link href="../chapters/chap16.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 17: The Least Squares Procedure</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="projection-approach">
+<h2 class="anchored" data-anchor-id="projection-approach">17.1 Projection Approach</h2>
+<p>We observe the following data:</p>
+<p><span class="math display">\[
+y = \begin{pmatrix} y_1 \\ \vdots \\ y_n \end{pmatrix} \in \mathbb{R}^n; \quad X = \begin{pmatrix} x_{11} &amp; \cdots &amp; x_{1K} \\ \vdots &amp; \ddots &amp; \vdots \\ x_{n1} &amp; \cdots &amp; x_{nK} \end{pmatrix} = (x_1, \dots, x_K).
+\]</span></p>
+<p>We would like to find <span class="math inline">\(\beta\)</span> such that <span class="math inline">\(y = X\beta\)</span>, but when <span class="math inline">\(n &gt; K\)</span> this is not possible. So we do the next best thing, which is to find the best linear (in <span class="math inline">\(X\)</span>) approximation to <span class="math inline">\(y\)</span>.</p>
+<section class="level3" id="definition-17.1.">
+<h3 class="anchored" data-anchor-id="definition-17.1.">Definition 17.1.</h3>
+<p>The <strong>(Ordinary) Least Squares (OLS)</strong> procedure chooses <span class="math inline">\(\hat{\beta}\)</span> to minimize the quadratic form</p>
+<p><span class="math display">\[
+S(\beta) = (y - X\beta)^T(y - X\beta) = \|y - X\beta\|^2
+\]</span></p>
+<p>with respect to <span class="math inline">\(\beta \in \mathbb{R}^K\)</span>.</p>
+<p>The data, <span class="math inline">\(y, x_1, \dots, x_K\)</span>, can all be viewed as elements of the vector space <span class="math inline">\(\mathbb{R}^n\)</span>. Define the column span of <span class="math inline">\(X\)</span>,</p>
+<p><span class="math display">\[
+C(X) = \{\alpha_1 x_1 + \dots + \alpha_K x_K\} = \{X\alpha : \alpha \in \mathbb{R}^K\} \subset \mathbb{R}^n.
+\]</span></p>
+<p>Then, <span class="math inline">\(C(X)\)</span> is a linear subspace of <span class="math inline">\(\mathbb{R}^n\)</span>. The projection theorem says that there is a unique solution to the minimization problem, call it <span class="math inline">\(\hat{y}\)</span>, which is characterized by the fact that <span class="math inline">\(y - \hat{y} = \hat{\varepsilon}\)</span> is orthogonal to the space <span class="math inline">\(C(X)\)</span>. That is, we can write uniquely</p>
+<p><span class="math display">\[
+y = \hat{y} + \hat{\varepsilon},
+\]</span></p>
+<p>where (the “fitted value”) <span class="math inline">\(\hat{y} \in C(X)\)</span> and (the “residual”) <span class="math inline">\(\hat{\varepsilon} \in C(X)^{\perp}\)</span>. This means that</p>
+<p><span class="math display">\[
+\hat{y} = X\hat{\beta}, \text{ some } \hat{\beta} \in \mathbb{R}^K \text{ and } X^T\hat{\varepsilon} = 0.
+\]</span> <strong>Intuition:</strong> Imagine <span class="math inline">\(y\)</span> is a point in a high-dimensional space, and <span class="math inline">\(C(X)\)</span> is a subspace (like a plane or a line) within that space. The OLS method finds the point <span class="math inline">\(\hat{y}\)</span> in the subspace <span class="math inline">\(C(X)\)</span> that is closest to <span class="math inline">\(y\)</span>. The vector connecting <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(y\)</span> is <span class="math inline">\(\hat{\varepsilon}\)</span>. The vector <span class="math inline">\(\hat{\varepsilon}\)</span> represents the part of <span class="math inline">\(y\)</span> that cannot be explained by the linear combination of the columns of <span class="math inline">\(X\)</span>.</p>
+<p>The orthogonality conditions can be written out explicitly:</p>
+<p><span class="math display">\[
+\begin{aligned}
+&amp;\sum_{i=1}^n x_{1i}\hat{\varepsilon}_i = 0 \\
+&amp;\sum_{i=1}^n x_{2i}\hat{\varepsilon}_i = 0 \\
+&amp;\qquad \vdots \\
+&amp;\sum_{i=1}^n x_{Ki}\hat{\varepsilon}_i = 0.
+\end{aligned}
+\]</span></p>
+<p>Note that if, as usual, <span class="math inline">\(x_{1i} = 1\)</span>, then we have <span class="math inline">\(\sum_{i=1}^n \hat{\varepsilon}_i = 0\)</span>.</p>
+<p>The vector <span class="math inline">\(\hat{y}\)</span> is interpreted as the best linear fit to the vector <span class="math inline">\(y\)</span>, which establishes a connection with the regression material of Chapter 7, although we have not yet specified any random structure generating the data; the results are data specific.</p>
+<p>We may write <span class="math inline">\(\hat{\varepsilon} = y - X\hat{\beta}\)</span> so that the orthogonality conditions may be rewritten as</p>
+<p><span class="math display">\[
+X^T(y - X\hat{\beta}) = 0. \tag{17.1}
+\]</span></p>
+<p>We can rewrite this equation as the so-called <strong>normal equations</strong></p>
+<p><span class="math display">\[
+X^TX\hat{\beta} = X^Ty \tag{17.2}
+\]</span></p>
+<p><span class="math display">\[
+X^TX = \begin{pmatrix}
+\sum_{i=1}^n x_{1i}^2 &amp; \cdots &amp; \sum_{i=1}^n x_{1i}x_{Ki} \\
+\vdots &amp; \ddots &amp; \vdots \\
+\sum_{i=1}^n x_{1i}x_{Ki} &amp; \cdots &amp; \sum_{i=1}^n x_{Ki}^2
+\end{pmatrix}; \quad
+X^Ty = \begin{pmatrix}
+\sum_{i=1}^n x_{1i}y_i \\
+\vdots \\
+\sum_{i=1}^n x_{Ki}y_i
+\end{pmatrix}.
+\]</span></p>
+<p>There always exists some <span class="math inline">\(\hat{\beta}\)</span> such that <span class="math inline">\(S(\hat{\beta})\)</span> is minimal, but it may not be unique. When <span class="math inline">\(\text{rank}(X) = K\)</span>, then <span class="math inline">\(X^TX\)</span> is of full rank and hence invertible. Then <span class="math inline">\(\hat{\beta}\)</span> is uniquely defined for any <span class="math inline">\(y\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\hat{\beta} = (X^TX)^{-1}X^Ty.
+\]</span></p>
+<p>How do we find <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span>?</p>
+</section>
+<section class="level3" id="definition-17.2.">
+<h3 class="anchored" data-anchor-id="definition-17.2.">Definition 17.2.</h3>
+<p>When <span class="math inline">\(X\)</span> is of full rank define the <span class="math inline">\(n \times n\)</span> <strong>Projector matrices</strong></p>
+<p><span class="math display">\[
+P_X = X(X^TX)^{-1}X^T; \quad M_X = I - X(X^TX)^{-1}X^T
+\]</span></p>
+<p>which project onto <span class="math inline">\(C(X)\)</span> and onto the orthogonal complement of <span class="math inline">\(C(X)\)</span>, denoted <span class="math inline">\(C(X)^{\perp}\)</span>. For any <span class="math inline">\(y\)</span>, we can uniquely write</p>
+<p><span class="math display">\[
+y = \hat{y} + \hat{\varepsilon} = P_Xy + M_Xy.
+\]</span></p>
+<p>We have <span class="math inline">\(P_XX = X\)</span> and <span class="math inline">\(M_XX = 0\)</span>. The matrices <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span> are symmetric and idempotent, i.e.,</p>
+<p><span class="math display">\[
+P_X = P_X^T; \quad P_X^2 = P_X.
+\]</span> <strong>Intuition:</strong> <span class="math inline">\(P_X\)</span> takes any vector <span class="math inline">\(y\)</span> and projects it onto the subspace spanned by the columns of <span class="math inline">\(X\)</span>. The resulting vector is the fitted value <span class="math inline">\(\hat{y}\)</span>. <span class="math inline">\(M_X\)</span> is the complement of <span class="math inline">\(P_X\)</span>. It projects <span class="math inline">\(y\)</span> onto the orthogonal complement of <span class="math inline">\(C(X)\)</span>. The resulting vector is the residual <span class="math inline">\(\hat{\varepsilon}\)</span>.</p>
+<p>After applying <span class="math inline">\(P_X\)</span> once you are ready in <span class="math inline">\(C(X)\)</span>. This means that they have eigenvalues either 0 or 1 using the eigendecomposition. Let <span class="math inline">\(P_X = U\Lambda U^T\)</span> for orthonormal <span class="math inline">\(U\)</span> and diagonal <span class="math inline">\(\Lambda\)</span>. Then</p>
+<p><span class="math display">\[
+(P_X)^2 = (U\Lambda U^T)(U\Lambda U^T) = (U\Lambda^2 U^T)
+\]</span></p>
+<p>so if <span class="math inline">\(P_X^2 = P_X\)</span>, then <span class="math inline">\(\Lambda^2 = \Lambda\)</span>, and eigenvalues have to be in <span class="math inline">\(\{0, 1\}\)</span>. <span class="math inline">\(P_X\)</span> is of rank <span class="math inline">\(K\)</span> and has <span class="math inline">\(K\)</span> eigenvalues equal to 1 and <span class="math inline">\(n - K\)</span> eigenvalues equal to 0, with the reverse for <span class="math inline">\(M_X\)</span>.</p>
+</section>
+<section class="level3" id="theorem-17.1.">
+<h3 class="anchored" data-anchor-id="theorem-17.1.">Theorem 17.1.</h3>
+<p>The space <span class="math inline">\(C(X)\)</span> is invariant to nonsingular linear transforms. That is for <span class="math inline">\(A_{K \times K}\)</span> with <span class="math inline">\(\text{det } A \neq 0\)</span>, we have</p>
+<p><span class="math display">\[
+C(XA) = C(X).
+\]</span></p>
+<p><strong>Proof.</strong> Let <span class="math inline">\(v \in C(X)\)</span>. Then there exists an <span class="math inline">\(\alpha \in \mathbb{R}^K\)</span> such that <span class="math inline">\(v = X\alpha\)</span>. Therefore,</p>
+<p><span class="math display">\[
+v = XAA^{-1}\alpha = XA\gamma,
+\]</span></p>
+<p>where <span class="math inline">\(\gamma = A^{-1}\alpha \in \mathbb{R}^K\)</span>. Likewise for any <span class="math inline">\(v = XA\gamma\)</span>, we can write <span class="math inline">\(v = X\alpha\)</span> for <span class="math inline">\(\alpha = A^{-1}\gamma\)</span>. That is, <span class="math inline">\(X \in C(XA)\)</span> and so <span class="math inline">\(C(X) = C(XA)\)</span>. <span class="math inline">\(\square\)</span></p>
+<p>Since <span class="math inline">\(C(X)\)</span> is invariant to linear transformations, so are <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span> (but not <span class="math inline">\(\hat{\beta}\)</span>). For example, rescaling of the components of <span class="math inline">\(X\)</span> does not affect the values of <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span>.</p>
+<p><span class="math inline">\(y\)</span> on <span class="math inline">\((x_1, x_2, x_3)\)</span> (17.3)</p>
+<p><span class="math inline">\(y\)</span> on <span class="math inline">\((x_1 + x_2, 2x_2 - x_3, 3x_1 - 2x_2 + 5x_3)\)</span> (17.4)</p>
+<p>in which case the transformation is</p>
+<p><span class="math display">\[
+A = \begin{pmatrix}
+1 &amp; 0 &amp; 3 \\
+1 &amp; 2 &amp; -2 \\
+0 &amp; -1 &amp; 5
+\end{pmatrix}
+\]</span></p>
+<p>which is of full rank. Therefore, (17.3) and (17.4) yield the same <span class="math inline">\(\hat{y}\)</span>, <span class="math inline">\(\hat{\varepsilon}\)</span>.</p>
+</section>
+<section class="level3" id="example-17.1.">
+<h3 class="anchored" data-anchor-id="example-17.1.">Example 17.1.</h3>
+<p><strong>Dummy variables.</strong> Suppose that <span class="math inline">\(x_{ji} = 1\)</span> if <span class="math inline">\(j \in I_l\)</span> and <span class="math inline">\(x_{ji} = 0\)</span> if <span class="math inline">\(j \notin I_l\)</span>, where <span class="math inline">\(\{I_l\}\)</span> forms a partition of <span class="math inline">\(\{1, \dots, n\}\)</span>. Specifically,</p>
+<p><span class="math display">\[
+I_l \cap I_{l'} = \emptyset, l \neq l'; \quad \bigcup_{l=1}^L I_l = \{1, \dots, n\}.
+\]</span></p>
+<p>For example, day of the week dummies. In this case <span class="math inline">\(L = 5\)</span></p>
+<p><span class="math display">\[
+X = \begin{pmatrix}
+1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 1 &amp; 0 &amp; 0 &amp; 0 \\
+\vdots &amp; 0 &amp; 1 &amp; 0 &amp; 0 \\
+\vdots &amp; 0 &amp; 1 &amp; 0 \\
+\vdots &amp; \vdots &amp; 0 &amp; 1 \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots
+\end{pmatrix}.
+\]</span></p>
+<p>We have a diagonal hat matrix</p>
+<p><span class="math display">\[
+X^TX = \begin{pmatrix}
+n_1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; n_2 &amp; 0 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; n_3 &amp; 0 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; n_4 &amp; 0 \\
+0 &amp; 0 &amp; 0 &amp; 0 &amp; n_5
+\end{pmatrix}.
+\]</span> <strong>Intuition:</strong></p>
+<p>Dummy variables are used to represent categorical data. In the example, we are looking at days of the week, so we have <span class="math inline">\(L=5\)</span> categories. Each column of <span class="math inline">\(X\)</span> represent one category. The <span class="math inline">\(X^TX\)</span> matrix is diagonal. The elements on the diagonal represent the number of observations in each category.</p>
+<p>Emphasizing <span class="math inline">\(C(X)\)</span> rather than <span class="math inline">\(X\)</span> itself is called the <strong>coordinate free approach</strong>. Some aspects of model/estimate are properties of <span class="math inline">\(C(X)\)</span>, the choice of coordinates is irrelevant.</p>
+<p>When <span class="math inline">\(X\)</span> is not of full rank, the space <span class="math inline">\(C(X)\)</span> is still well defined, as is the projection from <span class="math inline">\(y\)</span> onto <span class="math inline">\(C(X)\)</span>. The fitted value <span class="math inline">\(\hat{y}\)</span> and residual <span class="math inline">\(\hat{\varepsilon}\)</span> are uniquely defined in this case, but there is no unique coefficient vector <span class="math inline">\(\hat{\beta}\)</span>. This case is often called <strong>multicollinearity</strong> in econometrics, although it also arises in big data where the number of covariates is large relative to the number of observations. Suppose that <span class="math inline">\(X\)</span> is of deficient rank <span class="math inline">\(J &lt; K\)</span>. The singular value decomposition of <span class="math inline">\(X\)</span> is</p>
+<p><span class="math display">\[
+X = USV^T,
+\]</span></p>
+<p>where <span class="math inline">\(S = \text{diag}\{s_1, s_2, \dots, s_J, 0, \dots, 0\}|_{0_{n-K \times K}}\)</span>. Then we may write for <span class="math inline">\(\lambda_j &gt; 0\)</span></p>
+<p><span class="math display">\[
+X^TX = U\Lambda U^T, \quad U^TX^TXU = \Lambda
+\]</span> <strong>Intuition:</strong> When <span class="math inline">\(X\)</span> is not full rank, it means that at least one of the columns of <span class="math inline">\(X\)</span> can be written as linear combination of the other columns. This implies that we have redundant information in our regressors.</p>
+</section>
+</section>
+<section class="level2" id="partitioned-regression">
+<h2 class="anchored" data-anchor-id="partitioned-regression">17.2 Partitioned Regression</h2>
+<p>We next consider an important application of the projection idea. Partition</p>
+<p><span class="math display">\[
+X = (X_{1n \times K_1}, X_{2n \times K_2}), \quad K_1 + K_2 = K,
+\]</span></p>
+<p>and suppose we are interested only in <span class="math inline">\(\hat{\beta}_1\)</span> in the <strong>long regression</strong>.</p>
+<p>We are going to show a formula for <span class="math inline">\(\hat{\beta}_1\)</span> that does not involve computing all of <span class="math inline">\(\hat{\beta}\)</span> and reading off the subvector <span class="math inline">\(\hat{\beta}_1\)</span>. This will be called the <strong>Frisch-Waugh-Lovell Theorem</strong>. A key property of projection is given below.</p>
+<section class="level3" id="theorem-17.2.">
+<h3 class="anchored" data-anchor-id="theorem-17.2.">Theorem 17.2.</h3>
+<p>Suppose that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are orthogonal, i.e., <span class="math inline">\(X_1^TX_2 = 0\)</span>. Then</p>
+<p><span class="math display">\[
+P_X = P_{X_1} + P_{X_2}.
+\]</span></p>
+<p>This can be verified algebraically, but also should be obvious geometrically.</p>
+<p>We return to the general case. We have</p>
+<p><span class="math display">\[
+\hat{y} = X\hat{\beta} = P_Xy = P_{X_1}y + P_{X_2}y = X_1\hat{\beta}_1 + X_2\hat{\beta}_2.
+\]</span></p>
+<p>This just says that if <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> were orthogonal, then we could get <span class="math inline">\(\hat{\beta}_1\)</span> by regressing <span class="math inline">\(y\)</span> on <span class="math inline">\(X_1\)</span> only, and <span class="math inline">\(\hat{\beta}_2\)</span> by regressing <span class="math inline">\(y\)</span> on <span class="math inline">\(X_2\)</span> only.</p>
+<p><span class="math display">\[
+\begin{pmatrix} \hat{\beta}_1 \\ \hat{\beta}_2 \end{pmatrix} =
+\begin{pmatrix} X_1^TX_1 &amp; 0 \\ 0 &amp; X_2^TX_2 \end{pmatrix}^{-1}
+\begin{pmatrix} X_1^Ty \\ X_2^Ty \end{pmatrix} =
+\begin{pmatrix} (X_1^TX_1)^{-1}X_1^Ty \\ (X_2^TX_2)^{-1}X_2^Ty \end{pmatrix}.
+\]</span> It is rare that design matrices <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are orthogonal, but we can construct equivalent regressors that <em>are</em> orthogonal. Suppose we have general <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, whose dimensions satisfy <span class="math inline">\(K_1 + K_2 = K\)</span>. We make the following observations:</p>
+<ol type="1">
+<li><p><span class="math inline">\((X_1, X_2)\)</span> and <span class="math inline">\((M_2X_1, X_2)\)</span> span the same space. This follows because <span class="math inline">\(X_1 = M_2X_1 + P_2X_1\)</span>, where <span class="math inline">\(C(P_2X_1) \subset C(X_2)\)</span>. Therefore, <span class="math inline">\(C(M_2X_1, X_2) = C(X_1, X_2)\)</span>.</p></li>
+<li><p><span class="math inline">\(M_2X_1\)</span> and <span class="math inline">\(X_2\)</span> are orthogonal.</p></li>
+</ol>
+<p>This says that if we regress <span class="math inline">\(y\)</span> on <span class="math inline">\((X_1, X_2)\)</span> or <span class="math inline">\(y\)</span> on <span class="math inline">\((M_2X_1, X_2)\)</span> we get the same <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span>, and that if we wanted the coefficients on <span class="math inline">\(M_2X_1\)</span> from the second regression we could in fact just regress <span class="math inline">\(y\)</span> on <span class="math inline">\(M_2X_1\)</span> only.</p>
+<p>What are the coefficients on <span class="math inline">\(M_2X_1\)</span>? Recall that</p>
+<p><span class="math display">\[
+\begin{aligned}
+y &amp;= X_1\hat{\beta}_1 + X_2\hat{\beta}_2 \\
+&amp;= (M_2 + P_2)X_1\hat{\beta}_1 + X_2\hat{\beta}_2 \\
+&amp;= M_2X_1\hat{\beta}_1 + X_2[\hat{\beta}_2 + (X_2^TX_2)^{-1}X_2^TX_1\hat{\beta}_1] \\
+&amp;= M_2X_1\hat{\beta}_1 + X_2\hat{C},
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\hat{C} = \hat{\beta}_2 + (X_2^TX_2)^{-1}X_2^TX_1\hat{\beta}_1\)</span>. So the coefficient on <span class="math inline">\(M_2X_1\)</span> is the original <span class="math inline">\(\hat{\beta}_1\)</span>, while that on <span class="math inline">\(X_2\)</span> is some combination of <span class="math inline">\(\hat{\beta}_1\)</span> and <span class="math inline">\(\hat{\beta}_2\)</span>. Note that <span class="math inline">\(M_2X_1\)</span> are the residuals from a regression of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(X_2\)</span>.</p>
+</section>
+<section class="level3" id="theorem-17.3.-frisch-waugh-lovell.">
+<h3 class="anchored" data-anchor-id="theorem-17.3.-frisch-waugh-lovell.">Theorem 17.3. Frisch-Waugh-Lovell.</h3>
+<p>The coefficient on <span class="math inline">\(M_2X_1\)</span> is the original <span class="math inline">\(\hat{\beta}_1\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\beta}_1 &amp;= (X_1^TM_2X_1)^{-1}X_1^TM_2y = ((X_1^TM_2)(M_2X_1))^{-1}(X_1^TM_2)M_2y \\
+&amp;= (X_1^TX_1)^{-1}X_1^T\tilde{y}
+\end{aligned}
+\]</span></p>
+<p><strong>PRACTICAL IMPLICATION.</strong> If <span class="math inline">\(K\)</span> is large and we are primarily interested in first <span class="math inline">\(K_1\)</span> variables, then we can get <span class="math inline">\(\hat{\beta}_1\)</span> by regressing <span class="math inline">\(y\)</span> [or <span class="math inline">\(M_2y\)</span> equivalently] on <span class="math inline">\(M_2X_1\)</span> only, i.e.,</p>
+<p><span class="math display">\[
+\hat{\beta}_1 = (X_1^TM_2X_1)^{-1}X_1^TM_2y = (X_1^TM_2M_2X_1)^{-1}X_1^TM_2M_2y.
+\]</span></p>
+<p>This involves inversion of only <span class="math inline">\(K_1 \times K_1\)</span> and <span class="math inline">\(K_2 \times K_2\)</span> matrices, which involves less computing time than inverting <span class="math inline">\(K \times K\)</span> matrices, especially when <span class="math inline">\(K\)</span> is large [this computation can be as bad as <span class="math inline">\(O(K^3)\)</span>].</p>
+</section>
+<section class="level3" id="example-17.2.">
+<h3 class="anchored" data-anchor-id="example-17.2.">Example 17.2.</h3>
+<p>Suppose that <span class="math inline">\(X_2 = (1, 1, \dots, 1)^T = i\)</span> and <span class="math inline">\(X_1 = x_1\)</span>, then</p>
+<p><span class="math display">\[
+M_{X_2} = I_n - i(i^Ti)^{-1}i^T = I_n - \frac{ii^T}{n}
+\]</span></p>
+<p><span class="math display">\[
+M_{X_2}x_1 = x_1 - \frac{1}{n}\sum_{j=1}^n x_{ji}
+\begin{pmatrix} 1 \\ \vdots \\ 1 \end{pmatrix}
+= \begin{pmatrix}
+x_{11} - \bar{x}_1 \\
+\vdots \\
+x_{1n} - \bar{x}_1
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+\hat{\beta}_1 = \frac{\sum_{i=1}^n(x_{1i} - \bar{x}_1)(y_i - \bar{y})}{\sum_{i=1}^n(x_{1i} - \bar{x}_1)^2}
+\]</span></p>
+<p>When regression includes an intercept, can first demean the <span class="math inline">\(X\)</span> variables (and the <span class="math inline">\(y\)</span>’s) then do regression on the demeaned variables.</p>
+<p>Other examples include seasonal components (dummy variables), trends, etc. Common practice is to deseasonalize data or detrend data before analyzing effect of interest. This argument shows it is justified.</p>
+</section>
+</section>
+<section class="level2" id="restricted-least-squares">
+<h2 class="anchored" data-anchor-id="restricted-least-squares">17.3 Restricted Least Squares</h2>
+<p>Suppose we have <span class="math inline">\(q\)</span> linear restrictions on <span class="math inline">\(\beta\)</span>, i.e.,</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+R_{11} &amp; \cdots &amp; R_{1K} \\
+\vdots &amp; &amp; \vdots \\
+R_{q1} &amp; \cdots &amp; R_{qK}
+\end{pmatrix}
+\begin{pmatrix}
+\beta_1 \\ \vdots \\ \beta_K
+\end{pmatrix}
+= R\beta = r =
+\begin{pmatrix}
+r_1 \\ \vdots \\ r_q
+\end{pmatrix} \tag{17.5}
+\]</span></p>
+<p>where <span class="math inline">\(R\)</span> is <span class="math inline">\(q \times K\)</span> with <span class="math inline">\(q &lt; K\)</span> and <span class="math inline">\(R\)</span> is of rank <span class="math inline">\(q\)</span>. <strong>Intuition</strong> Sometimes economic theory dictates us to impose some restrictions on the coefficients.</p>
+<section class="level3" id="example-17.3.">
+<h3 class="anchored" data-anchor-id="example-17.3.">Example 17.3.</h3>
+<p>Suppose that <span class="math inline">\(\beta_1 + \dots + \beta_K = 1\)</span> (constant returns to scale). Then substituting in <span class="math inline">\(\beta_K = 1 - \beta_1 - \dots - \beta_{K-1}\)</span>, we obtain</p>
+<p><span class="math display">\[
+\begin{aligned}
+X\beta &amp;= \sum_{j=1}^K x_j\beta_j = \sum_{j=1}^{K-1} x_j\beta_j + x_K(1 - \beta_1 - \dots - \beta_{K-1}) \\
+&amp;= \sum_{j=1}^{K-1} (x_j - x_K)\beta_j + x_K.
+\end{aligned}
+\]</span></p>
+<p>This depends on only <span class="math inline">\(\beta_1, \dots, \beta_{K-1}\)</span>.</p>
+<p>We want to minimize the quadratic form</p>
+<p><span class="math display">\[
+S(\beta) = (y - X\beta)^T(y - X\beta)
+\]</span></p>
+<p>subject to the restrictions. Let <span class="math inline">\(\tilde{\beta}\)</span> denote the solution.</p>
+<p>Partition <span class="math inline">\(X\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(R\)</span></p>
+<p><span class="math display">\[
+X = \begin{pmatrix} X_1 &amp; X_2 \end{pmatrix}; \quad
+R = \begin{pmatrix} R_1 &amp; R_2 \end{pmatrix}; \quad
+\beta = \begin{pmatrix} \beta_1 \\ \beta_2 \end{pmatrix}
+\]</span> with dimensions <span class="math inline">\(n \times (K -q), \quad n \times q, \quad q \times (K-q), \quad q \times q, \quad (K-q) \times 1, \quad q \times 1\)</span>, respectively.</p>
+<p>And</p>
+<p><span class="math display">\[
+X_1\beta_1 + X_2\beta_2 = X\beta; \quad R_1\beta_1 + R_2\beta_2 = r,
+\]</span></p>
+<p>where <span class="math inline">\(R_2\)</span> is of full rank <span class="math inline">\(q\)</span> and invertible. This may require some reordering. We can write</p>
+<p><span class="math display">\[
+\beta_2 = R_2^{-1}(r - R_1\beta_1)
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+X\beta = X_1\beta_1 + X_2[R_2^{-1}(r - R_1\beta_1)] = (X_1 - X_2R_2^{-1}R_1)\beta_1 + X_2R_2^{-1}r.
+\]</span></p>
+<p>In other words, we can find <span class="math inline">\(\tilde{\beta}_1\)</span> by minimizing</p>
+<p><span class="math display">\[
+(y^* - X_1^*\tilde{\beta}_1)^T(y^* - X_1^*\tilde{\beta}_1)
+\]</span></p>
+<p>with respect to <span class="math inline">\(\beta_1\)</span>, where <span class="math inline">\(y^* = y - X_2R_2^{-1}r\)</span> and <span class="math inline">\(X_1^* = X_1 - X_2R_2^{-1}R_1\)</span> to get</p>
+<p><span class="math display">\[
+\begin{aligned}
+\tilde{\beta}_1 &amp;= (X_1^{*T}X_1^*)^{-1}X_1^{*T}y^* \\
+\tilde{\beta}_2 &amp;= R_2^{-1}(r - R_1\tilde{\beta}_1).
+\end{aligned}
+\]</span></p>
+<p>In fact there are other more convenient expressions for this.</p>
+</section>
+<section class="level3" id="theorem-17.4.-iterated-projection.">
+<h3 class="anchored" data-anchor-id="theorem-17.4.-iterated-projection.">Theorem 17.4. Iterated Projection.</h3>
+<p>Suppose that <span class="math inline">\(X = (X_1, X_2)\)</span>, and let <span class="math inline">\(C(X_1)\)</span> be the columns span of <span class="math inline">\(X_1\)</span> so that <span class="math inline">\(C(X_1)\)</span> is a subspace of <span class="math inline">\(C(X)\)</span>. Then</p>
+<p><span class="math display">\[
+P_{X_1} = P_{X_1}P_X.
+\]</span></p>
+<p>This says that one can first project onto the bigger space and then onto the smaller space</p>
+<p><strong>Proof.</strong> Using the orthogonal representation of <span class="math inline">\(C(X)\)</span> we have</p>
+<p><span class="math display">\[
+P_Xy = X_1\hat{\beta}_1 + M_{X_1}X_2\hat{\beta}_2
+\]</span></p>
+<p>where <span class="math inline">\(\hat{\beta}_1 = (X_1^TX_1)^{-1}X_1^Ty\)</span>, and</p>
+<p><span class="math display">\[
+P_{X_1}P_Xy = P_{X_1}X_1\hat{\beta}_1 + P_{X_1}M_{X_1}X_2\hat{\beta}_2 = X_1\hat{\beta}_1 \quad \square
+\]</span> ### Theorem 17.5. Consider the special case of (17.5) where <span class="math inline">\(r = 0\)</span>. Then</p>
+<p><span class="math display">\[
+\tilde \beta = \hat{\beta} - (X^T X)^{-1} R^T \left[ R (X^T X)^{-1} R^T \right ]^{-1} R \hat{\beta} = \left( I_K - (X^TX)^{-1}R^T [R(X^TX)^{-1}R^T]^{-1}R \right)\hat{\beta}
+\]</span> <strong>Proof:</strong> Define <span class="math display">\[
+S = \{z \in \mathbb{R}^n: z=X \beta, R \beta =0 \}
+\]</span> This is a subspace of <span class="math inline">\(C(X)\)</span>, because if <span class="math inline">\(z_1, z_2 \in S\)</span>, we have <span class="math inline">\(\alpha_1 z_1 + \alpha_2 z_2 \in S\)</span> for any scalars <span class="math inline">\(\alpha_1, \alpha_2\)</span>. This is because there exist <span class="math inline">\(\beta_1, \beta_2\)</span> such that <span class="math inline">\(z_1 = X \beta_1\)</span>, <span class="math inline">\(z_2= X \beta_2\)</span> with <span class="math inline">\(R \beta_1=0, R \beta_2 =0\)</span>. Therefore, <span class="math display">\[
+\begin{aligned}
+\alpha_1 z_1 + \alpha_2 z_2 &amp;= \alpha_1 X \beta_1 + \alpha_2 X \beta_2 = X(\alpha_1 \beta_1 + \alpha_2 \beta_2) \\
+R(\alpha_1 \beta_1 + \alpha_2 \beta_2) &amp;= \alpha_1 R \beta_1 + \alpha_2 R \beta_2 =0.
+\end{aligned}
+\]</span> Therefore, find the restricted least squares estimator using the principle of iterated projection - find <span class="math inline">\(\tilde y \in S\)</span> to minimize <span class="math display">\[
+(\tilde y - y)^T (\tilde y -y)= (X \tilde \beta - X \beta)^T (X \tilde \beta - X \beta) = (\tilde \beta - \hat{\beta})^T X^T X (\tilde \beta - \hat{\beta})
+\]</span> The projection operator onto <span class="math inline">\(S\)</span> is <span class="math display">\[
+M_W= I_n - W(W^TW)^{-1}W^T; \quad W=X(X^TX)^{-1}R^T
+\]</span> Hence <span class="math inline">\(M_W X \tilde \beta = X \tilde \beta\)</span> and the result follows. <span class="math inline">\(\square\)</span></p>
+</section>
+<section class="level3" id="backfitting-in-linear-regression">
+<h3 class="anchored" data-anchor-id="backfitting-in-linear-regression">17.3.1 Backfitting in Linear Regression</h3>
+<p>We next consider an iterative approach to computing OLS estimators. Suppose that we have <span class="math inline">\(y, x_1, \dots, x_K\)</span> vectors in <span class="math inline">\(\mathbb{R}^n\)</span>. Define the projection operators <span class="math inline">\(P_j = x_j(x_j^Tx_j)^{-1}x_j^T\)</span>, <span class="math inline">\(P_X = X(X^TX)^{-1}X^T\)</span>, <span class="math inline">\(M_j = I_n - P_j\)</span>, and <span class="math inline">\(M_X = I_n - P_X\)</span>, where <span class="math inline">\(X = (x_1, \dots, x_K)\)</span>. Thus</p>
+<p><span class="math display">\[
+y = P_Xy + M_Xy = \hat{y} + \hat{\varepsilon}. \tag{17.6}
+\]</span></p>
+<p>Suppose that one proceeds as follows</p>
+<p><strong>Backfitting Algorithm</strong></p>
+<ol type="1">
+<li><p>First regresses <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1\)</span> and get the residuals <span class="math inline">\(M_1y\)</span>.</p></li>
+<li><p>Then regress <span class="math inline">\(M_1y\)</span> on <span class="math inline">\(x_2\)</span> to get residuals <span class="math inline">\(M_2M_1y\)</span>.</p></li>
+<li><p>Continue doing one dimension regressions in the order <span class="math inline">\(x_1\)</span> then <span class="math inline">\(x_2\)</span> etc. until the process converges.</p></li>
+</ol>
+<p>The residual after <span class="math inline">\(K\)</span> cycles of the backfitting algorithm is</p>
+<p><span class="math display">\[
+\hat{\varepsilon}^K = T^Ky; \quad T = M_KM_{K-1}\dots M_1,
+\]</span></p>
+<p>where <span class="math inline">\(T: \mathbb{R}^n \to \mathbb{R}^n\)</span>.</p>
+</section>
+<section class="level3" id="theorem-17.6.">
+<h3 class="anchored" data-anchor-id="theorem-17.6.">Theorem 17.6.</h3>
+<p>Suppose that <span class="math inline">\(X\)</span> is of full rank. Then, we have as <span class="math inline">\(K \to \infty\)</span></p>
+<p><span class="math display">\[
+T^Ky \to M_Xy = \hat{\varepsilon}.
+\]</span></p>
+<p><strong>Proof.</strong> We prove that <span class="math inline">\(T\)</span> is a strict contraction mapping for <span class="math inline">\(z \in C(X)\)</span>, that is <span class="math inline">\(\|Tz\| &lt; \|z\|\)</span> for any <span class="math inline">\(z \in C(X)\)</span>. This means that <span class="math inline">\(T\)</span> shrinks any such vectors. First, for any vector <span class="math inline">\(z\)</span> write <span class="math inline">\(Tz = M_KM_{K-1}\dots M_1z = M_Kv\)</span> for <span class="math inline">\(v = M_{K-1}\dots M_1z\)</span>. Then</p>
+<p><span class="math display">\[
+\begin{aligned}
+\|Tz\|^2 &amp;= z^TT^2z \\
+&amp;= v^TM_Kv \\
+&amp;\leq \frac{v^TM_Kv}{v^Tv}v^Tv \\
+&amp;\leq \lambda_{max}(M_K)\|M_{K-1}\dots M_1z\|^2 \\
+&amp;\leq \|M_{K-1}\dots M_1z\|^2 \\
+&amp;\leq \|z\|^2
+\end{aligned}
+\]</span></p>
+<p>since <span class="math inline">\(\lambda_{max}(M_j) = 1\)</span> (<span class="math inline">\(M_j\)</span> are symmetric idempotent). Therefore, <span class="math inline">\(T\)</span> is a weak contraction. Furthermore, if <span class="math inline">\(\|Tz\| = \|z\|\)</span> then <span class="math inline">\(\|M_1z\| = \|z\|\)</span> from the above argument. This implies that <span class="math inline">\(z\)</span> is orthogonal to the space spanned by <span class="math inline">\(x_1\)</span>, i.e., <span class="math inline">\(z \in C(x_1)^{\perp}\)</span>. Similarly one obtains that <span class="math inline">\(z \in C(x_j)^{\perp}\)</span>, <span class="math inline">\(j = 2, \dots, K\)</span>. In other words, if <span class="math inline">\(\|Tz\| = \|z\|\)</span>, then <span class="math inline">\(z \in C(X)^{\perp}\)</span>. Therefore, if <span class="math inline">\(z \in C(X)\)</span>, it must be that</p>
+<p><span class="math display">\[
+\|Tz\| &lt; \|z\| \leq (1 - \epsilon)\|z\|
+\]</span></p>
+<p>for some <span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>. Also, if <span class="math inline">\(z \in C(X)\)</span>, then <span class="math inline">\(Tz \in C(X)\)</span>. Hence</p>
+<p><span class="math display">\[
+\|T^Kz\| \leq (1 - \epsilon)\|T^{K-1}z\| \leq (1 - \epsilon)^K\|z\|.
+\]</span></p>
+<p>Then combine with (17.6) we obtain the result. <span class="math inline">\(\square\)</span></p>
+<p>This says that one can compute the regression of <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1, \dots, x_K\)</span> by computing a sequence of linear one dimensional regressions. This method is of interest when the number of covariates is large, since it avoids directly inverting the full design matrix.</p>
+</section>
+<section class="level3" id="goodness-of-fit">
+<h3 class="anchored" data-anchor-id="goodness-of-fit">17.3.2 Goodness of Fit</h3>
+<p>We may decompose the total sum of squares as follows using the orthogonality</p>
+<p><span class="math display">\[
+y^Ty = \hat{y}^T\hat{y} + \hat{\varepsilon}^T\hat{\varepsilon} \tag{17.7}
+\]</span></p>
+<p>This is valid for any set of <span class="math inline">\(X = (x_1, \dots, x_K)\)</span>. It follows that</p>
+<p><span class="math display">\[
+\hat{y}^T\hat{y} \leq y^Ty, \tag{17.8}
+\]</span></p>
+<p>i.e., the Euclidean norm of the projected vector is smaller than the norm of the original series. The notion of fit is widely used in practice. It captures the idea of how much of the variation in the data is explained by the covariates, i.e., by how much <span class="math inline">\(\hat{y}^T\hat{y} \leq y^Ty\)</span>. One possibility is to measure the fit by the residual sum of squares</p>
+<p><span class="math display">\[
+S(\hat{\beta}) = RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \|y - \hat{y}\|^2 = \hat{\varepsilon}^T\hat{\varepsilon} = y^TM_Xy = y^Ty - \hat{y}^T\hat{y},
+\]</span></p>
+<p>which captures the Euclidean distance of the sample from the “fitted value”. In general, the smaller the <span class="math inline">\(RSS\)</span> the better. However, the numerical value of <span class="math inline">\(RSS\)</span> depends on the units used to measure <span class="math inline">\(y\)</span> in so that one cannot compare across different <span class="math inline">\(X\)</span>’s.</p>
+<p>The idea is to compare the <span class="math inline">\(RSS\)</span> from a given <span class="math inline">\(X\)</span> with the <span class="math inline">\(RSS\)</span> of the <span class="math inline">\(X\)</span> that contains only ones. When <span class="math inline">\(X = i\)</span> (<span class="math inline">\(i = (1, \dots, 1)^T\)</span>), that is, we just calculate the mean of <span class="math inline">\(y\)</span>, we have <span class="math display">\[
+y^Ty= \bar y^2 i^Ti + \tilde \varepsilon^T \tilde \varepsilon
+\]</span> where <span class="math inline">\(\tilde \varepsilon = y- \bar y i\)</span></p>
+</section>
+<section class="level3" id="definition-17.3.">
+<h3 class="anchored" data-anchor-id="definition-17.3.">Definition 17.3.</h3>
+<p>For a general <span class="math inline">\(X = (x_1, \dots, x_K)\)</span>, we define</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\hat{\varepsilon}^T\hat{\varepsilon}}{\tilde{\varepsilon}^T\tilde{\varepsilon}}.
+\]</span></p>
+<p><strong>Remarks.</strong></p>
+<ol type="1">
+<li><p>When <span class="math inline">\(X\)</span> contains a column vector of ones, <span class="math inline">\(0 \leq R^2 \leq 1\)</span>. If <span class="math inline">\(X\)</span> does not contain a column vector of ones, <span class="math inline">\(R^2\)</span> could be less than zero.</p></li>
+<li><p>In the bivariate case, <span class="math inline">\(R^2\)</span> is the squared sample correlation between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</p></li>
+<li><p><span class="math inline">\(R^2\)</span> is invariant to some changes of units. If <span class="math inline">\(y \to ay + b\)</span> for any constants <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, then <span class="math inline">\(\hat{y}_i \to a\hat{y}_i + b\)</span> and <span class="math inline">\(\bar{y} \to a\bar{y} + b\)</span>, so <span class="math inline">\(R^2\)</span> is the same in this case. Clearly, if <span class="math inline">\(X \to XA\)</span> for a nonsingular matrix <span class="math inline">\(A\)</span>, then <span class="math inline">\(\hat{y}\)</span> is unchanged, as is <span class="math inline">\(\bar{y}\)</span> and <span class="math inline">\(\tilde{y}\)</span>.</p></li>
+<li><p><span class="math inline">\(R^2\)</span> always increases with the addition of variables. With <span class="math inline">\(K = n\)</span> we can make <span class="math inline">\(R^2 = 1\)</span>.</p></li>
+<li><p><span class="math inline">\(R^2\)</span> can’t be used to compare across different <span class="math inline">\(y\)</span>.</p></li>
+</ol>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch17exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise1">Exercise 1</h3>
+<p><a href="#sec-ch17solution1">Solution 1</a></p>
+<p>Consider a dataset <span class="math inline">\((y, X)\)</span> where <span class="math inline">\(y = (2, 4, 6, 8)^T\)</span> and <span class="math inline">\(X = \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ 1 &amp; 4 \end{pmatrix}\)</span>. Calculate the OLS estimator <span class="math inline">\(\hat{\beta}\)</span> using the formula <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise2">Exercise 2</h3>
+<p><a href="#sec-ch17solution2">Solution 2</a></p>
+<p>Using the data from Exercise 1, calculate the fitted values <span class="math inline">\(\hat{y}\)</span> and the residuals <span class="math inline">\(\hat{\varepsilon}\)</span>. Verify that <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise3">Exercise 3</h3>
+<p><a href="#sec-ch17solution3">Solution 3</a></p>
+<p>For the same dataset in Exercise 1, calculate the projection matrix <span class="math inline">\(P_X\)</span> and the annihilator matrix <span class="math inline">\(M_X\)</span>. Verify that <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span> are symmetric and idempotent.</p>
+</section>
+<section class="level3" id="sec-ch17exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise4">Exercise 4</h3>
+<p><a href="#sec-ch17solution4">Solution 4</a></p>
+<p>Prove that for any matrix <span class="math inline">\(X\)</span>, the matrices <span class="math inline">\(P_X = X(X^TX)^{-1}X^T\)</span> and <span class="math inline">\(M_X = I - X(X^TX)^{-1}X^T\)</span> are idempotent, that is, <span class="math inline">\(P_X^2 = P_X\)</span> and <span class="math inline">\(M_X^2 = M_X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise5">Exercise 5</h3>
+<p><a href="#sec-ch17solution5">Solution 5</a></p>
+<p>Explain in intuitive terms what the <strong>column span</strong> <span class="math inline">\(C(X)\)</span> of a matrix <span class="math inline">\(X\)</span> represents. Provide an example with a <span class="math inline">\(3 \times 2\)</span> matrix.</p>
+</section>
+<section class="level3" id="sec-ch17exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise6">Exercise 6</h3>
+<p><a href="#sec-ch17solution6">Solution 6</a></p>
+<p>Explain the geometric interpretation of the <strong>Ordinary Least Squares (OLS)</strong> procedure. How does it relate to the projection of <span class="math inline">\(y\)</span> onto the column space of <span class="math inline">\(X\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch17exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise7">Exercise 7</h3>
+<p><a href="#sec-ch17solution7">Solution 7</a></p>
+<p>Consider the matrices <span class="math inline">\(X_1 = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}\)</span> and <span class="math inline">\(X_2 = \begin{pmatrix} 2 \\ 4 \\ 6 \end{pmatrix}\)</span>. Show that <span class="math inline">\(C(X_1) = C(X_2)\)</span>. What does this imply about the relationship between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch17exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise8">Exercise 8</h3>
+<p><a href="#sec-ch17solution8">Solution 8</a></p>
+<p>State the <strong>normal equations</strong> in the context of OLS and explain how they are derived from the minimization of the sum of squared errors.</p>
+</section>
+<section class="level3" id="sec-ch17exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise9">Exercise 9</h3>
+<p><a href="#sec-ch17solution9">Solution 9</a></p>
+<p>Explain the concept of <strong>multicollinearity</strong> and how it affects the uniqueness of the OLS estimator <span class="math inline">\(\hat{\beta}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise10">Exercise 10</h3>
+<p><a href="#sec-ch17solution10">Solution 10</a></p>
+<p>Given <span class="math inline">\(X = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \end{pmatrix}\)</span>, show that <span class="math inline">\(X^TX\)</span> is not invertible. What does this indicate about the rank of <span class="math inline">\(X\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch17exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise11">Exercise 11</h3>
+<p><a href="#sec-ch17solution11">Solution 11</a></p>
+<p>Consider a partitioned regression model where <span class="math inline">\(X = (X_1, X_2)\)</span>. If <span class="math inline">\(X_1^T X_2 = 0\)</span>, what can you say about relationship between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> and what is the implication to <span class="math inline">\(P_X\)</span></p>
+</section>
+<section class="level3" id="sec-ch17exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise12">Exercise 12</h3>
+<p><a href="#sec-ch17solution12">Solution 12</a></p>
+<p>State the <strong>Frisch-Waugh-Lovell Theorem</strong> and explain its practical implication for computing OLS estimates in a partitioned regression.</p>
+</section>
+<section class="level3" id="sec-ch17exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise13">Exercise 13</h3>
+<p><a href="#sec-ch17solution13">Solution 13</a></p>
+<p>Suppose you have a regression model <span class="math inline">\(y = X\beta + \varepsilon\)</span>, where <span class="math inline">\(X = (X_1, X_2)\)</span>. You are only interested in estimating <span class="math inline">\(\beta_1\)</span>. Using the <strong>Frisch-Waugh-Lovell Theorem</strong>, explain the steps to obtain <span class="math inline">\(\hat{\beta}_1\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise14">Exercise 14</h3>
+<p><a href="#sec-ch17solution14">Solution 14</a></p>
+<p>Explain the <strong>coordinate-free approach</strong> in the context of OLS regression. What is the main advantage of this approach?</p>
+</section>
+<section class="level3" id="sec-ch17exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise15">Exercise 15</h3>
+<p><a href="#sec-ch17solution15">Solution 15</a></p>
+<p>What does it mean for a matrix to be of <strong>full rank</strong>? How does the rank of the matrix <span class="math inline">\(X\)</span> affect the invertibility of <span class="math inline">\(X^TX\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch17exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise16">Exercise 16</h3>
+<p><a href="#sec-ch17solution16">Solution 16</a></p>
+<p>Define the <strong>residual sum of squares (RSS)</strong> and explain how it is related to the goodness of fit of an OLS regression.</p>
+</section>
+<section class="level3" id="sec-ch17exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise17">Exercise 17</h3>
+<p><a href="#sec-ch17solution17">Solution 17</a></p>
+<p>Define <span class="math inline">\(R^2\)</span> in the context of OLS regression. Explain its properties and potential limitations.</p>
+</section>
+<section class="level3" id="sec-ch17exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise18">Exercise 18</h3>
+<p><a href="#sec-ch17solution18">Solution 18</a></p>
+<p>Explain the concept of <strong>restricted least squares</strong> and provide an example of a linear restriction on the coefficients.</p>
+</section>
+<section class="level3" id="sec-ch17exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise19">Exercise 19</h3>
+<p><a href="#sec-ch17solution19">Solution 19</a> State the concept of <strong>iterated projection</strong>.</p>
+</section>
+<section class="level3" id="sec-ch17exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch17exercise20">Exercise 20</h3>
+<p><a href="#sec-ch17solution20">Solution 20</a></p>
+<p>Explain the process of <strong>backfitting</strong> in linear regression and its purpose.</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch17solution1">
+<h3 class="anchored" data-anchor-id="sec-ch17solution1">Solution 1</h3>
+<p><a href="#sec-ch17exercise1">Exercise 1</a></p>
+<p>First, we calculate <span class="math inline">\(X^TX\)</span>:</p>
+<p><span class="math display">\[
+X^TX = \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; 4 \end{pmatrix} \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ 1 &amp; 4 \end{pmatrix} = \begin{pmatrix} 4 &amp; 10 \\ 10 &amp; 30 \end{pmatrix}.
+\]</span></p>
+<p>Next, we find the inverse of <span class="math inline">\(X^TX\)</span>:</p>
+<p><span class="math display">\[
+(X^TX)^{-1} = \frac{1}{(4)(30) - (10)(10)} \begin{pmatrix} 30 &amp; -10 \\ -10 &amp; 4 \end{pmatrix} = \frac{1}{20} \begin{pmatrix} 30 &amp; -10 \\ -10 &amp; 4 \end{pmatrix} = \begin{pmatrix} 1.5 &amp; -0.5 \\ -0.5 &amp; 0.2 \end{pmatrix}.
+\]</span></p>
+<p>Now, we calculate <span class="math inline">\(X^Ty\)</span>:</p>
+<p><span class="math display">\[
+X^Ty = \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; 4 \end{pmatrix} \begin{pmatrix} 2 \\ 4 \\ 6 \\ 8 \end{pmatrix} = \begin{pmatrix} 20 \\ 60 \end{pmatrix}.
+\]</span></p>
+<p>Finally, we compute <span class="math inline">\(\hat{\beta}\)</span>:</p>
+<p><span class="math display">\[
+\hat{\beta} = (X^TX)^{-1}X^Ty = \begin{pmatrix} 1.5 &amp; -0.5 \\ -0.5 &amp; 0.2 \end{pmatrix} \begin{pmatrix} 20 \\ 60 \end{pmatrix} = \begin{pmatrix} 0 \\ 2 \end{pmatrix}.
+\]</span> <strong>Intuition:</strong> The OLS estimator gives the coefficients of the linear combination of the columns of X that best approximates <span class="math inline">\(y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution2">
+<h3 class="anchored" data-anchor-id="sec-ch17solution2">Solution 2</h3>
+<p><a href="#sec-ch17exercise2">Exercise 2</a></p>
+<p>We have <span class="math inline">\(\hat{\beta} = \begin{pmatrix} 0 \\ 2 \end{pmatrix}\)</span> from Exercise 1. The fitted values are:</p>
+<p><span class="math display">\[
+\hat{y} = X\hat{\beta} = \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ 1 &amp; 4 \end{pmatrix} \begin{pmatrix} 0 \\ 2 \end{pmatrix} = \begin{pmatrix} 2 \\ 4 \\ 6 \\ 8 \end{pmatrix}.
+\]</span></p>
+<p>The residuals are:</p>
+<p><span class="math display">\[
+\hat{\varepsilon} = y - \hat{y} = \begin{pmatrix} 2 \\ 4 \\ 6 \\ 8 \end{pmatrix} - \begin{pmatrix} 2 \\ 4 \\ 6 \\ 8 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \\ 0 \\ 0 \end{pmatrix}.
+\]</span></p>
+<p>We verify that <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span>:</p>
+<p><span class="math display">\[
+X^T\hat{\varepsilon} = \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; 4 \end{pmatrix} \begin{pmatrix} 0 \\ 0 \\ 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}.
+\]</span> <strong>Intuition:</strong> The residuals represent the difference between observed and fitted values. The property <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span> reflects that residuals are orthogonal to the column space of X.</p>
+</section>
+<section class="level3" id="sec-ch17solution3">
+<h3 class="anchored" data-anchor-id="sec-ch17solution3">Solution 3</h3>
+<p><a href="#sec-ch17exercise3">Exercise 3</a></p>
+<p>From Exercise 1, we have <span class="math inline">\((X^TX)^{-1} = \begin{pmatrix} 1.5 &amp; -0.5 \\ -0.5 &amp; 0.2 \end{pmatrix}\)</span>. The projection matrix <span class="math inline">\(P_X\)</span> is:</p>
+<p><span class="math display">\[
+P_X = X(X^TX)^{-1}X^T = \begin{pmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1 &amp; 3 \\ 1 &amp; 4 \end{pmatrix} \begin{pmatrix} 1.5 &amp; -0.5 \\ -0.5 &amp; 0.2 \end{pmatrix} \begin{pmatrix} 1 &amp; 1 &amp; 1 &amp; 1 \\ 1 &amp; 2 &amp; 3 &amp; 4 \end{pmatrix} = \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0\\ 0&amp; 0&amp; 0&amp; 1 \end{pmatrix}.
+\]</span> The annhilator matrix is given by: <span class="math display">\[
+M_X = I - P_X = \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 1 \end{pmatrix} - \begin{pmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 &amp; 0\\ 0&amp; 0&amp; 0&amp; 1 \end{pmatrix} = \begin{pmatrix} 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{pmatrix}.
+\]</span> <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span> are symmetric by construction. It can be verified by computation that <span class="math inline">\(P_X^2=P_X\)</span> and <span class="math inline">\(M_X^2=M_X\)</span>. <strong>Intuition:</strong> <span class="math inline">\(P_X\)</span> projects any vector onto the column space of <span class="math inline">\(X\)</span>, while <span class="math inline">\(M_X\)</span> projects any vector onto the orthogonal complement of the column space of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution4">
+<h3 class="anchored" data-anchor-id="sec-ch17solution4">Solution 4</h3>
+<p><a href="#sec-ch17exercise4">Exercise 4</a> To show <span class="math inline">\(P_X\)</span> is idempotent, we calculate <span class="math inline">\(P_X^2\)</span>: <span class="math display">\[
+P_X^2 = [X(X^TX)^{-1}X^T][X(X^TX)^{-1}X^T] = X(X^TX)^{-1}(X^TX)(X^TX)^{-1}X^T = X(X^TX)^{-1}X^T = P_X.
+\]</span> To show <span class="math inline">\(M_X\)</span> is idempotent, we have: <span class="math display">\[
+\begin{aligned}
+M_X^2 &amp;= (I - P_X)(I - P_X) \\
+&amp;= I - P_X - P_X + P_X^2 \\
+&amp;= I - P_X - P_X + P_X \\
+&amp;= I - P_X = M_X.
+\end{aligned}
+\]</span> <strong>Intuition:</strong> Idempotent matrices, when applied multiple times, have the same effect as when applied once.</p>
+</section>
+<section class="level3" id="sec-ch17solution5">
+<h3 class="anchored" data-anchor-id="sec-ch17solution5">Solution 5</h3>
+<p><a href="#sec-ch17exercise5">Exercise 5</a></p>
+<p>The <strong>column span</strong> <span class="math inline">\(C(X)\)</span> of a matrix <span class="math inline">\(X\)</span> represents the set of all possible linear combinations of the columns of <span class="math inline">\(X\)</span>. In other words, it’s the subspace spanned by the column vectors of <span class="math inline">\(X\)</span>.</p>
+<p>For example, consider <span class="math inline">\(X = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 1 \\ 0 &amp; 3 \end{pmatrix}\)</span>. The column span <span class="math inline">\(C(X)\)</span> is the set of all vectors of the form:</p>
+<p><span class="math display">\[
+c_1 \begin{pmatrix} 1 \\ 2 \\ 0 \end{pmatrix} + c_2 \begin{pmatrix} 2 \\ 1 \\ 3 \end{pmatrix}
+\]</span></p>
+<p>where <span class="math inline">\(c_1\)</span> and <span class="math inline">\(c_2\)</span> are any real numbers. Geometrically, this represents a plane in <span class="math inline">\(\mathbb{R}^3\)</span> passing through the origin.</p>
+<p><strong>Intuition:</strong> The column span represents all vectors that can be ‘reached’ by combining the columns of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution6">
+<h3 class="anchored" data-anchor-id="sec-ch17solution6">Solution 6</h3>
+<p><a href="#sec-ch17exercise6">Exercise 6</a></p>
+<p>The <strong>Ordinary Least Squares (OLS)</strong> procedure seeks to find the vector <span class="math inline">\(\hat{\beta}\)</span> that minimizes the distance between the vector <span class="math inline">\(y\)</span> and the vector <span class="math inline">\(X\hat{\beta}\)</span>, which lies in the column space of <span class="math inline">\(X\)</span>, <span class="math inline">\(C(X)\)</span>. Geometrically, this is equivalent to finding the orthogonal projection of <span class="math inline">\(y\)</span> onto <span class="math inline">\(C(X)\)</span>. The projection is the point in <span class="math inline">\(C(X)\)</span> that is closest to <span class="math inline">\(y\)</span>. The vector connecting <span class="math inline">\(y\)</span> to its projection on <span class="math inline">\(C(X)\)</span> is the residual vector <span class="math inline">\(\hat{\varepsilon}\)</span>, which is orthogonal to <span class="math inline">\(C(X)\)</span>.</p>
+<p><strong>Intuition:</strong> Imagine shining a light perpendicular to the subspace <span class="math inline">\(C(X)\)</span>. The shadow cast by <span class="math inline">\(y\)</span> onto <span class="math inline">\(C(X)\)</span> is its projection, <span class="math inline">\(\hat{y}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution7">
+<h3 class="anchored" data-anchor-id="sec-ch17solution7">Solution 7</h3>
+<p><a href="#sec-ch17exercise7">Exercise 7</a></p>
+<p>Notice that <span class="math inline">\(X_2 = 2X_1\)</span>. Therefore, any linear combination of the columns of <span class="math inline">\(X_2\)</span> can also be written as a linear combination of the columns of <span class="math inline">\(X_1\)</span>, and vice-versa. Thus, <span class="math inline">\(C(X_1) = C(X_2)\)</span>. This implies that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are linearly dependent; one is a scalar multiple of the other.</p>
+<p><strong>Intuition:</strong> If two matrices have the same column span, their columns span the same subspace, even if the columns themselves are different.</p>
+</section>
+<section class="level3" id="sec-ch17solution8">
+<h3 class="anchored" data-anchor-id="sec-ch17solution8">Solution 8</h3>
+<p><a href="#sec-ch17exercise8">Exercise 8</a></p>
+<p>The <strong>normal equations</strong> are given by <span class="math inline">\(X^TX\hat{\beta} = X^Ty\)</span>. They are derived by minimizing the sum of squared errors, <span class="math inline">\(S(\beta) = (y - X\beta)^T(y - X\beta)\)</span>. Taking the derivative of <span class="math inline">\(S(\beta)\)</span> with respect to <span class="math inline">\(\beta\)</span> and setting it to zero gives:</p>
+<p><span class="math display">\[
+\frac{\partial S(\beta)}{\partial \beta} = -2X^T(y - X\beta) = 0.
+\]</span></p>
+<p>This simplifies to the normal equations: <span class="math inline">\(X^TX\hat{\beta} = X^Ty\)</span>.</p>
+<p><strong>Intuition:</strong> The normal equations represent the condition where the gradient of the sum of squared errors is zero, corresponding to a minimum.</p>
+</section>
+<section class="level3" id="sec-ch17solution9">
+<h3 class="anchored" data-anchor-id="sec-ch17solution9">Solution 9</h3>
+<p><a href="#sec-ch17exercise9">Exercise 9</a></p>
+<p><strong>Multicollinearity</strong> occurs when there is a linear dependence among the columns of the matrix <span class="math inline">\(X\)</span>. In other words, one or more columns can be expressed as a linear combination of the other columns. When multicollinearity is present, the matrix <span class="math inline">\(X^TX\)</span> is not invertible, and the OLS estimator <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span> is not uniquely defined. There are infinitely many solutions for <span class="math inline">\(\hat{\beta}\)</span>.</p>
+<p><strong>Intuition:</strong> Multicollinearity means there is redundant information among the regressors, making it impossible to isolate the individual effect of each regressor.</p>
+</section>
+<section class="level3" id="sec-ch17solution10">
+<h3 class="anchored" data-anchor-id="sec-ch17solution10">Solution 10</h3>
+<p><a href="#sec-ch17exercise10">Exercise 10</a></p>
+<p>Given <span class="math inline">\(X = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \end{pmatrix}\)</span>, we have:</p>
+<p><span class="math display">\[
+X^TX = \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \end{pmatrix} \begin{pmatrix} 1 &amp; 2 \\ 2 &amp; 4 \end{pmatrix} = \begin{pmatrix} 5 &amp; 10 \\ 10 &amp; 20 \end{pmatrix}.
+\]</span></p>
+<p>The determinant of <span class="math inline">\(X^TX\)</span> is <span class="math inline">\((5)(20) - (10)(10) = 0\)</span>. Since the determinant is zero, <span class="math inline">\(X^TX\)</span> is not invertible. This indicates that the rank of <span class="math inline">\(X\)</span> is less than the number of columns (which is 2). In fact, the rank of <span class="math inline">\(X\)</span> is 1, because the second column is twice the first column.</p>
+<p><strong>Intuition:</strong> A non-invertible <span class="math inline">\(X^TX\)</span> indicates linear dependence among the columns of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution11">
+<h3 class="anchored" data-anchor-id="sec-ch17solution11">Solution 11</h3>
+<p><a href="#sec-ch17exercise11">Exercise 11</a></p>
+<p>If <span class="math inline">\(X_1^T X_2 = 0\)</span>, the columns of <span class="math inline">\(X_1\)</span> are orthogonal to the columns of <span class="math inline">\(X_2\)</span>. This means that <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> represent completely independent sets of regressors. Also it implies that <span class="math inline">\(P_X=P_{X_1} + P_{X_2}\)</span></p>
+<p><strong>Intuition</strong>: The cross product between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> represents the covariance between this regressors. If <span class="math inline">\(X_1^T X_2 = 0\)</span>, this covariance is 0.</p>
+</section>
+<section class="level3" id="sec-ch17solution12">
+<h3 class="anchored" data-anchor-id="sec-ch17solution12">Solution 12</h3>
+<p><a href="#sec-ch17exercise12">Exercise 12</a></p>
+<p>The <strong>Frisch-Waugh-Lovell Theorem</strong> states that in a partitioned regression model <span class="math inline">\(y = X_1\beta_1 + X_2\beta_2 + \varepsilon\)</span>, the OLS estimator of <span class="math inline">\(\beta_1\)</span> can be obtained by the following two-step procedure:</p>
+<ol type="1">
+<li>Regress <span class="math inline">\(y\)</span> on <span class="math inline">\(X_2\)</span> and obtain the residuals <span class="math inline">\(M_2y\)</span>.</li>
+<li>Regress <span class="math inline">\(X_1\)</span> on <span class="math inline">\(X_2\)</span> and obtain the residuals <span class="math inline">\(M_2X_1\)</span>.</li>
+<li>Regress <span class="math inline">\(M_2y\)</span> on <span class="math inline">\(M_2X_1\)</span> to obtain <span class="math inline">\(\hat{\beta}_1\)</span>.</li>
+</ol>
+<p>The practical implication is that we can obtain <span class="math inline">\(\hat{\beta}_1\)</span> without directly inverting the potentially large matrix <span class="math inline">\(X^TX\)</span>. Instead, we only need to invert smaller matrices related to <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>. <span class="math display">\[
+\hat{\beta}_1 = (X_1^TM_2X_1)^{-1}X_1^TM_2y
+\]</span> <strong>Intuition:</strong> The theorem allows us to isolate the effect of <span class="math inline">\(X_1\)</span> on <span class="math inline">\(y\)</span> after accounting for the effect of <span class="math inline">\(X_2\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution13">
+<h3 class="anchored" data-anchor-id="sec-ch17solution13">Solution 13</h3>
+<p><a href="#sec-ch17exercise13">Exercise 13</a></p>
+<ol type="1">
+<li>Calculate <span class="math inline">\(M_2 = I - X_2(X_2^TX_2)^{-1}X_2^T\)</span>.</li>
+<li>Calculate <span class="math inline">\(M_2y\)</span>.</li>
+<li>Calculate <span class="math inline">\(M_2X_1\)</span>.</li>
+<li>Calculate <span class="math inline">\(\hat{\beta}_1 = (X_1^TM_2X_1)^{-1}X_1^TM_2y\)</span>.</li>
+</ol>
+<p><strong>Intuition:</strong> This process effectively removes the influence of <span class="math inline">\(X_2\)</span> from both <span class="math inline">\(y\)</span> and <span class="math inline">\(X_1\)</span> before estimating the relationship between the adjusted <span class="math inline">\(y\)</span> and <span class="math inline">\(X_1\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17solution14">
+<h3 class="anchored" data-anchor-id="sec-ch17solution14">Solution 14</h3>
+<p><a href="#sec-ch17exercise14">Exercise 14</a></p>
+<p>The <strong>coordinate-free approach</strong> in OLS regression emphasizes the geometric interpretation of the regression in terms of the column space <span class="math inline">\(C(X)\)</span> rather than the specific choice of the regressors (the columns of <span class="math inline">\(X\)</span>). The main advantage is that it highlights the invariance of certain results (like fitted values and residuals) to non-singular linear transformations of the regressors.</p>
+<p><strong>Intuition:</strong> The coordinate-free approach focuses on the underlying subspace spanned by the regressors, regardless of how that subspace is represented.</p>
+</section>
+<section class="level3" id="sec-ch17solution15">
+<h3 class="anchored" data-anchor-id="sec-ch17solution15">Solution 15</h3>
+<p><a href="#sec-ch17exercise15">Exercise 15</a></p>
+<p>A matrix is of <strong>full rank</strong> if its rank is equal to the smaller of its number of rows and columns. For a matrix <span class="math inline">\(X\)</span> with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(K\)</span> columns, if <span class="math inline">\(n &gt; K\)</span>, full rank means rank(<span class="math inline">\(X\)</span>) = <span class="math inline">\(K\)</span>. If <span class="math inline">\(n &lt; K\)</span>, full rank means rank(<span class="math inline">\(X\)</span>) = <span class="math inline">\(n\)</span>. If <span class="math inline">\(X\)</span> is a <span class="math inline">\(n \times K\)</span> matrix, and rank(<span class="math inline">\(X\)</span>) = <span class="math inline">\(K\)</span> (and given <span class="math inline">\(n&gt;K\)</span>), then <span class="math inline">\(X^TX\)</span> is invertible. If rank(<span class="math inline">\(X\)</span>) &lt; <span class="math inline">\(K\)</span>, then <span class="math inline">\(X^TX\)</span> is not invertible.</p>
+<p><strong>Intuition:</strong> Full rank means that the columns (or rows) of the matrix are linearly independent.</p>
+</section>
+<section class="level3" id="sec-ch17solution16">
+<h3 class="anchored" data-anchor-id="sec-ch17solution16">Solution 16</h3>
+<p><a href="#sec-ch17exercise16">Exercise 16</a></p>
+<p>The <strong>residual sum of squares (RSS)</strong> is defined as:</p>
+<p><span class="math display">\[
+RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \hat{\varepsilon}^T\hat{\varepsilon}.
+\]</span></p>
+<p>It measures the total squared difference between the observed values <span class="math inline">\(y_i\)</span> and the fitted values <span class="math inline">\(\hat{y}_i\)</span>. A smaller RSS indicates a better fit of the model to the data, as the fitted values are closer to the observed values.</p>
+<p><strong>Intuition:</strong> RSS quantifies the unexplained variation in the data after fitting the OLS regression.</p>
+</section>
+<section class="level3" id="sec-ch17solution17">
+<h3 class="anchored" data-anchor-id="sec-ch17solution17">Solution 17</h3>
+<p><a href="#sec-ch17exercise17">Exercise 17</a></p>
+<p><span class="math inline">\(R^2\)</span>, or the coefficient of determination, is defined as:</p>
+<p><span class="math display">\[
+R^2 = 1 - \frac{\hat{\varepsilon}^T\hat{\varepsilon}}{\tilde{\varepsilon}^T\tilde{\varepsilon}} = 1 - \frac{RSS}{TSS}
+\]</span> where <span class="math inline">\(TSS = \sum(y_i - \bar y)^2\)</span> and <span class="math inline">\(\tilde \varepsilon = y- \bar y i\)</span>.</p>
+<p>It represents the proportion of the variance in the dependent variable <span class="math inline">\(y\)</span> that is explained by the independent variables in <span class="math inline">\(X\)</span>.</p>
+<p><strong>Properties:</strong></p>
+<ul>
+<li>If X contains a constant term, <span class="math inline">\(0 \leq R^2 \leq 1\)</span>.</li>
+<li><span class="math inline">\(R^2\)</span> increases as more variables are added to the model.</li>
+</ul>
+<p><strong>Limitations:</strong></p>
+<ul>
+<li><span class="math inline">\(R^2\)</span> can be misleadingly high for models with many variables.</li>
+<li><span class="math inline">\(R^2\)</span> cannot be used to compare models with different dependent variables.</li>
+<li>If X does not contain a constant term, <span class="math inline">\(R^2\)</span> could be less than 0.</li>
+</ul>
+<p><strong>Intuition:</strong> <span class="math inline">\(R^2\)</span> measures the goodness of fit of the model, but it should be interpreted cautiously.</p>
+</section>
+<section class="level3" id="sec-ch17solution18">
+<h3 class="anchored" data-anchor-id="sec-ch17solution18">Solution 18</h3>
+<p><a href="#sec-ch17exercise18">Exercise 18</a></p>
+<p><strong>Restricted least squares</strong> involves minimizing the sum of squared errors subject to one or more linear restrictions on the coefficients <span class="math inline">\(\beta\)</span>. An example of a linear restriction is <span class="math inline">\(\beta_1 + \beta_2 = 1\)</span>, which might represent a constraint that two coefficients sum to one (e.g., constant returns to scale in a production function).</p>
+<p><strong>Intuition:</strong> Restricted least squares incorporates prior information or theoretical constraints into the estimation process.</p>
+</section>
+<section class="level3" id="sec-ch17solution19">
+<h3 class="anchored" data-anchor-id="sec-ch17solution19">Solution 19</h3>
+<p><a href="#sec-ch17solution19">Exercise 19</a> If <span class="math inline">\(X = (X_1, X_2)\)</span>, and let <span class="math inline">\(C(X_1)\)</span> be the columns span of <span class="math inline">\(X_1\)</span> so that <span class="math inline">\(C(X_1)\)</span> is a subspace of <span class="math inline">\(C(X)\)</span>. Then <span class="math inline">\(P_{X_1} = P_{X_1}P_X\)</span>.</p>
+<p><strong>Intuition:</strong> Projecting a vector first onto a larger space (<span class="math inline">\(C(X)\)</span>) and then onto a subspace of that space (<span class="math inline">\(C(X_1)\)</span>) is equivalent to projecting the vector directly onto the subspace (<span class="math inline">\(C(X_1)\)</span>).</p>
+</section>
+<section class="level3" id="sec-ch17solution20">
+<h3 class="anchored" data-anchor-id="sec-ch17solution20">Solution 20</h3>
+<p><a href="#sec-ch17solution20">Exercise 20</a></p>
+<p><strong>Backfitting</strong> is an iterative procedure for computing OLS estimates. Given a set of regressors <span class="math inline">\(x_1, \dots, x_K\)</span>, the algorithm proceeds as follows:</p>
+<ol type="1">
+<li>Regress <span class="math inline">\(y\)</span> on <span class="math inline">\(x_1\)</span> and obtain residuals <span class="math inline">\(M_1y\)</span>.</li>
+<li>Regress <span class="math inline">\(M_1y\)</span> on <span class="math inline">\(x_2\)</span> and obtain residuals <span class="math inline">\(M_2M_1y\)</span>.</li>
+<li>Continue this process, regressing <span class="math inline">\(M_{j-1}\dots M_1y\)</span> on <span class="math inline">\(x_j\)</span> to obtain residuals <span class="math inline">\(M_jM_{j-1}\dots M_1y\)</span>.</li>
+<li>Repeat steps 1-3, cycling through the regressors until the residuals converge.</li>
+</ol>
+<p>The purpose of backfitting is to provide an alternative way to compute OLS estimates, particularly when the number of regressors is large, and inverting <span class="math inline">\(X^TX\)</span> directly is computationally expensive.</p>
+<p><strong>Intuition:</strong> Backfitting successively removes the influence of each regressor from the residuals, iteratively approaching the overall OLS solution.</p>
+</section>
+</section>
+<section class="level2" id="r-scripts">
+<h2 class="anchored" data-anchor-id="r-scripts">R Scripts</h2>
+<section class="level3" id="r-script-1-basic-ols-estimation">
+<h3 class="anchored" data-anchor-id="r-script-1-basic-ols-estimation">R Script 1: Basic OLS Estimation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a aria-hidden="true" href="#cb3-4" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb3-5"><a aria-hidden="true" href="#cb3-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span>  <span class="co"># Number of observations</span></span>
+<span id="cb3-6"><a aria-hidden="true" href="#cb3-6" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">2</span>    <span class="co"># Number of regressors</span></span>
+<span id="cb3-7"><a aria-hidden="true" href="#cb3-7" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K) <span class="co"># Generate random X matrix</span></span>
+<span id="cb3-8"><a aria-hidden="true" href="#cb3-8" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, X) <span class="co"># add a constant</span></span>
+<span id="cb3-9"><a aria-hidden="true" href="#cb3-9" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="dv">1</span>)  <span class="co"># True coefficients</span></span>
+<span id="cb3-10"><a aria-hidden="true" href="#cb3-10" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n)  <span class="co"># Generate y with error term</span></span>
+<span id="cb3-11"><a aria-hidden="true" href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a aria-hidden="true" href="#cb3-12" tabindex="-1"></a><span class="co"># Convert to tibble for tidyverse compatibility</span></span>
+<span id="cb3-13"><a aria-hidden="true" href="#cb3-13" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(<span class="fu">cbind</span>(y, X)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-14"><a aria-hidden="true" href="#cb3-14" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">y =</span> V1, <span class="at">intercept =</span> V2, <span class="at">x1 =</span> V3, <span class="at">x2 =</span> V4)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
+`.name_repair` is omitted as of tibble 2.0.0.
+ℹ Using compatibility `.name_repair`.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="co"># OLS estimation using lm()</span></span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data)</span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a><span class="co"># Print model summary</span></span>
+<span id="cb5-5"><a aria-hidden="true" href="#cb5-5" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ ., data = data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.8994 -0.6821 -0.1086  0.5749  3.3663 
+
+Coefficients: (1 not defined because of singularities)
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.8592     0.2862   6.497 3.53e-09 ***
+intercept         NA         NA      NA       NA    
+x1            0.5973     0.3457   1.728  0.08720 .  
+x2           -1.0296     0.3735  -2.757  0.00697 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9765 on 97 degrees of freedom
+Multiple R-squared:  0.106, Adjusted R-squared:  0.0876 
+F-statistic: 5.753 on 2 and 97 DF,  p-value: 0.004356</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Extract coefficients</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(model)</span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a><span class="fu">print</span>(beta_hat)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   intercept          x1          x2 
+  1.8592062          NA   0.5972598  -1.0296422 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" href="#cb9-1" tabindex="-1"></a><span class="co"># Calculate fitted values</span></span>
+<span id="cb9-2"><a aria-hidden="true" href="#cb9-2" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> <span class="fu">predict</span>(model)</span>
+<span id="cb9-3"><a aria-hidden="true" href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a aria-hidden="true" href="#cb9-4" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
+<span id="cb9-5"><a aria-hidden="true" href="#cb9-5" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> <span class="fu">resid</span>(model)</span>
+<span id="cb9-6"><a aria-hidden="true" href="#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a aria-hidden="true" href="#cb9-7" tabindex="-1"></a><span class="co"># Verify orthogonality (should be close to zero)</span></span>
+<span id="cb9-8"><a aria-hidden="true" href="#cb9-8" tabindex="-1"></a><span class="fu">t</span>(<span class="fu">as.matrix</span>(data[, <span class="sc">-</span><span class="dv">1</span>])) <span class="sc">%*%</span> residuals</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   [,1]
+intercept -5.551115e-15
+x1        -3.961511e-15
+x2        -1.720181e-15</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Data Simulation:</strong> We simulate a dataset with <span class="math inline">\(n=100\)</span> observations and <span class="math inline">\(K=2\)</span> regressors (plus a constant term, making it 3 coefficients). The <code>X</code> matrix is generated randomly, and <code>y</code> is created based on a linear model with known coefficients (<code>beta</code>) and a normally distributed error term.
+<ul>
+<li>The simulation process illustrates the <strong>linear model</strong> <span class="math inline">\(y = X\beta + \varepsilon\)</span>.</li>
+</ul></li>
+<li><strong>Data Preparation:</strong> The simulated data is converted to a tibble (tidyverse’s version of a data frame) and the columns are renamed for better readability.</li>
+<li><strong>OLS Estimation:</strong> The <code>lm()</code> function performs <strong>Ordinary Least Squares (OLS)</strong> regression. The formula <code>y ~ .</code> specifies that <code>y</code> is regressed on all other columns in the <code>data</code> tibble.
+<ul>
+<li>This step directly implements the <strong>OLS procedure</strong> described in Definition 17.1.</li>
+</ul></li>
+<li><strong>Model Summary:</strong> <code>summary(model)</code> provides various statistics, including coefficient estimates, standard errors, t-values, p-values, and R-squared.</li>
+<li><strong>Coefficient Extraction:</strong> <code>coef(model)</code> extracts the estimated coefficients (<span class="math inline">\(\hat{\beta}\)</span>).
+<ul>
+<li>This corresponds to finding the <span class="math inline">\(\hat{\beta}\)</span> that minimizes <span class="math inline">\(S(\beta)\)</span> in Definition 17.1.</li>
+</ul></li>
+<li><strong>Fitted Values and Residuals:</strong> <code>predict(model)</code> calculates the fitted values (<span class="math inline">\(\hat{y}\)</span>), and <code>resid(model)</code> calculates the residuals (<span class="math inline">\(\hat{\varepsilon}\)</span>).
+<ul>
+<li>These are the <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span> discussed in Section 17.1.</li>
+</ul></li>
+<li><strong>Orthogonality Verification:</strong> <code>t(as.matrix(data[,-1])) %*% residuals</code> calculates <span class="math inline">\(X^T\hat{\varepsilon}\)</span>. The result should be a vector very close to zero, demonstrating the orthogonality condition <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span>.
+<ul>
+<li>This verifies empirically the important property described just after Definition 17.1.</li>
+</ul></li>
+</ol>
+</section>
+<section class="level3" id="r-script-2-projection-matrices-and-orthogonality">
+<h3 class="anchored" data-anchor-id="r-script-2-projection-matrices-and-orthogonality">R Script 2: Projection Matrices and Orthogonality</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" href="#cb11-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb11-2"><a aria-hidden="true" href="#cb11-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-3"><a aria-hidden="true" href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a aria-hidden="true" href="#cb11-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb11-5"><a aria-hidden="true" href="#cb11-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb11-6"><a aria-hidden="true" href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a aria-hidden="true" href="#cb11-7" tabindex="-1"></a><span class="co"># Simulate data (same as before, but different seed)</span></span>
+<span id="cb11-8"><a aria-hidden="true" href="#cb11-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb11-9"><a aria-hidden="true" href="#cb11-9" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb11-10"><a aria-hidden="true" href="#cb11-10" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K)</span>
+<span id="cb11-11"><a aria-hidden="true" href="#cb11-11" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.8</span>)</span>
+<span id="cb11-12"><a aria-hidden="true" href="#cb11-12" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb11-13"><a aria-hidden="true" href="#cb11-13" tabindex="-1"></a></span>
+<span id="cb11-14"><a aria-hidden="true" href="#cb11-14" tabindex="-1"></a><span class="co"># Calculate X'X</span></span>
+<span id="cb11-15"><a aria-hidden="true" href="#cb11-15" tabindex="-1"></a>XtX <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb11-16"><a aria-hidden="true" href="#cb11-16" tabindex="-1"></a></span>
+<span id="cb11-17"><a aria-hidden="true" href="#cb11-17" tabindex="-1"></a><span class="co"># Calculate (X'X)^(-1)</span></span>
+<span id="cb11-18"><a aria-hidden="true" href="#cb11-18" tabindex="-1"></a>XtX_inv <span class="ot">&lt;-</span> <span class="fu">solve</span>(XtX)</span>
+<span id="cb11-19"><a aria-hidden="true" href="#cb11-19" tabindex="-1"></a></span>
+<span id="cb11-20"><a aria-hidden="true" href="#cb11-20" tabindex="-1"></a><span class="co"># Calculate projection matrix P_X</span></span>
+<span id="cb11-21"><a aria-hidden="true" href="#cb11-21" tabindex="-1"></a>P_X <span class="ot">&lt;-</span> X <span class="sc">%*%</span> XtX_inv <span class="sc">%*%</span> <span class="fu">t</span>(X)</span>
+<span id="cb11-22"><a aria-hidden="true" href="#cb11-22" tabindex="-1"></a></span>
+<span id="cb11-23"><a aria-hidden="true" href="#cb11-23" tabindex="-1"></a><span class="co"># Calculate annihilator matrix M_X</span></span>
+<span id="cb11-24"><a aria-hidden="true" href="#cb11-24" tabindex="-1"></a>M_X <span class="ot">&lt;-</span> <span class="fu">diag</span>(n) <span class="sc">-</span> P_X  <span class="co"># diag(n) creates an n x n identity matrix</span></span>
+<span id="cb11-25"><a aria-hidden="true" href="#cb11-25" tabindex="-1"></a></span>
+<span id="cb11-26"><a aria-hidden="true" href="#cb11-26" tabindex="-1"></a><span class="co"># Verify P_X is idempotent: P_X %*% P_X should be equal to P_X</span></span>
+<span id="cb11-27"><a aria-hidden="true" href="#cb11-27" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">all.equal</span>(P_X <span class="sc">%*%</span> P_X, P_X))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" href="#cb13-1" tabindex="-1"></a><span class="co"># Verify M_X is idempotent: M_X %*% M_X should be equal to M_X</span></span>
+<span id="cb13-2"><a aria-hidden="true" href="#cb13-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">all.equal</span>(M_X <span class="sc">%*%</span> M_X, M_X))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" href="#cb15-1" tabindex="-1"></a><span class="co"># Verify P_X is symmetric: t(P_X) should be equal to P_X</span></span>
+<span id="cb15-2"><a aria-hidden="true" href="#cb15-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">all.equal</span>(<span class="fu">t</span>(P_X), P_X))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" href="#cb17-1" tabindex="-1"></a><span class="co"># Verify M_X is symmetric: t(M_X) should be equal to M_X</span></span>
+<span id="cb17-2"><a aria-hidden="true" href="#cb17-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">all.equal</span>(<span class="fu">t</span>(M_X), M_X))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" href="#cb19-1" tabindex="-1"></a><span class="co"># Calculate fitted values</span></span>
+<span id="cb19-2"><a aria-hidden="true" href="#cb19-2" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> P_X <span class="sc">%*%</span> y</span>
+<span id="cb19-3"><a aria-hidden="true" href="#cb19-3" tabindex="-1"></a></span>
+<span id="cb19-4"><a aria-hidden="true" href="#cb19-4" tabindex="-1"></a><span class="co"># Calculate residuals</span></span>
+<span id="cb19-5"><a aria-hidden="true" href="#cb19-5" tabindex="-1"></a>epsilon_hat <span class="ot">&lt;-</span> M_X <span class="sc">%*%</span> y</span>
+<span id="cb19-6"><a aria-hidden="true" href="#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a aria-hidden="true" href="#cb19-7" tabindex="-1"></a><span class="co">#Verify y = ŷ + ε</span></span>
+<span id="cb19-8"><a aria-hidden="true" href="#cb19-8" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">all.equal</span>(y, y_hat<span class="sc">+</span>epsilon_hat))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" href="#cb21-1" tabindex="-1"></a><span class="co"># Verify orthogonality: X'ε should be close to zero</span></span>
+<span id="cb21-2"><a aria-hidden="true" href="#cb21-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> epsilon_hat)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              [,1]
+[1,] -1.815433e-15
+[2,]  1.393903e-14
+[3,]  6.695801e-15</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" href="#cb23-1" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb23-2"><a aria-hidden="true" href="#cb23-2" tabindex="-1"></a><span class="fu">plot</span>(y, y_hat, <span class="at">xlab =</span> <span class="st">"Actual Values (y)"</span>, <span class="at">ylab =</span> <span class="st">"Fitted Values (ŷ)"</span>, <span class="at">main =</span> <span class="st">"Actual vs. Fitted Values"</span>)</span>
+<span id="cb23-3"><a aria-hidden="true" href="#cb23-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>)  <span class="co"># Add a 45-degree line</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap17_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Data Simulation:</strong> Similar to Script 1, we generate data for a linear model.</li>
+<li><strong>Calculate <span class="math inline">\(X^TX\)</span> and <span class="math inline">\((X^TX)^{-1}\)</span>:</strong> These are intermediate steps needed to calculate the projection matrices.
+<ul>
+<li>These calculations are part of finding <span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span>.</li>
+</ul></li>
+<li><strong>Calculate <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span>:</strong> The projection matrix <span class="math inline">\(P_X\)</span> and the annihilator matrix <span class="math inline">\(M_X\)</span> are calculated using the formulas from Definition 17.2.</li>
+<li><strong>Idempotency and Symmetry Checks:</strong> The code verifies the key properties of <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span> stated in Definition 17.2: that they are both idempotent (<span class="math inline">\(P_X^2 = P_X\)</span>, <span class="math inline">\(M_X^2 = M_X\)</span>) and symmetric (<span class="math inline">\(P_X^T = P_X\)</span>, <span class="math inline">\(M_X^T = M_X\)</span>). <code>all.equal()</code> is used for comparison, accounting for potential small numerical differences.</li>
+<li><strong>Calculate <span class="math inline">\(\hat{y}\)</span> and <span class="math inline">\(\hat{\varepsilon}\)</span></strong> Fitted values and residuals are computed using projection matrices: <span class="math inline">\(\hat{y}= P_X y\)</span> and <span class="math inline">\(\hat{\varepsilon} = M_X y\)</span>.</li>
+<li><strong>Verify <span class="math inline">\(y = \hat{y} + \hat{\varepsilon}\)</span></strong>.</li>
+<li><strong>Orthogonality Verification:</strong> We check if <span class="math inline">\(X^T\hat{\varepsilon}\)</span> is close to zero, confirming the orthogonality condition.</li>
+<li><strong>Visualization:</strong> A scatter plot of actual values (<span class="math inline">\(y\)</span>) vs. fitted values (<span class="math inline">\(\hat{y}\)</span>) is created. A 45-degree line is added, representing perfect prediction. The closer the points are to the line, the better the fit.</li>
+</ol>
+</section>
+<section class="level3" id="r-script-3-frisch-waugh-lovell-theorem">
+<h3 class="anchored" data-anchor-id="r-script-3-frisch-waugh-lovell-theorem">R Script 3: Frisch-Waugh-Lovell Theorem</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" href="#cb24-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb24-2"><a aria-hidden="true" href="#cb24-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb24-3"><a aria-hidden="true" href="#cb24-3" tabindex="-1"></a></span>
+<span id="cb24-4"><a aria-hidden="true" href="#cb24-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb24-5"><a aria-hidden="true" href="#cb24-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>)</span>
+<span id="cb24-6"><a aria-hidden="true" href="#cb24-6" tabindex="-1"></a></span>
+<span id="cb24-7"><a aria-hidden="true" href="#cb24-7" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb24-8"><a aria-hidden="true" href="#cb24-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb24-9"><a aria-hidden="true" href="#cb24-9" tabindex="-1"></a>K1 <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb24-10"><a aria-hidden="true" href="#cb24-10" tabindex="-1"></a>K2 <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb24-11"><a aria-hidden="true" href="#cb24-11" tabindex="-1"></a>X1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K1), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K1)</span>
+<span id="cb24-12"><a aria-hidden="true" href="#cb24-12" tabindex="-1"></a>X2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K2), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K2)</span>
+<span id="cb24-13"><a aria-hidden="true" href="#cb24-13" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(X1, X2)</span>
+<span id="cb24-14"><a aria-hidden="true" href="#cb24-14" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="fl">0.2</span>)</span>
+<span id="cb24-15"><a aria-hidden="true" href="#cb24-15" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb24-16"><a aria-hidden="true" href="#cb24-16" tabindex="-1"></a></span>
+<span id="cb24-17"><a aria-hidden="true" href="#cb24-17" tabindex="-1"></a><span class="co"># Method 1: Full regression</span></span>
+<span id="cb24-18"><a aria-hidden="true" href="#cb24-18" tabindex="-1"></a>full_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X)</span>
+<span id="cb24-19"><a aria-hidden="true" href="#cb24-19" tabindex="-1"></a>beta_hat_full <span class="ot">&lt;-</span> <span class="fu">coef</span>(full_model)</span>
+<span id="cb24-20"><a aria-hidden="true" href="#cb24-20" tabindex="-1"></a></span>
+<span id="cb24-21"><a aria-hidden="true" href="#cb24-21" tabindex="-1"></a><span class="co"># Method 2: Frisch-Waugh-Lovell Theorem</span></span>
+<span id="cb24-22"><a aria-hidden="true" href="#cb24-22" tabindex="-1"></a></span>
+<span id="cb24-23"><a aria-hidden="true" href="#cb24-23" tabindex="-1"></a><span class="co"># Step 1: Regress y on X2 and get residuals</span></span>
+<span id="cb24-24"><a aria-hidden="true" href="#cb24-24" tabindex="-1"></a>model_y_on_X2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X2)</span>
+<span id="cb24-25"><a aria-hidden="true" href="#cb24-25" tabindex="-1"></a>residuals_y_on_X2 <span class="ot">&lt;-</span> <span class="fu">resid</span>(model_y_on_X2)</span>
+<span id="cb24-26"><a aria-hidden="true" href="#cb24-26" tabindex="-1"></a></span>
+<span id="cb24-27"><a aria-hidden="true" href="#cb24-27" tabindex="-1"></a><span class="co"># Step 2: Regress X1 on X2 and get residuals</span></span>
+<span id="cb24-28"><a aria-hidden="true" href="#cb24-28" tabindex="-1"></a>M2X1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> n, <span class="at">ncol =</span> K1)</span>
+<span id="cb24-29"><a aria-hidden="true" href="#cb24-29" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>K1) {</span>
+<span id="cb24-30"><a aria-hidden="true" href="#cb24-30" tabindex="-1"></a>  model_X1_on_X2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(X1[, i] <span class="sc">~</span> X2)</span>
+<span id="cb24-31"><a aria-hidden="true" href="#cb24-31" tabindex="-1"></a>  M2X1[, i] <span class="ot">&lt;-</span> <span class="fu">resid</span>(model_X1_on_X2)</span>
+<span id="cb24-32"><a aria-hidden="true" href="#cb24-32" tabindex="-1"></a>}</span>
+<span id="cb24-33"><a aria-hidden="true" href="#cb24-33" tabindex="-1"></a></span>
+<span id="cb24-34"><a aria-hidden="true" href="#cb24-34" tabindex="-1"></a><span class="co"># Step 3: Regress residuals_y_on_X2 on residuals_X1_on_X2</span></span>
+<span id="cb24-35"><a aria-hidden="true" href="#cb24-35" tabindex="-1"></a>fwl_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(residuals_y_on_X2 <span class="sc">~</span> M2X1 <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># -1 removes the intercept</span></span>
+<span id="cb24-36"><a aria-hidden="true" href="#cb24-36" tabindex="-1"></a>beta_hat_fwl <span class="ot">&lt;-</span> <span class="fu">coef</span>(fwl_model)</span>
+<span id="cb24-37"><a aria-hidden="true" href="#cb24-37" tabindex="-1"></a></span>
+<span id="cb24-38"><a aria-hidden="true" href="#cb24-38" tabindex="-1"></a><span class="co"># Compare coefficients for beta1 (full model vs. FWL)</span></span>
+<span id="cb24-39"><a aria-hidden="true" href="#cb24-39" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Coefficients from full regression (first K1 coefficients):"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Coefficients from full regression (first K1 coefficients):"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" href="#cb26-1" tabindex="-1"></a><span class="fu">print</span>(beta_hat_full[<span class="dv">2</span><span class="sc">:</span>(K1<span class="sc">+</span><span class="dv">1</span>)])</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        X1         X2 
+ 0.8012567 -0.7152640 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" href="#cb28-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Coefficients from FWL regression:"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Coefficients from FWL regression:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" href="#cb30-1" tabindex="-1"></a><span class="fu">print</span>(beta_hat_fwl)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     M2X11      M2X12 
+ 0.8012567 -0.7152640 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" href="#cb32-1" tabindex="-1"></a><span class="co"># They should be (almost) identical</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Data Simulation:</strong> Data is generated with two sets of regressors, <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>.</li>
+<li><strong>Full Regression:</strong> A standard OLS regression of <span class="math inline">\(y\)</span> on the full <span class="math inline">\(X\)</span> matrix (both <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>) is performed.</li>
+<li><strong>Frisch-Waugh-Lovell (FWL) - Step 1:</strong> <span class="math inline">\(y\)</span> is regressed on <span class="math inline">\(X_2\)</span> only, and the residuals are stored. This isolates the part of <span class="math inline">\(y\)</span> that is <em>not</em> explained by <span class="math inline">\(X_2\)</span>.</li>
+<li><strong>FWL - Step 2:</strong> Each column of <span class="math inline">\(X_1\)</span> is regressed on <span class="math inline">\(X_2\)</span>, and the residuals are stored in <code>M2X1</code>. This isolates the part of each variable in <span class="math inline">\(X_1\)</span> that is <em>not</em> explained by <span class="math inline">\(X_2\)</span>.</li>
+<li><strong>FWL - Step 3:</strong> The residuals from Step 1 (unexplained part of <span class="math inline">\(y\)</span>) are regressed on the residuals from Step 2 (unexplained parts of <span class="math inline">\(X_1\)</span>). The <code>- 1</code> in the formula removes the intercept term, as we are only interested in the coefficients on <span class="math inline">\(M_2X_1\)</span>.
+<ul>
+<li>This final regression isolates the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(X_1\)</span> after controlling for <span class="math inline">\(X_2\)</span>, directly implementing the <strong>Frisch-Waugh-Lovell Theorem</strong> (Theorem 17.3).</li>
+</ul></li>
+<li><strong>Comparison:</strong> The coefficients for <span class="math inline">\(\beta_1\)</span> (corresponding to <span class="math inline">\(X_1\)</span>) from the full regression and the FWL regression are printed. They should be virtually identical, demonstrating the theorem.</li>
+</ol>
+</section>
+<section class="level3" id="r-script-4-restricted-least-squares">
+<h3 class="anchored" data-anchor-id="r-script-4-restricted-least-squares">R Script 4: Restricted Least Squares</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" href="#cb33-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb33-2"><a aria-hidden="true" href="#cb33-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb33-3"><a aria-hidden="true" href="#cb33-3" tabindex="-1"></a><span class="fu">library</span>(quadprog) <span class="co"># For solve.QP()</span></span>
+<span id="cb33-4"><a aria-hidden="true" href="#cb33-4" tabindex="-1"></a></span>
+<span id="cb33-5"><a aria-hidden="true" href="#cb33-5" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb33-6"><a aria-hidden="true" href="#cb33-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101</span>)</span>
+<span id="cb33-7"><a aria-hidden="true" href="#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a aria-hidden="true" href="#cb33-8" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb33-9"><a aria-hidden="true" href="#cb33-9" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb33-10"><a aria-hidden="true" href="#cb33-10" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb33-11"><a aria-hidden="true" href="#cb33-11" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K)</span>
+<span id="cb33-12"><a aria-hidden="true" href="#cb33-12" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb33-13"><a aria-hidden="true" href="#cb33-13" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n)</span>
+<span id="cb33-14"><a aria-hidden="true" href="#cb33-14" tabindex="-1"></a></span>
+<span id="cb33-15"><a aria-hidden="true" href="#cb33-15" tabindex="-1"></a><span class="co"># Unrestricted OLS</span></span>
+<span id="cb33-16"><a aria-hidden="true" href="#cb33-16" tabindex="-1"></a>unrestricted_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># -1 removes the intercept for easier comparison</span></span>
+<span id="cb33-17"><a aria-hidden="true" href="#cb33-17" tabindex="-1"></a>beta_hat_unrestricted <span class="ot">&lt;-</span> <span class="fu">coef</span>(unrestricted_model)</span>
+<span id="cb33-18"><a aria-hidden="true" href="#cb33-18" tabindex="-1"></a></span>
+<span id="cb33-19"><a aria-hidden="true" href="#cb33-19" tabindex="-1"></a><span class="co"># Restricted Least Squares (beta1 + beta2 + beta3 = 1)</span></span>
+<span id="cb33-20"><a aria-hidden="true" href="#cb33-20" tabindex="-1"></a><span class="co"># We use quadratic programming (solve.QP) to solve the restricted LS</span></span>
+<span id="cb33-21"><a aria-hidden="true" href="#cb33-21" tabindex="-1"></a></span>
+<span id="cb33-22"><a aria-hidden="true" href="#cb33-22" tabindex="-1"></a><span class="co"># Define Dmat (corresponds to X'X)</span></span>
+<span id="cb33-23"><a aria-hidden="true" href="#cb33-23" tabindex="-1"></a>Dmat <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X</span>
+<span id="cb33-24"><a aria-hidden="true" href="#cb33-24" tabindex="-1"></a></span>
+<span id="cb33-25"><a aria-hidden="true" href="#cb33-25" tabindex="-1"></a><span class="co"># Define dvec (corresponds to X'y)</span></span>
+<span id="cb33-26"><a aria-hidden="true" href="#cb33-26" tabindex="-1"></a>dvec <span class="ot">&lt;-</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb33-27"><a aria-hidden="true" href="#cb33-27" tabindex="-1"></a></span>
+<span id="cb33-28"><a aria-hidden="true" href="#cb33-28" tabindex="-1"></a><span class="co"># Define Amat (constraint matrix) for beta1 + beta2 + beta3 = 1</span></span>
+<span id="cb33-29"><a aria-hidden="true" href="#cb33-29" tabindex="-1"></a>Amat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">1</span>)  <span class="co"># Each row is a constraint</span></span>
+<span id="cb33-30"><a aria-hidden="true" href="#cb33-30" tabindex="-1"></a></span>
+<span id="cb33-31"><a aria-hidden="true" href="#cb33-31" tabindex="-1"></a><span class="co"># Define bvec (constraint vector) for the constraint</span></span>
+<span id="cb33-32"><a aria-hidden="true" href="#cb33-32" tabindex="-1"></a>bvec <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb33-33"><a aria-hidden="true" href="#cb33-33" tabindex="-1"></a></span>
+<span id="cb33-34"><a aria-hidden="true" href="#cb33-34" tabindex="-1"></a><span class="co"># Solve the quadratic program</span></span>
+<span id="cb33-35"><a aria-hidden="true" href="#cb33-35" tabindex="-1"></a><span class="co"># solve.QP minimizes (1/2)b'Db - d'b subject to A'b &gt;= b0</span></span>
+<span id="cb33-36"><a aria-hidden="true" href="#cb33-36" tabindex="-1"></a>result <span class="ot">&lt;-</span> <span class="fu">solve.QP</span>(<span class="at">Dmat =</span> Dmat, <span class="at">dvec =</span> dvec, <span class="at">Amat =</span> <span class="fu">t</span>(Amat), <span class="at">bvec =</span> bvec, <span class="at">meq =</span> <span class="dv">1</span>)</span>
+<span id="cb33-37"><a aria-hidden="true" href="#cb33-37" tabindex="-1"></a></span>
+<span id="cb33-38"><a aria-hidden="true" href="#cb33-38" tabindex="-1"></a><span class="co"># Extract the solution (restricted coefficients)</span></span>
+<span id="cb33-39"><a aria-hidden="true" href="#cb33-39" tabindex="-1"></a>beta_hat_restricted <span class="ot">&lt;-</span> result<span class="sc">$</span>solution</span>
+<span id="cb33-40"><a aria-hidden="true" href="#cb33-40" tabindex="-1"></a></span>
+<span id="cb33-41"><a aria-hidden="true" href="#cb33-41" tabindex="-1"></a><span class="co"># Print results</span></span>
+<span id="cb33-42"><a aria-hidden="true" href="#cb33-42" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Unrestricted coefficients:"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Unrestricted coefficients:"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" href="#cb35-1" tabindex="-1"></a><span class="fu">print</span>(beta_hat_unrestricted)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        X1         X2         X3 
+ 2.2218437 -0.9351643  0.2940957 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" href="#cb37-1" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Restricted coefficients (sum to 1):"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Restricted coefficients (sum to 1):"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" href="#cb39-1" tabindex="-1"></a><span class="fu">print</span>(beta_hat_restricted)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2.12931820 -1.07568076 -0.05363744</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Data Simulation:</strong> Standard data generation for a linear model.</li>
+<li><strong>Unrestricted OLS:</strong> A standard OLS regression is performed without any restrictions. The intercept is removed (<code>- 1</code>) to simplify the comparison with the restricted estimates later, as the restriction will involve the coefficients directly.</li>
+<li><strong>Restricted Least Squares:</strong>
+<ul>
+<li>We use the <code>solve.QP()</code> function from the <code>quadprog</code> package, which solves quadratic programming problems. Restricted least squares can be formulated as a quadratic program.</li>
+<li><strong><code>Dmat</code>:</strong> This corresponds to <span class="math inline">\(X^TX\)</span> in the OLS objective function.</li>
+<li><strong><code>dvec</code>:</strong> This corresponds to <span class="math inline">\(X^Ty\)</span> in the OLS objective function.</li>
+<li><strong><code>Amat</code>:</strong> This matrix defines the linear constraints. In this case, we have one constraint: <span class="math inline">\(\beta_1 + \beta_2 + \beta_3 = 1\)</span>. Since <code>solve.QP</code> expects constraints in the form <span class="math inline">\(A^Tb \geq b_0\)</span>, we transpose <code>Amat</code>.</li>
+<li><strong><code>bvec</code>:</strong> This vector contains the right-hand side of the constraint (in this case, 1).</li>
+<li><strong><code>meq = 1</code></strong>. This parameter indicates that we have 1 equality constraint</li>
+<li><strong><code>result$solution</code>:</strong> This contains the solution to the quadratic program, which are the restricted OLS coefficients.</li>
+</ul></li>
+<li><strong>Print Results:</strong> The unrestricted and restricted coefficient estimates are printed for comparison. The restricted coefficients will sum to 1, satisfying the constraint.
+<ul>
+<li>This script directly applies the concepts of <strong>restricted least squares</strong> discussed in Section 17.3.</li>
+</ul></li>
+</ol>
+</section>
+<section class="level3" id="r-script-5-r-squared-and-goodness-of-fit">
+<h3 class="anchored" data-anchor-id="r-script-5-r-squared-and-goodness-of-fit">R Script 5: R-squared and Goodness of Fit</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" href="#cb41-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb41-2"><a aria-hidden="true" href="#cb41-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb41-3"><a aria-hidden="true" href="#cb41-3" tabindex="-1"></a></span>
+<span id="cb41-4"><a aria-hidden="true" href="#cb41-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb41-5"><a aria-hidden="true" href="#cb41-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">202</span>)</span>
+<span id="cb41-6"><a aria-hidden="true" href="#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a aria-hidden="true" href="#cb41-7" tabindex="-1"></a><span class="co"># Simulate data</span></span>
+<span id="cb41-8"><a aria-hidden="true" href="#cb41-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb41-9"><a aria-hidden="true" href="#cb41-9" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb41-10"><a aria-hidden="true" href="#cb41-10" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(n <span class="sc">*</span> K), <span class="at">nrow =</span> n, <span class="at">ncol =</span> K)</span>
+<span id="cb41-11"><a aria-hidden="true" href="#cb41-11" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, X)  <span class="co"># Add a constant term</span></span>
+<span id="cb41-12"><a aria-hidden="true" href="#cb41-12" tabindex="-1"></a>beta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb41-13"><a aria-hidden="true" href="#cb41-13" tabindex="-1"></a>y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n) <span class="co"># Model with good fit</span></span>
+<span id="cb41-14"><a aria-hidden="true" href="#cb41-14" tabindex="-1"></a>y_poor_fit <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>) <span class="co"># Model with poor fit. High error</span></span>
+<span id="cb41-15"><a aria-hidden="true" href="#cb41-15" tabindex="-1"></a></span>
+<span id="cb41-16"><a aria-hidden="true" href="#cb41-16" tabindex="-1"></a><span class="co"># Fit models</span></span>
+<span id="cb41-17"><a aria-hidden="true" href="#cb41-17" tabindex="-1"></a>model_good <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> X)</span>
+<span id="cb41-18"><a aria-hidden="true" href="#cb41-18" tabindex="-1"></a>model_poor <span class="ot">&lt;-</span> <span class="fu">lm</span>(y_poor_fit <span class="sc">~</span> X)</span>
+<span id="cb41-19"><a aria-hidden="true" href="#cb41-19" tabindex="-1"></a></span>
+<span id="cb41-20"><a aria-hidden="true" href="#cb41-20" tabindex="-1"></a><span class="co"># Get R-squared</span></span>
+<span id="cb41-21"><a aria-hidden="true" href="#cb41-21" tabindex="-1"></a>r_squared_good <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_good)<span class="sc">$</span>r.squared</span>
+<span id="cb41-22"><a aria-hidden="true" href="#cb41-22" tabindex="-1"></a>r_squared_poor <span class="ot">&lt;-</span> <span class="fu">summary</span>(model_poor)<span class="sc">$</span>r.squared</span>
+<span id="cb41-23"><a aria-hidden="true" href="#cb41-23" tabindex="-1"></a></span>
+<span id="cb41-24"><a aria-hidden="true" href="#cb41-24" tabindex="-1"></a><span class="co"># Print R-squared</span></span>
+<span id="cb41-25"><a aria-hidden="true" href="#cb41-25" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"R-squared (good fit):"</span>, r_squared_good))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R-squared (good fit): 0.119451827407791"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" href="#cb43-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"R-squared (poor fit):"</span>, r_squared_poor))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R-squared (poor fit): 0.0364354620408681"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a aria-hidden="true" href="#cb45-1" tabindex="-1"></a><span class="co"># Calculate RSS manually</span></span>
+<span id="cb45-2"><a aria-hidden="true" href="#cb45-2" tabindex="-1"></a>rss_good <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(model_good)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb45-3"><a aria-hidden="true" href="#cb45-3" tabindex="-1"></a>rss_poor <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(model_poor)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb45-4"><a aria-hidden="true" href="#cb45-4" tabindex="-1"></a></span>
+<span id="cb45-5"><a aria-hidden="true" href="#cb45-5" tabindex="-1"></a><span class="co"># Calculate TSS manually</span></span>
+<span id="cb45-6"><a aria-hidden="true" href="#cb45-6" tabindex="-1"></a>tss_good <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> <span class="fu">mean</span>(y))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb45-7"><a aria-hidden="true" href="#cb45-7" tabindex="-1"></a>tss_poor <span class="ot">&lt;-</span> <span class="fu">sum</span>((y_poor_fit <span class="sc">-</span> <span class="fu">mean</span>(y_poor_fit))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb45-8"><a aria-hidden="true" href="#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a aria-hidden="true" href="#cb45-9" tabindex="-1"></a><span class="co"># Calculate R-squared manually</span></span>
+<span id="cb45-10"><a aria-hidden="true" href="#cb45-10" tabindex="-1"></a>r_squared_good_manual <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rss_good <span class="sc">/</span> tss_good</span>
+<span id="cb45-11"><a aria-hidden="true" href="#cb45-11" tabindex="-1"></a>r_squared_poor_manual <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> rss_poor <span class="sc">/</span> tss_poor</span>
+<span id="cb45-12"><a aria-hidden="true" href="#cb45-12" tabindex="-1"></a></span>
+<span id="cb45-13"><a aria-hidden="true" href="#cb45-13" tabindex="-1"></a><span class="co"># Print manually calculated R-squared</span></span>
+<span id="cb45-14"><a aria-hidden="true" href="#cb45-14" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"R-squared (good fit, manual):"</span>, r_squared_good_manual))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R-squared (good fit, manual): 0.119451827407791"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" href="#cb47-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"R-squared (poor fit, manual):"</span>, r_squared_poor_manual))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "R-squared (poor fit, manual): 0.036435462040868"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" href="#cb49-1" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb49-2"><a aria-hidden="true" href="#cb49-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># Set up a 1x2 plotting area</span></span>
+<span id="cb49-3"><a aria-hidden="true" href="#cb49-3" tabindex="-1"></a></span>
+<span id="cb49-4"><a aria-hidden="true" href="#cb49-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(model_good), y, <span class="at">main =</span> <span class="st">"Good Fit"</span>, <span class="at">xlab =</span> <span class="st">"Fitted Values"</span>, <span class="at">ylab =</span> <span class="st">"Actual Values"</span>)</span>
+<span id="cb49-5"><a aria-hidden="true" href="#cb49-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb49-6"><a aria-hidden="true" href="#cb49-6" tabindex="-1"></a></span>
+<span id="cb49-7"><a aria-hidden="true" href="#cb49-7" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">predict</span>(model_poor), y_poor_fit, <span class="at">main =</span> <span class="st">"Poor Fit"</span>, <span class="at">xlab =</span> <span class="st">"Fitted Values"</span>, <span class="at">ylab =</span> <span class="st">"Actual Values"</span>)</span>
+<span id="cb49-8"><a aria-hidden="true" href="#cb49-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap17_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" href="#cb50-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>)) <span class="co"># restore plotting area</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Data Simulation:</strong> We simulate two datasets: one with a relatively small error term (<code>y</code>) and one with a much larger error term (<code>y_poor_fit</code>), representing a good fit and a poor fit, respectively.</li>
+<li><strong>Fit Models:</strong> We fit OLS models to both datasets.</li>
+<li><strong>Get R-squared:</strong> We extract the <span class="math inline">\(R^2\)</span> value from the model summaries using <code>summary(model)$r.squared</code>.</li>
+<li><strong>Print R-squared:</strong> We print the <span class="math inline">\(R^2\)</span> values for both models. The good fit model should have a much higher <span class="math inline">\(R^2\)</span> than the poor fit model.</li>
+<li><strong>Calculate RSS manually</strong>: We calculate manually RSS as <span class="math inline">\(RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \hat{\varepsilon}^T \hat{\varepsilon}\)</span>.</li>
+<li><strong>Calculate TSS manually</strong>: We calculate manually TSS as <span class="math inline">\(TSS = \sum_{i=1}^n (y_i - \bar y)^2\)</span></li>
+<li><strong>Calculate R-squared manually</strong>: We calculate manually R-squared as <span class="math inline">\(R^2 = 1- \dfrac{RSS}{TSS}\)</span>.</li>
+<li><strong>Visualization:</strong> We create scatter plots of fitted values vs. actual values for both models. The good fit model should show points clustered closely around the 45-degree line, while the poor fit model should show much more scatter.
+<ul>
+<li>This script illustrates the concept of <strong>goodness of fit</strong> and how <span class="math inline">\(R^2\)</span> (Definition 17.3) quantifies it. A higher <span class="math inline">\(R^2\)</span> corresponds to a model that explains a larger proportion of the variance in the dependent variable. The plots visually demonstrate the difference between a good fit and a poor fit.</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section class="level2" id="youtube-video-recommendations">
+<h2 class="anchored" data-anchor-id="youtube-video-recommendations">YouTube Video Recommendations</h2>
+<p>Here are some YouTube video recommendations related to the concepts in the provided text, along with explanations of their relevance. I have verified that all links are currently working as of October 26, 2023.</p>
+<section class="level3" id="ordinary-least-squares-ols-and-linear-regression">
+<h3 class="anchored" data-anchor-id="ordinary-least-squares-ols-and-linear-regression">1. Ordinary Least Squares (OLS) and Linear Regression</h3>
+<ul>
+<li><p><strong>Video Title:</strong> “Linear Regression - Fun and Easy Machine Learning”</p></li>
+<li><p><strong>Channel:</strong> Edureka</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=E5RjzSK0fvY">https://www.youtube.com/watch?v=E5RjzSK0fvY</a></p></li>
+<li><p><strong>Relevance:</strong> This video provides a good introduction to linear regression and OLS. It covers the basic concepts, including the idea of minimizing the sum of squared errors, finding the best-fit line, and interpreting the results. It connects directly to <strong>Definition 17.1</strong> and the initial sections on the <strong>projection approach</strong>. It provides intuitive visualizations, making the core concept easier to grasp.</p></li>
+<li><p><strong>Video Title:</strong> “Statistics 101: Linear Regression, The Very Basics”</p></li>
+<li><p><strong>Channel:</strong> Brandon Foltz</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=ZkjP5RJLQF4">https://www.youtube.com/watch?v=ZkjP5RJLQF4</a></p></li>
+<li><p><strong>Relevance:</strong> Another excellent introductory video that goes through a simple linear regression example step-by-step. It covers the basics clearly, including the formula for the OLS estimators, and it provides an introduction to the geometrical interpretation. This is a good starting point for understanding <strong>Section 17.1</strong>.</p></li>
+</ul>
+</section>
+<section class="level3" id="geometry-of-ols-and-projection">
+<h3 class="anchored" data-anchor-id="geometry-of-ols-and-projection">2. Geometry of OLS and Projection</h3>
+<ul>
+<li><p><strong>Video Title:</strong> “The Geometric Interpretation of Least Squares”</p></li>
+<li><p><strong>Channel:</strong> MathTheBeautiful</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=MCixDRMCnhs">https://www.youtube.com/watch?v=MCixDRMCnhs</a></p></li>
+<li><p><strong>Relevance:</strong> This video is <em>crucial</em> for understanding the <strong>projection approach</strong> in Section 17.1. It visually explains how OLS finds the projection of the dependent variable vector (<span class="math inline">\(y\)</span>) onto the column space of the regressor matrix (<span class="math inline">\(X\)</span>). It clearly illustrates concepts like the fitted values (<span class="math inline">\(\hat{y}\)</span>), residuals (<span class="math inline">\(\hat{\varepsilon}\)</span>), and the orthogonality condition (<span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span>). This video directly supports the geometric intuition behind OLS.</p></li>
+<li><p><strong>Video Title:</strong> “1. The Geometry of Linear Equations”</p></li>
+<li><p><strong>Channel:</strong> MIT OpenCourseWare</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=J7DzL2_Na80">https://www.youtube.com/watch?v=J7DzL2_Na80</a></p></li>
+<li><p><strong>Relevance:</strong> Part of Gilbert Strang’s Linear Algebra course, this helps build the fundamental understanding of column spaces, linear combinations, and when systems of equations have solutions. While not directly about OLS, it builds the foundation for understanding <em>why</em> OLS works the way it does (projecting onto the column space). This relates to the discussion of <span class="math inline">\(C(X)\)</span> and the conditions under which <span class="math inline">\(y = X\beta\)</span> has a solution.</p></li>
+<li><p><strong>Video Title</strong>: “Projection Matrix”</p></li>
+<li><p><strong>Channel</strong>: joshstarmer</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=WAkRlhG2_m8">https://www.youtube.com/watch?v=WAkRlhG2_m8</a></p></li>
+<li><p><strong>Relevance</strong>: The video explains the geometrical meaning of OLS. It explains fitted values, residuals, and it explains and proves the properties of Projection and Annihilator matrices. It also presents many related concepts such as orthogonality.</p></li>
+</ul>
+</section>
+<section class="level3" id="frisch-waugh-lovell-fwl-theorem">
+<h3 class="anchored" data-anchor-id="frisch-waugh-lovell-fwl-theorem">3. Frisch-Waugh-Lovell (FWL) Theorem</h3>
+<ul>
+<li><strong>Video Title:</strong> “Frisch-Waugh-Lovell (FWL) Theorem”</li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=B_qjF0Pgbv4">https://www.youtube.com/watch?v=B_qjF0Pgbv4</a></li>
+<li><strong>Relevance:</strong> This video <em>specifically</em> explains the <strong>Frisch-Waugh-Lovell Theorem (Theorem 17.3)</strong>. It shows the derivation, the intuition (partialling out the effect of other variables), and demonstrates how to apply it. This is a <em>direct</em> explanation of Section 17.2. The presenter gives intuition and geometric explanation.</li>
+</ul>
+</section>
+<section class="level3" id="multicollinearity">
+<h3 class="anchored" data-anchor-id="multicollinearity">4. Multicollinearity</h3>
+<ul>
+<li><strong>Video Title:</strong> “Econometrics // Lecture 10: Multicollinearity”</li>
+<li><strong>Channel:</strong> KeynesAcademy</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=tA9pIFJRy4c">https://www.youtube.com/watch?v=tA9pIFJRy4c</a></li>
+<li><strong>Relevance:</strong> This video explains the concept of <strong>multicollinearity</strong>, which is mentioned in the text when discussing the rank of <span class="math inline">\(X\)</span> and the uniqueness of the OLS estimator. It covers the causes, consequences, and detection of multicollinearity.</li>
+</ul>
+</section>
+<section class="level3" id="restricted-least-squares-1">
+<h3 class="anchored" data-anchor-id="restricted-least-squares-1">5. Restricted Least Squares</h3>
+<ul>
+<li><strong>Video Title:</strong> “Restricted Least Squares”</li>
+<li><strong>Channel:</strong> Steve Grams</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=45T-zSzJq-g">https://www.youtube.com/watch?v=45T-zSzJq-g</a></li>
+<li><strong>Relevance:</strong> This video provides a clear explanation of <strong>restricted least squares</strong>, directly corresponding to <strong>Section 17.3</strong>. It shows how to set up the restrictions, derive the restricted estimator, and discusses the underlying theory.</li>
+</ul>
+</section>
+<section class="level3" id="goodness-of-fit-r-squared">
+<h3 class="anchored" data-anchor-id="goodness-of-fit-r-squared">6. Goodness of Fit (R-squared)</h3>
+<ul>
+<li><strong>Video Title:</strong> “R-squared, Clearly Explained!!!”</li>
+<li><strong>Channel:</strong> StatQuest with Josh Starmer</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=OK2Bna1yx9k">https://www.youtube.com/watch?v=OK2Bna1yx9k</a></li>
+<li><strong>Relevance:</strong> This video explains the concept of <span class="math inline">\(R^2\)</span> (coefficient of determination) in a very intuitive way, including its interpretation and limitations. This relates directly to <strong>Section 17.3.2</strong> on <strong>Goodness of Fit</strong>.</li>
+</ul>
+</section>
+<section class="level3" id="matrix-algebra-review-for-background">
+<h3 class="anchored" data-anchor-id="matrix-algebra-review-for-background">7. Matrix Algebra Review (for background)</h3>
+<ul>
+<li><strong>Video Series:</strong> “Essence of Linear Algebra”</li>
+<li><strong>Channel:</strong> 3Blue1Brown</li>
+<li><strong>Playlist Link:</strong> <a href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab">https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab</a></li>
+<li><strong>Relevance:</strong> This series is <em>highly</em> recommended for building a strong geometric intuition for linear algebra concepts. While not directly about OLS, understanding vectors, matrices, linear transformations, spans, and orthogonality is <em>essential</em> for understanding the material in the text. The concepts of linear independence, span, and basis are particularly relevant.</li>
+</ul>
+<p>These videos cover the main theoretical concepts presented in the text, providing a mix of introductory explanations, geometric interpretations, and more advanced derivations. They should be helpful for students seeking to reinforce their understanding of the material.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch17mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch17mcsolution1">MC Solution 1</a></p>
+<p>The Ordinary Least Squares (OLS) procedure chooses <span class="math inline">\(\hat{\beta}\)</span> to minimize which of the following?</p>
+<ol type="a">
+<li><span class="math inline">\(y + X\beta\)</span></li>
+<li><span class="math inline">\((y - X\beta)^T(y - X\beta)\)</span></li>
+<li><span class="math inline">\(X^Ty\)</span></li>
+<li><span class="math inline">\((X^TX)^{-1}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch17mcsolution2">MC Solution 2</a></p>
+<p>The column span of a matrix <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(C(X)\)</span>, represents:</p>
+<ol type="a">
+<li>The set of all linear combinations of the rows of <span class="math inline">\(X\)</span>.</li>
+<li>The set of all linear combinations of the columns of <span class="math inline">\(X\)</span>.</li>
+<li>The inverse of <span class="math inline">\(X\)</span>.</li>
+<li>The determinant of <span class="math inline">\(X\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch17mcsolution3">MC Solution 3</a></p>
+<p>In the OLS context, the fitted values <span class="math inline">\(\hat{y}\)</span> are defined as:</p>
+<ol type="a">
+<li><span class="math inline">\(X\hat{\beta}\)</span></li>
+<li><span class="math inline">\(y - X\hat{\beta}\)</span></li>
+<li><span class="math inline">\((X^TX)^{-1}X^Ty\)</span></li>
+<li><span class="math inline">\(X^T\hat{\varepsilon}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch17mcsolution4">MC Solution 4</a></p>
+<p>The residuals <span class="math inline">\(\hat{\varepsilon}\)</span> in OLS regression satisfy which of the following orthogonality conditions?</p>
+<ol type="a">
+<li><span class="math inline">\(y^T\hat{\varepsilon} = 0\)</span></li>
+<li><span class="math inline">\(X^Ty = 0\)</span></li>
+<li><span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span></li>
+<li><span class="math inline">\(\hat{\varepsilon}^T\hat{\varepsilon} = 0\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch17mcsolution5">MC Solution 5</a></p>
+<p>The projection matrix <span class="math inline">\(P_X\)</span> is:</p>
+<ol type="a">
+<li>Always invertible.</li>
+<li>Symmetric and idempotent.</li>
+<li>Equal to <span class="math inline">\(X^TX\)</span>.</li>
+<li>Equal to <span class="math inline">\(X\)</span>.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch17mcsolution6">MC Solution 6</a></p>
+<p>The annihilator matrix <span class="math inline">\(M_X\)</span> is defined as:</p>
+<ol type="a">
+<li><span class="math inline">\(X(X^TX)^{-1}X^T\)</span></li>
+<li><span class="math inline">\(X^TX\)</span></li>
+<li><span class="math inline">\(I - X(X^TX)^{-1}X^T\)</span></li>
+<li><span class="math inline">\((X^TX)^{-1}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch17mcsolution7">MC Solution 7</a></p>
+<p>If the rank of the matrix <span class="math inline">\(X\)</span> is equal to the number of columns of <span class="math inline">\(X\)</span> (and n &gt; K), then:</p>
+<ol type="a">
+<li><span class="math inline">\(X^TX\)</span> is not invertible.</li>
+<li>The OLS estimator <span class="math inline">\(\hat{\beta}\)</span> is not unique.</li>
+<li><span class="math inline">\(X^TX\)</span> is invertible.</li>
+<li>The residuals are always zero.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch17mcsolution8">MC Solution 8</a></p>
+<p>The normal equations in OLS are given by:</p>
+<ol type="a">
+<li><span class="math inline">\(y = X\hat{\beta}\)</span></li>
+<li><span class="math inline">\(X^TX\hat{\beta} = X^Ty\)</span></li>
+<li><span class="math inline">\(\hat{\varepsilon} = y - X\hat{\beta}\)</span></li>
+<li><span class="math inline">\(X^T\hat{\varepsilon}=0\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch17mcsolution9">MC Solution 9</a></p>
+<p><strong>Multicollinearity</strong> occurs when:</p>
+<ol type="a">
+<li>The dependent variable <span class="math inline">\(y\)</span> is constant.</li>
+<li>The columns of <span class="math inline">\(X\)</span> are linearly independent.</li>
+<li>The columns of <span class="math inline">\(X\)</span> are linearly dependent.</li>
+<li>The error term has a non-zero mean.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch17mcsolution10">MC Solution 10</a></p>
+<p>The Frisch-Waugh-Lovell (FWL) theorem allows us to:</p>
+<ol type="a">
+<li>Calculate the inverse of <span class="math inline">\(X^TX\)</span> more easily.</li>
+<li>Estimate a subset of coefficients in a partitioned regression without inverting the full <span class="math inline">\(X^TX\)</span> matrix.</li>
+<li>Find the determinant of <span class="math inline">\(X\)</span>.</li>
+<li>Always obtain an <span class="math inline">\(R^2\)</span> of 1.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch17mcsolution11">MC Solution 11</a></p>
+<p>In the partitioned regression <span class="math inline">\(y = X_1\beta_1 + X_2\beta_2 + \varepsilon\)</span>, if <span class="math inline">\(X_1^TX_2 = 0\)</span>, then:</p>
+<ol type="a">
+<li>The columns of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are orthogonal.</li>
+<li>The OLS estimator is biased.</li>
+<li>The model is not identified.</li>
+<li><span class="math inline">\(R^2\)</span> will be zero.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch17mcsolution12">MC Solution 12</a></p>
+<p>The <strong>coordinate-free approach</strong> to OLS emphasizes:</p>
+<ol type="a">
+<li>The specific choice of regressors.</li>
+<li>The column space <span class="math inline">\(C(X)\)</span>.</li>
+<li>The sample size <span class="math inline">\(n\)</span>.</li>
+<li>The distribution of the error term.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch17mcsolution13">MC Solution 13</a></p>
+<p>If a matrix <span class="math inline">\(A\)</span> is idempotent, then:</p>
+<ol type="a">
+<li><span class="math inline">\(A^{-1} = A\)</span></li>
+<li><span class="math inline">\(A^2 = A\)</span></li>
+<li><span class="math inline">\(A^T = A\)</span></li>
+<li><span class="math inline">\(\text{det}(A) = 0\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch17mcsolution14">MC Solution 14</a></p>
+<p>The <strong>residual sum of squares (RSS)</strong> measures:</p>
+<ol type="a">
+<li>The total variation in <span class="math inline">\(y\)</span>.</li>
+<li>The variation in <span class="math inline">\(y\)</span> explained by the model.</li>
+<li>The unexplained variation in <span class="math inline">\(y\)</span>.</li>
+<li>The correlation between <span class="math inline">\(y\)</span> and <span class="math inline">\(x\)</span>.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch17mcsolution15">MC Solution 15</a></p>
+<p><span class="math inline">\(R^2\)</span> (the coefficient of determination) is defined as:</p>
+<ol type="a">
+<li><span class="math inline">\(1 - \dfrac{TSS}{RSS}\)</span></li>
+<li><span class="math inline">\(1 - \dfrac{RSS}{TSS}\)</span></li>
+<li><span class="math inline">\(\dfrac{RSS}{TSS}\)</span></li>
+<li><span class="math inline">\(\dfrac{TSS}{RSS}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch17mcsolution16">MC Solution 16</a></p>
+<p>Adding more variables to an OLS regression model will generally:</p>
+<ol type="a">
+<li>Decrease <span class="math inline">\(R^2\)</span>.</li>
+<li>Increase <span class="math inline">\(R^2\)</span>.</li>
+<li>Not affect <span class="math inline">\(R^2\)</span>.</li>
+<li>Make <span class="math inline">\(R^2\)</span> negative.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch17mcsolution17">MC Solution 17</a></p>
+<p><strong>Restricted least squares</strong> is used when: a) The matrix X is not of full rank b) We want to impose linear restrictions on the coefficients. c) The error term is heteroskedastic. d) We do not have enough data.</p>
+</section>
+<section class="level3" id="sec-ch17mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch17mcsolution18">MC Solution 18</a></p>
+<p><strong>Iterated Projection</strong> implies that: a) <span class="math inline">\(P_{X_1} = P_X P_{X_1}\)</span> b) <span class="math inline">\(P_{X} = P_{X_1} P_{X_2}\)</span> c) <span class="math inline">\(P_{X_1} = P_{X_1} P_X\)</span> d) <span class="math inline">\(M_{X_1} = P_{X_1} P_X\)</span></p>
+</section>
+<section class="level3" id="sec-ch17mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch17mcsolution19">MC Solution 19</a></p>
+<p>The <strong>backfitting algorithm</strong> is:</p>
+<ol type="a">
+<li>A method for finding the inverse of a matrix.</li>
+<li>An iterative method for computing OLS estimates.</li>
+<li>A way to calculate <span class="math inline">\(R^2\)</span>.</li>
+<li>A technique for data visualization.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch17mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch17mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch17mcsolution20">MC Solution 20</a></p>
+<p>If a matrix X is not of full rank:</p>
+<ol type="a">
+<li><span class="math inline">\(\hat{\beta}\)</span> is unique</li>
+<li>The normal equations have a unique solution.</li>
+<li><span class="math inline">\(X^T X\)</span> is invertible</li>
+<li><span class="math inline">\(X^T X\)</span> is not invertible.</li>
+</ol>
+</section>
+</section>
+<section class="level2" id="multiple-choice-solutions">
+<h2 class="anchored" data-anchor-id="multiple-choice-solutions">Multiple Choice Solutions</h2>
+<section class="level3" id="sec-ch17mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch17mcexercise1">MC Exercise 1</a></p>
+<p><strong>Answer:</strong> b) <span class="math inline">\((y - X\beta)^T(y - X\beta)\)</span></p>
+<p><strong>Explanation:</strong> The OLS procedure, by definition (Definition 17.1), minimizes the sum of squared errors, which is represented by the quadratic form <span class="math inline">\((y - X\beta)^T(y - X\beta)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch17mcexercise2">MC Exercise 2</a></p>
+<p><strong>Answer:</strong> b) The set of all linear combinations of the columns of <span class="math inline">\(X\)</span>.</p>
+<p><strong>Explanation:</strong> The column span, <span class="math inline">\(C(X)\)</span>, is <em>defined</em> as the set of all possible linear combinations of the column vectors of <span class="math inline">\(X\)</span> (Section 17.1).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch17mcexercise3">MC Exercise 3</a></p>
+<p><strong>Answer:</strong> a) <span class="math inline">\(X\hat{\beta}\)</span></p>
+<p><strong>Explanation:</strong> The fitted values, <span class="math inline">\(\hat{y}\)</span>, represent the projection of <span class="math inline">\(y\)</span> onto the column space of <span class="math inline">\(X\)</span>. This projection is given by <span class="math inline">\(X\hat{\beta}\)</span> (Section 17.1).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch17mcexercise4">MC Exercise 4</a></p>
+<p><strong>Answer:</strong> c) <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span></p>
+<p><strong>Explanation:</strong> The key orthogonality condition in OLS is that the residuals, <span class="math inline">\(\hat{\varepsilon}\)</span>, are orthogonal to the column space of <span class="math inline">\(X\)</span>. This is expressed mathematically as <span class="math inline">\(X^T\hat{\varepsilon} = 0\)</span> (Section 17.1).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch17mcexercise5">MC Exercise 5</a></p>
+<p><strong>Answer:</strong> b) Symmetric and idempotent.</p>
+<p><strong>Explanation:</strong> The projection matrix <span class="math inline">\(P_X\)</span> has two important properties: it is symmetric (<span class="math inline">\(P_X^T = P_X\)</span>) and idempotent (<span class="math inline">\(P_X^2 = P_X\)</span>) (Definition 17.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch17mcexercise6">MC Exercise 6</a></p>
+<p><strong>Answer:</strong> c) <span class="math inline">\(I - X(X^TX)^{-1}X^T\)</span></p>
+<p><strong>Explanation:</strong> The annihilator matrix <span class="math inline">\(M_X\)</span> is defined as <span class="math inline">\(I - P_X\)</span>, which is equivalent to <span class="math inline">\(I - X(X^TX)^{-1}X^T\)</span> (Definition 17.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch17mcexercise7">MC Exercise 7</a></p>
+<p><strong>Answer:</strong> c) <span class="math inline">\(X^TX\)</span> is invertible.</p>
+<p><strong>Explanation:</strong> If the rank of <span class="math inline">\(X\)</span> equals the number of columns (and n &gt; K), meaning the columns are linearly independent, then <span class="math inline">\(X^TX\)</span> is invertible (Section 17.1). This guarantees a unique solution for <span class="math inline">\(\hat{\beta}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch17mcexercise8">MC Exercise 8</a></p>
+<p><strong>Answer:</strong> b) <span class="math inline">\(X^TX\hat{\beta} = X^Ty\)</span></p>
+<p><strong>Explanation:</strong> The normal equations, derived from minimizing the sum of squared errors, are <span class="math inline">\(X^TX\hat{\beta} = X^Ty\)</span> (Equation 17.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch17mcexercise9">MC Exercise 9</a></p>
+<p><strong>Answer:</strong> c) The columns of <span class="math inline">\(X\)</span> are linearly dependent.</p>
+<p><strong>Explanation:</strong> Multicollinearity is defined as the situation where there is linear dependence among the columns of the regressor matrix <span class="math inline">\(X\)</span> (Section 17.1, discussion of non-full rank <span class="math inline">\(X\)</span>).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch17mcexercise10">MC Exercise 10</a></p>
+<p><strong>Answer:</strong> b) Estimate a subset of coefficients in a partitioned regression without inverting the full <span class="math inline">\(X^TX\)</span> matrix.</p>
+<p><strong>Explanation:</strong> The Frisch-Waugh-Lovell theorem provides a way to estimate coefficients for a subset of regressors after partialling out the effects of other regressors, avoiding direct inversion of the potentially large <span class="math inline">\(X^TX\)</span> matrix (Section 17.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch17mcexercise11">MC Exercise 11</a></p>
+<p><strong>Answer:</strong> a) The columns of <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> are orthogonal.</p>
+<p><strong>Explanation:</strong> The condition <span class="math inline">\(X_1^TX_2 = 0\)</span> <em>means</em> that the columns of <span class="math inline">\(X_1\)</span> are orthogonal to the columns of <span class="math inline">\(X_2\)</span> (Section 17.2, Theorem 17.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch17mcexercise12">MC Exercise 12</a></p>
+<p><strong>Answer:</strong> b) The column space <span class="math inline">\(C(X)\)</span>.</p>
+<p><strong>Explanation:</strong> The coordinate-free approach emphasizes the geometric interpretation of OLS in terms of the column space <span class="math inline">\(C(X)\)</span>, rather than the specific choice of basis vectors (columns of <span class="math inline">\(X\)</span>) (Section 17.1).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch17mcexercise13">MC Exercise 13</a></p>
+<p><strong>Answer:</strong> b) <span class="math inline">\(A^2 = A\)</span></p>
+<p><strong>Explanation:</strong> An idempotent matrix is defined as a matrix that, when multiplied by itself, equals itself: <span class="math inline">\(A^2 = A\)</span> (Section 17.1, properties of <span class="math inline">\(P_X\)</span> and <span class="math inline">\(M_X\)</span>).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch17mcexercise14">MC Exercise 14</a></p>
+<p><strong>Answer:</strong> c) The unexplained variation in <span class="math inline">\(y\)</span>.</p>
+<p><strong>Explanation:</strong> The residual sum of squares (RSS) measures the squared differences between the observed values (<span class="math inline">\(y_i\)</span>) and the fitted values (<span class="math inline">\(\hat{y}_i\)</span>), thus representing the variation in <span class="math inline">\(y\)</span> <em>not</em> explained by the model (Section 17.3.2).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch17mcexercise15">MC Exercise 15</a></p>
+<p><strong>Answer:</strong> b) <span class="math inline">\(1 - \dfrac{RSS}{TSS}\)</span></p>
+<p><strong>Explanation:</strong> <span class="math inline">\(R^2\)</span> is defined as one minus the ratio of the residual sum of squares (RSS) to the total sum of squares (TSS): <span class="math inline">\(R^2 = 1 - \frac{RSS}{TSS}\)</span> (Definition 17.3).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch17mcexercise16">MC Exercise 16</a></p>
+<p><strong>Answer:</strong> b) Increase <span class="math inline">\(R^2\)</span>.</p>
+<p><strong>Explanation:</strong> Adding more variables to an OLS model will generally increase <span class="math inline">\(R^2\)</span>, even if the added variables are not truly related to the dependent variable (Section 17.3.2, Remark 4). This is because the model will always be able to explain at least as much, and usually slightly more, of the variation in <span class="math inline">\(y\)</span> with more variables.</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch17mcexercise17">MC Exercise 17</a></p>
+<p><strong>Answer:</strong> b) We want to impose linear restrictions on the coefficients.</p>
+<p><strong>Explanation:</strong> Restricted least squares is used when we have prior information or theoretical constraints that we want to impose on the coefficient estimates (Section 17.3).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch17mcexercise18">MC Exercise 18</a></p>
+<p><strong>Answer:</strong> c) <span class="math inline">\(P_{X_1} = P_{X_1} P_X\)</span></p>
+<p><strong>Explanation:</strong> If <span class="math inline">\(X = (X_1, X_2)\)</span>, and let <span class="math inline">\(C(X_1)\)</span> be the columns span of <span class="math inline">\(X_1\)</span> so that <span class="math inline">\(C(X_1)\)</span> is a subspace of <span class="math inline">\(C(X)\)</span>. Then <span class="math inline">\(P_{X_1} = P_{X_1} P_X\)</span> (Section 17.3, Theorem 17.4)</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch17mcexercise19">MC Exercise 19</a></p>
+<p><strong>Answer:</strong> b) An iterative method for computing OLS estimates.</p>
+<p><strong>Explanation:</strong> The backfitting algorithm is an iterative procedure for computing OLS coefficient estimates by successively regressing residuals on individual regressors (Section 17.3.1).</p>
+</section>
+<section class="level3" id="sec-ch17mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch17mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch17mcexercise20">MC Exercise 20</a></p>
+<p><strong>Answer:</strong> d) <span class="math inline">\(X^T X\)</span> is not invertible.</p>
+<p><strong>Explanation:</strong> If a matrix <span class="math inline">\(X\)</span> is not of full rank, its columns are linearly dependent, which means that <span class="math inline">\(X^TX\)</span> is not invertible, and the OLS estimator is not unique (Section 17.1).</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

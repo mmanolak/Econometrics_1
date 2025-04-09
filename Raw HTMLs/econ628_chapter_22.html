@@ -1,0 +1,2113 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 22: Asymptotic Properties of OLS Estimator and Test Statistics – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap23.html" rel="next"/>
+<link href="../chapters/chap21.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 22: Asymptotic Properties of OLS Estimator and Test Statistics</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="the-i.i.d.-case">
+<h2 class="anchored" data-anchor-id="the-i.i.d.-case">22.1 THE I.I.D. CASE</h2>
+<p>In this section, we consider a random design regression model where the observations <span class="math inline">\((x_i, \varepsilon_i)\)</span> are independent and identically distributed (i.i.d.). The model is given by:</p>
+<p><span class="math display">\[
+y_i = \beta^T x_i + \varepsilon_i, \quad x_i = (x_{i1}, \dots, x_{iK})^T
+\]</span></p>
+<p>where <span class="math inline">\(y_i\)</span> is the dependent variable, <span class="math inline">\(x_i\)</span> is a <span class="math inline">\(K \times 1\)</span> vector of regressors, <span class="math inline">\(\beta\)</span> is a <span class="math inline">\(K \times 1\)</span> vector of coefficients, and <span class="math inline">\(\varepsilon_i\)</span> is the error term.</p>
+<section class="level3" id="assumption-b">
+<h3 class="anchored" data-anchor-id="assumption-b">Assumption B</h3>
+<p>We assume that <span class="math inline">\((x_i, \varepsilon_i)\)</span> are i.i.d. and that:</p>
+<ol type="1">
+<li><p><span class="math inline">\(E(x_i) = E(\varepsilon_i) = 0\)</span> and <span class="math inline">\(E[|x_{ji}\varepsilon_i|] &lt; \infty\)</span>, for <span class="math inline">\(j = 1, \dots, K\)</span>, and for some positive definite <span class="math inline">\(K \times K\)</span> matrix <span class="math inline">\(M\)</span>:</p>
+<p><span class="math display">\[
+E[x_i x_i^T] = M
+\]</span></p></li>
+<li><p>For some finite positive definite <span class="math inline">\(K \times K\)</span> matrix <span class="math inline">\(\Omega\)</span>:</p>
+<p><span class="math display">\[
+E[x_i x_i^T \varepsilon_i^2] = \Omega
+\]</span> We also consider the <strong>homoskedastic</strong> special case where <span class="math inline">\(E(\varepsilon_i^2 | x_i) = \sigma^2\)</span> for some <span class="math inline">\(\sigma^2\)</span>, in which case:</p>
+<p><span class="math display">\[
+\Omega = \sigma^2 M
+\]</span> Note: Assumptions A1 and A2 from the i.i.d framework imply conditions B1 and B2, respectively.</p></li>
+</ol>
+<p>In B1, we assume the <strong>unconditional moment condition</strong>:</p>
+<p><span class="math display">\[
+\text{cov}(x_i, \varepsilon_i) = E(x_i \varepsilon_i) = 0
+\]</span></p>
+<p>This condition is sufficient for the asymptotic properties but is insufficient for the proper interpretation of the model as a regression since we would get the Best Linear Predictor (Chapter 7) and it does not ensure that the OLS estimator is unbiased.</p>
+<p>We might assume the stronger <strong>conditional moment condition</strong>: <span class="math display">\[E[\epsilon_i | x_i] = 0\]</span> <span class="math display">\[E[\epsilon_i^2 | x_i] = v(x_i)\]</span> <span class="math display">\[\Omega = E[v(x_i)x_i x_i^T]\]</span></p>
+</section>
+<section class="level3" id="example-22.1">
+<h3 class="anchored" data-anchor-id="example-22.1">Example 22.1</h3>
+<p><span class="math inline">\(x_i = \sin(\theta_i)\)</span> and <span class="math inline">\(\varepsilon_i = \cos(\theta_i)\)</span>, where <span class="math inline">\(\theta_i \sim [0, 2\pi]\)</span>. We have:</p>
+<p><span class="math display">\[
+E(x_i \varepsilon_i) = 0
+\]</span></p>
+<p>But knowing <span class="math inline">\(x_i\)</span> tells you <span class="math inline">\(\varepsilon_i\)</span>, and it is not always zero. However, <span class="math inline">\(E(\varepsilon_i | x_i) = 0\)</span>.</p>
+<p>The conditional moment condition also ensures that the OLS estimator is unbiased because: <span class="math display">\[
+\hat{\beta} = \beta + (X^T X)^{-1}(X^T \varepsilon) = \beta + \left( \sum_{i=1}^n x_i x_i^T \right)^{-1} \sum_{i=1}^n x_i \varepsilon_i
+\]</span></p>
+<p><span class="math display">\[
+E[\hat{\beta}|X] = \beta + \left( \sum_{i=1}^n x_i x_i^T \right)^{-1} \sum_{i=1}^n x_i E[\varepsilon_i | x_i] = \beta
+\]</span> We assume B1 and B2 and are concerned with large sample properties.</p>
+</section>
+<section class="level3" id="theorem-22.1">
+<h3 class="anchored" data-anchor-id="theorem-22.1">Theorem 22.1</h3>
+<p>Suppose that B1 holds. Then we have</p>
+<p><span class="math display">\[
+\hat{\beta} \overset{p}{\to} \beta
+\]</span></p>
+<p><strong>Proof:</strong></p>
+<p>We have</p>
+<p><span class="math display">\[
+\hat{\beta} - \beta = \left(\frac{X^T X}{n}\right)^{-1} \left(\frac{X^T \varepsilon}{n}\right) = \left(\frac{1}{n} \sum_{i=1}^n x_i x_i^T\right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n x_i \varepsilon_i\right)
+\]</span> By the Weak Law of Large Numbers, we know: <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_i x_i^T \overset{p}{\to} E(x_i x_i^T) = M
+\]</span> and <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_i \varepsilon_i \overset{p}{\to} E(x_i\varepsilon_i)=0
+\]</span> Then the result follows by applying the Law of Large Numbers to both terms and then applying Slutsky’s theorem.</p>
+</section>
+<section class="level3" id="theorem-22.2">
+<h3 class="anchored" data-anchor-id="theorem-22.2">Theorem 22.2</h3>
+<p>Suppose that B1 and B2 hold. Then</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} N(0, M^{-1}\Omega M^{-1})
+\]</span></p>
+<p><strong>Proof:</strong> We have <span class="math display">\[
+\frac{X^T X}{n} = \frac{1}{n} \sum_{i=1}^n x_i x_i^T \overset{p}{\to} M
+\]</span> using LLN element by element. Then for any <span class="math inline">\(c \in \mathbb{R}^K\)</span>: <span class="math display">\[
+\frac{c^T X^T \varepsilon}{\sqrt{n}} = \frac{1}{\sqrt{n}} \sum_{i=1}^n c^T x_i \varepsilon_i \overset{d}{\to} N(0, c^T \Omega c)
+\]</span></p>
+<p>by the CLT for i.i.d. random variables. Then apply the Crámer-Wald, the Mann-Wald, and the Slutsky Theorems.</p>
+<p>In the special case of homoskedasticity, we have: <span class="math display">\[
+M^{-1}\Omega M^{-1} = M^{-1} \sigma^2 M M^{-1} = \sigma^2 M^{-1}
+\]</span></p>
+</section>
+<section class="level3" id="theorem-22.3">
+<h3 class="anchored" data-anchor-id="theorem-22.3">Theorem 22.3</h3>
+<p>Suppose that B1 and B2 hold and let <span class="math inline">\(\sigma^2 = E[\varepsilon_i^2] &lt; \infty\)</span>. Then</p>
+<p><span class="math display">\[
+s_*^2 \overset{p}{\to} \sigma^2
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+s_*^2 = \frac{\hat{\varepsilon}^T \hat{\varepsilon}}{n-K} = \frac{1}{n-K} \sum_{i=1}^n \hat{\varepsilon}_i^2 = \frac{1}{n-K}\varepsilon^T M_X \varepsilon
+\]</span></p>
+<p><strong>Proof:</strong></p>
+<p>We have</p>
+<p><span class="math display">\[
+\begin{aligned}
+s_*^2 &amp;= \frac{1}{n-K} \varepsilon^T M_X \varepsilon \\
+&amp;= \frac{1}{n-K} [\varepsilon^T \varepsilon - \varepsilon^T X (X^T X)^{-1} X^T \varepsilon] \\
+&amp;= \left(\frac{n}{n-K}\right) \left(\frac{\varepsilon^T \varepsilon}{n} - \frac{\varepsilon^T X}{n} \left(\frac{X^T X}{n}\right)^{-1} \frac{X^T \varepsilon}{n}\right) \\
+&amp;\overset{p}{\to} \sigma^2
+\end{aligned}
+\]</span></p>
+<p>This follows by the Law of Large Numbers applied to <span class="math inline">\(X^T \varepsilon / n\)</span>, <span class="math inline">\(\varepsilon^T \varepsilon / n\)</span>, and <span class="math inline">\(X^T X / n\)</span>.</p>
+<p><strong>Intuition:</strong> This theorem shows that the unbiased estimator of the error variance, <span class="math inline">\(s_*^2\)</span>, is a consistent estimator of the true error variance, <span class="math inline">\(\sigma^2\)</span>.</p>
+</section>
+<section class="level3" id="theorem-22.4">
+<h3 class="anchored" data-anchor-id="theorem-22.4">Theorem 22.4</h3>
+<p>Suppose B1 and B2 and (22.1) hold. Then, under <span class="math inline">\(H_0\)</span>, as <span class="math inline">\(n \to \infty\)</span>, we have: <span class="math display">\[
+t \overset{d}{\to} N(0,1)
+\]</span> and <span class="math display">\[
+qF \overset{d}{\to} \chi^2(q)
+\]</span> where: <span class="math display">\[t = \frac{\sqrt{n}c^T\hat{\beta}}{\sqrt{s_*^2 c^T(\frac{X^TX}{n})^{-1}c}}\]</span> <span class="math display">\[F = n(R\hat{\beta} - r)^T\left[s_*^2R\left(\frac{X^TX}{n}\right)^{-1}R^T\right]^{-1}(R\hat{\beta} - r)/q\]</span> <strong>Proof:</strong></p>
+<p>It follows from above that under <span class="math inline">\(H_0\)</span>: <span class="math display">\[\frac{c^T\hat{\beta} - \gamma}{\sqrt{\text{Var}(c^T\hat{\beta} - \gamma)}}=\frac{\sqrt{n}c^T(\hat{\beta} - \beta)}{\sigma\sqrt{c^T(\frac{X^TX}{n})^{-1}c}} \overset{d}{\to} N(0,1)\]</span></p>
+<p>Then, using Slutsky and Mann-Wald, we know that: <span class="math display">\[\frac{\sqrt{n}c^T(\hat{\beta} - \beta)}{s_*\sqrt{c^T(\frac{X^TX}{n})^{-1}c}} = \frac{\sqrt{n}c^T(\hat{\beta} - \gamma)}{\sigma\sqrt{c^T(\frac{X^TX}{n})^{-1}c}} \times \frac{\sigma}{s_*} \overset{d}{\to} N(0,1)\]</span> Similarly, for the F-test, it follows from (20.15) that, by applying the delta method and Slutsky’s theorem: <span class="math display">\[W, LR, LM \overset{d}{\to} \chi^2(q)\]</span></p>
+<p>If the homoskedasticity condition fails, then <span class="math inline">\(t \overset{d}{\to} N(0,v)\)</span> for some <span class="math inline">\(v \neq 1\)</span> and the testing strategy would use the wrong critical values. Likewise, the Wald statistic would not have the claimed chi-squared distribution.</p>
+</section>
+<section class="level3" id="estimating-omega">
+<h3 class="anchored" data-anchor-id="estimating-omega">Estimating <span class="math inline">\(\Omega\)</span></h3>
+<p>In general, we work with B1 and B2 and we don’t assume homoskedasticity. Therefore, the asymptotic variance of <span class="math inline">\(\hat{\beta}\)</span> involves both <span class="math inline">\(M\)</span> and <span class="math inline">\(\Omega\)</span>, where: <span class="math display">\[\Omega = E(x_ix_i^T\epsilon_i^2)\]</span> We estimate <span class="math inline">\(\Omega\)</span> with: <span class="math display">\[
+\hat{\Omega} = \frac{1}{n} \sum_{i=1}^n x_i x_i^T \hat{\varepsilon}_i^2
+\]</span></p>
+<p>Then the matrix: <span class="math display">\[
+\hat{H} = \left(\frac{1}{n}\sum_{i=1}^n x_ix_i^T\right)^{-1}\hat{\Omega}\left(\frac{1}{n}\sum_{i=1}^n x_ix_i^T\right)^{-1} = (\hat{H}_{j,k})_{j,k=1}^K
+\]</span></p>
+<p>contains all the estimators of <span class="math inline">\(\text{var}(\sqrt{n}\hat{\beta_k})\)</span> and <span class="math inline">\(\text{cov}(\sqrt{n}\hat{\beta_j},\sqrt{n}\hat{\beta_k})\)</span>. In this case, we consider robust test statistics (White, 1980):</p>
+<p><span class="math display">\[
+t_R = \frac{c^T\hat{\beta}}{\sqrt{c^T(X^TX)^{-1}\hat{\Omega}(X^TX)^{-1}c}}
+\]</span></p>
+<p><span class="math display">\[
+W_R = (R\hat{\beta} - r)^T[R(X^TX)^{-1}\hat{\Omega}(X^TX)^{-1}R^T]^{-1}(R\hat{\beta} - r)
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[
+\hat{\Omega} = \frac{1}{n}\sum_{i=1}^n x_i x_i^T \hat{\varepsilon}_i^2 = \frac{1}{n}X^TSX
+\]</span></p>
+<p>where <span class="math inline">\(S\)</span> is the <span class="math inline">\(n \times n\)</span> diagonal matrix with typical element <span class="math inline">\(\hat{\varepsilon}_i^2\)</span>.</p>
+</section>
+<section class="level3" id="theorem-22.5">
+<h3 class="anchored" data-anchor-id="theorem-22.5">Theorem 22.5</h3>
+<p>Suppose that B1 and B2 hold. Suppose also that <span class="math inline">\(E|x_{ij}x_{ik}x_{il}x_{ir}| &lt; \infty\)</span>, <span class="math inline">\(E|x_{ij}x_{ik}x_{il}\varepsilon_i| &lt; \infty\)</span> and <span class="math inline">\(E(x_{ij}x_{ik}\varepsilon_i x_{il}) = 0\)</span>. Then</p>
+<p><span class="math display">\[
+t_R \overset{d}{\to} N(0,1)
+\]</span></p>
+<p><span class="math display">\[
+W_R \overset{d}{\to} \chi^2(q)
+\]</span></p>
+<p><strong>Proof:</strong></p>
+<p>We have:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\Omega} &amp;= \frac{1}{n} \sum_{i=1}^n x_i x_i^T \varepsilon_i^2 - 2 \frac{1}{n}\sum_{i=1}^n x_i x_i^T \varepsilon_i x_i^T (X^T X)^{-1} X^T \varepsilon \\
+&amp;+ \frac{1}{n}\sum_{i=1}^n x_i x_i^T x_i^T (X^T X)^{-1} X^T \varepsilon \varepsilon^T X (X^T X)^{-1} x_i
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(\tilde{\varepsilon_i} = \varepsilon_i - x_i^T(X^T X)^{-1}X^T \varepsilon\)</span>. We have: <span class="math display">\[
+\frac{1}{n}\sum_{i=1}^n x_ix_i^T\epsilon_i x_i^T (X^TX)^{-1}X^T\epsilon = \frac{1}{n}\sum_{i=1}^n x_ix_i^T\epsilon_i x_i^T (X^TX/n)^{-1}(X^T\epsilon/n) \overset{p}{\to} 0
+\]</span> since <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_{ij}x_{ik} \varepsilon_i x_{il} \overset{p}{\to} 0
+\]</span> while <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_i x_i^T x_i^T \left(\frac{X^T X}{n}\right)^{-1} \frac{X^T \varepsilon \varepsilon^T X}{n} \left(\frac{X^T X}{n}\right)^{-1} x_i \overset{p}{\to} 0
+\]</span></p>
+<p>because <span class="math inline">\(X^T X / n \overset{p}{\to} M\)</span> and <span class="math inline">\(X^T \varepsilon / \sqrt{n} \Rightarrow N(0, \Omega)\)</span>, while for any <span class="math inline">\(j, k, l, r\)</span>:</p>
+<p><span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_{ij} x_{ik} x_{il} x_{ir} \overset{p}{\to} E[x_{ij} x_{ik} x_{il} x_{ir}]
+\]</span></p>
+<p>It follows that <span class="math inline">\(\hat{\Omega} \overset{p}{\to} \Omega\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="the-non-i.i.d.-case">
+<h2 class="anchored" data-anchor-id="the-non-i.i.d.-case">22.2 THE NON-I.I.D. CASE</h2>
+<p>We next consider the “fixed” design setting of <strong>Assumption A</strong> and make general assumptions on the matrix <span class="math inline">\(X\)</span>. These conditions work in more general sampling schemes including trending variables.</p>
+<section class="level3" id="theorem-22.6">
+<h3 class="anchored" data-anchor-id="theorem-22.6">Theorem 22.6</h3>
+<p>Suppose Assumptions A1-A2 hold and with probability one: <span class="math display">\[\lambda_{max}(X^T\Sigma X)\lambda^{-2}_{min}(X^TX) \to 0, \quad \text{as } n \to \infty\]</span> Then, <span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>. <strong>Proof:</strong> We show that <span class="math inline">\(c^T\hat{\beta} \overset{p}{\to} c^T\beta\)</span> for all vectors <span class="math inline">\(c\)</span>. First, with probability 1: <span class="math display">\[E[c^T\hat{\beta}|X] = c^T\beta\]</span> <span class="math display">\[\text{var}(c^T\hat{\beta}|X) = c^T(X^TX)^{-1}X^T\Sigma X(X^TX)^{-1}c\]</span> We have: <span class="math display">\[
+\begin{aligned}
+c^T(X^TX)^{-1}X^T\Sigma X(X^TX)^{-1}c &amp;= c^Tc\frac{c^T(X^TX)^{-1}X^T\Sigma X(X^TX)^{-1}c}{c^Tc} \\
+&amp;\leq c^Tc \cdot \max_{u \in \mathbb{R}^k}\frac{u^T(X^TX)^{-1}X^T\Sigma X (X^TX)^{-1}u}{u^Tu} \\
+&amp;\leq c^Tc \cdot \lambda_{max}((X^TX)^{-1}X^T\Sigma X(X^TX)^{-1}) \\
+&amp;= c^Tc \cdot \lambda_{max}((X^TX)^{-1})\lambda_{max}(X^T\Sigma X) \\
+&amp;= c^Tc \cdot \frac{\lambda_{max}(X^T\Sigma X)}{\lambda^2_{min}(X^TX)}
+\end{aligned}
+\]</span></p>
+<p>and provided <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\lambda^{-2}_{min}(X^TX) \to 0\)</span>, we have <span class="math inline">\(\text{var}(c^T\hat{\beta})\to 0\)</span>.</p>
+<p>When <span class="math inline">\(\Sigma = \sigma^2 I_n\)</span>, it suffices that <span class="math inline">\(\lambda_{min}(X^TX) \to \infty\)</span>.</p>
+<p>If we do have a random design, then the conditions and conclusion should be interpreted as holding with probability one in the conditional distribution given <span class="math inline">\(X\)</span>. Deterministic design settings arise commonly in practice, either in the context of trends or dummy variables.</p>
+</section>
+<section class="level3" id="example-22.2">
+<h3 class="anchored" data-anchor-id="example-22.2">Example 22.2</h3>
+<p>Suppose that</p>
+<p><span class="math display">\[
+X = \begin{pmatrix}
+1 &amp; D_1 \\
+\vdots &amp; \vdots \\
+1 &amp; D_n
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+D_i = \begin{cases}
+1 &amp; \text{if } i \in I \subset \{1, \dots, n\} \\
+0 &amp; \text{else}
+\end{cases}
+\]</span></p>
+<p>Here, <span class="math inline">\(I\)</span> is the set defining the dummy variable. Then, <span class="math display">\[X^TX = \begin{pmatrix}
+\sum_{i=1}^n 1 &amp; \sum_{i=1}^n D_i \\
+\sum_{i=1}^n D_i &amp; \sum_{i=1}^n D_i
+\end{pmatrix} = \begin{pmatrix}
+n &amp; n_I \\
+n_I &amp; n_I
+\end{pmatrix}\]</span> where <span class="math inline">\(n_I\)</span> is the number of observations in set <span class="math inline">\(I\)</span>, because <span class="math inline">\(D_i^2 = D_i\)</span>. Therefore, <span class="math display">\[(X^TX)^{-1} = \frac{1}{(n-n_I)n_I}\begin{pmatrix}
+n_I &amp; -n_I \\
+-n_I &amp; n
+\end{pmatrix}\]</span> In this case (using Mathematica): <span class="math display">\[\lambda_{min}(X^TX) = \frac{1}{2}n_I + \frac{1}{2}n - \frac{1}{2}\sqrt{5n_I^2 - 2n_In + n^2} = \frac{1}{2}n_I + \frac{1}{2}n\left(1-\sqrt{5\frac{n_I^2}{n^2} - 2\frac{n_I}{n}+1}\right)\]</span> If <span class="math inline">\(n_I \to \infty\)</span> as <span class="math inline">\(n \to \infty\)</span>, then <span class="math inline">\(\lambda_{min}(X^TX) \to \infty\)</span>. This is the usual case, say, for day-of-the-week dummies. On the other hand, if <span class="math inline">\(n_I\)</span> is fixed, then we can see that <span class="math inline">\(\lambda_{min}(X^TX) \to n_I/2\)</span> as <span class="math inline">\(n \to \infty\)</span> and <span class="math inline">\(\hat{\beta}\)</span> is not consistent. However, even in this case, the first component is consistent because <span class="math display">\[((X^TX)^{-1})_{11} = \frac{1}{n-n_I} \to 0\]</span> but the second component is inconsistent. One can’t estimate consistently the effect of a dummy variable when it only affects a relatively small number of observations.</p>
+</section>
+<section class="level3" id="example-22.3">
+<h3 class="anchored" data-anchor-id="example-22.3">Example 22.3</h3>
+<p>Trends. Suppose that</p>
+<p><span class="math display">\[
+X = \begin{pmatrix}
+1 &amp; 1 \\
+\vdots &amp; \vdots \\
+1 &amp; n
+\end{pmatrix}
+\]</span></p>
+<p>which says that there is potentially a linear trend in the data. In this case,</p>
+<p><span class="math display">\[
+X^T X = \begin{pmatrix}
+\sum_{i=1}^n 1 &amp; \sum_{i=1}^n i \\
+\sum_{i=1}^n i &amp; \sum_{i=1}^n i^2
+\end{pmatrix} = \begin{pmatrix}
+n &amp; \frac{n(n+1)}{2} \\
+\frac{n(n+1)}{2} &amp; \frac{n(n+1)(2n+1)}{6}
+\end{pmatrix}
+\]</span></p>
+<p>which you know from A-level mathematics. Furthermore (by Mathematica):</p>
+<p><span class="math display">\[
+\lambda_{min}(X^T X) = \frac{7}{12}n - \frac{1}{2}n^2 - \frac{1}{9}n^3 + \frac{1}{36}n^4 + \frac{25}{36}n^2 + \frac{7}{6}n^3 + \frac{1}{4}n^4 + \frac{1}{6}n^2 + \frac{1}{36}n^3
+\]</span></p>
+<p>This looks nasty, but it can be shown by very tedious work that this goes to infinity. It is easier to see that</p>
+<p><span class="math display">\[
+((X^T X)^{-1})_{11} = \frac{\frac{1}{6}n(n+1)(2n+1)}{\frac{1}{12}n^4 - \frac{1}{12}n^2} \to 0
+\]</span></p>
+<p><span class="math display">\[
+((X^T X)^{-1})_{22} = \frac{n}{\frac{1}{12}n^4 - \frac{1}{12}n^2} \to 0
+\]</span></p>
+</section>
+<section class="level3" id="example-22.4">
+<h3 class="anchored" data-anchor-id="example-22.4">Example 22.4</h3>
+<p>Consider the high-low method for determining average cost: <span class="math display">\[\hat{\beta}_{H-L} = \frac{y_H - y_L}{x_H - x_L}\]</span> where <span class="math inline">\(x_H, x_L\)</span> are the highest and lowest achieved by the covariate, respectively, and <span class="math inline">\(y_H, y_L\)</span> are the “concomitants”, that is, the corresponding values of the outcome variable. This estimator is conditionally unbiased and satisfies: <span class="math display">\[\text{Var}(\hat{\beta}_{H-L}|X) = \frac{2\sigma^2}{(x_H - x_L)^2}\]</span> For consistency, it suffices that <span class="math inline">\(x_H - x_L \to \infty\)</span> as the sample size increases. This happens for example if the covariates have support on the whole real line, say, are normally distributed.</p>
+</section>
+<section class="level3" id="example-22.5">
+<h3 class="anchored" data-anchor-id="example-22.5">Example 22.5</h3>
+<p>Suppose that the regressors are orthogonal, meaning <span class="math inline">\(X^TX = I_K\)</span>, but that <span class="math inline">\(K=K(n)\)</span> is large. Then consider a linear combination <span class="math inline">\(c^T\hat{\beta}\)</span>. We have: <span class="math display">\[\text{Var}(c^T\hat{\beta}) = \frac{\sigma^2}{n}c^Tc = \frac{\sigma^2 K(n)}{n}\frac{1}{K}\sum_{k=1}^Kc_k^2\]</span> This says that the individual estimates (<span class="math inline">\(c_k = 1\)</span>, <span class="math inline">\(c_j = 0\)</span> for <span class="math inline">\(j \neq k\)</span>) are consistent provided <span class="math inline">\(K(n)/n \to 0\)</span>.</p>
+<p>We next consider the limiting distribution of <span class="math inline">\(\hat{\beta}\)</span>. We shall suppose that the covariates are nonrandom, possibly containing trends or dummy variables, but the error terms are independent. We make the following assumptions.</p>
+</section>
+<section class="level3" id="assumptions-r">
+<h3 class="anchored" data-anchor-id="assumptions-r">Assumptions R</h3>
+<ol type="1">
+<li><p><span class="math inline">\(u_i\)</span> are independent random variables with mean zero and variance <span class="math inline">\(\sigma_i^2\)</span> such that <span class="math inline">\(0 &lt; \underline{\sigma}^2 \leq \sigma_i^2 \leq \bar{\sigma}^2 &lt; \infty\)</span> and <span class="math inline">\(E(|u_i|^{2+\delta}) &lt; C &lt; \infty\)</span> for some <span class="math inline">\(\delta &gt; 0\)</span>.</p></li>
+<li><p><span class="math inline">\(X\)</span> is non-stochastic and full rank and satisfy for all <span class="math inline">\(j = 1, \dots, K\)</span>:</p>
+<p><span class="math display">\[
+d_j^2 = \sum_{i=1}^n x_{ij}^2 \to \infty
+\]</span></p>
+<p><span class="math display">\[
+\frac{\max_{1 \leq i \leq n} x_{ij}^2}{\sum_{i=1}^n x_{ij}^2} \to 0
+\]</span></p></li>
+<li><p>The <span class="math inline">\(K \times K\)</span> matrices below satisfy for positive definite matrices <span class="math inline">\(M, \Psi\)</span></p>
+<p><span class="math display">\[
+M_n = \Delta^{-1} X^T X \Delta^{-1} \to M
+\]</span></p>
+<p><span class="math display">\[
+\Psi_n = \Delta^{-1} X^T \Sigma X \Delta^{-1} \to \Psi
+\]</span></p>
+<p>where <span class="math inline">\(\Delta = \text{diag}\{d_1, \dots, d_K\}\)</span> and <span class="math inline">\(\Sigma = \text{diag}\{\sigma_1^2, \dots, \sigma_n^2\}\)</span>.</p></li>
+</ol>
+</section>
+<section class="level3" id="theorem-22.7">
+<h3 class="anchored" data-anchor-id="theorem-22.7">Theorem 22.7</h3>
+<p>Suppose that Assumptions R1-R3 hold. Then</p>
+<p><span class="math display">\[
+\Delta(\hat{\beta} - \beta) \overset{d}{\to} N(0, M^{-1} \Psi M^{-1})
+\]</span></p>
+<p><strong>Proof:</strong></p>
+<p>We write</p>
+<p><span class="math display">\[
+\Delta(\hat{\beta} - \beta) = (\Delta^{-1} X^T X \Delta^{-1})^{-1} \Delta^{-1} X^T u = M_n^{-1} r_n
+\]</span></p>
+<p>By assumption, <span class="math inline">\(M_n\)</span> converges to <span class="math inline">\(M\)</span>. We consider for any <span class="math inline">\(c \in \mathbb{R}^K\)</span></p>
+<p><span class="math display">\[
+c^T \Delta^{-1} X^T u = \sum_{j=1}^K c_j d_j^{-1} \sum_{i=1}^n x_{ij} u_i = \sum_{i=1}^n w_{ni} u_i
+\]</span></p>
+<p>where <span class="math inline">\(w_{ni} = \sum_{j=1}^K c_j d_j^{-1} x_{ij}\)</span>. We next apply the Lindeberg CLT (generalized to <strong>triangular arrays</strong> - <span class="math inline">\(w_{ni}\)</span> depends on <span class="math inline">\(n\)</span>). We show that the standardized random variable</p>
+<p><span class="math display">\[
+T_n = \frac{\sum_{i=1}^n w_{ni}u_i}{\left(\sum_{i=1}^n w_{ni}^2 \sigma_i^2\right)^{1/2}}
+\]</span></p>
+<p>converges to a standard normal random variable.</p>
+<p>For any <span class="math inline">\(i\)</span> we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+E\left[u_i^2 1(w_{ni}^2 u_i^2 &gt; \varepsilon s_n^2)\right] &amp;\leq E\left[|u_i|^{2+\delta} \left(\frac{w_{ni}^2}{\varepsilon s_n^2}\right)^{\delta/2} 1\left(u_i^2 &gt; \frac{\varepsilon s_n^2}{w_{ni}^2}\right)\right] \\
+&amp;\leq \left(\frac{w_{ni}^2}{\varepsilon s_n^2}\right)^{\delta/2} E[|u_i|^{2+\delta}] \\
+&amp;\leq C \left(\frac{w_{ni}^2}{\varepsilon s_n^2}\right)^{\delta/2}
+\end{aligned}
+\]</span></p>
+<p>where <span class="math inline">\(s_n^2 = \sum_{i=1}^n w_{ni}^2 \sigma_i^2\)</span>. Therefore, provided</p>
+<p><span class="math display">\[
+\frac{\max_{1 \leq i \leq n} w_{ni}^2}{s_n^2} \to 0,
+\]</span></p>
+<p>we have</p>
+<p><span class="math display">\[
+\frac{1}{\sum_{i=1}^n w_{ni}^2 \sigma_i^2} \sum_{i=1}^n w_{ni}^2 E\left[u_i^2 1(w_{ni}^2 u_i^2 &gt; \varepsilon s_n^2)\right] \leq \frac{1}{\sum_{i=1}^n w_{ni}^2 \sigma_i^2} \times C \left(\frac{1}{\varepsilon^{\delta/2}}\right) \times \left(\frac{\max_{1 \leq i \leq n} w_{ni}^2}{s_n^2}\right)^{\delta/2} \to 0
+\]</span></p>
+<p>We have by R1, R2, and R3 and the Cauchy-Schwarz inequality</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{\max_{1 \leq i \leq n} \left(\sum_{j=1}^K c_j d_j^{-1} x_{ij}\right)^2}{\sum_{i=1}^n \left(\sum_{j=1}^K c_j d_j^{-1} x_{ij}\right)^2 \sigma_i^2}
+&amp;\leq \frac{\left(\sum_{j=1}^K |c_j| \max_{1 \leq i \leq n} |d_j^{-1} x_{ij}|\right)^2}{\underline{\sigma}^2 \sum_{i=1}^n \left(\sum_{j=1}^K c_j d_j^{-1} x_{ij}\right)^2} \\
+&amp;= \frac{\left(\sum_{j=1}^K |c_j| \max_{1 \leq i \leq n} |d_j^{-1} x_{ij}|\right)^2}{\underline{\sigma}^2 c^T \Delta^{-1} X^T X \Delta^{-1} c} \\
+&amp;\leq \frac{K \times c^T c \times \max_{1 \leq j \leq K} \max_{1 \leq i \leq n} d_j^{-2} x_{ij}^2}{\underline{\sigma}^2 \times c^T c \times (\lambda_{min}(M) + o(1))} \to 0
+\end{aligned}
+\]</span></p>
+<p>It follows that <span class="math inline">\(T_n \overset{d}{\to} N(0,1)\)</span> for any <span class="math inline">\(c \neq 0\)</span> and hence <span class="math inline">\(\Delta^{-1} X^T u \overset{d}{\to} N(0, \Psi)\)</span>. We apply the multivariate version of the continuous mapping and Slutsky theorem to conclude.</p>
+</section>
+<section class="level3" id="example-22.6">
+<h3 class="anchored" data-anchor-id="example-22.6">Example 22.6</h3>
+<p>Suppose that <span class="math inline">\(x_{i1} = 1\)</span>, <span class="math inline">\(x_{i2} = i\)</span>, and <span class="math inline">\(x_{i3} = i^2\)</span>, and <span class="math inline">\(u_i\)</span> are i.i.d. with variance <span class="math inline">\(\sigma^2\)</span>. Then</p>
+<p><span class="math display">\[
+\Delta = \begin{pmatrix}
+\sqrt{n} &amp; 0 &amp; 0 \\
+0 &amp; \sqrt{\sum_{i=1}^n i^2} &amp; 0 \\
+0 &amp; 0 &amp; \sqrt{\sum_{i=1}^n i^4}
+\end{pmatrix} \approx \begin{pmatrix}
+\sqrt{n} &amp; 0 &amp; 0 \\
+0 &amp; n^{3/2} / \sqrt{3} &amp; 0 \\
+0 &amp; 0 &amp; n^{5/2} / \sqrt{5}
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+M = I
+\]</span></p>
+<p>The negligibility conditions are easily satisfied, for example, if <span class="math inline">\(x_{i2} = i\)</span>,</p>
+<p><span class="math display">\[
+\frac{\max_{1 \leq i \leq n} i^2}{\sum_{j=1}^n j^2} = \frac{n^2}{O(n^3)} \to 0
+\]</span></p>
+<p>In this case, even though the largest element is increasing with sample size, many other elements are increasing just as fast.</p>
+</section>
+<section class="level3" id="example-22.7">
+<h3 class="anchored" data-anchor-id="example-22.7">Example 22.7</h3>
+<p>Consider the dummy variable example <span class="math inline">\(x_i = D_i\)</span>, then</p>
+<p><span class="math display">\[
+\frac{\max_{1 \leq i \leq n} x_i^2}{\sum_{j=1}^n x_j^2} = \frac{1}{\sum_{j=1}^n D_j}
+\]</span></p>
+<p>which goes to zero if and only if <span class="math inline">\(\sum_{j=1}^n D_j \to \infty\)</span>.</p>
+</section>
+<section class="level3" id="example-22.8">
+<h3 class="anchored" data-anchor-id="example-22.8">Example 22.8</h3>
+<p>An example where the CLT would fail is</p>
+<p><span class="math display">\[
+x_i = \begin{cases}
+1 &amp; \text{if } i &lt; n \\
+n &amp; \text{if } i = n
+\end{cases}
+\]</span></p>
+<p>In this case, the negligibility condition fails and the distribution of the least squares estimator would be largely determined by the last observation.</p>
+<p>We next consider the robust t and Wald statistics in this environment. We let:</p>
+<p><span class="math display">\[
+\hat{\Psi} = \Delta^{-1} X^T S X \Delta^{-1}
+\]</span></p>
+<p>where <span class="math inline">\(S\)</span> is the <span class="math inline">\(n \times n\)</span> diagonal matrix with a typical element <span class="math inline">\(\hat{\varepsilon}_i^2\)</span>. We can write:</p>
+<p><span class="math display">\[
+t_R = \frac{c^T \Delta^{-1} \Delta \hat{\beta}}{\sqrt{c^T \Delta^{-1} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \hat{\Psi} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \Delta^{-1} c}}
+\]</span></p>
+<p>Define: <span class="math display">\[
+\hat{x}_i = (x_{i1}, \dots, x_{iK})^T; \quad \tilde{x}_{ij} = \frac{x_{ij}}{\sqrt{\sum_{i=1}^n x_{ij}^2}}
+\]</span> ### Assumption R3 says that <span class="math inline">\(\sum_{i=1}^n \tilde{x}_i \tilde{x}_i^T\)</span> converges to a positive definite matrix. We make further assumption</p>
+</section>
+<section class="level3" id="assumption-r4">
+<h3 class="anchored" data-anchor-id="assumption-r4">Assumption R4</h3>
+<p>For <span class="math inline">\(j, k, l, r = 1, \dots, K\)</span>, we have: <span class="math display">\[\sum_{i=1}^n \tilde{x}_{ij}^2 \tilde{x}_{ik}^2, \quad \sum_{i=1}^n \tilde{x}_{ij}^2\tilde{x}_{ik}^2\tilde{x}_{il}^2, \quad \sum_{i=1}^n |\tilde{x}_{ij}\tilde{x}_{ik}\tilde{x}_{il}\tilde{x}_{ir}|\to 0\]</span></p>
+</section>
+<section class="level3" id="assumption-r5">
+<h3 class="anchored" data-anchor-id="assumption-r5">Assumption R5</h3>
+<p>For some <span class="math inline">\(C&lt;\infty\)</span>, we have: <span class="math display">\[E[(\epsilon_i^2 - \sigma_i^2)^2] \leq C\]</span></p>
+</section>
+<section class="level3" id="theorem-22.8">
+<h3 class="anchored" data-anchor-id="theorem-22.8">Theorem 22.8</h3>
+<p>Suppose that R1-R5 hold. Then, under <span class="math inline">\(H_0\)</span>: <span class="math display">\[t_R \overset{d}{\to} N(0,1)\]</span> <strong>Proof:</strong> We have: <span class="math display">\[\hat{\Psi} = \Delta^{-1}\sum_{i=1}^n x_i x_i^T \varepsilon_i^2\Delta^{-1} - 2\Delta^{-1}\sum_{i=1}^n x_i x_i^T \varepsilon_i x_i^T (X^TX)^{-1}X^T\varepsilon + \Delta^{-1}\sum_{i=1}^nx_ix_i^Tx_i^T(X^TX)^{-1}X^T\varepsilon\varepsilon^T X (X^TX)^{-1}x_i\]</span> <span class="math display">\[= \hat{\Psi}_1 + \hat{\Psi}_2 + \hat{\Psi}_3\]</span></p>
+<p>where <span class="math inline">\(\tilde{\varepsilon_i} = \varepsilon_i - x_i^T (X^T X)^{-1} X^T \varepsilon\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{aligned}
+\hat{\Psi}_2 &amp;= \Delta^{-1} \sum_{i=1}^n x_i x_i^T \tilde{\varepsilon_i} \Delta^{-1} x_i^T (\Delta^{-1} X^T X \Delta^{-1})^{-1} (\Delta^{-1} X^T \varepsilon) \\
+&amp;= \sum_{i=1}^n \tilde{x}_i \tilde{x}_i^T \tilde{\varepsilon_i} (\Delta^{-1} X^T X \Delta^{-1})^{-1} (\Delta^{-1} X^T \varepsilon) \overset{p}{\to} 0
+\end{aligned}
+\]</span> since <span class="math inline">\((\Delta^{-1}X^T X \Delta^{-1})^{-1}(\Delta^{-1}X^T\varepsilon) \overset{d}{\to} W \in \mathbb{R}^K\)</span>, say, while for any <span class="math inline">\(j, k, l = 1, \dots, K\)</span> we have</p>
+<p><span class="math display">\[
+E\left[\sum_{i=1}^n \tilde{x}_{ij} \tilde{x}_{ik} \tilde{x}_{il} \varepsilon_i\right] = 0
+\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{var}\left(\sum_{i=1}^n \tilde{x}_{ij} \tilde{x}_{ik} \tilde{x}_{il} \varepsilon_i\right) &amp;= \sum_{i=1}^n \tilde{x}_{ij}^2 \tilde{x}_{ik}^2 \tilde{x}_{il}^2 \sigma_i^2 \\
+&amp;\leq \bar{\sigma}^2 \sum_{i=1}^n \tilde{x}_{ij}^2 \tilde{x}_{ik}^2 \tilde{x}_{il}^2 \to 0.
+\end{aligned}
+\]</span></p>
+<p>Likewise</p>
+<p><span class="math display">\[
+\hat{\Psi}_3 = \sum_{i=1}^n \tilde{x}_i \tilde{x}_i^T (\Delta^{-1} X^T X \Delta^{-1})^{-1} \Delta^{-1} X^T \varepsilon \varepsilon^T X \Delta^{-1} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \tilde{x}_i \overset{p}{\to} 0
+\]</span></p>
+<p>because <span class="math inline">\((\Delta^{-1} X^T X \Delta^{-1})^{-1} \Delta^{-1} X^T \varepsilon \varepsilon^T X \Delta^{-1} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \overset{d}{\to} W W^T\)</span>, and the fact that <span class="math inline">\(\sum_{i=1}^n |\tilde{x}_{ij} \tilde{x}_{ik} \tilde{x}_{il} \tilde{x}_{ir}| \to 0\)</span>. Likewise, for any <span class="math inline">\(j,k\)</span>, we have</p>
+<p><span class="math display">\[E\left[\sum_{i=1}^n\tilde{x}_{ij}\tilde{x}_{ik}(\epsilon_i^2 - \sigma_i^2)\right]=0\]</span> <span class="math display">\[Var\left[\sum_{i=1}^n\tilde{x}_{ij}\tilde{x}_{ik}(\epsilon_i^2 - \sigma_i^2)\right] = \sum_{i=1}^n \tilde{x}_{ij}^2\tilde{x}_{ik}^2 E\left[(\epsilon_i^2 - \sigma_i^2)^2\right] \leq C\sum_{i=1}^n \tilde{x}_{ij}^2\tilde{x}_{ik}^2 \to 0\]</span> Therefore: <span class="math display">\[\hat{\Psi} \overset{p}{\to} \Psi\]</span> We have <span class="math display">\[t_R \overset{d}{\to} \left( \lim_{n\to \infty}\frac{c^T\Delta^{-1}(M^{-1}\Psi M^{-1})^{-1/2}}{\sqrt{c^T\Delta^{-1}M^{-1}\Psi M^{-1}\Delta^{-1}c}} \right) \times Z = a^TZ\]</span> where <span class="math inline">\(Z \sim N(0, I_K)\)</span> and <span class="math inline">\(a\)</span> is such that <span class="math inline">\(a^Ta = 1\)</span> and the result follows.</p>
+<p>Note that <span class="math inline">\(a\)</span> may possess many zeros, so only a few components of <span class="math inline">\(Z\)</span> contribute to the limiting distribution.</p>
+</section>
+<section class="level3" id="example-22.9">
+<h3 class="anchored" data-anchor-id="example-22.9">Example 22.9</h3>
+<p>In the case where <span class="math inline">\(x_{ij} = i\)</span> and <span class="math inline">\(x_{ik} = i^2\)</span> we have</p>
+<p><span class="math display">\[
+\sum_{i=1}^n \tilde{x}_{ij}^2 \tilde{x}_{ik}^2 = \frac{\sum_{i=1}^n i^6}{\sum_{i=1}^n i^2 \sum_{i=1}^n i^4} \to 0
+\]</span></p>
+<p>Let’s consider the robust Wald statistic, which can be written</p>
+<p><span class="math display">\[
+W_R = (R \Delta^{-1} \Delta (\hat{\beta} - \beta))^T \left[R \Delta^{-1} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \hat{\Psi} (\Delta^{-1} X^T X \Delta^{-1})^{-1} \Delta^{-1} R^T\right]^{-1} R \Delta^{-1} \Delta (\hat{\beta} - \beta)
+\]</span></p>
+<p>We have <span class="math inline">\(\Delta (\hat{\beta} - \beta) \overset{d}{\to} (M^{-1} \Psi M^{-1})^{1/2} \times x\)</span>, where <span class="math inline">\(x \sim N(0, I_K)\)</span> so replacing <span class="math inline">\(\hat{\Psi}\)</span> by its probability limit we have</p>
+<p><span class="math display">\[
+W_R \overset{d}{\to} x^T (M^{-1} \Psi M^{-1})^{1/2} \times \lim_{n \to \infty} \left(\Delta^{-1} R^T \left[R \Delta^{-1} M^{-1} \Psi M^{-1} \Delta^{-1} R^T\right]^{-1} R \Delta^{-1}\right) \times (M^{-1} \Psi M^{-1})^{1/2} \times x
+\]</span></p>
+<p>The main issue is that we can’t guarantee this limit exists, because the matrix <span class="math inline">\(R \Delta^{-1}\)</span> can be of deficient rank in large samples even when <span class="math inline">\(R\)</span> is full rank.</p>
+</section>
+<section class="level3" id="example-22.10">
+<h3 class="anchored" data-anchor-id="example-22.10">Example 22.10</h3>
+<p>Suppose that <span class="math inline">\(M = \Psi = I_3\)</span> and</p>
+<p><span class="math display">\[
+\Delta = \text{diag}(n^{1/2}, n^{3/2}, n^{5/2}); \quad R = \begin{pmatrix}
+1 &amp; 1 &amp; 1 \\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</span></p>
+<p>Then</p>
+<p><span class="math display">\[
+R \Delta^{-1} = \begin{pmatrix}
+n^{-1/2} &amp; n^{-3/2} &amp; n^{-5/2} \\
+0 &amp; 0 &amp; n^{-5/2}
+\end{pmatrix}
+\]</span></p>
+<p><span class="math display">\[
+R \Delta^{-1} \Delta^{-1} R^T = \begin{pmatrix}
+n^{-1} + n^{-3} + n^{-5} &amp; n^{-5} \\
+n^{-5} &amp; n^{-5}
+\end{pmatrix}
+\]</span></p>
+<p>and the matrix <span class="math inline">\(n R \Delta^{-1} \Delta^{-1} R^T\)</span> is asymptotically singular. In this case, if <span class="math inline">\(c\)</span> is the first row of <span class="math inline">\(R\)</span> we have <span class="math inline">\(a^T = (1, 0, 0)\)</span> so the t-statistic is only driven by the first component.</p>
+<p>Intuitively, when there are restrictions across variables that are driven by different trend rates, it is the slowest rate that prevails. See Phillips (2007) for further discussion of regression with trending regressors and some of the pitfalls that may occur and the possible remedies.</p>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch22exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise1">Exercise 1</h3>
+<p><a href="#sec-ch22solution1">Solution 1</a></p>
+<p>Consider the regression model <span class="math inline">\(y_i = \beta^T x_i + \varepsilon_i\)</span>, where <span class="math inline">\((x_i, \varepsilon_i)\)</span> are i.i.d. and <span class="math inline">\(E[x_i x_i^T] = M\)</span>. Explain in intuitive terms what the matrix <span class="math inline">\(M\)</span> represents.</p>
+</section>
+<section class="level3" id="sec-ch22exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise2">Exercise 2</h3>
+<p><a href="#sec-ch22solution2">Solution 2</a></p>
+<p>Under what conditions is the matrix <span class="math inline">\(\Omega = E[x_i x_i^T \varepsilon_i^2]\)</span> equal to <span class="math inline">\(\sigma^2 M\)</span>, where <span class="math inline">\(\sigma^2\)</span> is a scalar? Explain the meaning of this condition.</p>
+</section>
+<section class="level3" id="sec-ch22exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise3">Exercise 3</h3>
+<p><a href="#sec-ch22solution3">Solution 3</a></p>
+<p>State the unconditional moment condition and explain why it does not guarantee the unbiasedness of the OLS estimator.</p>
+</section>
+<section class="level3" id="sec-ch22exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise4">Exercise 4</h3>
+<p><a href="#sec-ch22solution4">Solution 4</a></p>
+<p>State the conditional moment condition that ensures the unbiasedness of the OLS estimator and explain why this condition achieves this.</p>
+</section>
+<section class="level3" id="sec-ch22exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise5">Exercise 5</h3>
+<p><a href="#sec-ch22solution5">Solution 5</a></p>
+<p>Explain the result of Theorem 22.1, <span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>, in intuitive terms. What does it tell us about the OLS estimator in large samples?</p>
+</section>
+<section class="level3" id="sec-ch22exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise6">Exercise 6</h3>
+<p><a href="#sec-ch22solution6">Solution 6</a></p>
+<p>In the proof of Theorem 22.1, what is the role of Slutsky’s theorem?</p>
+</section>
+<section class="level3" id="sec-ch22exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise7">Exercise 7</h3>
+<p><a href="#sec-ch22solution7">Solution 7</a></p>
+<p>Explain the result of Theorem 22.2, <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} N(0, M^{-1}\Omega M^{-1})\)</span>, in intuitive terms. What is the distribution of the OLS estimator in large samples?</p>
+</section>
+<section class="level3" id="sec-ch22exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise8">Exercise 8</h3>
+<p><a href="#sec-ch22solution8">Solution 8</a></p>
+<p>In the special case of homoskedasticity, how does the asymptotic variance of <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span> simplify?</p>
+</section>
+<section class="level3" id="sec-ch22exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise9">Exercise 9</h3>
+<p><a href="#sec-ch22solution9">Solution 9</a></p>
+<p>Explain why Theorem 22.3 is important for inference in the linear regression model.</p>
+</section>
+<section class="level3" id="sec-ch22exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise10">Exercise 10</h3>
+<p><a href="#sec-ch22solution10">Solution 10</a></p>
+<p>If the homoskedasticity condition fails, what is the consequence for the usual t-statistic?</p>
+</section>
+<section class="level3" id="sec-ch22exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise11">Exercise 11</h3>
+<p><a href="#sec-ch22solution11">Solution 11</a></p>
+<p>What is the purpose of using robust test statistics (<span class="math inline">\(t_R\)</span> and <span class="math inline">\(W_R\)</span>) as defined in equations (22.2) and (22.3)?</p>
+</section>
+<section class="level3" id="sec-ch22exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise12">Exercise 12</h3>
+<p><a href="#sec-ch22solution12">Solution 12</a></p>
+<p>In Theorem 22.5, what do the conditions <span class="math inline">\(E|x_{ij}x_{ik}x_{il}x_{ir}| &lt; \infty\)</span>, <span class="math inline">\(E|x_{ij}x_{ik}x_{il}\varepsilon_i| &lt; \infty\)</span>, and <span class="math inline">\(E(x_{ij}x_{ik}\varepsilon_i x_{il}) = 0\)</span> ensure?</p>
+</section>
+<section class="level3" id="sec-ch22exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise13">Exercise 13</h3>
+<p><a href="#sec-ch22solution13">Solution 13</a></p>
+<p>Explain the non-i.i.d. case considered in section 22.2. How does it differ from the i.i.d. case?</p>
+</section>
+<section class="level3" id="sec-ch22exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise14">Exercise 14</h3>
+<p><a href="#sec-ch22solution14">Solution 14</a></p>
+<p>In Theorem 22.6, what is the significance of the condition <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\lambda_{min}^{-2}(X^TX) \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch22exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise15">Exercise 15</h3>
+<p><a href="#sec-ch22solution15">Solution 15</a></p>
+<p>In Example 22.2, why is the OLS estimator of the dummy variable coefficient inconsistent when the number of observations in the set <span class="math inline">\(I\)</span> is fixed?</p>
+</section>
+<section class="level3" id="sec-ch22exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise16">Exercise 16</h3>
+<p><a href="#sec-ch22solution16">Solution 16</a></p>
+<p>Explain Assumptions R1, R2, and R3 in the context of Theorem 22.7.</p>
+</section>
+<section class="level3" id="sec-ch22exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise17">Exercise 17</h3>
+<p><a href="#sec-ch22solution17">Solution 17</a></p>
+<p>What is a triangular array, and why is the Lindeberg CLT used for triangular arrays in the proof of Theorem 22.7?</p>
+</section>
+<section class="level3" id="sec-ch22exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise18">Exercise 18</h3>
+<p><a href="#sec-ch22solution18">Solution 18</a></p>
+<p>In Example 22.6, explain the scaling matrix <span class="math inline">\(\Delta\)</span> and why different scaling is needed for different regressors.</p>
+</section>
+<section class="level3" id="sec-ch22exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise19">Exercise 19</h3>
+<p><a href="#sec-ch22solution19">Solution 19</a></p>
+<p>In Theorem 22.8, what are the assumptions R4 and R5 ensuring?</p>
+</section>
+<section class="level3" id="sec-ch22exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch22exercise20">Exercise 20</h3>
+<p><a href="#sec-ch22solution20">Solution 20</a></p>
+<p>In Example 22.10, explain why the t-statistic is driven only by the first component when the matrix <span class="math inline">\(R\Delta^{-1}\)</span> is asymptotically singular.</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch22solution1">
+<h3 class="anchored" data-anchor-id="sec-ch22solution1">Solution 1</h3>
+<p><a href="#sec-ch22exercise1">Exercise 1</a></p>
+<p>The matrix <span class="math inline">\(M = E[x_i x_i^T]\)</span> represents the expected outer product of the regressor vector <span class="math inline">\(x_i\)</span> with itself. Since <span class="math inline">\(x_i\)</span> is a <span class="math inline">\(K \times 1\)</span> vector, <span class="math inline">\(x_i x_i^T\)</span> is a <span class="math inline">\(K \times K\)</span> matrix. The elements of this matrix are the expected values of the squares and cross-products of the regressors. Specifically, the diagonal elements, <span class="math inline">\(E[x_{ij}^2]\)</span>, represent the expected values of the squared regressors, and the off-diagonal elements, <span class="math inline">\(E[x_{ij}x_{ik}]\)</span> for <span class="math inline">\(j \neq k\)</span>, represent the expected values of the cross-products of different regressors. The matrix <span class="math inline">\(M\)</span> summarizes the second moments of the regressors. Intuitively, it reflects the spread and the linear relationships between the regressors.</p>
+</section>
+<section class="level3" id="sec-ch22solution2">
+<h3 class="anchored" data-anchor-id="sec-ch22solution2">Solution 2</h3>
+<p><a href="#sec-ch22exercise2">Exercise 2</a></p>
+<p>The matrix <span class="math inline">\(\Omega = E[x_i x_i^T \varepsilon_i^2]\)</span> is equal to <span class="math inline">\(\sigma^2 M\)</span> under the condition of <strong>homoskedasticity</strong>, which means that the variance of the error term <span class="math inline">\(\varepsilon_i\)</span> is constant and does not depend on the regressors <span class="math inline">\(x_i\)</span>. Formally, this is stated as <span class="math inline">\(E[\varepsilon_i^2 | x_i] = \sigma^2\)</span> for all <span class="math inline">\(i\)</span>. If this holds, then</p>
+<p><span class="math display">\[
+\Omega = E[x_i x_i^T \varepsilon_i^2] = E[E[x_i x_i^T \varepsilon_i^2 | x_i]] = E[x_i x_i^T E[\varepsilon_i^2 | x_i]] = E[x_i x_i^T \sigma^2] = \sigma^2 E[x_i x_i^T] = \sigma^2 M
+\]</span></p>
+</section>
+<section class="level3" id="sec-ch22solution3">
+<h3 class="anchored" data-anchor-id="sec-ch22solution3">Solution 3</h3>
+<p><a href="#sec-ch22exercise3">Exercise 3</a></p>
+<p>The <strong>unconditional moment condition</strong> is <span class="math inline">\(E[x_i \varepsilon_i] = 0\)</span>. This means that the regressors and the error term are uncorrelated <em>on average</em>. However, this does <em>not</em> guarantee the unbiasedness of the OLS estimator. Unbiasedness requires that <span class="math inline">\(E[\hat{\beta} | X] = \beta\)</span>. The unconditional moment condition is not strong enough to imply this conditional expectation. It only implies that <span class="math inline">\(E[X^T \varepsilon] = 0\)</span>, but it doesn’t guarantee that <span class="math inline">\(E[(X^T X)^{-1} X^T \varepsilon | X] = 0\)</span>, as is needed for unbiasedness.</p>
+</section>
+<section class="level3" id="sec-ch22solution4">
+<h3 class="anchored" data-anchor-id="sec-ch22solution4">Solution 4</h3>
+<p><a href="#sec-ch22exercise4">Exercise 4</a></p>
+<p>The <strong>conditional moment condition</strong> that ensures the unbiasedness of the OLS estimator is <span class="math inline">\(E[\varepsilon_i | x_i] = 0\)</span>. This condition means that the expected value of the error term, given any value of the regressors, is zero. It is a stronger condition than the unconditional moment condition. This condition ensures unbiasedness because:</p>
+<p><span class="math display">\[
+\begin{aligned}
+E[\hat{\beta} | X] &amp;= E[\beta + (X^T X)^{-1} X^T \varepsilon | X] \\
+&amp;= \beta + E[(X^T X)^{-1} X^T \varepsilon | X] \\
+&amp;= \beta + (X^T X)^{-1} X^T E[\varepsilon | X] \\
+&amp;= \beta + (X^T X)^{-1} X^T \cdot 0 \\
+&amp;= \beta
+\end{aligned}
+\]</span></p>
+<p>Here, we use the fact that <span class="math inline">\(X\)</span> is treated as fixed in the conditional expectation, and <span class="math inline">\(E[\varepsilon | X]\)</span> is a vector with elements <span class="math inline">\(E[\varepsilon_i | x_i] = 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch22solution5">
+<h3 class="anchored" data-anchor-id="sec-ch22solution5">Solution 5</h3>
+<p><a href="#sec-ch22exercise5">Exercise 5</a></p>
+<p>Theorem 22.1, <span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>, states that the OLS estimator <span class="math inline">\(\hat{\beta}\)</span> <strong>converges in probability</strong> to the true parameter vector <span class="math inline">\(\beta\)</span>. This means that as the sample size <span class="math inline">\(n\)</span> goes to infinity, the probability that <span class="math inline">\(\hat{\beta}\)</span> is arbitrarily close to <span class="math inline">\(\beta\)</span> approaches 1. In intuitive terms, this tells us that in large samples, the OLS estimator is likely to be very close to the true value of the parameters. This is the property of <strong>consistency</strong> of an estimator.</p>
+</section>
+<section class="level3" id="sec-ch22solution6">
+<h3 class="anchored" data-anchor-id="sec-ch22solution6">Solution 6</h3>
+<p><a href="#sec-ch22exercise6">Exercise 6</a></p>
+<p>In the proof of Theorem 22.1, Slutsky’s theorem is used to combine the results from the Law of Large Numbers applied to the two terms: <span class="math display">\[
+\left(\frac{1}{n} \sum_{i=1}^n x_i x_i^T\right)^{-1} \overset{p}{\to} M^{-1}
+\]</span> and <span class="math display">\[
+\frac{1}{n} \sum_{i=1}^n x_i \varepsilon_i \overset{p}{\to} 0
+\]</span> Slutsky’s theorem states that if <span class="math inline">\(X_n \overset{d}{\to} X\)</span> and <span class="math inline">\(Y_n \overset{p}{\to} c\)</span>, where <span class="math inline">\(c\)</span> is a constant, then <span class="math inline">\(X_n Y_n \overset{d}{\to} cX\)</span>, and <span class="math inline">\(X_n + Y_n \overset{d}{\to} X + c\)</span> and, <span class="math inline">\(Y_n^{-1}X_n \overset{d}{\to} c^{-1}X\)</span>, if <span class="math inline">\(c \neq 0\)</span>. Here we have convergence in probability, which is a special, simpler, case of convergence in distribution, and it allow us to conclude that the product converges in probability to <span class="math inline">\(M^{-1} \cdot 0 = 0\)</span>: <span class="math display">\[
+\hat{\beta} - \beta = \left(\frac{1}{n} \sum_{i=1}^n x_i x_i^T\right)^{-1} \left(\frac{1}{n} \sum_{i=1}^n x_i \varepsilon_i\right) \overset{p}{\to} M^{-1} \cdot 0 = 0
+\]</span></p>
+</section>
+<section class="level3" id="sec-ch22solution7">
+<h3 class="anchored" data-anchor-id="sec-ch22solution7">Solution 7</h3>
+<p><a href="#sec-ch22exercise7">Exercise 7</a></p>
+<p>Theorem 22.2 states that <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span> <strong>converges in distribution</strong> to a normal distribution with mean 0 and variance <span class="math inline">\(M^{-1} \Omega M^{-1}\)</span>. This means that, in large samples, the <em>scaled</em> difference between the OLS estimator and the true parameter vector is approximately normally distributed. This result is crucial for constructing confidence intervals and hypothesis tests about <span class="math inline">\(\beta\)</span>. The scaling factor <span class="math inline">\(\sqrt{n}\)</span> indicates the rate of convergence: <span class="math inline">\(\hat{\beta}\)</span> approaches <span class="math inline">\(\beta\)</span> at a rate proportional to <span class="math inline">\(1/\sqrt{n}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch22solution8">
+<h3 class="anchored" data-anchor-id="sec-ch22solution8">Solution 8</h3>
+<p><a href="#sec-ch22exercise8">Exercise 8</a></p>
+<p>In the special case of homoskedasticity, where <span class="math inline">\(E[\varepsilon_i^2 | x_i] = \sigma^2\)</span>, the asymptotic variance simplifies to <span class="math inline">\(\sigma^2 M^{-1}\)</span>. This is because, under homoskedasticity, <span class="math inline">\(\Omega = \sigma^2 M\)</span>, so:</p>
+<p><span class="math display">\[
+M^{-1} \Omega M^{-1} = M^{-1} (\sigma^2 M) M^{-1} = \sigma^2 M^{-1} M M^{-1} = \sigma^2 M^{-1}
+\]</span></p>
+</section>
+<section class="level3" id="sec-ch22solution9">
+<h3 class="anchored" data-anchor-id="sec-ch22solution9">Solution 9</h3>
+<p><a href="#sec-ch22exercise9">Exercise 9</a></p>
+<p>Theorem 22.3, <span class="math inline">\(s_*^2 \overset{p}{\to} \sigma^2\)</span>, is important for inference because <span class="math inline">\(s_*^2\)</span> is the estimator of the error variance <span class="math inline">\(\sigma^2\)</span> that is used in the calculation of the standard errors of the OLS estimator <span class="math inline">\(\hat{\beta}\)</span>. Since <span class="math inline">\(s_*^2\)</span> is consistent for <span class="math inline">\(\sigma^2\)</span>, we can use it to consistently estimate the variance-covariance matrix of <span class="math inline">\(\hat{\beta}\)</span>, which is needed for constructing t-statistics and F-statistics.</p>
+</section>
+<section class="level3" id="sec-ch22solution10">
+<h3 class="anchored" data-anchor-id="sec-ch22solution10">Solution 10</h3>
+<p><a href="#sec-ch22exercise10">Exercise 10</a></p>
+<p>If the homoskedasticity condition fails, the usual t-statistic does <em>not</em> converge to a standard normal distribution. Instead, it converges to a normal distribution with a variance that is not equal to 1. This means that using the standard normal critical values for hypothesis testing will lead to incorrect inference (incorrect size of the test).</p>
+</section>
+<section class="level3" id="sec-ch22solution11">
+<h3 class="anchored" data-anchor-id="sec-ch22solution11">Solution 11</h3>
+<p><a href="#sec-ch22exercise11">Exercise 11</a></p>
+<p>The purpose of using robust test statistics (<span class="math inline">\(t_R\)</span> and <span class="math inline">\(W_R\)</span>) is to obtain valid inference even when the homoskedasticity assumption is violated. These statistics use a consistent estimator of the variance-covariance matrix of <span class="math inline">\(\hat{\beta}\)</span> that does not rely on the assumption of constant error variance. The matrix <span class="math inline">\(\hat{\Omega}\)</span> provides a consistent estimate of <span class="math inline">\(\Omega\)</span> even under heteroskedasticity.</p>
+</section>
+<section class="level3" id="sec-ch22solution12">
+<h3 class="anchored" data-anchor-id="sec-ch22solution12">Solution 12</h3>
+<p><a href="#sec-ch22exercise12">Exercise 12</a></p>
+<p>In Theorem 22.5, the conditions <span class="math inline">\(E|x_{ij}x_{ik}x_{il}x_{ir}| &lt; \infty\)</span>, <span class="math inline">\(E|x_{ij}x_{ik}x_{il}\varepsilon_i| &lt; \infty\)</span>, and <span class="math inline">\(E(x_{ij}x_{ik}\varepsilon_i x_{il}) = 0\)</span> are moment conditions that ensure that certain sample averages involving the regressors and the error terms converge to their population counterparts. These conditions, together with B1 and B2, guarantee the consistency of <span class="math inline">\(\hat{\Omega}\)</span> for <span class="math inline">\(\Omega\)</span> under heteroskedasticity. They are technical conditions required for the application of laws of large numbers.</p>
+</section>
+<section class="level3" id="sec-ch22solution13">
+<h3 class="anchored" data-anchor-id="sec-ch22solution13">Solution 13</h3>
+<p><a href="#sec-ch22exercise13">Exercise 13</a></p>
+<p>The non-i.i.d. case considered in section 22.2 refers to situations where the observations <span class="math inline">\((x_i, \varepsilon_i)\)</span> are <em>not</em> independently and identically distributed. This can occur, for example, when the regressors include deterministic trends or dummy variables or when the errors have different variances (heteroscedasticity), or are autocorrelated. This contrasts with the i.i.d. case, where each observation is assumed to be drawn from the same distribution and independent of other observations.</p>
+</section>
+<section class="level3" id="sec-ch22solution14">
+<h3 class="anchored" data-anchor-id="sec-ch22solution14">Solution 14</h3>
+<p><a href="#sec-ch22exercise14">Exercise 14</a></p>
+<p>In Theorem 22.6, the condition <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\lambda_{min}^{-2}(X^TX) \to 0\)</span> as <span class="math inline">\(n \to \infty\)</span> is a condition that ensures the consistency of the OLS estimator in the non-i.i.d. case. It essentially requires that the variance of the error terms (represented by <span class="math inline">\(\Sigma\)</span>) does not grow too fast relative to the information in the regressors (represented by <span class="math inline">\(X^TX\)</span>). The smallest eigenvalue of <span class="math inline">\(X^TX\)</span>, <span class="math inline">\(\lambda_{min}(X^TX)\)</span>, measures how much information <span class="math inline">\(X\)</span> contains. The largest eigenvalue <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\)</span> can be thought of as the largest variance in the errors projected onto the space of X. If <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\)</span> grows at a faster rate than the square of <span class="math inline">\(\lambda_{min}(X^TX)\)</span>, then the increased variability in y due to the non-constant variance in <span class="math inline">\(\Sigma\)</span> dominates the increased information in <span class="math inline">\(X^TX\)</span> obtained by increasing the sample size, n.</p>
+</section>
+<section class="level3" id="sec-ch22solution15">
+<h3 class="anchored" data-anchor-id="sec-ch22solution15">Solution 15</h3>
+<p><a href="#sec-ch22exercise15">Exercise 15</a></p>
+<p>In Example 22.2, the OLS estimator of the dummy variable coefficient is inconsistent when the number of observations in the set <span class="math inline">\(I\)</span> (<span class="math inline">\(n_I\)</span>) is fixed because the information about the effect of that dummy variable does not grow with the sample size. As <span class="math inline">\(n\)</span> increases, the number of observations <em>outside</em> the set <span class="math inline">\(I\)</span> grows, but the number of observations <em>inside</em> the set <span class="math inline">\(I\)</span> remains constant. This means that we are not getting more information about the effect of the dummy variable as the sample size increases, and thus we cannot consistently estimate its coefficient. This corresponds to the fact that, in this case, <span class="math inline">\(\lambda_{min}(X^TX)\)</span> does not tend to infinity.</p>
+</section>
+<section class="level3" id="sec-ch22solution16">
+<h3 class="anchored" data-anchor-id="sec-ch22solution16">Solution 16</h3>
+<p><a href="#sec-ch22exercise16">Exercise 16</a></p>
+<p>Assumptions R1, R2, and R3 in the context of Theorem 22.7 are conditions on the error terms and the regressors that are needed to establish the asymptotic normality of the OLS estimator in the non-i.i.d. case.</p>
+<ul>
+<li><strong>R1:</strong> The error terms <span class="math inline">\(u_i\)</span> are independent (but not necessarily identically distributed) with mean zero and bounded variances. The condition <span class="math inline">\(E(|u_i|^{2+\delta}) &lt; C\)</span> is a technical condition (Lyapunov condition) that ensures that the central limit theorem can be applied.</li>
+<li><strong>R2:</strong> The regressors are non-stochastic (fixed) and full rank. The condition <span class="math inline">\(d_j^2 = \sum_{i=1}^n x_{ij}^2 \to \infty\)</span> ensures that the information in each regressor grows with the sample size. The condition <span class="math inline">\(\frac{\max_{1 \leq i \leq n} x_{ij}^2}{\sum_{i=1}^n x_{ij}^2} \to 0\)</span> is a “no single observation dominates” condition. It prevents any single observation from having an overwhelming influence on the estimator.</li>
+<li><strong>R3:</strong> This condition states that the scaled regressor matrices converge to positive definite matrices <span class="math inline">\(M\)</span> and <span class="math inline">\(\Psi\)</span>. This ensures that the information in the regressors, appropriately scaled, stabilizes as the sample size increases, and that there is sufficient variation in the data. The matrix <span class="math inline">\(\Delta\)</span> scales the regressors based on their individual sums of squares.</li>
+</ul>
+</section>
+<section class="level3" id="sec-ch22solution17">
+<h3 class="anchored" data-anchor-id="sec-ch22solution17">Solution 17</h3>
+<p><a href="#sec-ch22exercise17">Exercise 17</a></p>
+<p>A <strong>triangular array</strong> is a sequence of random variables where the number of variables in each row depends on the row number. In the proof of Theorem 22.7, the <span class="math inline">\(w_{ni}\)</span> terms form a triangular array because they depend on both <span class="math inline">\(i\)</span> (the observation index) and <span class="math inline">\(n\)</span> (the sample size). The Lindeberg CLT is used for triangular arrays because the classical CLT applies to sums of i.i.d. random variables, which is not the case here. The Lindeberg CLT provides conditions under which the sum of independent, but not necessarily identically distributed, random variables (properly normalized) converges to a standard normal distribution. The Lindeberg condition (Equation 22.5) ensures that no single term in the sum dominates the others, preventing the sum from being driven by a few observations.</p>
+</section>
+<section class="level3" id="sec-ch22solution18">
+<h3 class="anchored" data-anchor-id="sec-ch22solution18">Solution 18</h3>
+<p><a href="#sec-ch22exercise18">Exercise 18</a></p>
+<p>In Example 22.6, the scaling matrix <span class="math inline">\(\Delta\)</span> is a diagonal matrix with elements that scale each regressor differently. The diagonal elements are the square roots of the sums of squares of the corresponding regressors: <span class="math inline">\(\sqrt{n}\)</span>, <span class="math inline">\(\sqrt{\sum_{i=1}^n i^2}\)</span>, and <span class="math inline">\(\sqrt{\sum_{i=1}^n i^4}\)</span>. Different scaling is needed because the regressors (<span class="math inline">\(1\)</span>, <span class="math inline">\(i\)</span>, and <span class="math inline">\(i^2\)</span>) grow at different rates as the sample size <span class="math inline">\(n\)</span> increases. The constant regressor grows at rate <span class="math inline">\(n\)</span>, the linear trend grows at rate <span class="math inline">\(n^3\)</span>, and the quadratic trend grows at rate <span class="math inline">\(n^5\)</span>. To apply the central limit theorem, we need to normalize each regressor by its “size” so that the scaled regressors have comparable magnitudes.</p>
+</section>
+<section class="level3" id="sec-ch22solution19">
+<h3 class="anchored" data-anchor-id="sec-ch22solution19">Solution 19</h3>
+<p><a href="#sec-ch22exercise19">Exercise 19</a></p>
+<p>In Theorem 22.8, assumptions R4 and R5 are additional conditions needed to prove the consistency of the robust variance estimator <span class="math inline">\(\hat{\Psi}\)</span> in the non-i.i.d. case.</p>
+<ul>
+<li><strong>R4:</strong> This assumption places restrictions on the higher-order moments of the scaled regressors (<span class="math inline">\(\tilde{x}_{ij}\)</span>). It helps ensure that certain sums involving products of the scaled regressors converge to zero, which is necessary for the consistency of <span class="math inline">\(\hat{\Psi}\)</span>.</li>
+<li><strong>R5:</strong> This assumption bounds the variance of the squared errors, which is necessary to show <span class="math inline">\(\hat{\Psi}_1 \overset{p}{\to} \Psi\)</span></li>
+</ul>
+</section>
+<section class="level3" id="sec-ch22solution20">
+<h3 class="anchored" data-anchor-id="sec-ch22solution20">Solution 20</h3>
+<p><a href="#sec-ch22exercise20">Exercise 20</a></p>
+<p>In Example 22.10, the t-statistic is driven only by the first component when the matrix <span class="math inline">\(nR\Delta^{-1}\Delta^{-1}R^T\)</span> is asymptotically singular because the restriction matrix <span class="math inline">\(R\)</span> effectively eliminates the influence of the faster-growing regressors. The matrix <span class="math inline">\(\Delta^{-1}\)</span> scales the regressors by <span class="math inline">\(n^{-1/2}\)</span>, <span class="math inline">\(n^{-3/2}\)</span>, and <span class="math inline">\(n^{-5/2}\)</span>. The matrix <span class="math inline">\(R = \begin{pmatrix} 1 &amp; 1 &amp; 1 \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\)</span> imposes the restrictions. When we multiply <span class="math inline">\(R\)</span> by <span class="math inline">\(\Delta^{-1}\)</span>, we get a matrix where the elements corresponding to the faster-growing regressors (<span class="math inline">\(n^{-3/2}\)</span> and <span class="math inline">\(n^{-5/2}\)</span>) are much smaller than the element corresponding to the slowest-growing regressor (<span class="math inline">\(n^{-1/2}\)</span>). The restriction effectively says that the coefficients sum to the same, but since the coefficients are associated with trends growing at different speeds, that sum is determined by the slowest. Asymptotically, the t-statistic only reflects the variation associated with the slowest-growing component (the constant term in this case).</p>
+</section>
+</section>
+<section class="level2" id="r-script-examples">
+<h2 class="anchored" data-anchor-id="r-script-examples">R Script Examples</h2>
+<section class="level3" id="r-script-1-illustration-of-consistency-theorem-22.1">
+<h3 class="anchored" data-anchor-id="r-script-1-illustration-of-consistency-theorem-22.1">R Script 1: Illustration of Consistency (Theorem 22.1)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a aria-hidden="true" href="#cb3-4" tabindex="-1"></a><span class="co"># Define a function to run the simulation</span></span>
+<span id="cb3-5"><a aria-hidden="true" href="#cb3-5" tabindex="-1"></a>run_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
+<span id="cb3-6"><a aria-hidden="true" href="#cb3-6" tabindex="-1"></a>  <span class="co"># Generate i.i.d. data</span></span>
+<span id="cb3-7"><a aria-hidden="true" href="#cb3-7" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># x_i ~ N(2, 1)</span></span>
+<span id="cb3-8"><a aria-hidden="true" href="#cb3-8" tabindex="-1"></a>  epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>) <span class="co"># epsilon_i ~ N(0, 1)</span></span>
+<span id="cb3-9"><a aria-hidden="true" href="#cb3-9" tabindex="-1"></a>  beta_true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># True beta</span></span>
+<span id="cb3-10"><a aria-hidden="true" href="#cb3-10" tabindex="-1"></a>  y <span class="ot">&lt;-</span> beta_true[<span class="dv">1</span>] <span class="sc">+</span> beta_true[<span class="dv">2</span>] <span class="sc">*</span> x <span class="sc">+</span> epsilon <span class="co"># y_i = 1 + 2x_i + epsilon_i</span></span>
+<span id="cb3-11"><a aria-hidden="true" href="#cb3-11" tabindex="-1"></a></span>
+<span id="cb3-12"><a aria-hidden="true" href="#cb3-12" tabindex="-1"></a>  <span class="co"># Calculate OLS estimator</span></span>
+<span id="cb3-13"><a aria-hidden="true" href="#cb3-13" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x) <span class="co"># Design matrix</span></span>
+<span id="cb3-14"><a aria-hidden="true" href="#cb3-14" tabindex="-1"></a>  beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb3-15"><a aria-hidden="true" href="#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a aria-hidden="true" href="#cb3-16" tabindex="-1"></a>  <span class="fu">return</span>(beta_hat)</span>
+<span id="cb3-17"><a aria-hidden="true" href="#cb3-17" tabindex="-1"></a>}</span>
+<span id="cb3-18"><a aria-hidden="true" href="#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a aria-hidden="true" href="#cb3-19" tabindex="-1"></a><span class="co"># Run simulations for different sample sizes</span></span>
+<span id="cb3-20"><a aria-hidden="true" href="#cb3-20" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>, <span class="dv">1000</span>, <span class="dv">5000</span>)</span>
+<span id="cb3-21"><a aria-hidden="true" href="#cb3-21" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_sizes, run_simulation)</span>
+<span id="cb3-22"><a aria-hidden="true" href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a aria-hidden="true" href="#cb3-23" tabindex="-1"></a><span class="co"># Convert results to a data frame</span></span>
+<span id="cb3-24"><a aria-hidden="true" href="#cb3-24" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-25"><a aria-hidden="true" href="#cb3-25" tabindex="-1"></a>  <span class="at">n =</span> sample_sizes,</span>
+<span id="cb3-26"><a aria-hidden="true" href="#cb3-26" tabindex="-1"></a>  <span class="at">beta_0_hat =</span> <span class="fu">sapply</span>(results, <span class="cf">function</span>(x) x[<span class="dv">1</span>]),</span>
+<span id="cb3-27"><a aria-hidden="true" href="#cb3-27" tabindex="-1"></a>  <span class="at">beta_1_hat =</span> <span class="fu">sapply</span>(results, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
+<span id="cb3-28"><a aria-hidden="true" href="#cb3-28" tabindex="-1"></a>)</span>
+<span id="cb3-29"><a aria-hidden="true" href="#cb3-29" tabindex="-1"></a></span>
+<span id="cb3-30"><a aria-hidden="true" href="#cb3-30" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb3-31"><a aria-hidden="true" href="#cb3-31" tabindex="-1"></a><span class="fu">print</span>(results_df)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     n  beta_0_hat beta_1_hat
+1   10 -0.09561438   2.628661
+2   50  1.26398748   1.838626
+3  100  1.11766332   1.991450
+4  500  0.97820790   2.024957
+5 1000  0.90675784   2.045172
+6 5000  0.98676169   2.003172</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a>results_df_long <span class="ot">&lt;-</span> results_df <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(beta_0_hat, beta_1_hat),</span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb5-5"><a aria-hidden="true" href="#cb5-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Estimate"</span>)</span>
+<span id="cb5-6"><a aria-hidden="true" href="#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a aria-hidden="true" href="#cb5-7" tabindex="-1"></a><span class="fu">ggplot</span>(results_df_long, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> Estimate, <span class="at">color =</span> Coefficient)) <span class="sc">+</span></span>
+<span id="cb5-8"><a aria-hidden="true" href="#cb5-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb5-9"><a aria-hidden="true" href="#cb5-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-10"><a aria-hidden="true" href="#cb5-10" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb5-11"><a aria-hidden="true" href="#cb5-11" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb5-12"><a aria-hidden="true" href="#cb5-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"OLS Estimates vs. Sample Size"</span>,</span>
+<span id="cb5-13"><a aria-hidden="true" href="#cb5-13" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sample Size (n) - Log Scale"</span>,</span>
+<span id="cb5-14"><a aria-hidden="true" href="#cb5-14" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Estimate"</span>) <span class="sc">+</span></span>
+<span id="cb5-15"><a aria-hidden="true" href="#cb5-15" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-1-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> The <code>tidyverse</code> library is loaded for data manipulation and visualization.</li>
+<li><strong>Set Seed:</strong> <code>set.seed(123)</code> ensures that the results are reproducible.</li>
+<li><strong><code>run_simulation</code> Function:</strong> This function simulates data from the linear model <span class="math inline">\(y_i = 1 + 2x_i + \varepsilon_i\)</span>, where <span class="math inline">\(x_i \sim N(2,1)\)</span> and <span class="math inline">\(\varepsilon_i \sim N(0,1)\)</span>. It takes the sample size <code>n</code> as input. The true parameters are <span class="math inline">\(\beta_0 = 1\)</span> and <span class="math inline">\(\beta_1 = 2\)</span>. The function calculates the OLS estimator <span class="math inline">\(\hat{\beta}\)</span> using the formula <span class="math inline">\(\hat{\beta} = (X^T X)^{-1} X^T y\)</span>.</li>
+<li><strong>Simulations:</strong> The <code>run_simulation</code> function is called for various sample sizes (<code>sample_sizes</code>).</li>
+<li><strong>Data Frame:</strong> The results are stored in a data frame <code>results_df</code>.</li>
+<li><strong>Print results:</strong> The resulting estimates are printed.</li>
+<li><strong>Plotting:</strong> The <code>ggplot2</code> library (part of <code>tidyverse</code>) is used to create a plot showing how the OLS estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> change as the sample size increases. The x-axis is on a log scale to better visualize the convergence. The dashed horizontal lines represent the true values of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>.</li>
+</ol>
+<p><strong>Connection to the Text:</strong> This script illustrates <strong>Theorem 22.1</strong>, which states that the OLS estimator is consistent (<span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>). As the sample size (<code>n</code>) increases, the estimates <span class="math inline">\(\hat{\beta_0}\)</span> and <span class="math inline">\(\hat{\beta_1}\)</span> get closer and closer to the true values (1 and 2, respectively), demonstrating convergence in probability.</p>
+</section>
+<section class="level3" id="r-script-2-illustration-of-asymptotic-normality-theorem-22.2">
+<h3 class="anchored" data-anchor-id="r-script-2-illustration-of-asymptotic-normality-theorem-22.2">R Script 2: Illustration of Asymptotic Normality (Theorem 22.2)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" href="#cb6-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb6-2"><a aria-hidden="true" href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a aria-hidden="true" href="#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a aria-hidden="true" href="#cb6-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb6-5"><a aria-hidden="true" href="#cb6-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb6-6"><a aria-hidden="true" href="#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a aria-hidden="true" href="#cb6-7" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
+<span id="cb6-8"><a aria-hidden="true" href="#cb6-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">1000</span>        <span class="co"># Sample size</span></span>
+<span id="cb6-9"><a aria-hidden="true" href="#cb6-9" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span> <span class="co"># Number of simulations</span></span>
+<span id="cb6-10"><a aria-hidden="true" href="#cb6-10" tabindex="-1"></a>beta_true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)      <span class="co"># True beta</span></span>
+<span id="cb6-11"><a aria-hidden="true" href="#cb6-11" tabindex="-1"></a></span>
+<span id="cb6-12"><a aria-hidden="true" href="#cb6-12" tabindex="-1"></a><span class="co"># Function to generate data and calculate scaled difference</span></span>
+<span id="cb6-13"><a aria-hidden="true" href="#cb6-13" tabindex="-1"></a>run_simulation_normality <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb6-14"><a aria-hidden="true" href="#cb6-14" tabindex="-1"></a>  <span class="co"># Generate i.i.d. data</span></span>
+<span id="cb6-15"><a aria-hidden="true" href="#cb6-15" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">2</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb6-16"><a aria-hidden="true" href="#cb6-16" tabindex="-1"></a>  epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb6-17"><a aria-hidden="true" href="#cb6-17" tabindex="-1"></a>  y <span class="ot">&lt;-</span> beta_true[<span class="dv">1</span>] <span class="sc">+</span> beta_true[<span class="dv">2</span>] <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb6-18"><a aria-hidden="true" href="#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a aria-hidden="true" href="#cb6-19" tabindex="-1"></a>  <span class="co"># Calculate OLS estimator</span></span>
+<span id="cb6-20"><a aria-hidden="true" href="#cb6-20" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x)</span>
+<span id="cb6-21"><a aria-hidden="true" href="#cb6-21" tabindex="-1"></a>  beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb6-22"><a aria-hidden="true" href="#cb6-22" tabindex="-1"></a></span>
+<span id="cb6-23"><a aria-hidden="true" href="#cb6-23" tabindex="-1"></a>  <span class="co"># Calculate M</span></span>
+<span id="cb6-24"><a aria-hidden="true" href="#cb6-24" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fu">mean</span>(x), <span class="fu">mean</span>(x), <span class="fu">mean</span>(x<span class="sc">^</span><span class="dv">2</span>)), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb6-25"><a aria-hidden="true" href="#cb6-25" tabindex="-1"></a></span>
+<span id="cb6-26"><a aria-hidden="true" href="#cb6-26" tabindex="-1"></a>  <span class="co"># Calculate Omega (homoskedastic case)</span></span>
+<span id="cb6-27"><a aria-hidden="true" href="#cb6-27" tabindex="-1"></a>  sigma2_hat <span class="ot">&lt;-</span> <span class="fu">sum</span>((y <span class="sc">-</span> X <span class="sc">%*%</span> beta_hat)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (n <span class="sc">-</span> <span class="dv">2</span>)</span>
+<span id="cb6-28"><a aria-hidden="true" href="#cb6-28" tabindex="-1"></a>  Omega <span class="ot">&lt;-</span> sigma2_hat <span class="sc">*</span> M</span>
+<span id="cb6-29"><a aria-hidden="true" href="#cb6-29" tabindex="-1"></a></span>
+<span id="cb6-30"><a aria-hidden="true" href="#cb6-30" tabindex="-1"></a>  <span class="co"># Calculate scaled difference</span></span>
+<span id="cb6-31"><a aria-hidden="true" href="#cb6-31" tabindex="-1"></a>  scaled_diff <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n) <span class="sc">*</span> (beta_hat <span class="sc">-</span> beta_true)</span>
+<span id="cb6-32"><a aria-hidden="true" href="#cb6-32" tabindex="-1"></a></span>
+<span id="cb6-33"><a aria-hidden="true" href="#cb6-33" tabindex="-1"></a>  <span class="fu">return</span>(scaled_diff)</span>
+<span id="cb6-34"><a aria-hidden="true" href="#cb6-34" tabindex="-1"></a>}</span>
+<span id="cb6-35"><a aria-hidden="true" href="#cb6-35" tabindex="-1"></a></span>
+<span id="cb6-36"><a aria-hidden="true" href="#cb6-36" tabindex="-1"></a><span class="co"># Run simulations</span></span>
+<span id="cb6-37"><a aria-hidden="true" href="#cb6-37" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(num_simulations, <span class="fu">run_simulation_normality</span>())</span>
+<span id="cb6-38"><a aria-hidden="true" href="#cb6-38" tabindex="-1"></a></span>
+<span id="cb6-39"><a aria-hidden="true" href="#cb6-39" tabindex="-1"></a><span class="co"># Convert results to a data frame</span></span>
+<span id="cb6-40"><a aria-hidden="true" href="#cb6-40" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb6-41"><a aria-hidden="true" href="#cb6-41" tabindex="-1"></a>  <span class="at">beta_0_scaled =</span> results[<span class="dv">1</span>, , ],</span>
+<span id="cb6-42"><a aria-hidden="true" href="#cb6-42" tabindex="-1"></a>  <span class="at">beta_1_scaled =</span> results[<span class="dv">2</span>, , ]</span>
+<span id="cb6-43"><a aria-hidden="true" href="#cb6-43" tabindex="-1"></a>)</span>
+<span id="cb6-44"><a aria-hidden="true" href="#cb6-44" tabindex="-1"></a></span>
+<span id="cb6-45"><a aria-hidden="true" href="#cb6-45" tabindex="-1"></a><span class="co"># Plot the distributions</span></span>
+<span id="cb6-46"><a aria-hidden="true" href="#cb6-46" tabindex="-1"></a>results_df_long <span class="ot">&lt;-</span> results_df <span class="sc">%&gt;%</span></span>
+<span id="cb6-47"><a aria-hidden="true" href="#cb6-47" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb6-48"><a aria-hidden="true" href="#cb6-48" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb6-49"><a aria-hidden="true" href="#cb6-49" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Scaled_Difference"</span>)</span>
+<span id="cb6-50"><a aria-hidden="true" href="#cb6-50" tabindex="-1"></a></span>
+<span id="cb6-51"><a aria-hidden="true" href="#cb6-51" tabindex="-1"></a><span class="co"># Find the standard deviations</span></span>
+<span id="cb6-52"><a aria-hidden="true" href="#cb6-52" tabindex="-1"></a>sd <span class="ot">&lt;-</span> results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb6-53"><a aria-hidden="true" href="#cb6-53" tabindex="-1"></a>  <span class="fu">group_by</span>(Coefficient) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-54"><a aria-hidden="true" href="#cb6-54" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(Scaled_Difference)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-55"><a aria-hidden="true" href="#cb6-55" tabindex="-1"></a>  <span class="fu">pull</span>(sd)</span>
+<span id="cb6-56"><a aria-hidden="true" href="#cb6-56" tabindex="-1"></a></span>
+<span id="cb6-57"><a aria-hidden="true" href="#cb6-57" tabindex="-1"></a><span class="co"># Plot 1</span></span>
+<span id="cb6-58"><a aria-hidden="true" href="#cb6-58" tabindex="-1"></a>results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb6-59"><a aria-hidden="true" href="#cb6-59" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Coefficient, <span class="st">"0"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-60"><a aria-hidden="true" href="#cb6-60" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Scaled_Difference)) <span class="sc">+</span></span>
+<span id="cb6-61"><a aria-hidden="true" href="#cb6-61" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-62"><a aria-hidden="true" href="#cb6-62" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sd[<span class="dv">1</span>]),</span>
+<span id="cb6-63"><a aria-hidden="true" href="#cb6-63" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-64"><a aria-hidden="true" href="#cb6-64" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Coefficient, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb6-65"><a aria-hidden="true" href="#cb6-65" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Scaled Difference (sqrt(n)*(beta_hat - beta))"</span>,</span>
+<span id="cb6-66"><a aria-hidden="true" href="#cb6-66" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Scaled Difference"</span>,</span>
+<span id="cb6-67"><a aria-hidden="true" href="#cb6-67" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb6-68"><a aria-hidden="true" href="#cb6-68" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Plot 2</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a>results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Coefficient, <span class="st">"1"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a aria-hidden="true" href="#cb7-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Scaled_Difference)) <span class="sc">+</span></span>
+<span id="cb7-5"><a aria-hidden="true" href="#cb7-5" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a aria-hidden="true" href="#cb7-6" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sd[<span class="dv">2</span>]),</span>
+<span id="cb7-7"><a aria-hidden="true" href="#cb7-7" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a aria-hidden="true" href="#cb7-8" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Coefficient, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a aria-hidden="true" href="#cb7-9" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Scaled Difference (sqrt(n)*(beta_hat - beta))"</span>,</span>
+<span id="cb7-10"><a aria-hidden="true" href="#cb7-10" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Scaled Difference"</span>,</span>
+<span id="cb7-11"><a aria-hidden="true" href="#cb7-11" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a aria-hidden="true" href="#cb7-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-2-2.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> The <code>tidyverse</code> library is loaded.</li>
+<li><strong>Set Seed:</strong> <code>set.seed(456)</code> ensures reproducibility.</li>
+<li><strong>Simulation Parameters:</strong> The sample size (<code>n</code>), the number of simulations (<code>num_simulations</code>), and the true parameter vector (<code>beta_true</code>) are defined.</li>
+<li><strong><code>run_simulation_normality</code> Function:</strong> This function generates data, calculates the OLS estimator <span class="math inline">\(\hat{\beta}\)</span>, and then calculates the <em>scaled difference</em> <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span>. It also estimates <span class="math inline">\(M\)</span> and <span class="math inline">\(\Omega\)</span> (assuming homoskedasticity).</li>
+<li><strong>Simulations:</strong> The <code>replicate</code> function runs the <code>run_simulation_normality</code> function many times.</li>
+<li><strong>Data Frame:</strong> The results (the scaled differences) are stored in a data frame.</li>
+<li><strong>Plotting:</strong> Histograms of the scaled differences for <span class="math inline">\(\hat{\beta}_0\)</span> and <span class="math inline">\(\hat{\beta}_1\)</span> are created. A standard normal density curve (red line) is overlaid on each histogram to show how closely the distributions of the scaled differences resemble a normal distribution. <code>facet_wrap</code> creates separate plots for each coefficient.</li>
+</ol>
+<p><strong>Connection to the Text:</strong> This script illustrates <strong>Theorem 22.2</strong>, which states that <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span> converges in distribution to a normal distribution. The histograms show that the distributions of the scaled differences are approximately normal, even for a moderate sample size (n=1000).</p>
+</section>
+<section class="level3" id="r-script-3-heteroskedasticity-and-robust-standard-errors">
+<h3 class="anchored" data-anchor-id="r-script-3-heteroskedasticity-and-robust-standard-errors">R Script 3: Heteroskedasticity and Robust Standard Errors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" href="#cb8-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb8-2"><a aria-hidden="true" href="#cb8-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb8-3"><a aria-hidden="true" href="#cb8-3" tabindex="-1"></a><span class="fu">library</span>(sandwich) <span class="co"># For robust standard errors</span></span>
+<span id="cb8-4"><a aria-hidden="true" href="#cb8-4" tabindex="-1"></a><span class="fu">library</span>(lmtest)   <span class="co"># For coeftest</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: zoo</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'zoo'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" href="#cb12-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb12-2"><a aria-hidden="true" href="#cb12-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>)</span>
+<span id="cb12-3"><a aria-hidden="true" href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a aria-hidden="true" href="#cb12-4" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
+<span id="cb12-5"><a aria-hidden="true" href="#cb12-5" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">200</span></span>
+<span id="cb12-6"><a aria-hidden="true" href="#cb12-6" tabindex="-1"></a>beta_true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb12-7"><a aria-hidden="true" href="#cb12-7" tabindex="-1"></a></span>
+<span id="cb12-8"><a aria-hidden="true" href="#cb12-8" tabindex="-1"></a><span class="co"># Generate data with heteroskedasticity</span></span>
+<span id="cb12-9"><a aria-hidden="true" href="#cb12-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">1</span>, <span class="at">max =</span> <span class="dv">5</span>)</span>
+<span id="cb12-10"><a aria-hidden="true" href="#cb12-10" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> x) <span class="co"># Heteroskedastic errors: sd depends on x</span></span>
+<span id="cb12-11"><a aria-hidden="true" href="#cb12-11" tabindex="-1"></a>y <span class="ot">&lt;-</span> beta_true[<span class="dv">1</span>] <span class="sc">+</span> beta_true[<span class="dv">2</span>] <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb12-12"><a aria-hidden="true" href="#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a aria-hidden="true" href="#cb12-13" tabindex="-1"></a><span class="co"># Fit OLS model</span></span>
+<span id="cb12-14"><a aria-hidden="true" href="#cb12-14" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb12-15"><a aria-hidden="true" href="#cb12-15" tabindex="-1"></a></span>
+<span id="cb12-16"><a aria-hidden="true" href="#cb12-16" tabindex="-1"></a><span class="co"># Calculate usual standard errors</span></span>
+<span id="cb12-17"><a aria-hidden="true" href="#cb12-17" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-10.003  -1.505   0.287   1.925  12.512 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   1.0214     0.6534   1.563     0.12    
+x             1.8903     0.2079   9.091   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.266 on 198 degrees of freedom
+Multiple R-squared:  0.2945,    Adjusted R-squared:  0.2909 
+F-statistic: 82.64 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" href="#cb14-1" tabindex="-1"></a><span class="co"># Calculate heteroskedasticity-robust standard errors (White's standard errors)</span></span>
+<span id="cb14-2"><a aria-hidden="true" href="#cb14-2" tabindex="-1"></a>vcov_robust <span class="ot">&lt;-</span> <span class="fu">vcovHC</span>(model, <span class="at">type =</span> <span class="st">"HC1"</span>) <span class="co"># HC1 is a common choice</span></span>
+<span id="cb14-3"><a aria-hidden="true" href="#cb14-3" tabindex="-1"></a><span class="fu">coeftest</span>(model, <span class="at">vcov. =</span> vcov_robust)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+t test of coefficients:
+
+            Estimate Std. Error t value  Pr(&gt;|t|)    
+(Intercept)  1.02140    0.54616  1.8702   0.06294 .  
+x            1.89026    0.22883  8.2604 2.048e-14 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" href="#cb16-1" tabindex="-1"></a><span class="co"># Create a plot showing the heteroskedasticity</span></span>
+<span id="cb16-2"><a aria-hidden="true" href="#cb16-2" tabindex="-1"></a>data_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">residuals =</span> <span class="fu">residuals</span>(model))</span>
+<span id="cb16-3"><a aria-hidden="true" href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a aria-hidden="true" href="#cb16-4" tabindex="-1"></a><span class="fu">ggplot</span>(data_df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> residuals)) <span class="sc">+</span></span>
+<span id="cb16-5"><a aria-hidden="true" href="#cb16-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb16-6"><a aria-hidden="true" href="#cb16-6" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a aria-hidden="true" href="#cb16-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Residuals vs. x (Illustrating Heteroskedasticity)"</span>,</span>
+<span id="cb16-8"><a aria-hidden="true" href="#cb16-8" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"x"</span>,</span>
+<span id="cb16-9"><a aria-hidden="true" href="#cb16-9" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Residuals"</span>) <span class="sc">+</span></span>
+<span id="cb16-10"><a aria-hidden="true" href="#cb16-10" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-3-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> <code>tidyverse</code>, <code>sandwich</code>, and <code>lmtest</code> are loaded. <code>sandwich</code> provides functions for robust covariance matrix estimation, and <code>lmtest</code> provides functions for hypothesis testing using these robust estimates.</li>
+<li><strong>Set Seed:</strong> <code>set.seed(789)</code> ensures reproducibility.</li>
+<li><strong>Simulation Parameters:</strong> <code>n</code> and <code>beta_true</code> are defined.</li>
+<li><strong>Generate Data:</strong> Data is generated with <strong>heteroskedasticity</strong>: the standard deviation of the error term <code>epsilon</code> depends on the value of <code>x</code>. This violates the homoskedasticity assumption.</li>
+<li><strong>Fit OLS Model:</strong> <code>lm(y ~ x)</code> fits the linear regression model.</li>
+<li><strong>Usual Standard Errors:</strong> <code>summary(model)</code> provides the usual OLS output, including standard errors that assume homoskedasticity.</li>
+<li><strong>Robust Standard Errors:</strong> <code>vcovHC(model, type = "HC1")</code> calculates White’s heteroskedasticity-consistent covariance matrix. <code>coeftest(model, vcov. = vcov_robust)</code> displays the coefficient estimates along with the robust standard errors.</li>
+<li><strong>Plot:</strong> A scatterplot of the residuals against <code>x</code> is created to visualize the heteroskedasticity. The spread of the residuals increases with <code>x</code>, indicating that the variance of the error term is not constant.</li>
+</ol>
+<p><strong>Connection to the Text:</strong> This script demonstrates the issue of <strong>heteroskedasticity</strong> and how to use <strong>robust standard errors</strong> to address it. The text discusses how the usual standard errors are inconsistent under heteroskedasticity, leading to incorrect inference. The script shows how to calculate White’s robust standard errors, which provide consistent estimates of the standard errors even when heteroskedasticity is present, as suggested by Theorem 22.5 and equations (22.2) and (22.3).</p>
+</section>
+<section class="level3" id="r-script-4-non-iid-case---dummy-variable-with-fixed-number-of-observations">
+<h3 class="anchored" data-anchor-id="r-script-4-non-iid-case---dummy-variable-with-fixed-number-of-observations">R Script 4: Non-IID Case - Dummy Variable with Fixed Number of Observations</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" href="#cb17-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb17-2"><a aria-hidden="true" href="#cb17-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb17-3"><a aria-hidden="true" href="#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a aria-hidden="true" href="#cb17-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb17-5"><a aria-hidden="true" href="#cb17-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101112</span>)</span>
+<span id="cb17-6"><a aria-hidden="true" href="#cb17-6" tabindex="-1"></a></span>
+<span id="cb17-7"><a aria-hidden="true" href="#cb17-7" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
+<span id="cb17-8"><a aria-hidden="true" href="#cb17-8" tabindex="-1"></a>n_total <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># Total sample size</span></span>
+<span id="cb17-9"><a aria-hidden="true" href="#cb17-9" tabindex="-1"></a>n_group1 <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># Fixed size of group 1 (dummy variable = 1)</span></span>
+<span id="cb17-10"><a aria-hidden="true" href="#cb17-10" tabindex="-1"></a>beta_true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>)</span>
+<span id="cb17-11"><a aria-hidden="true" href="#cb17-11" tabindex="-1"></a></span>
+<span id="cb17-12"><a aria-hidden="true" href="#cb17-12" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb17-13"><a aria-hidden="true" href="#cb17-13" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, n_group1), <span class="fu">rep</span>(<span class="dv">0</span>, n_total <span class="sc">-</span> n_group1)) <span class="co"># Dummy variable</span></span>
+<span id="cb17-14"><a aria-hidden="true" href="#cb17-14" tabindex="-1"></a>epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_total, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb17-15"><a aria-hidden="true" href="#cb17-15" tabindex="-1"></a>y <span class="ot">&lt;-</span> beta_true[<span class="dv">1</span>] <span class="sc">+</span> beta_true[<span class="dv">2</span>] <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb17-16"><a aria-hidden="true" href="#cb17-16" tabindex="-1"></a></span>
+<span id="cb17-17"><a aria-hidden="true" href="#cb17-17" tabindex="-1"></a><span class="co"># Create a sequence of increasing sample sizes, keeping n_group1 fixed</span></span>
+<span id="cb17-18"><a aria-hidden="true" href="#cb17-18" tabindex="-1"></a>sample_sizes <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">50</span>, n_total, <span class="at">by =</span> <span class="dv">50</span>)</span>
+<span id="cb17-19"><a aria-hidden="true" href="#cb17-19" tabindex="-1"></a></span>
+<span id="cb17-20"><a aria-hidden="true" href="#cb17-20" tabindex="-1"></a><span class="co"># Function to run simulation for a given total sample size</span></span>
+<span id="cb17-21"><a aria-hidden="true" href="#cb17-21" tabindex="-1"></a>run_dummy_simulation <span class="ot">&lt;-</span> <span class="cf">function</span>(n_total) {</span>
+<span id="cb17-22"><a aria-hidden="true" href="#cb17-22" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, n_group1), <span class="fu">rep</span>(<span class="dv">0</span>, n_total <span class="sc">-</span> n_group1))</span>
+<span id="cb17-23"><a aria-hidden="true" href="#cb17-23" tabindex="-1"></a>  epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n_total, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb17-24"><a aria-hidden="true" href="#cb17-24" tabindex="-1"></a>  y <span class="ot">&lt;-</span> beta_true[<span class="dv">1</span>] <span class="sc">+</span> beta_true[<span class="dv">2</span>] <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb17-25"><a aria-hidden="true" href="#cb17-25" tabindex="-1"></a>  X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="dv">1</span>, x)</span>
+<span id="cb17-26"><a aria-hidden="true" href="#cb17-26" tabindex="-1"></a>  beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb17-27"><a aria-hidden="true" href="#cb17-27" tabindex="-1"></a>  <span class="fu">return</span>(beta_hat)</span>
+<span id="cb17-28"><a aria-hidden="true" href="#cb17-28" tabindex="-1"></a>}</span>
+<span id="cb17-29"><a aria-hidden="true" href="#cb17-29" tabindex="-1"></a></span>
+<span id="cb17-30"><a aria-hidden="true" href="#cb17-30" tabindex="-1"></a><span class="co"># Run simulations for different total sample sizes</span></span>
+<span id="cb17-31"><a aria-hidden="true" href="#cb17-31" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">lapply</span>(sample_sizes, run_dummy_simulation)</span>
+<span id="cb17-32"><a aria-hidden="true" href="#cb17-32" tabindex="-1"></a></span>
+<span id="cb17-33"><a aria-hidden="true" href="#cb17-33" tabindex="-1"></a><span class="co"># Convert results to a dataframe</span></span>
+<span id="cb17-34"><a aria-hidden="true" href="#cb17-34" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb17-35"><a aria-hidden="true" href="#cb17-35" tabindex="-1"></a>  <span class="at">n_total =</span> sample_sizes,</span>
+<span id="cb17-36"><a aria-hidden="true" href="#cb17-36" tabindex="-1"></a>  <span class="at">beta_0_hat =</span> <span class="fu">sapply</span>(results, <span class="cf">function</span>(x) x[<span class="dv">1</span>]),</span>
+<span id="cb17-37"><a aria-hidden="true" href="#cb17-37" tabindex="-1"></a>  <span class="at">beta_1_hat =</span> <span class="fu">sapply</span>(results, <span class="cf">function</span>(x) x[<span class="dv">2</span>])</span>
+<span id="cb17-38"><a aria-hidden="true" href="#cb17-38" tabindex="-1"></a>)</span>
+<span id="cb17-39"><a aria-hidden="true" href="#cb17-39" tabindex="-1"></a></span>
+<span id="cb17-40"><a aria-hidden="true" href="#cb17-40" tabindex="-1"></a><span class="co"># Print results</span></span>
+<span id="cb17-41"><a aria-hidden="true" href="#cb17-41" tabindex="-1"></a><span class="fu">print</span>(results_df)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   n_total beta_0_hat beta_1_hat
+1       50  0.8499523   3.079081
+2      100  0.9987144   3.102146
+3      150  0.9555374   3.551848
+4      200  0.9345526   3.403887
+5      250  0.9677228   3.460532
+6      300  1.0198353   3.161775
+7      350  1.0231876   3.139851
+8      400  0.9620140   3.474453
+9      450  0.9695749   3.209462
+10     500  0.9712435   3.641636
+11     550  1.0383135   3.618084
+12     600  1.0249506   3.379474
+13     650  0.9827814   2.916996
+14     700  1.0979926   2.868049
+15     750  0.9586777   3.084809
+16     800  1.0458507   2.441791
+17     850  0.9990818   3.494196
+18     900  0.9706746   2.549287
+19     950  1.0672488   3.148554
+20    1000  1.0090117   3.315724</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" href="#cb19-1" tabindex="-1"></a><span class="co"># Plot the results</span></span>
+<span id="cb19-2"><a aria-hidden="true" href="#cb19-2" tabindex="-1"></a>results_df_long <span class="ot">&lt;-</span> results_df <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a aria-hidden="true" href="#cb19-3" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(beta_0_hat, beta_1_hat),</span>
+<span id="cb19-4"><a aria-hidden="true" href="#cb19-4" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb19-5"><a aria-hidden="true" href="#cb19-5" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Estimate"</span>)</span>
+<span id="cb19-6"><a aria-hidden="true" href="#cb19-6" tabindex="-1"></a></span>
+<span id="cb19-7"><a aria-hidden="true" href="#cb19-7" tabindex="-1"></a><span class="fu">ggplot</span>(results_df_long, <span class="fu">aes</span>(<span class="at">x =</span> n_total, <span class="at">y =</span> Estimate, <span class="at">color =</span> Coefficient)) <span class="sc">+</span></span>
+<span id="cb19-8"><a aria-hidden="true" href="#cb19-8" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb19-9"><a aria-hidden="true" href="#cb19-9" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb19-10"><a aria-hidden="true" href="#cb19-10" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(beta_true[<span class="dv">1</span>], beta_true[<span class="dv">2</span>]), <span class="at">linetype =</span> <span class="st">"dashed"</span>,</span>
+<span id="cb19-11"><a aria-hidden="true" href="#cb19-11" tabindex="-1"></a>             <span class="at">color =</span> <span class="fu">c</span>(<span class="st">"red"</span>,<span class="st">"blue"</span>)) <span class="sc">+</span></span>
+<span id="cb19-12"><a aria-hidden="true" href="#cb19-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"OLS Estimates with Fixed Dummy Group Size"</span>,</span>
+<span id="cb19-13"><a aria-hidden="true" href="#cb19-13" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Total Sample Size (n_total)"</span>,</span>
+<span id="cb19-14"><a aria-hidden="true" href="#cb19-14" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Estimate"</span>) <span class="sc">+</span></span>
+<span id="cb19-15"><a aria-hidden="true" href="#cb19-15" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-4-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> <code>tidyverse</code> is loaded.</li>
+<li><strong>Set Seed:</strong> <code>set.seed(101112)</code> for reproducibility.</li>
+<li><strong>Simulation Parameters:</strong> <code>n_total</code> (total sample size) and <code>n_group1</code> (fixed size of the group where the dummy variable is 1) are defined, along with <code>beta_true</code>.</li>
+<li><strong>Generate Data:</strong> A dummy variable <code>x</code> is created. <code>n_group1</code> observations have <code>x = 1</code>, and the rest have <code>x = 0</code>. The error term is i.i.d. normal.</li>
+<li><strong>Increasing Sample Sizes:</strong> A sequence of increasing <em>total</em> sample sizes (<code>sample_sizes</code>) is created.</li>
+<li><strong><code>run_dummy_simulation</code> Function:</strong> This function simulates data with a fixed number of observations in group 1 (<code>n_group1</code>) and a varying total number of observations, then estimates and returns the betas.</li>
+<li><strong>Simulations:</strong> The <code>run_dummy_simulation</code> function is called for each total sample size in <code>sample_sizes</code>.</li>
+<li><strong>Data Frame and Print:</strong> The results are stored in a dataframe and printed.</li>
+<li><strong>Plotting:</strong> The plot shows how the OLS estimates of <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span> change as the <em>total</em> sample size increases, while the number of observations with <code>x = 1</code> remains fixed.</li>
+</ol>
+<p><strong>Connection to the Text:</strong> This script illustrates the scenario described in <strong>Example 22.2</strong>, where a dummy variable has a fixed number of observations in one group. As discussed in the text, the OLS estimator for the coefficient of the dummy variable (<span class="math inline">\(\beta_1\)</span> in this case) is <em>inconsistent</em> because the information about that coefficient does not grow as the total sample size increases. You should observe in the plot and the results table that <span class="math inline">\(\hat{\beta_0}\)</span> converges to <span class="math inline">\(\beta_0\)</span> but <span class="math inline">\(\hat{\beta_1}\)</span> <em>does not</em> converge to <span class="math inline">\(\beta_1\)</span>.</p>
+</section>
+<section class="level3" id="r-script-5-illustration-of-lindeberg-clt-theorem-22.7">
+<h3 class="anchored" data-anchor-id="r-script-5-illustration-of-lindeberg-clt-theorem-22.7">R Script 5: Illustration of Lindeberg CLT (Theorem 22.7)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" href="#cb20-1" tabindex="-1"></a><span class="co"># Load necessary library</span></span>
+<span id="cb20-2"><a aria-hidden="true" href="#cb20-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb20-3"><a aria-hidden="true" href="#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a aria-hidden="true" href="#cb20-4" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb20-5"><a aria-hidden="true" href="#cb20-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb20-6"><a aria-hidden="true" href="#cb20-6" tabindex="-1"></a></span>
+<span id="cb20-7"><a aria-hidden="true" href="#cb20-7" tabindex="-1"></a><span class="co"># Simulation parameters</span></span>
+<span id="cb20-8"><a aria-hidden="true" href="#cb20-8" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb20-9"><a aria-hidden="true" href="#cb20-9" tabindex="-1"></a>num_simulations <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb20-10"><a aria-hidden="true" href="#cb20-10" tabindex="-1"></a>beta_true <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="sc">-</span><span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb20-11"><a aria-hidden="true" href="#cb20-11" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="fu">length</span>(beta_true)</span>
+<span id="cb20-12"><a aria-hidden="true" href="#cb20-12" tabindex="-1"></a></span>
+<span id="cb20-13"><a aria-hidden="true" href="#cb20-13" tabindex="-1"></a><span class="co"># Function for the simulation</span></span>
+<span id="cb20-14"><a aria-hidden="true" href="#cb20-14" tabindex="-1"></a>lindeberg_sim <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb20-15"><a aria-hidden="true" href="#cb20-15" tabindex="-1"></a></span>
+<span id="cb20-16"><a aria-hidden="true" href="#cb20-16" tabindex="-1"></a>    <span class="co"># Generate non-iid data.  x will be a triangular array.</span></span>
+<span id="cb20-17"><a aria-hidden="true" href="#cb20-17" tabindex="-1"></a>    x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-18"><a aria-hidden="true" href="#cb20-18" tabindex="-1"></a>    x2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n <span class="co"># Linear Trend</span></span>
+<span id="cb20-19"><a aria-hidden="true" href="#cb20-19" tabindex="-1"></a>    x3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">:</span>n)) <span class="co"># Increasing variance</span></span>
+<span id="cb20-20"><a aria-hidden="true" href="#cb20-20" tabindex="-1"></a>    X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x1, x2, x3)</span>
+<span id="cb20-21"><a aria-hidden="true" href="#cb20-21" tabindex="-1"></a>    </span>
+<span id="cb20-22"><a aria-hidden="true" href="#cb20-22" tabindex="-1"></a>    <span class="co"># Heteroskedastic errors</span></span>
+<span id="cb20-23"><a aria-hidden="true" href="#cb20-23" tabindex="-1"></a>    sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fl">0.5</span> <span class="sc">+</span> <span class="fl">0.1</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fl">0.01</span> <span class="sc">*</span> x3<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb20-24"><a aria-hidden="true" href="#cb20-24" tabindex="-1"></a>    epsilon <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, sigma)</span>
+<span id="cb20-25"><a aria-hidden="true" href="#cb20-25" tabindex="-1"></a>    </span>
+<span id="cb20-26"><a aria-hidden="true" href="#cb20-26" tabindex="-1"></a>    y <span class="ot">&lt;-</span> X <span class="sc">%*%</span> beta_true <span class="sc">+</span> epsilon</span>
+<span id="cb20-27"><a aria-hidden="true" href="#cb20-27" tabindex="-1"></a></span>
+<span id="cb20-28"><a aria-hidden="true" href="#cb20-28" tabindex="-1"></a>    <span class="co"># Calculate OLS estimator</span></span>
+<span id="cb20-29"><a aria-hidden="true" href="#cb20-29" tabindex="-1"></a>    beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> y</span>
+<span id="cb20-30"><a aria-hidden="true" href="#cb20-30" tabindex="-1"></a></span>
+<span id="cb20-31"><a aria-hidden="true" href="#cb20-31" tabindex="-1"></a>    <span class="co"># Calculate Delta</span></span>
+<span id="cb20-32"><a aria-hidden="true" href="#cb20-32" tabindex="-1"></a>    Delta <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">sqrt</span>(<span class="fu">sum</span>(x1<span class="sc">^</span><span class="dv">2</span>)), <span class="fu">sqrt</span>(<span class="fu">sum</span>(x2<span class="sc">^</span><span class="dv">2</span>)), <span class="fu">sqrt</span>(<span class="fu">sum</span>(x3<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb20-33"><a aria-hidden="true" href="#cb20-33" tabindex="-1"></a></span>
+<span id="cb20-34"><a aria-hidden="true" href="#cb20-34" tabindex="-1"></a>    <span class="co"># Calculate scaled difference</span></span>
+<span id="cb20-35"><a aria-hidden="true" href="#cb20-35" tabindex="-1"></a>    scaled_diff <span class="ot">&lt;-</span> Delta <span class="sc">%*%</span> (beta_hat <span class="sc">-</span> beta_true)</span>
+<span id="cb20-36"><a aria-hidden="true" href="#cb20-36" tabindex="-1"></a></span>
+<span id="cb20-37"><a aria-hidden="true" href="#cb20-37" tabindex="-1"></a>    <span class="fu">return</span>(scaled_diff)</span>
+<span id="cb20-38"><a aria-hidden="true" href="#cb20-38" tabindex="-1"></a>}</span>
+<span id="cb20-39"><a aria-hidden="true" href="#cb20-39" tabindex="-1"></a></span>
+<span id="cb20-40"><a aria-hidden="true" href="#cb20-40" tabindex="-1"></a><span class="co"># Run the simulations</span></span>
+<span id="cb20-41"><a aria-hidden="true" href="#cb20-41" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">replicate</span>(num_simulations, <span class="fu">lindeberg_sim</span>(), <span class="at">simplify =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-42"><a aria-hidden="true" href="#cb20-42" tabindex="-1"></a></span>
+<span id="cb20-43"><a aria-hidden="true" href="#cb20-43" tabindex="-1"></a><span class="co"># Transform the results in a data frame</span></span>
+<span id="cb20-44"><a aria-hidden="true" href="#cb20-44" tabindex="-1"></a>results_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">t</span>(results))</span>
+<span id="cb20-45"><a aria-hidden="true" href="#cb20-45" tabindex="-1"></a><span class="fu">names</span>(results_df) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"beta_"</span>, <span class="dv">0</span><span class="sc">:</span>(K<span class="dv">-1</span>), <span class="st">"_scaled"</span>)</span>
+<span id="cb20-46"><a aria-hidden="true" href="#cb20-46" tabindex="-1"></a></span>
+<span id="cb20-47"><a aria-hidden="true" href="#cb20-47" tabindex="-1"></a><span class="co"># Calculate theoretical asymptotic variance (for comparison)</span></span>
+<span id="cb20-48"><a aria-hidden="true" href="#cb20-48" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
+<span id="cb20-49"><a aria-hidden="true" href="#cb20-49" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>n <span class="co"># Linear Trend</span></span>
+<span id="cb20-50"><a aria-hidden="true" href="#cb20-50" tabindex="-1"></a>x3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="fu">sqrt</span>(<span class="dv">1</span><span class="sc">:</span>n))</span>
+<span id="cb20-51"><a aria-hidden="true" href="#cb20-51" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>(x1, x2, x3)</span>
+<span id="cb20-52"><a aria-hidden="true" href="#cb20-52" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fl">0.5</span> <span class="sc">+</span> <span class="fl">0.1</span> <span class="sc">*</span> x2 <span class="sc">+</span> <span class="fl">0.01</span> <span class="sc">*</span> x3<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb20-53"><a aria-hidden="true" href="#cb20-53" tabindex="-1"></a>Delta <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">c</span>(<span class="fu">sqrt</span>(<span class="fu">sum</span>(x1<span class="sc">^</span><span class="dv">2</span>)), <span class="fu">sqrt</span>(<span class="fu">sum</span>(x2<span class="sc">^</span><span class="dv">2</span>)), <span class="fu">sqrt</span>(<span class="fu">sum</span>(x3<span class="sc">^</span><span class="dv">2</span>))))</span>
+<span id="cb20-54"><a aria-hidden="true" href="#cb20-54" tabindex="-1"></a>M <span class="ot">&lt;-</span> <span class="fu">solve</span>(Delta) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(Delta)</span>
+<span id="cb20-55"><a aria-hidden="true" href="#cb20-55" tabindex="-1"></a>Psi <span class="ot">&lt;-</span> <span class="fu">solve</span>(Delta) <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> <span class="fu">diag</span>(sigma<span class="sc">^</span><span class="dv">2</span>) <span class="sc">%*%</span> X <span class="sc">%*%</span> <span class="fu">solve</span>(Delta)</span>
+<span id="cb20-56"><a aria-hidden="true" href="#cb20-56" tabindex="-1"></a>asymptotic_variance <span class="ot">&lt;-</span> <span class="fu">solve</span>(M) <span class="sc">%*%</span> Psi <span class="sc">%*%</span> <span class="fu">solve</span>(M)</span>
+<span id="cb20-57"><a aria-hidden="true" href="#cb20-57" tabindex="-1"></a></span>
+<span id="cb20-58"><a aria-hidden="true" href="#cb20-58" tabindex="-1"></a><span class="co"># Plotting</span></span>
+<span id="cb20-59"><a aria-hidden="true" href="#cb20-59" tabindex="-1"></a>results_df_long <span class="ot">&lt;-</span> results_df <span class="sc">%&gt;%</span></span>
+<span id="cb20-60"><a aria-hidden="true" href="#cb20-60" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">everything</span>(),</span>
+<span id="cb20-61"><a aria-hidden="true" href="#cb20-61" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Coefficient"</span>,</span>
+<span id="cb20-62"><a aria-hidden="true" href="#cb20-62" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Scaled_Difference"</span>)</span>
+<span id="cb20-63"><a aria-hidden="true" href="#cb20-63" tabindex="-1"></a></span>
+<span id="cb20-64"><a aria-hidden="true" href="#cb20-64" tabindex="-1"></a><span class="co"># Find the standard deviations</span></span>
+<span id="cb20-65"><a aria-hidden="true" href="#cb20-65" tabindex="-1"></a>sd <span class="ot">&lt;-</span> results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb20-66"><a aria-hidden="true" href="#cb20-66" tabindex="-1"></a>  <span class="fu">group_by</span>(Coefficient) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-67"><a aria-hidden="true" href="#cb20-67" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sd =</span> <span class="fu">sd</span>(Scaled_Difference)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-68"><a aria-hidden="true" href="#cb20-68" tabindex="-1"></a>  <span class="fu">pull</span>(sd)</span>
+<span id="cb20-69"><a aria-hidden="true" href="#cb20-69" tabindex="-1"></a></span>
+<span id="cb20-70"><a aria-hidden="true" href="#cb20-70" tabindex="-1"></a><span class="co"># Generate the plots</span></span>
+<span id="cb20-71"><a aria-hidden="true" href="#cb20-71" tabindex="-1"></a>results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb20-72"><a aria-hidden="true" href="#cb20-72" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Coefficient, <span class="st">"0"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb20-73"><a aria-hidden="true" href="#cb20-73" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Scaled_Difference)) <span class="sc">+</span></span>
+<span id="cb20-74"><a aria-hidden="true" href="#cb20-74" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb20-75"><a aria-hidden="true" href="#cb20-75" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>,</span>
+<span id="cb20-76"><a aria-hidden="true" href="#cb20-76" tabindex="-1"></a>                                         <span class="at">sd =</span> sd[<span class="dv">1</span>]</span>
+<span id="cb20-77"><a aria-hidden="true" href="#cb20-77" tabindex="-1"></a>                                         ),</span>
+<span id="cb20-78"><a aria-hidden="true" href="#cb20-78" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb20-79"><a aria-hidden="true" href="#cb20-79" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Coefficient, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb20-80"><a aria-hidden="true" href="#cb20-80" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Scaled Difference (Delta*(beta_hat - beta))"</span>,</span>
+<span id="cb20-81"><a aria-hidden="true" href="#cb20-81" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Scaled Difference"</span>,</span>
+<span id="cb20-82"><a aria-hidden="true" href="#cb20-82" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb20-83"><a aria-hidden="true" href="#cb20-83" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" href="#cb21-1" tabindex="-1"></a>results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a aria-hidden="true" href="#cb21-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Coefficient, <span class="st">"1"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a aria-hidden="true" href="#cb21-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Scaled_Difference)) <span class="sc">+</span></span>
+<span id="cb21-4"><a aria-hidden="true" href="#cb21-4" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a aria-hidden="true" href="#cb21-5" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>,</span>
+<span id="cb21-6"><a aria-hidden="true" href="#cb21-6" tabindex="-1"></a>                                         <span class="at">sd =</span> sd[<span class="dv">2</span>]</span>
+<span id="cb21-7"><a aria-hidden="true" href="#cb21-7" tabindex="-1"></a>                                         ),</span>
+<span id="cb21-8"><a aria-hidden="true" href="#cb21-8" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb21-9"><a aria-hidden="true" href="#cb21-9" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Coefficient, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb21-10"><a aria-hidden="true" href="#cb21-10" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Scaled Difference (Delta*(beta_hat - beta))"</span>,</span>
+<span id="cb21-11"><a aria-hidden="true" href="#cb21-11" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Scaled Difference"</span>,</span>
+<span id="cb21-12"><a aria-hidden="true" href="#cb21-12" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb21-13"><a aria-hidden="true" href="#cb21-13" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-5-2.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" href="#cb22-1" tabindex="-1"></a>results_df_long <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a aria-hidden="true" href="#cb22-2" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(Coefficient, <span class="st">"2"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a aria-hidden="true" href="#cb22-3" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Scaled_Difference)) <span class="sc">+</span></span>
+<span id="cb22-4"><a aria-hidden="true" href="#cb22-4" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">50</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a aria-hidden="true" href="#cb22-5" tabindex="-1"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>,</span>
+<span id="cb22-6"><a aria-hidden="true" href="#cb22-6" tabindex="-1"></a>                                         <span class="at">sd =</span> sd[<span class="dv">3</span>]</span>
+<span id="cb22-7"><a aria-hidden="true" href="#cb22-7" tabindex="-1"></a>                                         ),</span>
+<span id="cb22-8"><a aria-hidden="true" href="#cb22-8" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a aria-hidden="true" href="#cb22-9" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>Coefficient, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb22-10"><a aria-hidden="true" href="#cb22-10" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Scaled Difference (Delta*(beta_hat - beta))"</span>,</span>
+<span id="cb22-11"><a aria-hidden="true" href="#cb22-11" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Scaled Difference"</span>,</span>
+<span id="cb22-12"><a aria-hidden="true" href="#cb22-12" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"Density"</span>) <span class="sc">+</span></span>
+<span id="cb22-13"><a aria-hidden="true" href="#cb22-13" tabindex="-1"></a>     <span class="fu">theme_bw</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap22_files/figure-html/unnamed-chunk-5-3.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> The <code>tidyverse</code> package is loaded.</li>
+<li><strong>Set Seed:</strong> <code>set.seed(2024)</code> ensures reproducibility.</li>
+<li><strong>Simulation Parameters:</strong> <code>n</code>, <code>num_simulations</code>, <code>beta_true</code>, and <code>K</code> are defined.</li>
+<li><strong><code>lindeberg_sim</code> Function:</strong> This function simulates data that violates the i.i.d. assumption.
+<ul>
+<li><code>x1</code>: Uniformly distributed.</li>
+<li><code>x2</code>: A linear trend (1, 2, 3, …, n). This creates a triangular array because each value depends on its index within the sequence.</li>
+<li><code>x3</code>: Normally distributed with increasing variance.</li>
+<li><code>epsilon</code>: The errors are heteroskedastic, with variance depending on <code>x2</code> and <code>x3</code>.</li>
+<li>The function computes <span class="math inline">\(\hat\beta\)</span> and then <span class="math inline">\(\Delta(\hat\beta-\beta)\)</span></li>
+</ul></li>
+<li><strong>Simulations:</strong> The function is called multiple times.</li>
+<li><strong>Theoretical Asymptotic Variance:</strong> The theoretical asymptotic variance (<span class="math inline">\(M^{-1}\Psi M^{-1}\)</span>) is calculated using the true data-generating process, for comparison.</li>
+<li><strong>Plotting:</strong> Histograms of the scaled differences (<span class="math inline">\(\Delta(\hat{\beta} - \beta)\)</span>) are plotted, with normal density curves overlaid. The <code>facet_wrap</code> function creates separate plots for each coefficient.</li>
+</ol>
+<p><strong>Connection to the Text:</strong> This script illustrates <strong>Theorem 22.7</strong>, which deals with the asymptotic distribution of the OLS estimator in the <em>non-i.i.d.</em> case. The data are generated to satisfy Assumptions R1-R3, allowing the application of the Lindeberg CLT. Even though the regressors and errors are not i.i.d., the scaled differences <span class="math inline">\(\Delta(\hat{\beta} - \beta)\)</span> are approximately normally distributed in large samples, as the histograms demonstrate. The scaling matrix <span class="math inline">\(\Delta\)</span> is crucial for achieving this normality, as different regressors have different rates of growth.</p>
+</section>
+</section>
+<section class="level2" id="youtube-videos">
+<h2 class="anchored" data-anchor-id="youtube-videos">YouTube Videos</h2>
+<p>Here are some YouTube videos that explain concepts related to Chapter 22, “Asymptotic Properties of OLS Estimator and Test Statistics.” I have verified that all links are currently working (as of October 26, 2023).</p>
+<section class="level3" id="consistency-of-ols">
+<h3 class="anchored" data-anchor-id="consistency-of-ols">1. Consistency of OLS</h3>
+<ul>
+<li><strong>Video Title:</strong> Consistency of OLS</li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=tG0nkHFy-Ik">https://www.youtube.com/watch?v=tG0nkHFy-Ik</a></li>
+<li><strong>Relation to Text:</strong> This video directly addresses the concept of <strong>consistency</strong> of the OLS estimator, which is the main topic of <strong>Theorem 22.1</strong> (<span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>). The video explains what it means for an estimator to be consistent, and it provides a visual and intuitive explanation of why OLS is consistent under the standard assumptions. It covers similar ground to the proof of Theorem 22.1, although perhaps less formally.</li>
+</ul>
+</section>
+<section class="level3" id="asymptotic-normality-of-ols">
+<h3 class="anchored" data-anchor-id="asymptotic-normality-of-ols">2. Asymptotic Normality of OLS</h3>
+<ul>
+<li><strong>Video Title:</strong> Asymptotic Normality of OLS</li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=DAbE7l-j-9A">https://www.youtube.com/watch?v=DAbE7l-j-9A</a></li>
+<li><strong>Relation to Text:</strong> This video covers the <strong>asymptotic normality</strong> of the OLS estimator, which is precisely the statement of <strong>Theorem 22.2</strong> (<span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta) \overset{d}{\to} N(0, M^{-1}\Omega M^{-1})\)</span>). The video explains how the central limit theorem is used to derive the asymptotic distribution of the OLS estimator and discusses the implications for inference (hypothesis testing and confidence intervals). It provides the intuition behind the theorem, although without a full formal proof. It focuses on the i.i.d. case.</li>
+</ul>
+</section>
+<section class="level3" id="heteroskedasticity-and-robust-standard-errors">
+<h3 class="anchored" data-anchor-id="heteroskedasticity-and-robust-standard-errors">3. Heteroskedasticity and Robust Standard Errors</h3>
+<ul>
+<li><p><strong>Video Title:</strong> (1 of 4) Heteroskedasticity</p></li>
+<li><p><strong>Channel:</strong> jbstatistics</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=V2Z8qa5J2bk">https://www.youtube.com/watch?v=V2Z8qa5J2bk</a></p></li>
+<li><p><strong>Relation to Text:</strong> This is part 1 of a four-part series. It introduces <strong>heteroskedasticity</strong>, explaining what it is and why it’s a problem. This relates to the discussion in the text before and after Theorem 22.3, and the motivation for <strong>Theorem 22.5</strong>. The text mentions that if homoskedasticity fails, the usual t-statistic does not have a standard normal distribution. This video explains that visually.</p></li>
+<li><p><strong>Video Title:</strong> (4 of 4) Heteroskedasticity: Estimation using the White standard errors</p></li>
+<li><p><strong>Channel:</strong> jbstatistics</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=9ujhcWwMlxw">https://www.youtube.com/watch?v=9ujhcWwMlxw</a></p></li>
+<li><p><strong>Relation to Text:</strong> This video discusses <strong>White’s standard errors</strong> (also called heteroskedasticity-consistent or robust standard errors), which provide valid inference even when heteroskedasticity is present. This directly corresponds to the content surrounding <strong>Theorem 22.5</strong>, and equations (22.2) and (22.3) where <span class="math inline">\(t_R\)</span> and <span class="math inline">\(W_R\)</span> (robust test statistics) are defined. The video explains the concept of robust standard errors and shows how they are calculated.</p></li>
+</ul>
+</section>
+<section class="level3" id="law-of-large-numbers-and-central-limit-theorem">
+<h3 class="anchored" data-anchor-id="law-of-large-numbers-and-central-limit-theorem">4. Law of Large Numbers and Central Limit Theorem</h3>
+<ul>
+<li><p><strong>Video Title:</strong> (Weak) Law of Large Numbers</p></li>
+<li><p><strong>Channel:</strong> jbstatistics</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=MntX3zWNWec">https://www.youtube.com/watch?v=MntX3zWNWec</a></p></li>
+<li><p><strong>Relation to Text:</strong> This video explains the <strong>Weak Law of Large Numbers</strong>, which is crucial for understanding the consistency of the OLS estimator (Theorem 22.1). The proofs in the text rely on the WLLN.</p></li>
+<li><p><strong>Video Title:</strong> Central Limit Theorem</p></li>
+<li><p><strong>Channel:</strong> jbstatistics</p></li>
+<li><p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=YAlJCEDH2uY">https://www.youtube.com/watch?v=YAlJCEDH2uY</a></p></li>
+<li><p><strong>Relation to Text:</strong> This video presents the <strong>Central Limit Theorem (CLT)</strong>, another fundamental concept underlying the asymptotic normality of the OLS estimator (Theorem 22.2). The proofs and discussions in the text heavily rely on the CLT.</p></li>
+</ul>
+</section>
+<section class="level3" id="slutskys-theorem">
+<h3 class="anchored" data-anchor-id="slutskys-theorem">5. Slutsky’s Theorem</h3>
+<ul>
+<li><strong>Video Title:</strong> Slutsky’s Theorem</li>
+<li><strong>Channel:</strong> Modus Ponens</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=tMHEf0c7B8k">https://www.youtube.com/watch?v=tMHEf0c7B8k</a></li>
+<li><strong>Relation to Text:</strong> This video explains <strong>Slutsky’s Theorem</strong>, which is used extensively in the proofs and derivations throughout the chapter, particularly in Theorems 22.1, 22.2, and 22.4. The video provides the statement of the theorem and illustrates its use with examples.</li>
+</ul>
+</section>
+<section class="level3" id="lindeberg-central-limit-theorem-advanced">
+<h3 class="anchored" data-anchor-id="lindeberg-central-limit-theorem-advanced">6. Lindeberg Central Limit Theorem (Advanced)</h3>
+<ul>
+<li><strong>Video Title:</strong> Lindeberg-Feller Central Limit Theorem</li>
+<li><strong>Channel:</strong> Murtaza Ali</li>
+<li><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=SYLD2uJk_ts">https://www.youtube.com/watch?v=SYLD2uJk_ts</a></li>
+<li><strong>Relation to Text:</strong> This video discusses the <strong>Lindeberg-Feller Central Limit Theorem</strong>, which is a more general version of the CLT that applies to independent but <em>not</em> identically distributed random variables. This is directly relevant to <strong>Theorem 22.7</strong>, which deals with the non-i.i.d. case. The proof of Theorem 22.7 invokes the Lindeberg CLT. This is a more advanced topic.</li>
+</ul>
+<p>These videos provide a good complement to the textbook chapter, offering visual explanations and examples to solidify understanding of the key concepts. They range in difficulty, with the Lindeberg CLT video being the most mathematically advanced.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch22mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch22mcsolution1">MC Solution 1</a></p>
+<p>Under the i.i.d. assumption, the matrix <span class="math inline">\(M = E[x_i x_i^T]\)</span> represents:</p>
+<ol type="a">
+<li>The variance-covariance matrix of the error terms.</li>
+<li>The expected outer product of the regressor vector with itself.</li>
+<li>The inverse of the variance-covariance matrix of the OLS estimator.</li>
+<li>The expected value of the dependent variable.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch22mcsolution2">MC Solution 2</a></p>
+<p>The condition <span class="math inline">\(E[\varepsilon_i^2 | x_i] = \sigma^2\)</span> is known as:</p>
+<ol type="a">
+<li>Linearity</li>
+<li>Homoskedasticity</li>
+<li>Normality</li>
+<li>Exogeneity</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch22mcsolution3">MC Solution 3</a></p>
+<p>The unconditional moment condition <span class="math inline">\(E[x_i \varepsilon_i] = 0\)</span> implies:</p>
+<ol type="a">
+<li>The OLS estimator is unbiased.</li>
+<li>The regressors and the error term are uncorrelated.</li>
+<li>The error term has a mean of zero.</li>
+<li>The OLS estimator is BLUE.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch22mcsolution4">MC Solution 4</a></p>
+<p>Which of the following conditional moment conditions ensures the unbiasedness of the OLS estimator?</p>
+<ol type="a">
+<li><span class="math inline">\(E[\varepsilon_i] = 0\)</span></li>
+<li><span class="math inline">\(E[x_i] = 0\)</span></li>
+<li><span class="math inline">\(E[\varepsilon_i | x_i] = 0\)</span></li>
+<li><span class="math inline">\(E[x_i \varepsilon_i] = 0\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch22mcsolution5">MC Solution 5</a></p>
+<p>Theorem 22.1 (<span class="math inline">\(\hat{\beta} \overset{p}{\to} \beta\)</span>) states that the OLS estimator is:</p>
+<ol type="a">
+<li>Unbiased</li>
+<li>Consistent</li>
+<li>Normally distributed</li>
+<li>Efficient</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch22mcsolution6">MC Solution 6</a></p>
+<p>In the proof of Theorem 22.1, Slutsky’s theorem is used to:</p>
+<ol type="a">
+<li>Show that the sample mean converges to the population mean.</li>
+<li>Combine the convergence results of two separate terms.</li>
+<li>Prove the Central Limit Theorem.</li>
+<li>Demonstrate the unbiasedness of the OLS estimator.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch22mcsolution7">MC Solution 7</a></p>
+<p>Theorem 22.2 states that in large samples, the distribution of <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span> is approximately:</p>
+<ol type="a">
+<li>Uniform</li>
+<li>Chi-squared</li>
+<li>Normal</li>
+<li>t-distributed</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch22mcsolution8">MC Solution 8</a></p>
+<p>Under homoskedasticity, the asymptotic variance of <span class="math inline">\(\sqrt{n}(\hat{\beta} - \beta)\)</span> simplifies to:</p>
+<ol type="a">
+<li><span class="math inline">\(M^{-1} \Omega M^{-1}\)</span></li>
+<li><span class="math inline">\(\sigma^2 M^{-1}\)</span></li>
+<li><span class="math inline">\(\sigma^2 \Omega^{-1}\)</span></li>
+<li><span class="math inline">\(M^{-1}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch22mcsolution9">MC Solution 9</a></p>
+<p>Theorem 22.3 (<span class="math inline">\(s_*^2 \overset{p}{\to} \sigma^2\)</span>) is important for:</p>
+<ol type="a">
+<li>Proving the consistency of the OLS estimator.</li>
+<li>Constructing confidence intervals and hypothesis tests.</li>
+<li>Demonstrating the unbiasedness of the OLS estimator.</li>
+<li>Deriving the asymptotic distribution of the OLS estimator.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch22mcsolution10">MC Solution 10</a>(#sec-ch22mcsolution10}</p>
+<p>If the homoskedasticity assumption is violated, the usual t-statistic:</p>
+<ol type="a">
+<li>Still converges to a standard normal distribution.</li>
+<li>Converges to a t-distribution with n-K degrees of freedom.</li>
+<li>Does not converge to a standard normal distribution.</li>
+<li>Converges to a chi-squared distribution.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch22mcsolution11">MC Solution 11</a></p>
+<p>Robust test statistics (<span class="math inline">\(t_R\)</span> and <span class="math inline">\(W_R\)</span>) are used to:</p>
+<ol type="a">
+<li>Obtain valid inference under heteroskedasticity.</li>
+<li>Improve the efficiency of the OLS estimator.</li>
+<li>Ensure the unbiasedness of the OLS estimator.</li>
+<li>Simplify the calculation of standard errors.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch22mcsolution12">MC Solution 12</a></p>
+<p>The moment conditions in Theorem 22.5, such as <span class="math inline">\(E|x_{ij}x_{ik}x_{il}x_{ir}| &lt; \infty\)</span>, are necessary to: (a) Ensure OLS estimator is unbiased. (b) Ensure the consistency of the heteroskedasticity-robust variance estimator. (c) Ensure that regressors are non-stochastic. (d) Ensure that OLS estimator is BLUE.</p>
+</section>
+<section class="level3" id="sec-ch22mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch22mcsolution13">MC Solution 13</a></p>
+<p>The non-i.i.d. case considered in section 22.2 allows for:</p>
+<ol type="a">
+<li>Only independent and identically distributed observations.</li>
+<li>Observations that are not necessarily independent or identically distributed.</li>
+<li>Only normally distributed error terms.</li>
+<li>Only homoskedastic error terms.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch22mcsolution14">MC Solution 14</a></p>
+<p>In Theorem 22.6, the condition <span class="math inline">\(\lambda_{max}(X^T\Sigma X)\lambda_{min}^{-2}(X^TX) \to 0\)</span> ensures:</p>
+<ol type="a">
+<li>Unbiasedness of the OLS estimator.</li>
+<li>Consistency of the OLS estimator in the non-i.i.d. case.</li>
+<li>Normality of the error terms.</li>
+<li>Homoskedasticity of the error terms.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch22mcsolution15">MC Solution 15</a></p>
+<p>In Example 22.2, the OLS estimator of the dummy variable coefficient is inconsistent when the number of observations in the set <span class="math inline">\(I\)</span> is fixed because:</p>
+<ol type="a">
+<li>The error terms are heteroskedastic.</li>
+<li>The regressors are stochastic.</li>
+<li>Information about that coefficient does not grow with sample size.</li>
+<li>The model is misspecified.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch22mcsolution16">MC Solution 16</a></p>
+<p>Assumption R2 in Theorem 22.7 includes the condition <span class="math inline">\(\frac{\max_{1 \leq i \leq n} x_{ij}^2}{\sum_{i=1}^n x_{ij}^2} \to 0\)</span>. This condition is known as:</p>
+<ol type="a">
+<li>The homoskedasticity condition</li>
+<li>The Lyapunov condition</li>
+<li>The no single observation dominates condition</li>
+<li>The full rank condition.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch22mcsolution17">MC Solution 17</a></p>
+<p>The Lindeberg CLT is used in the proof of Theorem 22.7 because:</p>
+<ol type="a">
+<li>The error terms are normally distributed.</li>
+<li>The regressors are i.i.d.</li>
+<li>The random variables being summed are independent but not necessarily identically distributed.</li>
+<li>The OLS estimator is unbiased.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch22mcsolution18">MC Solution 18</a></p>
+<p>In Example 22.6, the scaling matrix <span class="math inline">\(\Delta\)</span> is used because:</p>
+<ol type="a">
+<li>The regressors are heteroskedastic.</li>
+<li>The regressors grow at different rates.</li>
+<li>The error terms are not normally distributed.</li>
+<li>The OLS estimator is biased.</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch22mcsolution19">MC Solution 19</a></p>
+<p>Assumptions R4 and R5 in Theorem 22.8 are needed to ensure:</p>
+<ol type="a">
+<li>The OLS estimator is unbiased</li>
+<li>The consistency of the robust variance estimator in the non-i.i.d. case.</li>
+<li>The normality of error terms.</li>
+<li>The homoscedasticity of error terms</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch22mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch22mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch22mcsolution20">MC Solution 20</a></p>
+<p>In Example 22.10, the t-statistic is driven only by the first component when the matrix <span class="math inline">\(R\Delta^{-1}\)</span> is asymptotically singular. This means that: (a) All regressors contribute equally. (b) The fastest-growing regressors dominate. (c) The slowest-growing regressor dominates. (d) The error terms are homoscedastic.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-solutions">
+<h2 class="anchored" data-anchor-id="multiple-choice-solutions">Multiple Choice Solutions</h2>
+<section class="level3" id="sec-ch22mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch22mcexercise1">MC Exercise 1</a></p>
+<p><strong>(b) The expected outer product of the regressor vector with itself.</strong></p>
+<p>As explained in the text, <span class="math inline">\(x_i\)</span> is a <span class="math inline">\(K \times 1\)</span> vector, so <span class="math inline">\(x_i x_i^T\)</span> is a <span class="math inline">\(K \times K\)</span> matrix containing the squares and cross-products of the regressors. <span class="math inline">\(M\)</span> is the expected value of this matrix.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch22mcexercise2">MC Exercise 2</a></p>
+<p><strong>(b) Homoskedasticity</strong></p>
+<p>This is the definition of homoskedasticity: the variance of the error term is constant and does not depend on the regressors.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch22mcexercise3">MC Exercise 3</a></p>
+<p><strong>(b) The regressors and the error term are uncorrelated.</strong></p>
+<p>This is the definition of zero correlation. While <span class="math inline">\(E[\varepsilon_i] = 0\)</span> is often assumed, it’s not <em>implied</em> by <span class="math inline">\(E[x_i \varepsilon_i] = 0\)</span>. Unbiasedness and the BLUE property require stronger assumptions.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch22mcexercise4">MC Exercise 4</a></p>
+<p><strong>(c) <span class="math inline">\(E[\varepsilon_i | x_i] = 0\)</span></strong></p>
+<p>This is the conditional moment condition that, along with the other standard assumptions, guarantees the unbiasedness of the OLS estimator, as shown in the text.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch22mcexercise5">MC Exercise 5</a></p>
+<p><strong>(b) Consistent</strong></p>
+<p>Consistency means that the estimator converges in probability to the true parameter value as the sample size increases.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch22mcexercise6">MC Exercise 6</a></p>
+<p><strong>(b) Combine the convergence results of two separate terms.</strong></p>
+<p>Slutsky’s theorem allows us to combine the convergence in probability of <span class="math inline">\((X^TX/n)^{-1}\)</span> to <span class="math inline">\(M^{-1}\)</span> and the convergence in probability of <span class="math inline">\(X^T\varepsilon/n\)</span> to 0.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch22mcexercise7">MC Exercise 7</a></p>
+<p><strong>(c) Normal</strong></p>
+<p>This is the statement of the asymptotic normality of the OLS estimator.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch22mcexercise8">MC Exercise 8</a></p>
+<p><strong>(b) <span class="math inline">\(\sigma^2 M^{-1}\)</span></strong></p>
+<p>Under homoskedasticity, <span class="math inline">\(\Omega = \sigma^2 M\)</span>, which simplifies the general expression for the asymptotic variance.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch22mcexercise9">MC Exercise 9</a></p>
+<p><strong>(b) Constructing confidence intervals and hypothesis tests.</strong></p>
+<p><span class="math inline">\(s_*^2\)</span> is used to estimate the variance of the error term, which is needed to calculate standard errors and construct test statistics.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch22mcexercise10">MC Exercise 10</a></p>
+<p><strong>(c) Does not converge to a standard normal distribution.</strong></p>
+<p>The violation of homoskedasticity invalidates the usual standard errors and, consequently, the usual t-statistic.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch22mcexercise11">MC Exercise 11</a></p>
+<p><strong>(a) Obtain valid inference under heteroskedasticity.</strong></p>
+<p>Robust standard errors provide consistent estimates of the variance-covariance matrix of the OLS estimator, even when heteroskedasticity is present.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch22mcexercise12">MC Exercise 12</a></p>
+<p><strong>(b) Ensure the consistency of the heteroskedasticity-robust variance estimator.</strong> These are moment conditions. They ensure that sample averages converge to population quantities.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch22mcexercise13">MC Exercise 13</a></p>
+<p><strong>(b) Observations that are not necessarily independent or identically distributed.</strong></p>
+<p>The non-i.i.d. case allows for situations like heteroskedasticity, autocorrelation, and deterministic trends in the regressors.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch22mcexercise14">MC Exercise 14</a></p>
+<p><strong>(b) Consistency of the OLS estimator in the non-i.i.d. case.</strong></p>
+<p>This condition ensures that the variance in the error terms doesn’t grow too fast relative to the information in the data, which is necessary for consistency.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch22mcexercise15">MC Exercise 15</a></p>
+<p><strong>(c) Information about that coefficient does not grow with sample size.</strong></p>
+<p>With a fixed number of observations for the dummy variable, increasing the overall sample size doesn’t provide more information about the effect of that specific dummy variable.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch22mcexercise16">MC Exercise 16</a></p>
+<p><strong>(c) The no single observation dominates condition</strong> This condition prevents any single observation from having too large an influence on the OLS estimator as the sample gets larger.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch22mcexercise17">MC Exercise 17</a></p>
+<p><strong>(c) The random variables being summed are independent but not necessarily identically distributed.</strong></p>
+<p>The standard CLT requires i.i.d. random variables. The Lindeberg CLT generalizes this to independent but not necessarily identically distributed variables, which is needed for the non-i.i.d. case.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch22mcexercise18">MC Exercise 18</a></p>
+<p><strong>(b) The regressors grow at different rates.</strong></p>
+<p>The scaling matrix ensures that all regressors, after scaling, contribute to the asymptotic distribution.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch22mcexercise19">MC Exercise 19</a></p>
+<p><strong>(b) The consistency of the robust variance estimator in the non-i.i.d. case.</strong> These assumptions ensure the sample averages of cross-products converge to their population counterparts, which is needed for consistency.</p>
+</section>
+<section class="level3" id="sec-ch22mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch22mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch22mcexercise20">MC Exercise 20</a></p>
+<p><strong>(c) The slowest-growing regressor dominates.</strong> When the matrix is asymptotically singular, it means restrictions across variables with different trend rates are effectively dominated by slowest trend rate.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

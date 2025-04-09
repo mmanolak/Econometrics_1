@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 5: The Expectation – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap06.html" rel="next"/>
+<link href="../chapters/chap04.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 5: The Expectation</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="definition-and-properties">
+<h2 class="anchored" data-anchor-id="definition-and-properties">5.1 DEFINITION AND PROPERTIES</h2>
+<p>The <strong>expectation</strong> of a random variable is a measure of its average value or “central tendency.”</p>
+<p>If the random variable <span class="math inline">\(X\)</span> has <strong>bounded support</strong>, meaning that there exists a constant <span class="math inline">\(M\)</span> such that <span class="math inline">\(\left| X \right| \leq M\)</span>, then the expectation always exists and is finite.</p>
+<p>Suppose that the probability measure <span class="math inline">\(P_X\)</span> of the random variable <span class="math inline">\(X\)</span> is absolutely continuous with respect to a measure <span class="math inline">\(\mu\)</span>, then the expectation is in general defined through the Lebesgue integral</p>
+<p><span class="math display">\[
+E(X) = \int x dF_X(x). \tag{5.1}
+\]</span></p>
+<p>This is also often denoted by <span class="math inline">\(\int X(s) dP(s)\)</span>. We will focus on the two leading cases where we can give simpler, more explicit definitions.</p>
+<p>In the <strong>continuous case</strong> we have</p>
+<p><span class="math display">\[
+E(X) = \int x f_X(x) dx, \tag{5.2}
+\]</span></p>
+<p>where <span class="math inline">\(f_X\)</span> is the probability density function (p.d.f.).</p>
+<p>In the <strong>discrete case</strong> we have</p>
+<p><span class="math display">\[
+E(X) = \sum_x x f_X(x), \tag{5.3}
+\]</span></p>
+<p>where <span class="math inline">\(f_X\)</span> is the probability mass function (p.m.f.). We sometimes write <span class="math inline">\(EX\)</span> to denote the expectation, for example.</p>
+<p>If the support of the random variable is <strong>unbounded</strong>, one must take limits of a sequence of cases with bounded supports, and one may find that the limit is not necessarily finite and may not even be well-defined.</p>
+<section class="level3" id="definition-5.1">
+<h3 class="anchored" data-anchor-id="definition-5.1">Definition 5.1</h3>
+<ul>
+<li>If <span class="math inline">\(\int_{-\infty}^{\infty} \left| x \right| f_X(x) dx &lt; \infty\)</span>, then we say that the expectation of <span class="math inline">\(X\)</span> <strong>exists</strong>, and is denoted by <span class="math inline">\(E(X)\)</span>.</li>
+<li>If <span class="math inline">\(\int_{0}^{\infty} x f_X(x) dx = \infty\)</span> and <span class="math inline">\(\int_{-\infty}^{0} x f_X(x) dx &gt; - \infty\)</span>, then we say that the expectation exists but <span class="math inline">\(E(X) = \infty\)</span>.</li>
+<li>If <span class="math inline">\(\int_{0}^{\infty} x f_X(x) dx &lt; \infty\)</span> and <span class="math inline">\(\int_{-\infty}^{0} x f_X(x) dx = - \infty\)</span>, then we say that the expectation exists but <span class="math inline">\(E(X) = - \infty\)</span>.</li>
+<li>If <span class="math inline">\(\int_{0}^{\infty} x f_X(x) dx = \infty\)</span> and <span class="math inline">\(\int_{-\infty}^{0} x f_X(x) dx = - \infty\)</span>, then <span class="math inline">\(E(X)\)</span> is not defined, i.e., it does not exist.</li>
+</ul>
+<p>When the expectation exists, we define it as</p>
+<p><span class="math display">\[
+E(X) = \int_{- \infty}^{\infty} x f_X(x) dx,
+\]</span></p>
+<p>noting that it can be plus or minus infinity. If <span class="math inline">\(X\)</span> is discrete, we replace integrals by sums in the above.</p>
+<p>For a general random variable <span class="math inline">\(X \in \mathbb{R}\)</span> we can decompose it into its positive and negative parts</p>
+<p><span class="math display">\[
+X = X_{+} - X_{-},
+\]</span></p>
+<p>where <span class="math inline">\(X_{+} = \max \{ X, 0 \} \geq 0\)</span> is called the <strong>positive part</strong> and <span class="math inline">\(X_{-} = \max \{ -X, 0 \} \geq 0\)</span> is called the <strong>negative part</strong>. We then say that the expectation of <span class="math inline">\(X\)</span> exists if the expectation of <span class="math inline">\(X_{+}\)</span> and <span class="math inline">\(X_{-}\)</span> are both finite or if only one or the other but not both is infinite.</p>
+</section>
+<section class="level3" id="example-5.1.-uniform-distribution">
+<h3 class="anchored" data-anchor-id="example-5.1.-uniform-distribution">Example 5.1. Uniform distribution</h3>
+<p><span class="math inline">\(X \sim U[0, a]\)</span> i.e.,</p>
+<p><span class="math display">\[
+f_X(x) = \begin{cases}
+\dfrac{1}{a} &amp; \text{if } 0 \leq x \leq a \\
+0 &amp; \text{else}.
+\end{cases}
+\]</span></p>
+<p>This has</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= \int_{0}^{a} x f_X(x) dx \\
+&amp;= \int_{0}^{a} x \dfrac{1}{a} dx \\
+&amp;= \dfrac{1}{a} \int_{0}^{a} x dx \\
+&amp;= \dfrac{1}{a} \left[ \dfrac{x^2}{2} \right]_0^a \\
+&amp;= \dfrac{a}{2}.
+\end{aligned}
+\]</span></p>
+<p><strong>Intuition:</strong> The uniform distribution assigns equal probability to all values within the interval <span class="math inline">\([0, a]\)</span>. Intuitively, the average value should be the midpoint of this interval, which is <span class="math inline">\(\dfrac{a}{2}\)</span>.</p>
+</section>
+<section class="level3" id="example-5.2.-normal-or-gaussian-distribution">
+<h3 class="anchored" data-anchor-id="example-5.2.-normal-or-gaussian-distribution">Example 5.2. Normal or Gaussian distribution</h3>
+<p>Suppose that</p>
+<p><span class="math display">\[
+f_X(x) = \dfrac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \dfrac{1}{2} \left( \dfrac{x - \mu}{\sigma} \right)^2 \right)
+\]</span></p>
+<p>we say that <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>. This has</p>
+<p><span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx = \mu.
+\]</span></p>
+<p>For the special case <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma^2 = 1\)</span> we have</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X) &amp;= \dfrac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\infty} x \exp \left( - \dfrac{1}{2} x^2 \right) dx \\
+&amp;= \dfrac{1}{\sqrt{2 \pi}} \int_{-\infty}^{0} x \exp \left( - \dfrac{1}{2} x^2 \right) dx + \dfrac{1}{\sqrt{2 \pi}} \int_{0}^{\infty} x \exp \left( - \dfrac{1}{2} x^2 \right) dx \\
+&amp;= - \dfrac{1}{\sqrt{2 \pi}} \int_{0}^{\infty} x \exp \left( - \dfrac{1}{2} x^2 \right) dx + \dfrac{1}{\sqrt{2 \pi}} \int_{0}^{\infty} x \exp \left( - \dfrac{1}{2} x^2 \right) dx \\
+&amp;= 0,
+\end{aligned}
+\]</span></p>
+<p>by symmetry; or use a change of variables <span class="math inline">\(u = \dfrac{x^2}{2}\)</span>.</p>
+<p><strong>Intuition:</strong> The normal distribution is symmetric around its mean <span class="math inline">\(\mu\)</span>. The probability of observing a value above the mean is the same as the probability of observing a value the same distance below the mean. Thus, the contributions of values above and below the mean to the expectation cancel each other out, and the expectation is equal to the mean <span class="math inline">\(\mu\)</span>.</p>
+</section>
+<section class="level3" id="example-5.3.-cauchy-distribution">
+<h3 class="anchored" data-anchor-id="example-5.3.-cauchy-distribution">Example 5.3. Cauchy distribution</h3>
+<p>Suppose that for all <span class="math inline">\(x\)</span></p>
+<p><span class="math display">\[
+f_X(x) = \dfrac{1}{\pi (1 + x^2)}.
+\]</span></p>
+<p>This density is symmetric about zero, and so <span class="math inline">\(\int_{-a}^{a} x f_X(x) dx = 0\)</span> for all <span class="math inline">\(a\)</span>. One is tempted to say that <span class="math inline">\(E(X) = \lim_{a \to \infty} \int_{-a}^{a} x f_X(x) dx = 0\)</span>, but</p>
+<p><span class="math display">\[
+\int_{0}^{\infty} x f_X(x) dx = \infty \quad \text{and} \quad \int_{-\infty}^{0} x f_X(x) dx = - \infty,
+\]</span></p>
+<p>so <span class="math inline">\(E(X) = \lim_{b \to \infty, a \to \infty} \int_{-a}^{b} x f_X(x) dx\)</span> is not well defined. However, <span class="math inline">\(E \left| X \right| = \infty\)</span> (it does exist but is equal to infinity; we just say for simplicity the expectation does not exist). The median is zero, because the distribution is symmetric about zero.</p>
+<p><strong>Intuition:</strong> The Cauchy distribution has heavy tails, meaning that there is a relatively high probability of observing extreme values. In this case, the tails are so heavy that the integrals over the positive and negative parts of the distribution diverge to infinity and negative infinity, respectively. Therefore, the expectation is undefined.</p>
+</section>
+<section class="level3" id="definition-5.2">
+<h3 class="anchored" data-anchor-id="definition-5.2">Definition 5.2</h3>
+<p>We define for any (measurable) function <span class="math inline">\(g\)</span> such that <span class="math inline">\(\int_{-\infty}^{\infty} \left| g(x) \right| f_X(x) dx &lt; \infty\)</span></p>
+<p><span class="math display">\[
+E(g(X)) = \int_{-\infty}^{\infty} g(x) f_X(x) dx. \tag{5.4}
+\]</span></p>
+<p>We may also consider the random variable <span class="math inline">\(Y = g(X)\)</span> and obtain its density function <span class="math inline">\(f_Y(y)\)</span> or mass function and then define its expectation by the definition <span class="math inline">\(E(Y) = \int_{-\infty}^{\infty} y f_Y(y) dy\)</span>. These two definitions can be shown to be the same, which can be proven by a change of variables argument.</p>
+<p>Whether the moments of a random variable exist or not is a question with some practical implications, because it relates to the likelihood of observing extreme values. For example, some authors have argued that for daily stock returns <span class="math inline">\(E(\left| X \right|^4) = \infty\)</span>, but <span class="math inline">\(E(\left| X \right|^3) &lt; \infty\)</span>. A sufficient condition for <span class="math inline">\(EX^k &lt; \infty\)</span> for positive random variable <span class="math inline">\(X\)</span> is that <span class="math inline">\(1 - F_X(x) \leq Cx^{-(j-1)}\)</span> for some constant <span class="math inline">\(C\)</span> and <span class="math inline">\(j &gt; k + 1\)</span>.</p>
+</section>
+<section class="level3" id="example-5.4.-st.-petersburg-paradox">
+<h3 class="anchored" data-anchor-id="example-5.4.-st.-petersburg-paradox">Example 5.4. St. Petersburg Paradox</h3>
+<p>Suppose you toss a fair coin until the first head shows up in which case you win <span class="math inline">\(\$2^{k-1}\)</span>, where <span class="math inline">\(k\)</span> is the number of tosses until the first head shows up. Your expected winnings are</p>
+<p><span class="math display">\[
+E(X) = \sum_{k=1}^{\infty} 2^{k-1} \times \dfrac{1}{2^k} = \infty.
+\]</span></p>
+<p>An alternative version of this is the well known <strong>Doubling strategy</strong> for coin tossing. First bet <span class="math inline">\(\$1\)</span> on heads, if lose, bet <span class="math inline">\(\$2\)</span> on heads; if lose, bet <span class="math inline">\(\$4\)</span> etc. If one assumes one can continue indefinitely, you always make <span class="math inline">\(\$1\)</span>. Although you always win, the expected amount of capital needed to play is infinite. In fact, for finite capital one can show that the probability of going bankrupt is one.</p>
+<p>However, Bernoulli showed in 1738 that</p>
+<p><span class="math display">\[
+E(\log X) = \sum_{k=1}^{\infty} \log (2^{k-1}) \dfrac{1}{2^k} = \log(2) &lt; \infty.
+\]</span></p>
+<p>This says that the value of the game for logarithmic utility is <span class="math inline">\(\log(2)\)</span>. However, for log utility there exist other games that would have infinite expectation.</p>
+<p><strong>Intuition:</strong> The St. Petersburg Paradox highlights the difference between expected value and expected utility. While the expected monetary value of the game is infinite, the expected utility (satisfaction or value) derived from the game is finite when considering a logarithmic utility function. This is because the utility function captures the idea that the value of additional money decreases as one’s wealth increases (diminishing marginal utility).</p>
+</section>
+<section class="level3" id="theorem-5.1.-expectation-has-the-following-properties">
+<h3 class="anchored" data-anchor-id="theorem-5.1.-expectation-has-the-following-properties">Theorem 5.1. Expectation has the following properties:</h3>
+<section class="level4" id="linearity">
+<h4 class="anchored" data-anchor-id="linearity">1. Linearity</h4>
+<p>For measurable functions <span class="math inline">\(g_1\)</span>, <span class="math inline">\(g_2\)</span>, and constants <span class="math inline">\(a_1\)</span>, <span class="math inline">\(a_2\)</span>, and <span class="math inline">\(a_3\)</span></p>
+<p><span class="math display">\[
+E(a_1 g_1(X) + a_2 g_2(X) + a_3) = a_1 E(g_1(X)) + a_2 E(g_2(X)) + a_3.
+\]</span></p>
+<p><strong>Intuition:</strong> This property states that the expectation of a linear combination of functions of a random variable is equal to the linear combination of the expectations of those functions. It reflects the idea that if we scale or shift a random variable, its average value scales or shifts accordingly.</p>
+</section>
+<section class="level4" id="monotonicity">
+<h4 class="anchored" data-anchor-id="monotonicity">2. Monotonicity</h4>
+<p>If <span class="math inline">\(g_1(x) \geq g_2(x)\)</span> for all <span class="math inline">\(x \implies Eg_1(X) \geq Eg_2(X)\)</span>.</p>
+<p><strong>Intuition:</strong> If one function of a random variable is always greater than or equal to another function of the same random variable, then the expected value of the first function will be greater than or equal to the expected value of the second function. This reflects the idea that if we have two random variables, and one is always larger than the other, then its average value will also be larger.</p>
+</section>
+<section class="level4" id="jensens-inequality">
+<h4 class="anchored" data-anchor-id="jensens-inequality">3. Jensen’s inequality</h4>
+<p>If <span class="math inline">\(g(x)\)</span> is a (weakly) convex function, i.e., <span class="math inline">\(g(\lambda x + (1 - \lambda)y) \leq \lambda g(x) + (1 - \lambda) g(y)\)</span> for all <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, and all <span class="math inline">\(\lambda\)</span> with <span class="math inline">\(0 \leq \lambda \leq 1\)</span>, then</p>
+<p><span class="math display">\[
+E[g(X)] \geq g[E(X)].
+\]</span></p>
+<p>Conversely, if <span class="math inline">\(g(x)\)</span> is a (weakly) concave function, then <span class="math inline">\(E[g(X)] \leq g[E(X)]\)</span>.</p>
+<p><strong>Proof:</strong></p>
+<p>Let <span class="math inline">\(a + bx\)</span> be the tangent line to the curve <span class="math inline">\(g(x)\)</span> at the point <span class="math inline">\(g(E(X))\)</span>. Then <span class="math inline">\(g(x) \geq a + bx\)</span>, for all <span class="math inline">\(x\)</span> by the definition of convexity. It follows from property (2) that</p>
+<p><span class="math display">\[
+E[g(X)] \geq a + bE(X) = g(E(X)).
+\]</span></p>
+<p><strong>Intuition:</strong> Jensen’s inequality relates the expected value of a convex (or concave) function of a random variable to the function evaluated at the expected value of the random variable. For a convex function, the expected value of the function is greater than or equal to the function of the expected value. This is because a convex function curves upwards, so the average of the function values will be higher than the function value at the average input.</p>
+<p><strong>Remarks</strong></p>
+<ol type="1">
+<li><p>Two important examples for property (3). First, <span class="math inline">\(E \left| X \right| \geq \left| EX \right|\)</span>, in fact <span class="math inline">\(\left| EX \right|\)</span> is exactly zero for any random variable with zero mean, whereas <span class="math inline">\(E \left| X \right| &gt; 0\)</span> unless <span class="math inline">\(X = 0\)</span> with probability one. Consider <span class="math inline">\(\log X\)</span>. In this case <span class="math inline">\(- \log X\)</span> is convex (i.e., <span class="math inline">\(\log\)</span> is concave). Therefore,</p>
+<p><span class="math display">\[
+E(- \log X) = - E(\log X) \geq - \log EX \iff \log EX \geq E \log X.
+\]</span></p></li>
+<li><p>Utility functions are (usually) assumed to be concave, which means that</p>
+<p><span class="math display">\[
+E[U(X)] \leq U(E(X))
+\]</span></p>
+<p>for any random variable <span class="math inline">\(X\)</span> for which the expectations are well-defined, i.e., you prefer a sure thing with the same expected value to an uncertain prospect with the same expected value but some risk of losing, aka <strong>risk aversion</strong>.</p></li>
+<li><p>More generally, <span class="math inline">\(Eg(X)\)</span> and <span class="math inline">\(gEX\)</span> may not be related. In fact one could exist while the other does not, e.g., if</p>
+<p><span class="math display">\[
+g(x) = \dfrac{x}{1 + \left| x \right|},
+\]</span></p>
+<p>then <span class="math inline">\(E[|g(X)|] &lt; \infty\)</span> for any random variable <span class="math inline">\(X\)</span> because <span class="math inline">\(g\)</span> is a bounded function, but if <span class="math inline">\(X\)</span> is Cauchy, <span class="math inline">\(EX\)</span> does not even exist.</p></li>
+<li><p>Property 2 implies that for <span class="math inline">\(X \geq 1\)</span>, <span class="math inline">\(EX^k &lt; \infty \implies EX^j &lt; \infty\)</span> for all <span class="math inline">\(j \leq k\)</span>, because <span class="math inline">\(x^j \leq x^k\)</span>. This is also true for <span class="math inline">\(X \geq 0\)</span> because <span class="math inline">\(\int_0^1 x^j f(x) dx \leq \int_0^1 f(x) dx &lt; \infty\)</span> for any <span class="math inline">\(j\)</span>. In general for <span class="math inline">\(j \leq k\)</span>, we have</p>
+<p><span class="math display">\[
+E(|X|^k) &lt; \infty \implies E(|X|^j) &lt; \infty.
+\]</span></p></li>
+<li><p>We have</p>
+<p><span class="math display">\[
+F_X(x) = E[1(X \leq x)], \tag{5.5}
+\]</span></p>
+<p>where <span class="math inline">\(1(.)\)</span> denotes the indicator function.</p></li>
+</ol>
+<p>The <strong>median</strong> can be compared with the mean, as it also measures “central tendency”. However, the median is not linear in the sense that we can’t guarantee that</p>
+<p><span class="math display">\[
+M(a_1 g_1(X) + a_2 g_2(X) + a_3) = a_1 M(g_1(X)) + a_2 M(g_2(X)) + a_3. \tag{5.6}
+\]</span></p>
+<p>On the other hand it possesses a useful property called <strong>monotone equivariance</strong> or equivariance with respect to a monotonic transformation.</p>
+</section>
+</section>
+<section class="level3" id="theorem-5.2">
+<h3 class="anchored" data-anchor-id="theorem-5.2">Theorem 5.2</h3>
+<p>Suppose that <span class="math inline">\(g\)</span> is an increasing transformation (if <span class="math inline">\(t \geq s\)</span>, then <span class="math inline">\(g(t) \geq g(s)\)</span>). Then we have</p>
+<p><span class="math display">\[
+M(g(X)) = g(M(X)). \tag{5.7}
+\]</span></p>
+<p>For example, if <span class="math inline">\(g(X) = aX + b\)</span> where <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> are constants with <span class="math inline">\(a &gt; 0\)</span>, then</p>
+<p><span class="math display">\[
+M(aX + b) = aM(X) + b.
+\]</span></p>
+<p>If <span class="math inline">\(X &gt; 0\)</span>, then <span class="math inline">\(M(\log(X)) = \log(M(X))\)</span>. The result (5.7) is a simple consequence of the fact that for any real number <span class="math inline">\(m\)</span> and increasing transformation <span class="math inline">\(g\)</span>, the following two events are identical</p>
+<p><span class="math display">\[
+\{ a : X(a) \leq m \} = \{ a : g(X(a)) \leq g(m) \}. \tag{5.8}
+\]</span></p>
+<p><strong>Intuition:</strong> This theorem states that if we apply a monotonically increasing transformation to a random variable, the median of the transformed variable is equal to the transformation applied to the median of the original variable. This property is useful because it means that the median is preserved under monotonic transformations, which is not the case for the mean.</p>
+<p>We next connect the notion of stochastic dominance with expected utility. Let <span class="math inline">\(U_1\)</span> denote the class of all von Neumann-Morgenstern type utility functions, <span class="math inline">\(u\)</span>, such that <span class="math inline">\(u' \geq 0\)</span>, (increasing).</p>
+</section>
+<section class="level3" id="theorem-5.3.-x-first-order-stochastic-dominates-y-if-and-only-if">
+<h3 class="anchored" data-anchor-id="theorem-5.3.-x-first-order-stochastic-dominates-y-if-and-only-if">Theorem 5.3. X First Order Stochastic Dominates Y if and only if</h3>
+<p><span class="math display">\[
+E[u(X)] \geq E[u(Y)]
+\]</span></p>
+<p>for all <span class="math inline">\(u \in U_1\)</span>, with strict inequality for some <span class="math inline">\(u\)</span>.</p>
+<p><strong>Proof.</strong></p>
+<p>We give a rough argument for the equivalence of the two definitions of first order stochastic dominance. We suppose for simplicity that both random variables have compact support <span class="math inline">\([a, b]\)</span> and that <span class="math inline">\(F_j(a) = 0\)</span> and <span class="math inline">\(F_j(b) = 1\)</span> for <span class="math inline">\(j = X, Y\)</span>. Let <span class="math inline">\(f_j\)</span> be the density of <span class="math inline">\(F_j\)</span>. By integration by parts</p>
+<p><span class="math display">\[
+\begin{aligned}
+Eu(X) - Eu(Y) &amp;= \int_a^b u(x) [f_X(x) - f_Y(x)] dx \\
+&amp;= \left[ (F_X(x) - F_Y(x)) u(x) \right]_a^b - \int_a^b [F_X(x) - F_Y(x)] u'(x) dx \\
+&amp;= - \int_a^b [F_X(x) - F_Y(x)] u'(x) dx,
+\end{aligned}
+\]</span></p>
+<p>which has the opposite sign of <span class="math inline">\(F_X(x) - F_Y(x)\)</span>. To prove the necessity, one constructs a special utility function that coincides with the interval of c.d.f. domination. See Levy (2016) for the full argument.</p>
+<p>This says that whether <span class="math inline">\(X\)</span> is preferred to <span class="math inline">\(Y\)</span> for all individuals with increasing utility is equivalent to whether the c.d.f. of <span class="math inline">\(X\)</span> is dominated by the c.d.f. of <span class="math inline">\(Y\)</span>.</p>
+<p>Finally, the c.d.f. and the expectation operation are connected through the following result.</p>
+</section>
+<section class="level3" id="theorem-5.4">
+<h3 class="anchored" data-anchor-id="theorem-5.4">Theorem 5.4</h3>
+<p>Let <span class="math inline">\(X\)</span> be a positive (continuous) random variable. Then we have</p>
+<p><span class="math display">\[
+E(X) = \int_0^{\infty} (1 - F_X(x)) dx.
+\]</span></p>
+<p><strong>Proof.</strong></p>
+<p>This follows by a change of variable <span class="math inline">\(y = 1 - F(x)\)</span>.</p>
+<p>In fact, this gives an alternative way of defining expectation. For a random variable <span class="math inline">\(X \geq 0\)</span>, provided <span class="math inline">\(\sum_{k=0}^{\infty} \Pr(X \geq k) &lt; \infty\)</span>, we have</p>
+<p><span class="math display">\[
+E(X) = \lim_{\epsilon \to 0} \sum_{k=1}^{\infty} k \Pr((k-1) \epsilon &lt; X \leq k \epsilon). \tag{5.9}
+\]</span></p>
+</section>
+</section>
+<section class="level2" id="additional-moments-and-cumulants">
+<h2 class="anchored" data-anchor-id="additional-moments-and-cumulants">5.2 ADDITIONAL MOMENTS AND CUMULANTS</h2>
+<p>The <strong>variance</strong> of a random variable <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(\sigma_X^2\)</span>, is defined as</p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{var}(X) &amp;= E[(X - E(X))^2] \\
+&amp;= E[X^2 - 2XE(X) + E^2(X)] \\
+&amp;= E(X^2) - E[2XE(X)] + E^2(X) \\
+&amp;= E(X^2) - 2E(X)E(X) + E^2(X) \\
+&amp;= E(X^2) - 2E^2(X) + E^2(X) \\
+&amp;= E(X^2) - E^2(X).
+\end{aligned}
+\]</span></p>
+<p>We have</p>
+<p><span class="math display">\[
+0 \leq \text{var}(X) \leq E(X^2)
+\]</span></p>
+<p>so that a sufficient condition for the existence of the variance is: <span class="math inline">\(E(X^2) &lt; \infty\)</span>.</p>
+<p><strong>Exercise.</strong></p>
+<p>Prove that <span class="math inline">\(\text{var}(aX + b) = a^2 \text{var}(X)\)</span> for all <span class="math inline">\(a, b\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p><span class="math display">\[
+\begin{aligned}
+\text{var}(aX + b) &amp;= E \left[ (aX + b - E(aX + b))^2 \right] \\
+&amp;= E \left[ (aX + b - (aE(X) + b))^2 \right] \\
+&amp;= E \left[ (aX - aE(X))^2 \right] \\
+&amp;= E \left[ a^2 (X - E(X))^2 \right] \\
+&amp;= a^2 E \left[ (X - E(X))^2 \right] \\
+&amp;= a^2 \text{var}(X).
+\end{aligned}
+\]</span></p>
+<p>The <strong>standard deviation</strong> <span class="math inline">\(\sigma_X = \sqrt{\sigma_X^2}\)</span>, sometimes called SD. This satisfies <span class="math inline">\(\text{SD}(aX + b) = \left| a \right| \text{SD}(X)\)</span>, i.e., <span class="math inline">\(\text{SD}(X)\)</span> changes proportionally. Variance measures dispersion, so that higher variance corresponds to the random variable being more spread out. In financial applications variance is a common measure of risk, and much research is devoted to modelling this quantity. In statistics, the variance of an estimator is important because it gives some understanding of the precision with which the quantity being estimated has been measured. Define the random variable</p>
+<p><span class="math display">\[
+Z = \dfrac{X - E(X)}{\text{SD}(X)}. \tag{5.10}
+\]</span></p>
+<p>This “standardized” quantity has <span class="math inline">\(E(Z) = 0\)</span> and <span class="math inline">\(\text{var}(Z) = 1\)</span>.</p>
+<p>The <strong>interquartile range</strong> [i.e., the range of the middle half]</p>
+<p><span class="math display">\[
+\text{IQR}(X) = Q_X(3/4) - Q_X(1/4)
+\]</span></p>
+<p>always exists (when <span class="math inline">\(X\)</span> is continuously distributed with a strictly increasing c.d.f.) and is an alternative measure of spreadoutness. For the standard normal distribution <span class="math inline">\(\text{IQR}(X) = 1.349\)</span>, which justifies the use of <span class="math inline">\(\text{IQR} / 1.349\)</span> as an alternative to the standard deviation as a general measure of scale. For the standard Cauchy, <span class="math inline">\(\text{IQR} = 2\)</span>. Note that <span class="math inline">\(Z = (X - M(X)) / \text{IQR}(X)\)</span> has median zero and interquartile range of <span class="math inline">\(1\)</span>, and this <span class="math inline">\(Z\)</span> is an alternative standardization of <span class="math inline">\(X\)</span>.</p>
+<p><strong>Skewness</strong> and <strong>kurtosis</strong>. Suppose that <span class="math inline">\(EX^4 &lt; \infty\)</span>, then we may define the skewness and excess kurtosis:</p>
+<p><span class="math display">\[
+\kappa_3(X) = \dfrac{E(X - E(X))^3}{\text{var}^{3/2}(X)}
+\]</span></p>
+<p><span class="math display">\[
+\kappa_4(X) = \dfrac{E(X - E(X))^4}{\text{var}^2(X)} - 3.
+\]</span></p>
+<p>For a normal distribution, <span class="math inline">\(\kappa_3(X) = \kappa_4(X) = 0\)</span>. In general, <span class="math inline">\(\kappa_3(X) \in \mathbb{R}\)</span>. Both quantities are invariant to location and scale changes, that is <span class="math inline">\(\kappa_j(aX + b) = \kappa_j(X)\)</span> for any constants <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> and any random variable <span class="math inline">\(X\)</span>. Skewness is one measure of (lack of) symmetry of the distribution, albeit imperfect. If <span class="math inline">\(X\)</span> is symmetric about <span class="math inline">\(E(X)\)</span>, then <span class="math inline">\(\kappa_3 = 0\)</span>, but if <span class="math inline">\(\kappa_3 = 0\)</span>, then one cannot conclude that <span class="math inline">\(X\)</span> is symmetric. In high school, one is often taught that when mean <span class="math inline">\(&gt;\)</span> median, the distribution is said to be right skewed, otherwise left skewed. An alternative measure of skewness is called the <strong>nonparametric skewness</strong></p>
+<p><span class="math display">\[
+\rho_X = \dfrac{E(X) - M(X)}{\sigma_X}. \tag{5.11}
+\]</span></p>
+<p>It can be shown that <span class="math inline">\(-1 \leq \rho_X \leq 1\)</span> for any random variable <span class="math inline">\(X\)</span>, with <span class="math inline">\(\rho_X &gt; 0\)</span> corresponding to “positive skewness”. Note however that there is no necessary logical relationship between <span class="math inline">\(\rho_X\)</span> and <span class="math inline">\(\kappa_3(X)\)</span> in the sense that we could have <span class="math inline">\(\rho_X &gt; 0\)</span> and <span class="math inline">\(\kappa_3(X) &lt; 0\)</span> and vice versa.</p>
+<p>Typically, income distributions are right skewed (because there are some very high income individuals and lots of low income ones). Some investment strategies tend to have payoff distributions that are left skewed (meaning that for much of the time they make a small positive return, but every now and then they suffer a wipeout. This may be to the fund managers advantage because in the good times they get a payoff, and if it all goes pear shaped they just leave).</p>
+<p>Kurtosis measures the thickness of the tails [and consequently the peakedness of the middle] of a distribution relative to the normal [which has <span class="math inline">\(\kappa_4 = 0\)</span>]. Heavy tails correspond to the <strong>leptokurtic</strong> case <span class="math inline">\([\kappa_4 &gt; 0]\)</span>, while thin tails correspond to the <strong>platykurtic</strong> case <span class="math inline">\([\kappa_4 &lt; 0]\)</span>. Note that in any case <span class="math inline">\(\kappa_4 \geq -3\)</span>. Typically, income distributions are right skewed (because there are some very high income individuals and lots of low income ones). Likewise income distributions and stock returns are Leptokurtic. The “Samsung distribution” is platykurtic (by this I mean the distribution used in some of their advertising). See Fig. 5.1.</p>
+<p>Finally, we turn to the <strong>moment generating function</strong> [m.g.f.] and the <strong>characteristic function</strong> [c.f.]. The m.g.f. is defined (for continuous random variables) as</p>
+<p><span class="math display">\[
+M_X(t) = Ee^{tX} = \int_{-\infty}^{\infty} e^{tx} f_X(x) dx \tag{5.12}
+\]</span></p>
+<p>for any <span class="math inline">\(t \in \mathbb{R}\)</span>, provided this integral exists in some neighbourhood of <span class="math inline">\(t = 0\)</span>. It is the Laplace transform of the function <span class="math inline">\(f_X\)</span> with argument <span class="math inline">\(-t\)</span>. We have the useful inversion formula</p>
+<p><span class="math display">\[
+f_X(x) = \int_{-\infty}^{\infty} M_X(t) e^{-tx} dt, \tag{5.13}
+\]</span></p>
+<p>when the m.g.f. exists. The moment generating function is of limited use, since it does not exist for many random variables (although it does exist for normal random variables and any variable with bounded support). The characteristic function is applicable more generally, since it always exists, although in general it is complex valued:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\phi_X(t) &amp;= Ee^{itX}, \text{ real } t, i = \sqrt{-1} \\
+&amp;= \int_{-\infty}^{\infty} e^{itx} f_X(x) dx \\
+&amp;= \int_{-\infty}^{\infty} \cos(tx) f_X(x) dx + i \int_{-\infty}^{\infty} \sin(tx) f_X(x) dx.
+\end{aligned}
+\]</span></p>
+<p>This takes the value one at <span class="math inline">\(t = 0\)</span>. This is essentially the Fourier transform of the density function <span class="math inline">\(f_X(x)\)</span> and there is a well-defined inversion formula</p>
+<p><span class="math display">\[
+f_X(x) = \dfrac{1}{2 \pi} \int_{-\infty}^{\infty} e^{-itx} \phi_X(t) dt. \tag{5.14}
+\]</span></p>
+<p>If <span class="math inline">\(X\)</span> is symmetric about zero, the complex part of <span class="math inline">\(\phi_X\)</span> is zero and <span class="math inline">\(\phi_X(t)\)</span> is a real valued function. Also,</p>
+<p><span class="math display">\[
+\dfrac{\partial^r}{\partial t^r} \phi_X(0) = E(i^r X^r e^{itX}) |_{t=0} = i^r E(X^r), \quad r = 1, 2, \dots
+\]</span></p>
+<p>Thus the moments of <span class="math inline">\(X\)</span> are related to the derivative of the characteristic function at the origin.</p>
+</section>
+<section class="level2" id="an-interpretation-of-expectation-and-median">
+<h2 class="anchored" data-anchor-id="an-interpretation-of-expectation-and-median">5.3 AN INTERPRETATION OF EXPECTATION AND MEDIAN</h2>
+<p>We claim that <span class="math inline">\(E(X)\)</span> can be given the interpretation of the unique minimizer of the function <span class="math inline">\(E(X - \theta)^2\)</span> with respect to <span class="math inline">\(\theta\)</span>.</p>
+<section class="level3" id="theorem-5.5">
+<h3 class="anchored" data-anchor-id="theorem-5.5">Theorem 5.5</h3>
+<p>Suppose that <span class="math inline">\(E(X^2)\)</span> exists and is finite. Then <span class="math inline">\(E(X)\)</span> is the unique minimizer of <span class="math inline">\(E(X - \theta)^2\)</span> with respect to <span class="math inline">\(\theta\)</span>.</p>
+<p><strong>Proof.</strong></p>
+<p>For any <span class="math inline">\(\theta \in \mathbb{R}\)</span>, write (completing the square)</p>
+<p><span class="math display">\[
+\begin{aligned}
+E(X - \theta)^2 &amp;= E(X^2) - 2 \theta E(X) + \theta^2 \\
+&amp;= \theta^2 - 2 \theta E(X) + E^2(X) + E(X^2) - E^2(X) \\
+&amp;= (\theta - E(X))^2 + E(X^2) - E^2(X) \\
+&amp;= (\theta - E(X))^2 + \text{var}(X) \\
+&amp;\geq \text{var}(X).
+\end{aligned}
+\]</span></p>
+<p>The lower bound in the last expression is achieved by taking <span class="math inline">\(\theta = E(X)\)</span> in the last but one line. One can also show this constructively using calculus applied to the function <span class="math inline">\(Q(\theta) = E(X - \theta)^2\)</span>. Specifically, the first order condition is</p>
+<p><span class="math display">\[
+E(X - \theta) = 0, \tag{5.15}
+\]</span></p>
+<p>which yields the same solution.</p>
+<p>This theorem says that the expectation of <span class="math inline">\(X\)</span> is the closest constant to the random variable <span class="math inline">\(X\)</span> in terms of the mean squared error.</p>
+<p>We next show that the median minimizes the <strong>mean absolute error</strong> <span class="math inline">\(E \left| X - \theta \right|\)</span>. This is a bit more tricky to establish since we can’t expand out the function <span class="math inline">\(E \left| X - \theta \right|\)</span> as we did for <span class="math inline">\(E(X - \theta)^2\)</span>. Furthermore, the function <span class="math inline">\(\left| x - \theta \right|\)</span> is not differentiable at <span class="math inline">\(x = \theta\)</span>, so that one can’t just obtain a first order condition directly by differentiating inside the integral sign.</p>
+</section>
+<section class="level3" id="theorem-5.6">
+<h3 class="anchored" data-anchor-id="theorem-5.6">Theorem 5.6</h3>
+<p>Suppose that <span class="math inline">\(X\)</span> is continuously distributed with strictly increasing c.d.f. and <span class="math inline">\(E(|X|) &lt; \infty\)</span>. Then the median minimizes uniquely the Least Absolute Error criterion, that is,</p>
+<p><span class="math display">\[
+M(X) = \arg \min_{\theta \in \mathbb{R}} E \left| X - \theta \right|.
+\]</span></p>
+<p>We may define <span class="math inline">\(M\)</span> equivalently as the minimizer of the function <span class="math inline">\(ED(X, \theta)\)</span> with respect to <span class="math inline">\(\theta\)</span>, where</p>
+<p><span class="math display">\[
+D(x, \theta) = \left| x - \theta \right| - \left| x - M \right|
+\]</span></p>
+<p>is a bounded function of <span class="math inline">\(\theta\)</span> for all <span class="math inline">\(x\)</span>, in which case the requirement that <span class="math inline">\(E(|X|) &lt; \infty\)</span> is not needed.</p>
+<p><strong>Proof.</strong></p>
+<p>The fact that <span class="math inline">\(D(x, \theta)\)</span> is bounded can best be seen by drawing a graph. As a consequence, we do not require any moments of <span class="math inline">\(X\)</span> to exist for the solution of the minimization problem to exist. Let <span class="math inline">\(Q(\theta) = ED(X, \theta)\)</span>. We have</p>
+<p><span class="math display">\[
+\begin{aligned}
+Q(\theta) &amp;= \int_{-\infty}^{\infty} \left| x - \theta \right| f_X(x) dx - \int_{-\infty}^{\infty} \left| x - M \right| f_X(x) dx \\
+&amp;= \int_{-\infty}^{\theta} ((x - \theta) - \left| x - M \right|) f_X(x) dx - \int_{\theta}^{\infty} ((x - \theta) - \left| x - M \right|) f_X(x) dx.
+\end{aligned}
+\]</span></p>
+<p>The function <span class="math inline">\(Q\)</span> is differentiable in <span class="math inline">\(\theta\)</span> with (total) derivative</p>
+<p><span class="math display">\[
+Q'(\theta) = - \int_{-\infty}^{\theta} f_X(x) dx + \int_{\theta}^{\infty} f_X(x) dx = - E[\text{sign}(X - \theta)],
+\]</span></p>
+<p>where <span class="math inline">\(\text{sign}(x) = 1(x &gt; 0) - 1(x &lt; 0)\)</span>. The second derivative is <span class="math inline">\(-2 f_X(\theta)\)</span>, which is always negative. In conclusion, a minimizer of <span class="math inline">\(Q\)</span> satisfies</p>
+<p><span class="math display">\[
+E[\text{sign}(X - M)] = 0. \tag{5.16}
+\]</span></p>
+<p>Now note that <span class="math inline">\(\text{sign}(x - \theta) = 1(x - \theta &gt; 0) - 1(x - \theta &lt; 0)\)</span> so that the above equation says that</p>
+<p><span class="math display">\[
+E[1(X - M &gt; 0)] = E[1(X - M &lt; 0)], \text{ i.e., }
+\]</span></p>
+<p><span class="math display">\[
+\Pr(X &gt; M) = \Pr(X &lt; M),
+\]</span></p>
+<p>which is the defining property of the median of a continuous random variable.</p>
+</section>
+<section class="level3" id="example-5.5">
+<h3 class="anchored" data-anchor-id="example-5.5">Example 5.5</h3>
+<p>Suppose that <span class="math inline">\(X\)</span> is standard normal. Then</p>
+<p><span class="math display">\[
+\begin{aligned}
+E \left| X - \theta \right| &amp;= \int_{-\infty}^{\theta} (x - \theta) \phi(x) dx + \int_{\theta}^{\infty} (\theta - x) \phi(x) dx \\
+&amp;= \int_{-\infty}^{\theta} x \phi(x) dx - \int_{\theta}^{\infty} x \phi(x) dx - \theta \int_{-\infty}^{\theta} \phi(x) dx + \theta \int_{\theta}^{\infty} \phi(x) dx \\
+&amp;= \dfrac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\theta} x \exp(-0.5 x^2) dx - \dfrac{1}{\sqrt{2 \pi}} \int_{\theta}^{\infty} x \exp(-0.5 x^2) dx \\
+&amp;+ \theta (2 \Phi(\theta) - 1) \\
+&amp;= \dfrac{1}{\sqrt{2 \pi}} \int_{\frac{1}{2} \theta^2}^{\infty} \exp(-u) du - \dfrac{1}{\sqrt{2 \pi}} \int_{-\infty}^{\frac{1}{2} \theta^2} \exp(-u) du + \theta (2 \Phi(\theta) - 1) \\
+&amp;= \dfrac{2}{\sqrt{2 \pi}} \exp \left( - \dfrac{1}{2} \theta^2 \right) + \theta (2 \Phi(\theta) - 1) \\
+&amp;\geq \sqrt{\dfrac{2}{\pi}} = E \left| X \right|
+\end{aligned}
+\]</span></p>
+<p>with equality if and only if <span class="math inline">\(\theta = 0\)</span>. We used the change of variable <span class="math inline">\(x \to u = \dfrac{x^2}{2}\)</span> (or Mathematica). This function although complicated is differentiable in <span class="math inline">\(\theta\)</span> for all values of <span class="math inline">\(\theta\)</span> and in fact infinitely times differentiable. It has a well defined minimum at <span class="math inline">\(\theta = 0\)</span> (we know that the median of the standard normal is zero) in which case <span class="math inline">\(E \left| X \right| = \sqrt{\dfrac{2}{\pi}}\)</span>.</p>
+<p>If the density is symmetric about <span class="math inline">\(M\)</span>, then <span class="math inline">\(E(X) = M(X)\)</span>. Finally, for any <span class="math inline">\(k\)</span> such that the absolute moment exists, we have for continuous random variables</p>
+<p><span class="math display">\[
+E(X^k) = \int_0^1 Q_X^k(\alpha) d \alpha. \tag{5.17}
+\]</span></p>
+<p>This follows by a change of variables argument, letting <span class="math inline">\(y = F_X^{-1}(\alpha)\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch05exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise1">Exercise 1</h3>
+<p><a href="#sec-ch05solution1">Solution 1</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the following probability density function (pdf):</p>
+<p><span class="math display">\[
+f_X(x) = \begin{cases}
+2x &amp; \text{if } 0 \leq x \leq 1 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>Calculate the expectation <span class="math inline">\(E(X)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise2">Exercise 2</h3>
+<p><a href="#sec-ch05solution2">Solution 2</a></p>
+<p>Let <span class="math inline">\(Y\)</span> be a discrete random variable with the following probability mass function (pmf):</p>
+<p><span class="math display">\[
+f_Y(y) = \begin{cases}
+\dfrac{1}{5} &amp; \text{if } y = 1, 2, 3, 4, 5 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>Calculate the expectation <span class="math inline">\(E(Y)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise3">Exercise 3</h3>
+<p><a href="#sec-ch05solution3">Solution 3</a></p>
+<p>Suppose <span class="math inline">\(Z\)</span> is a random variable with <span class="math inline">\(E(Z) = 5\)</span> and <span class="math inline">\(E(Z^2) = 30\)</span>. Calculate the variance <span class="math inline">\(\text{var}(Z)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise4">Exercise 4</h3>
+<p><a href="#sec-ch05solution4">Solution 4</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with expectation <span class="math inline">\(E(X) = \mu\)</span> and variance <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. Define a new random variable <span class="math inline">\(Y = aX + b\)</span>, where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants. Find <span class="math inline">\(E(Y)\)</span> and <span class="math inline">\(\text{var}(Y)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise5">Exercise 5</h3>
+<p><a href="#sec-ch05solution5">Solution 5</a></p>
+<p>Suppose <span class="math inline">\(X\)</span> is a random variable with probability density function <span class="math inline">\(f_X(x) = \dfrac{1}{2} e^{-|x|}\)</span> for all <span class="math inline">\(x \in \mathbb{R}\)</span>. Determine whether the expectation <span class="math inline">\(E(X)\)</span> exists.</p>
+</section>
+<section class="level3" id="sec-ch05exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise6">Exercise 6</h3>
+<p><a href="#sec-ch05solution6">Solution 6</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable uniformly distributed on the interval <span class="math inline">\([2, 6]\)</span>. Find the expectation <span class="math inline">\(E(X)\)</span> and the median <span class="math inline">\(M(X)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise7">Exercise 7</h3>
+<p><a href="#sec-ch05solution7">Solution 7</a></p>
+<p>Suppose <span class="math inline">\(X\)</span> is a random variable with expectation <span class="math inline">\(E(X) = 4\)</span>. Let <span class="math inline">\(g(x) = x^2\)</span> be a function. If possible, find a lower bound for <span class="math inline">\(E[g(X)]\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise8">Exercise 8</h3>
+<p><a href="#sec-ch05solution8">Solution 8</a></p>
+<p>Consider a random variable <span class="math inline">\(X\)</span> with <span class="math inline">\(E(X) = 3\)</span> and <span class="math inline">\(E(X^2) = 13\)</span>. Calculate the standard deviation of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise9">Exercise 9</h3>
+<p><a href="#sec-ch05solution9">Solution 9</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with <span class="math inline">\(E(X) = 2\)</span>. Define a new random variable <span class="math inline">\(Y = 3X + 1\)</span>. Calculate <span class="math inline">\(E(Y)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise10">Exercise 10</h3>
+<p><a href="#sec-ch05solution10">Solution 10</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with <span class="math inline">\(E(X) = 5\)</span> and <span class="math inline">\(\text{var}(X) = 4\)</span>. Define <span class="math inline">\(Z = \dfrac{X - E(X)}{\sqrt{\text{var}(X)}}\)</span>. Calculate <span class="math inline">\(E(Z)\)</span> and <span class="math inline">\(\text{var}(Z)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise11">Exercise 11</h3>
+<p><a href="#sec-ch05solution11">Solution 11</a></p>
+<p>For a random variable <span class="math inline">\(X\)</span>, suppose that <span class="math inline">\(\int_0^{\infty} x f_X(x) dx = 3\)</span> and <span class="math inline">\(\int_{-\infty}^0 x f_X(x) dx = -3\)</span>. Does the expectation <span class="math inline">\(E(X)\)</span> exist?</p>
+</section>
+<section class="level3" id="sec-ch05exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise12">Exercise 12</h3>
+<p><a href="#sec-ch05solution12">Solution 12</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with probability density function (pdf) <span class="math inline">\(f_X(x) = \dfrac{1}{x^2}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. Does <span class="math inline">\(E(X)\)</span> exist? If so, calculate it.</p>
+</section>
+<section class="level3" id="sec-ch05exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise13">Exercise 13</h3>
+<p><a href="#sec-ch05solution13">Solution 13</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with probability density function <span class="math inline">\(f_X(x) = \dfrac{3}{x^4}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. Does <span class="math inline">\(E(X^2)\)</span> exist? If so, calculate it.</p>
+</section>
+<section class="level3" id="sec-ch05exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise14">Exercise 14</h3>
+<p><a href="#sec-ch05solution14">Solution 14</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with expectation <span class="math inline">\(E(X) = 7\)</span>. Suppose <span class="math inline">\(g(x)\)</span> is a convex function. What can be said about the relationship between <span class="math inline">\(E[g(X)]\)</span> and <span class="math inline">\(g(E(X))\)</span>?</p>
+</section>
+<section class="level3" id="sec-ch05exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise15">Exercise 15</h3>
+<p><a href="#sec-ch05solution15">Solution 15</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a positive continuous random variable with cumulative distribution function <span class="math inline">\(F_X(x) = 1 - \dfrac{1}{x}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. Calculate <span class="math inline">\(E(X)\)</span> using the formula <span class="math inline">\(E(X) = \int_0^{\infty} (1 - F_X(x)) dx\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise16">Exercise 16</h3>
+<p><a href="#sec-ch05solution16">Solution 16</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with probability density function <span class="math inline">\(f_X(x) = 4x^3\)</span> for <span class="math inline">\(0 \leq x \leq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. Calculate the median <span class="math inline">\(M(X)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise17">Exercise 17</h3>
+<p><a href="#sec-ch05solution17">Solution 17</a></p>
+<p>Consider two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> with <span class="math inline">\(E(X) = 5\)</span> and <span class="math inline">\(E(Y) = 7\)</span>. If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are related such that <span class="math inline">\(Y = 2X - 3\)</span>, find the median of <span class="math inline">\(Y\)</span> in terms of the median of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise18">Exercise 18</h3>
+<p><a href="#sec-ch05solution18">Solution 18</a></p>
+<p>A random variable <span class="math inline">\(X\)</span> has <span class="math inline">\(E(X) = 10\)</span> and <span class="math inline">\(E(X^2) = 125\)</span>. Find the upper bound for the variance of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise19">Exercise 19</h3>
+<p><a href="#sec-ch05solution19">Solution 19</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with <span class="math inline">\(E(X) = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. Define <span class="math inline">\(Y = \dfrac{X - \mu}{\sigma}\)</span>. Calculate the skewness <span class="math inline">\(\kappa_3(Y)\)</span> in terms of the moments of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch05exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch05exercise20">Exercise 20</h3>
+<p><a href="#sec-ch05solution20">Solution 20</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with probability density function <span class="math inline">\(f_X(x) = \dfrac{1}{\pi(1 + x^2)}\)</span> for all <span class="math inline">\(x \in \mathbb{R}\)</span>. Determine whether the variance <span class="math inline">\(\text{var}(X)\)</span> exists.</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch05solution1">
+<h3 class="anchored" data-anchor-id="sec-ch05solution1">Solution 1</h3>
+<p><a href="#sec-ch05exercise1">Exercise 1</a></p>
+<p>We are given the probability density function (pdf) of a continuous random variable <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[
+f_X(x) = \begin{cases}
+2x &amp; \text{if } 0 \leq x \leq 1 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>We need to calculate the expectation <span class="math inline">\(E(X)\)</span>. According to the definition of expectation for continuous random variables, we have:</p>
+<p><span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx
+\]</span></p>
+<p>In our case, the pdf is non-zero only for <span class="math inline">\(0 \leq x \leq 1\)</span>, so we can rewrite the integral as:</p>
+<p><span class="math display">\[
+E(X) = \int_{0}^{1} x (2x) dx = \int_{0}^{1} 2x^2 dx
+\]</span></p>
+<p>Now, we can evaluate the integral:</p>
+<p><span class="math display">\[
+E(X) = 2 \int_{0}^{1} x^2 dx = 2 \left[ \dfrac{x^3}{3} \right]_0^1 = 2 \left( \dfrac{1^3}{3} - \dfrac{0^3}{3} \right) = 2 \left( \dfrac{1}{3} \right) = \dfrac{2}{3}
+\]</span></p>
+<p>Thus, the expectation of <span class="math inline">\(X\)</span> is <span class="math inline">\(\dfrac{2}{3}\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The expectation represents the average value of the random variable. Since the pdf is increasing linearly from 0 to 1, we expect the average value to be skewed towards the higher end of the interval, which is consistent with the result <span class="math inline">\(E(X) = \dfrac{2}{3}\)</span>. This is related to <strong>Equation 5.2</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution2">
+<h3 class="anchored" data-anchor-id="sec-ch05solution2">Solution 2</h3>
+<p><a href="#sec-ch05exercise2">Exercise 2</a></p>
+<p>We are given the probability mass function (pmf) of a discrete random variable <span class="math inline">\(Y\)</span>:</p>
+<p><span class="math display">\[
+f_Y(y) = \begin{cases}
+\dfrac{1}{5} &amp; \text{if } y = 1, 2, 3, 4, 5 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>We need to calculate the expectation <span class="math inline">\(E(Y)\)</span>. According to the definition of expectation for discrete random variables, we have:</p>
+<p><span class="math display">\[
+E(Y) = \sum_{y} y f_Y(y)
+\]</span></p>
+<p>In our case, the pmf is non-zero only for <span class="math inline">\(y = 1, 2, 3, 4, 5\)</span>, so we can rewrite the sum as:</p>
+<p><span class="math display">\[
+E(Y) = \sum_{y=1}^{5} y \left( \dfrac{1}{5} \right) = \dfrac{1}{5} \sum_{y=1}^{5} y
+\]</span></p>
+<p>Now, we can evaluate the sum:</p>
+<p><span class="math display">\[
+E(Y) = \dfrac{1}{5} (1 + 2 + 3 + 4 + 5) = \dfrac{1}{5} (15) = 3
+\]</span></p>
+<p>Thus, the expectation of <span class="math inline">\(Y\)</span> is <span class="math inline">\(3\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The expectation represents the average value of the random variable. Since the pmf assigns equal probability to each value from 1 to 5, we expect the average value to be the middle value, which is 3. This is related to <strong>Equation 5.3</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution3">
+<h3 class="anchored" data-anchor-id="sec-ch05solution3">Solution 3</h3>
+<p><a href="#sec-ch05exercise3">Exercise 3</a></p>
+<p>We are given <span class="math inline">\(E(Z) = 5\)</span> and <span class="math inline">\(E(Z^2) = 30\)</span>. We need to calculate the variance <span class="math inline">\(\text{var}(Z)\)</span>. The formula for variance is:</p>
+<p><span class="math display">\[
+\text{var}(Z) = E(Z^2) - [E(Z)]^2
+\]</span></p>
+<p>Plugging in the given values, we get:</p>
+<p><span class="math display">\[
+\text{var}(Z) = 30 - (5)^2 = 30 - 25 = 5
+\]</span></p>
+<p>Thus, the variance of <span class="math inline">\(Z\)</span> is <span class="math inline">\(5\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The variance measures the spread or dispersion of the random variable around its mean. In this case, we are given the expected value of <span class="math inline">\(Z\)</span> and <span class="math inline">\(Z^2\)</span>. Using the formula for variance, we can calculate the spread of <span class="math inline">\(Z\)</span> around its mean. This is related to the definition of <strong>variance</strong> in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution4">
+<h3 class="anchored" data-anchor-id="sec-ch05solution4">Solution 4</h3>
+<p><a href="#sec-ch05exercise4">Exercise 4</a></p>
+<p>We are given <span class="math inline">\(E(X) = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. We have a new random variable <span class="math inline">\(Y = aX + b\)</span>, where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants. We need to find <span class="math inline">\(E(Y)\)</span> and <span class="math inline">\(\text{var}(Y)\)</span>.</p>
+<p>Using the linearity property of expectation, we have:</p>
+<p><span class="math display">\[
+E(Y) = E(aX + b) = aE(X) + b = a\mu + b
+\]</span></p>
+<p>For the variance, we use the property <span class="math inline">\(\text{var}(aX + b) = a^2 \text{var}(X)\)</span>:</p>
+<p><span class="math display">\[
+\text{var}(Y) = \text{var}(aX + b) = a^2 \text{var}(X) = a^2 \sigma^2
+\]</span></p>
+<p>Thus, <span class="math inline">\(E(Y) = a\mu + b\)</span> and <span class="math inline">\(\text{var}(Y) = a^2 \sigma^2\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The expectation of a linear transformation of a random variable is the linear transformation of the expectation. Similarly, the variance of a linear transformation of a random variable is the square of the scaling factor times the variance of the original random variable. This is related to the <strong>linearity property of expectation</strong> and the properties of <strong>variance</strong> in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution5">
+<h3 class="anchored" data-anchor-id="sec-ch05solution5">Solution 5</h3>
+<p><a href="#sec-ch05exercise5">Exercise 5</a></p>
+<p>We are given the probability density function <span class="math inline">\(f_X(x) = \dfrac{1}{2} e^{-|x|}\)</span> for all <span class="math inline">\(x \in \mathbb{R}\)</span>. We need to determine whether the expectation <span class="math inline">\(E(X)\)</span> exists.</p>
+<p>To determine if the expectation exists, we need to check if <span class="math inline">\(\int_{-\infty}^{\infty} |x| f_X(x) dx &lt; \infty\)</span>. In this case, we have:</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\infty} |x| f_X(x) dx = \int_{-\infty}^{\infty} |x| \left( \dfrac{1}{2} e^{-|x|} \right) dx = \dfrac{1}{2} \int_{-\infty}^{\infty} |x| e^{-|x|} dx
+\]</span></p>
+<p>We can split the integral into two parts:</p>
+<p><span class="math display">\[
+\dfrac{1}{2} \left( \int_{-\infty}^{0} -x e^{x} dx + \int_{0}^{\infty} x e^{-x} dx \right)
+\]</span></p>
+<p>Let’s evaluate each integral separately. For the first integral, we use integration by parts: Let <span class="math inline">\(u = -x\)</span> and <span class="math inline">\(dv = e^x dx\)</span>. Then <span class="math inline">\(du = -dx\)</span> and <span class="math inline">\(v = e^x\)</span>.</p>
+<p><span class="math display">\[
+\int_{-\infty}^{0} -x e^{x} dx = \left[ -x e^x \right]_{-\infty}^0 - \int_{-\infty}^0 -e^x dx = 0 + \left[ e^x \right]_{-\infty}^0 = 1
+\]</span></p>
+<p>For the second integral, we also use integration by parts: Let <span class="math inline">\(u = x\)</span> and <span class="math inline">\(dv = e^{-x} dx\)</span>. Then <span class="math inline">\(du = dx\)</span> and <span class="math inline">\(v = -e^{-x}\)</span>.</p>
+<p><span class="math display">\[
+\int_{0}^{\infty} x e^{-x} dx = \left[ -x e^{-x} \right]_0^{\infty} - \int_0^{\infty} -e^{-x} dx = 0 + \left[ -e^{-x} \right]_0^{\infty} = 1
+\]</span></p>
+<p>Therefore,</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\infty} |x| f_X(x) dx = \dfrac{1}{2} (1 + 1) = 1 &lt; \infty
+\]</span></p>
+<p>Since the integral is finite, the expectation <span class="math inline">\(E(X)\)</span> exists.</p>
+<p>We can now calculate the expectation: <span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx = \int_{-\infty}^{\infty} x \left( \dfrac{1}{2} e^{-|x|} \right) dx = \dfrac{1}{2} \int_{-\infty}^{\infty} x e^{-|x|} dx
+\]</span> Since the integrand is an odd function, the integral is 0. Thus <span class="math inline">\(E(X) = 0\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> To determine if the expectation exists, we need to check if the integral of <span class="math inline">\(|x|\)</span> times the pdf is finite. In this case, the integral is finite, so the expectation exists. The expectation is 0 because the pdf is symmetric around 0. This is related to <strong>Definition 5.1</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution6">
+<h3 class="anchored" data-anchor-id="sec-ch05solution6">Solution 6</h3>
+<p><a href="#sec-ch05exercise6">Exercise 6</a></p>
+<p>We are given that <span class="math inline">\(X\)</span> is a continuous random variable uniformly distributed on the interval <span class="math inline">\([2, 6]\)</span>. The probability density function (pdf) of a uniform distribution on <span class="math inline">\([a, b]\)</span> is given by:</p>
+<p><span class="math display">\[
+f_X(x) = \begin{cases}
+\dfrac{1}{b-a} &amp; \text{if } a \leq x \leq b \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>In our case, <span class="math inline">\(a = 2\)</span> and <span class="math inline">\(b = 6\)</span>, so the pdf is:</p>
+<p><span class="math display">\[
+f_X(x) = \begin{cases}
+\dfrac{1}{6-2} = \dfrac{1}{4} &amp; \text{if } 2 \leq x \leq 6 \\
+0 &amp; \text{otherwise}
+\end{cases}
+\]</span></p>
+<p>The expectation of a uniform distribution on <span class="math inline">\([a, b]\)</span> is given by:</p>
+<p><span class="math display">\[
+E(X) = \dfrac{a+b}{2}
+\]</span></p>
+<p>In our case, <span class="math inline">\(E(X) = \dfrac{2+6}{2} = \dfrac{8}{2} = 4\)</span>.</p>
+<p>The median of a continuous uniform distribution on <span class="math inline">\([a, b]\)</span> is also given by:</p>
+<p><span class="math display">\[
+M(X) = \dfrac{a+b}{2}
+\]</span></p>
+<p>In our case, <span class="math inline">\(M(X) = \dfrac{2+6}{2} = \dfrac{8}{2} = 4\)</span>.</p>
+<p>Thus, <span class="math inline">\(E(X) = 4\)</span> and <span class="math inline">\(M(X) = 4\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> For a uniform distribution, the probability is evenly distributed across the interval. Therefore, the expectation and median are both the midpoint of the interval. This is related to <strong>Example 5.1</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution7">
+<h3 class="anchored" data-anchor-id="sec-ch05solution7">Solution 7</h3>
+<p><a href="#sec-ch05exercise7">Exercise 7</a></p>
+<p>We are given that <span class="math inline">\(E(X) = 4\)</span> and <span class="math inline">\(g(x) = x^2\)</span>. We need to find a lower bound for <span class="math inline">\(E[g(X)]\)</span>.</p>
+<p>Since <span class="math inline">\(g(x) = x^2\)</span> is a convex function, we can apply Jensen’s inequality, which states that for a convex function <span class="math inline">\(g(x)\)</span>:</p>
+<p><span class="math display">\[
+E[g(X)] \geq g(E(X))
+\]</span></p>
+<p>In our case, <span class="math inline">\(E(X) = 4\)</span>, so <span class="math inline">\(g(E(X)) = g(4) = 4^2 = 16\)</span>. Therefore, <span class="math inline">\(E[g(X)] \geq 16\)</span>.</p>
+<p>Thus, a lower bound for <span class="math inline">\(E[g(X)]\)</span> is <span class="math inline">\(16\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> Jensen’s inequality tells us that for a convex function, the expectation of the function of a random variable is greater than or equal to the function of the expectation of the random variable. In this case, since <span class="math inline">\(x^2\)</span> is convex, the lower bound for <span class="math inline">\(E[g(X)]\)</span> is given by <span class="math inline">\(g(E(X))\)</span>. This is related to <strong>Jensen’s inequality (Theorem 5.1, part 3)</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution8">
+<h3 class="anchored" data-anchor-id="sec-ch05solution8">Solution 8</h3>
+<p><a href="#sec-ch05exercise8">Exercise 8</a></p>
+<p>We are given <span class="math inline">\(E(X) = 3\)</span> and <span class="math inline">\(E(X^2) = 13\)</span>. We need to calculate the standard deviation of <span class="math inline">\(X\)</span>. The variance of <span class="math inline">\(X\)</span> is given by:</p>
+<p><span class="math display">\[
+\text{var}(X) = E(X^2) - [E(X)]^2
+\]</span></p>
+<p>Plugging in the given values, we get:</p>
+<p><span class="math display">\[
+\text{var}(X) = 13 - (3)^2 = 13 - 9 = 4
+\]</span></p>
+<p>The standard deviation is the square root of the variance:</p>
+<p><span class="math display">\[
+\text{SD}(X) = \sqrt{\text{var}(X)} = \sqrt{4} = 2
+\]</span></p>
+<p>Thus, the standard deviation of <span class="math inline">\(X\)</span> is <span class="math inline">\(2\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The standard deviation is a measure of the spread of the random variable around its mean. It is the square root of the variance, which is calculated using the expected values of <span class="math inline">\(X\)</span> and <span class="math inline">\(X^2\)</span>. This is related to the definition of <strong>standard deviation</strong> in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution9">
+<h3 class="anchored" data-anchor-id="sec-ch05solution9">Solution 9</h3>
+<p><a href="#sec-ch05exercise9">Exercise 9</a></p>
+<p>We are given <span class="math inline">\(E(X) = 2\)</span> and <span class="math inline">\(Y = 3X + 1\)</span>. We need to calculate <span class="math inline">\(E(Y)\)</span>.</p>
+<p>Using the linearity property of expectation, we have:</p>
+<p><span class="math display">\[
+E(Y) = E(3X + 1) = 3E(X) + 1
+\]</span></p>
+<p>Plugging in the given value of <span class="math inline">\(E(X) = 2\)</span>, we get:</p>
+<p><span class="math display">\[
+E(Y) = 3(2) + 1 = 6 + 1 = 7
+\]</span></p>
+<p>Thus, <span class="math inline">\(E(Y) = 7\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The expectation of a linear transformation of a random variable is the linear transformation of the expectation. This is related to the <strong>linearity property of expectation (Theorem 5.1, part 1)</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution10">
+<h3 class="anchored" data-anchor-id="sec-ch05solution10">Solution 10</h3>
+<p><a href="#sec-ch05exercise10">Exercise 10</a></p>
+<p>We are given <span class="math inline">\(E(X) = 5\)</span> and <span class="math inline">\(\text{var}(X) = 4\)</span>. We have <span class="math inline">\(Z = \dfrac{X - E(X)}{\sqrt{\text{var}(X)}}\)</span>. We need to calculate <span class="math inline">\(E(Z)\)</span> and <span class="math inline">\(\text{var}(Z)\)</span>.</p>
+<p>First, let’s find <span class="math inline">\(E(Z)\)</span>:</p>
+<p><span class="math display">\[
+E(Z) = E \left( \dfrac{X - E(X)}{\sqrt{\text{var}(X)}} \right) = \dfrac{1}{\sqrt{\text{var}(X)}} E(X - E(X)) = \dfrac{1}{\sqrt{4}} (E(X) - E(X)) = \dfrac{1}{2} (0) = 0
+\]</span></p>
+<p>Next, let’s find <span class="math inline">\(\text{var}(Z)\)</span>:</p>
+<p><span class="math display">\[
+\text{var}(Z) = \text{var} \left( \dfrac{X - E(X)}{\sqrt{\text{var}(X)}} \right) = \dfrac{1}{\text{var}(X)} \text{var}(X - E(X)) = \dfrac{1}{4} \text{var}(X) = \dfrac{1}{4} (4) = 1
+\]</span></p>
+<p>Thus, <span class="math inline">\(E(Z) = 0\)</span> and <span class="math inline">\(\text{var}(Z) = 1\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The variable <span class="math inline">\(Z\)</span> is a standardized version of <span class="math inline">\(X\)</span>. Subtracting the mean and dividing by the standard deviation results in a variable with a mean of 0 and a variance (and standard deviation) of 1. This is related to the concept of <strong>standardization</strong> mentioned in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution11">
+<h3 class="anchored" data-anchor-id="sec-ch05solution11">Solution 11</h3>
+<p><a href="#sec-ch05exercise11">Exercise 11</a></p>
+<p>We are given that for a random variable <span class="math inline">\(X\)</span>, <span class="math inline">\(\int_0^{\infty} x f_X(x) dx = 3\)</span> and <span class="math inline">\(\int_{-\infty}^0 x f_X(x) dx = -3\)</span>. We need to determine if the expectation <span class="math inline">\(E(X)\)</span> exists.</p>
+<p>The expectation <span class="math inline">\(E(X)\)</span> is defined as:</p>
+<p><span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx = \int_{-\infty}^0 x f_X(x) dx + \int_0^{\infty} x f_X(x) dx
+\]</span></p>
+<p>If both integrals are finite, or if one is infinite and the other is finite, then the expectation exists. If both integrals are infinite and of opposite signs, the expectation does not exist. In this case, we have:</p>
+<p><span class="math display">\[
+\int_{-\infty}^0 x f_X(x) dx = -3 \quad \text{and} \quad \int_0^{\infty} x f_X(x) dx = 3
+\]</span></p>
+<p>Both integrals are finite, so the expectation exists. We can calculate the expectation:</p>
+<p><span class="math display">\[
+E(X) = -3 + 3 = 0
+\]</span></p>
+<p>Thus, the expectation <span class="math inline">\(E(X)\)</span> exists and is equal to <span class="math inline">\(0\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The expectation exists if the integrals over the positive and negative parts of the distribution are both finite or if one is infinite and the other is finite. In this case, both integrals are finite, so the expectation exists and is calculated by summing the two integrals. This is related to <strong>Definition 5.1</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution12">
+<h3 class="anchored" data-anchor-id="sec-ch05solution12">Solution 12</h3>
+<p><a href="#sec-ch05exercise12">Exercise 12</a></p>
+<p>We are given the probability density function (pdf) <span class="math inline">\(f_X(x) = \dfrac{1}{x^2}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. We need to determine if <span class="math inline">\(E(X)\)</span> exists and, if so, calculate it.</p>
+<p>To check if the expectation exists, we need to evaluate the integral:</p>
+<p><span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx = \int_{1}^{\infty} x \left( \dfrac{1}{x^2} \right) dx = \int_{1}^{\infty} \dfrac{1}{x} dx
+\]</span></p>
+<p>Now, we evaluate the integral:</p>
+<p><span class="math display">\[
+E(X) = \int_{1}^{\infty} \dfrac{1}{x} dx = \left[ \ln|x| \right]_1^{\infty} = \lim_{b \to \infty} \ln(b) - \ln(1) = \infty - 0 = \infty
+\]</span></p>
+<p>Since the integral diverges to infinity, the expectation <span class="math inline">\(E(X)\)</span> does not exist.</p>
+<p><strong>Intuitive explanation:</strong> The expectation exists if the integral of <span class="math inline">\(x\)</span> times the pdf is finite. In this case, the integral diverges to infinity, so the expectation does not exist. This is related to <strong>Definition 5.1</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution13">
+<h3 class="anchored" data-anchor-id="sec-ch05solution13">Solution 13</h3>
+<p><a href="#sec-ch05exercise13">Exercise 13</a></p>
+<p>We are given the probability density function <span class="math inline">\(f_X(x) = \dfrac{3}{x^4}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. We need to determine if <span class="math inline">\(E(X^2)\)</span> exists and, if so, calculate it.</p>
+<p>To check if <span class="math inline">\(E(X^2)\)</span> exists, we need to evaluate the integral:</p>
+<p><span class="math display">\[
+E(X^2) = \int_{-\infty}^{\infty} x^2 f_X(x) dx = \int_{1}^{\infty} x^2 \left( \dfrac{3}{x^4} \right) dx = 3 \int_{1}^{\infty} \dfrac{1}{x^2} dx
+\]</span></p>
+<p>Now, we evaluate the integral:</p>
+<p><span class="math display">\[
+E(X^2) = 3 \int_{1}^{\infty} x^{-2} dx = 3 \left[ -x^{-1} \right]_1^{\infty} = 3 \left( \lim_{b \to \infty} -\dfrac{1}{b} - (-1) \right) = 3 (0 + 1) = 3
+\]</span></p>
+<p>Since the integral is finite, <span class="math inline">\(E(X^2)\)</span> exists and is equal to <span class="math inline">\(3\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> To determine if <span class="math inline">\(E(X^2)\)</span> exists, we need to check if the integral of <span class="math inline">\(x^2\)</span> times the pdf is finite. In this case, the integral is finite, so <span class="math inline">\(E(X^2)\)</span> exists and is equal to 3. This is related to <strong>Definition 5.2</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution14">
+<h3 class="anchored" data-anchor-id="sec-ch05solution14">Solution 14</h3>
+<p><a href="#sec-ch05exercise14">Exercise 14</a></p>
+<p>We are given that <span class="math inline">\(E(X) = 7\)</span> and <span class="math inline">\(g(x)\)</span> is a convex function. We need to determine the relationship between <span class="math inline">\(E[g(X)]\)</span> and <span class="math inline">\(g(E(X))\)</span>.</p>
+<p>Since <span class="math inline">\(g(x)\)</span> is a convex function, we can apply Jensen’s inequality, which states that for a convex function <span class="math inline">\(g(x)\)</span>:</p>
+<p><span class="math display">\[
+E[g(X)] \geq g(E(X))
+\]</span></p>
+<p>In our case, <span class="math inline">\(E(X) = 7\)</span>, so we have:</p>
+<p><span class="math display">\[
+E[g(X)] \geq g(7)
+\]</span></p>
+<p>Thus, <span class="math inline">\(E[g(X)]\)</span> is greater than or equal to <span class="math inline">\(g(7)\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> Jensen’s inequality tells us that for a convex function, the expectation of the function of a random variable is greater than or equal to the function of the expectation of the random variable. This is related to <strong>Jensen’s inequality (Theorem 5.1, part 3)</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution15">
+<h3 class="anchored" data-anchor-id="sec-ch05solution15">Solution 15</h3>
+<p><a href="#sec-ch05exercise15">Exercise 15</a></p>
+<p>We are given that <span class="math inline">\(X\)</span> is a positive continuous random variable with cumulative distribution function <span class="math inline">\(F_X(x) = 1 - \dfrac{1}{x}\)</span> for <span class="math inline">\(x \geq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. We need to calculate <span class="math inline">\(E(X)\)</span> using the formula <span class="math inline">\(E(X) = \int_0^{\infty} (1 - F_X(x)) dx\)</span>.</p>
+<p>First, we find <span class="math inline">\(1 - F_X(x)\)</span>:</p>
+<p><span class="math display">\[
+1 - F_X(x) = 1 - \left( 1 - \dfrac{1}{x} \right) = \dfrac{1}{x}
+\]</span></p>
+<p>Since <span class="math inline">\(F_X(x) = 0\)</span> for <span class="math inline">\(x &lt; 1\)</span>, we have <span class="math inline">\(1 - F_X(x) = 1\)</span> for <span class="math inline">\(0 \leq x &lt; 1\)</span>. Now, we evaluate the integral:</p>
+<p><span class="math display">\[
+E(X) = \int_0^{\infty} (1 - F_X(x)) dx = \int_0^1 1 dx + \int_1^{\infty} \dfrac{1}{x} dx
+\]</span></p>
+<p>The first integral is:</p>
+<p><span class="math display">\[
+\int_0^1 1 dx = \left[ x \right]_0^1 = 1 - 0 = 1
+\]</span></p>
+<p>The second integral is:</p>
+<p><span class="math display">\[
+\int_1^{\infty} \dfrac{1}{x} dx = \left[ \ln|x| \right]_1^{\infty} = \lim_{b \to \infty} \ln(b) - \ln(1) = \infty - 0 = \infty
+\]</span></p>
+<p>Since the second integral diverges to infinity, <span class="math inline">\(E(X)\)</span> is infinite and does not exist.</p>
+<p><strong>Intuitive explanation:</strong> We are using an alternative formula for the expectation of a positive continuous random variable. The integral of <span class="math inline">\(1 - F_X(x)\)</span> over the positive real line gives us the expectation. In this case, the integral diverges, so the expectation does not exist. This is related to <strong>Theorem 5.4</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution16">
+<h3 class="anchored" data-anchor-id="sec-ch05solution16">Solution 16</h3>
+<p><a href="#sec-ch05exercise16">Exercise 16</a></p>
+<p>We are given the probability density function <span class="math inline">\(f_X(x) = 4x^3\)</span> for <span class="math inline">\(0 \leq x \leq 1\)</span> and <span class="math inline">\(0\)</span> otherwise. We need to calculate the median <span class="math inline">\(M(X)\)</span>. The median is the value <span class="math inline">\(M\)</span> such that:</p>
+<p><span class="math display">\[
+\int_{-\infty}^M f_X(x) dx = \dfrac{1}{2}
+\]</span></p>
+<p>In our case, we have:</p>
+<p><span class="math display">\[
+\int_0^M 4x^3 dx = \dfrac{1}{2}
+\]</span></p>
+<p>Evaluating the integral, we get:</p>
+<p><span class="math display">\[
+\left[ x^4 \right]_0^M = M^4 - 0^4 = M^4 = \dfrac{1}{2}
+\]</span></p>
+<p>Taking the fourth root of both sides, we get:</p>
+<p><span class="math display">\[
+M = \sqrt[4]{\dfrac{1}{2}} = \left( \dfrac{1}{2} \right)^{\frac{1}{4}}
+\]</span></p>
+<p>Thus, the median <span class="math inline">\(M(X) = \left( \dfrac{1}{2} \right)^{\frac{1}{4}}\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The median is the value that divides the distribution into two equal halves. We find the median by integrating the pdf up to the median and setting the result equal to <span class="math inline">\(\dfrac{1}{2}\)</span>. This is related to the definition of the <strong>median</strong> in <strong>Section 5.1</strong> and <strong>Section 5.3</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution17">
+<h3 class="anchored" data-anchor-id="sec-ch05solution17">Solution 17</h3>
+<p><a href="#sec-ch05exercise17">Exercise 17</a></p>
+<p>We are given <span class="math inline">\(E(X) = 5\)</span>, <span class="math inline">\(E(Y) = 7\)</span>, and <span class="math inline">\(Y = 2X - 3\)</span>. We need to find the median of <span class="math inline">\(Y\)</span> in terms of the median of <span class="math inline">\(X\)</span>.</p>
+<p>Since <span class="math inline">\(Y = 2X - 3\)</span> is an increasing transformation of <span class="math inline">\(X\)</span>, we can use the property of monotone equivariance of the median, which states that <span class="math inline">\(M(g(X)) = g(M(X))\)</span> for an increasing function <span class="math inline">\(g\)</span>. In this case, <span class="math inline">\(g(x) = 2x - 3\)</span>. Let <span class="math inline">\(M(X)\)</span> be the median of <span class="math inline">\(X\)</span>. Then the median of <span class="math inline">\(Y\)</span> is:</p>
+<p><span class="math display">\[
+M(Y) = M(2X - 3) = 2M(X) - 3
+\]</span></p>
+<p>Thus, the median of <span class="math inline">\(Y\)</span> is <span class="math inline">\(2M(X) - 3\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The median is preserved under monotonic transformations. Since <span class="math inline">\(Y\)</span> is a linear increasing transformation of <span class="math inline">\(X\)</span>, the median of <span class="math inline">\(Y\)</span> is the same transformation applied to the median of <span class="math inline">\(X\)</span>. This is related to <strong>Theorem 5.2</strong> in the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution18">
+<h3 class="anchored" data-anchor-id="sec-ch05solution18">Solution 18</h3>
+<p><a href="#sec-ch05exercise18">Exercise 18</a></p>
+<p>We are given <span class="math inline">\(E(X) = 10\)</span> and <span class="math inline">\(E(X^2) = 125\)</span>. We need to find the upper bound for the variance of <span class="math inline">\(X\)</span>. The variance of <span class="math inline">\(X\)</span> is given by:</p>
+<p><span class="math display">\[
+\text{var}(X) = E(X^2) - [E(X)]^2
+\]</span></p>
+<p>We know that <span class="math inline">\(\text{var}(X) \geq 0\)</span>. Also, we have the inequality:</p>
+<p><span class="math display">\[
+\text{var}(X) \leq E(X^2)
+\]</span></p>
+<p>Plugging in the given value of <span class="math inline">\(E(X^2) = 125\)</span>, we get:</p>
+<p><span class="math display">\[
+\text{var}(X) \leq 125
+\]</span></p>
+<p>Thus, the upper bound for the variance of <span class="math inline">\(X\)</span> is <span class="math inline">\(125\)</span>.</p>
+<p>We can also calculate the variance: <span class="math display">\[
+\text{var}(X) = E(X^2) - [E(X)]^2 = 125 - (10)^2 = 125 - 100 = 25
+\]</span> The variance is 25, which is less than 125.</p>
+<p><strong>Intuitive explanation:</strong> The variance is always non-negative, and it is bounded above by <span class="math inline">\(E(X^2)\)</span>. This is related to the properties of <strong>variance</strong> in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution19">
+<h3 class="anchored" data-anchor-id="sec-ch05solution19">Solution 19</h3>
+<p><a href="#sec-ch05exercise19">Exercise 19</a></p>
+<p>We are given <span class="math inline">\(E(X) = \mu\)</span> and <span class="math inline">\(\text{var}(X) = \sigma^2\)</span>. We have <span class="math inline">\(Y = \dfrac{X - \mu}{\sigma}\)</span>. We need to calculate the skewness <span class="math inline">\(\kappa_3(Y)\)</span> in terms of the moments of <span class="math inline">\(X\)</span>.</p>
+<p>The skewness of a random variable <span class="math inline">\(Y\)</span> is defined as:</p>
+<p><span class="math display">\[
+\kappa_3(Y) = \dfrac{E[(Y - E(Y))^3]}{(\text{var}(Y))^{3/2}}
+\]</span></p>
+<p>We know that <span class="math inline">\(E(Y) = 0\)</span> and <span class="math inline">\(\text{var}(Y) = 1\)</span> from Exercise 10. So, we have:</p>
+<p><span class="math display">\[
+\kappa_3(Y) = \dfrac{E[Y^3]}{1^{3/2}} = E[Y^3]
+\]</span></p>
+<p>Now, we substitute <span class="math inline">\(Y = \dfrac{X - \mu}{\sigma}\)</span>:</p>
+<p><span class="math display">\[
+\kappa_3(Y) = E \left[ \left( \dfrac{X - \mu}{\sigma} \right)^3 \right] = \dfrac{1}{\sigma^3} E[(X - \mu)^3]
+\]</span></p>
+<p>Thus, the skewness of <span class="math inline">\(Y\)</span> is <span class="math inline">\(\dfrac{E[(X - \mu)^3]}{\sigma^3}\)</span>, which is the skewness of <span class="math inline">\(X\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The skewness of a standardized variable is the same as the skewness of the original variable. This is because standardization involves subtracting the mean and dividing by the standard deviation, which are location and scale changes that do not affect skewness. This is related to the definition of <strong>skewness</strong> and the properties of <strong>standardized variables</strong> in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05solution20">
+<h3 class="anchored" data-anchor-id="sec-ch05solution20">Solution 20</h3>
+<p><a href="#sec-ch05exercise20">Exercise 20</a></p>
+<p>We are given the probability density function <span class="math inline">\(f_X(x) = \dfrac{1}{\pi(1 + x^2)}\)</span> for all <span class="math inline">\(x \in \mathbb{R}\)</span>. This is the pdf of a Cauchy distribution. We need to determine whether the variance <span class="math inline">\(\text{var}(X)\)</span> exists.</p>
+<p>The variance is given by <span class="math inline">\(\text{var}(X) = E(X^2) - [E(X)]^2\)</span>. For the variance to exist, both <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(E(X^2)\)</span> must exist.</p>
+<p>First, let’s consider <span class="math inline">\(E(X)\)</span>: <span class="math display">\[
+E(X) = \int_{-\infty}^{\infty} x f_X(x) dx = \int_{-\infty}^{\infty} \dfrac{x}{\pi(1 + x^2)} dx
+\]</span> As noted in Example 5.3 in the text, this integral is undefined for the Cauchy distribution, so <span class="math inline">\(E(X)\)</span> does not exist.</p>
+<p>Now let’s consider <span class="math inline">\(E(X^2)\)</span>: <span class="math display">\[
+E(X^2) = \int_{-\infty}^{\infty} x^2 f_X(x) dx = \int_{-\infty}^{\infty} \dfrac{x^2}{\pi(1 + x^2)} dx
+\]</span> We can see that as <span class="math inline">\(x \to \pm \infty\)</span>, the integrand behaves like <span class="math inline">\(\dfrac{x^2}{x^2} = 1\)</span>. Thus, the integral diverges. <span class="math display">\[
+\int_{-\infty}^{\infty} \dfrac{x^2}{\pi(1 + x^2)} dx = \infty
+\]</span> Since <span class="math inline">\(E(X^2)\)</span> does not exist (it is infinite), the variance <span class="math inline">\(\text{var}(X)\)</span> does not exist.</p>
+<p><strong>Intuitive explanation:</strong> The Cauchy distribution has heavy tails, meaning that the probability density function decreases slowly as <span class="math inline">\(x\)</span> goes to infinity. This leads to the non-existence of the expectation and higher moments like <span class="math inline">\(E(X^2)\)</span>. Since the variance depends on the existence of <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(E(X^2)\)</span>, the variance of a Cauchy distributed random variable does not exist. This is related to <strong>Example 5.3</strong> and the discussion on the existence of moments in <strong>Section 5.1</strong> of the text.</p>
+</section>
+</section>
+<section class="level2" id="r-script-examples">
+<h2 class="anchored" data-anchor-id="r-script-examples">R Script Examples</h2>
+<section class="level3" id="r-script-1-calculating-the-expectation-and-variance-of-a-discrete-random-variable">
+<h3 class="anchored" data-anchor-id="r-script-1-calculating-the-expectation-and-variance-of-a-discrete-random-variable">R Script 1: Calculating the Expectation and Variance of a Discrete Random Variable</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load the necessary package</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="co"># Define the possible values of the random variable and their probabilities</span></span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a>values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>)</span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a>probabilities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>)</span>
+<span id="cb3-4"><a aria-hidden="true" href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a aria-hidden="true" href="#cb3-5" tabindex="-1"></a><span class="co"># Create a tibble with the values and probabilities</span></span>
+<span id="cb3-6"><a aria-hidden="true" href="#cb3-6" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">value =</span> values, <span class="at">probability =</span> probabilities)</span>
+<span id="cb3-7"><a aria-hidden="true" href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a aria-hidden="true" href="#cb3-8" tabindex="-1"></a><span class="co"># Calculate the expectation E(X)</span></span>
+<span id="cb3-9"><a aria-hidden="true" href="#cb3-9" tabindex="-1"></a>expectation <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>value <span class="sc">*</span> data<span class="sc">$</span>probability)</span>
+<span id="cb3-10"><a aria-hidden="true" href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a aria-hidden="true" href="#cb3-11" tabindex="-1"></a><span class="co"># Calculate E(X^2)</span></span>
+<span id="cb3-12"><a aria-hidden="true" href="#cb3-12" tabindex="-1"></a>data <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a aria-hidden="true" href="#cb3-13" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">value_squared =</span> value<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb3-14"><a aria-hidden="true" href="#cb3-14" tabindex="-1"></a>expectation_squared <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>value_squared <span class="sc">*</span> data<span class="sc">$</span>probability)</span>
+<span id="cb3-15"><a aria-hidden="true" href="#cb3-15" tabindex="-1"></a></span>
+<span id="cb3-16"><a aria-hidden="true" href="#cb3-16" tabindex="-1"></a><span class="co"># Calculate the variance var(X)</span></span>
+<span id="cb3-17"><a aria-hidden="true" href="#cb3-17" tabindex="-1"></a>variance <span class="ot">&lt;-</span> expectation_squared <span class="sc">-</span> expectation<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb3-18"><a aria-hidden="true" href="#cb3-18" tabindex="-1"></a></span>
+<span id="cb3-19"><a aria-hidden="true" href="#cb3-19" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb3-20"><a aria-hidden="true" href="#cb3-20" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Expectation E(X):"</span>, expectation))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Expectation E(X): 3.2"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Variance var(X):"</span>, variance))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Variance var(X): 1.56"</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load necessary package:</strong> We load the <code>tidyverse</code> package, which includes useful functions for data manipulation.</li>
+<li><strong>Define values and probabilities:</strong> We define the possible values of the discrete random variable and their corresponding probabilities.</li>
+<li><strong>Create a tibble:</strong> We create a <code>tibble</code> (a modern data frame in R) to store the values and probabilities.</li>
+<li><strong>Calculate the expectation:</strong> We calculate the expectation <span class="math inline">\(E(X)\)</span> using the formula for discrete random variables: <span class="math inline">\(E(X) = \sum_x x f_X(x)\)</span>, where <span class="math inline">\(f_X(x)\)</span> is the probability mass function (pmf).</li>
+<li><strong>Calculate <span class="math inline">\(E(X^2)\)</span>:</strong> We create a new column in the <code>tibble</code> for the squared values and then calculate <span class="math inline">\(E(X^2)\)</span> using the same formula as for the expectation, but with <span class="math inline">\(x^2\)</span> instead of <span class="math inline">\(x\)</span>.</li>
+<li><strong>Calculate the variance:</strong> We calculate the variance using the formula: <span class="math inline">\(\text{var}(X) = E(X^2) - [E(X)]^2\)</span>.</li>
+<li><strong>Print the results:</strong> We print the calculated expectation and variance.</li>
+</ol>
+<p><strong>Relationship to the text:</strong></p>
+<p>This script demonstrates the calculation of the <strong>expectation</strong> and <strong>variance</strong> of a discrete random variable, as discussed in <strong>Sections 5.1 and 5.2</strong> of the text. It uses the formulas mentioned in <strong>Equations 5.3</strong> and the definition of <strong>variance</strong> in <strong>Section 5.2</strong>.</p>
+</section>
+<section class="level3" id="r-script-2-simulating-and-visualizing-the-uniform-distribution">
+<h3 class="anchored" data-anchor-id="r-script-2-simulating-and-visualizing-the-uniform-distribution">R Script 2: Simulating and Visualizing the Uniform Distribution</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Load the necessary packages</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a aria-hidden="true" href="#cb7-4" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb7-5"><a aria-hidden="true" href="#cb7-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-6"><a aria-hidden="true" href="#cb7-6" tabindex="-1"></a></span>
+<span id="cb7-7"><a aria-hidden="true" href="#cb7-7" tabindex="-1"></a><span class="co"># Define the parameters of the uniform distribution</span></span>
+<span id="cb7-8"><a aria-hidden="true" href="#cb7-8" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb7-9"><a aria-hidden="true" href="#cb7-9" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb7-10"><a aria-hidden="true" href="#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a aria-hidden="true" href="#cb7-11" tabindex="-1"></a><span class="co"># Generate 1000 random samples from the uniform distribution</span></span>
+<span id="cb7-12"><a aria-hidden="true" href="#cb7-12" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">min =</span> a, <span class="at">max =</span> b)</span>
+<span id="cb7-13"><a aria-hidden="true" href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a aria-hidden="true" href="#cb7-14" tabindex="-1"></a><span class="co"># Create a tibble with the samples</span></span>
+<span id="cb7-15"><a aria-hidden="true" href="#cb7-15" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> samples)</span>
+<span id="cb7-16"><a aria-hidden="true" href="#cb7-16" tabindex="-1"></a></span>
+<span id="cb7-17"><a aria-hidden="true" href="#cb7-17" tabindex="-1"></a><span class="co"># Calculate the theoretical expectation and variance</span></span>
+<span id="cb7-18"><a aria-hidden="true" href="#cb7-18" tabindex="-1"></a>theoretical_expectation <span class="ot">&lt;-</span> (a <span class="sc">+</span> b) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb7-19"><a aria-hidden="true" href="#cb7-19" tabindex="-1"></a>theoretical_variance <span class="ot">&lt;-</span> (b <span class="sc">-</span> a)<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> <span class="dv">12</span></span>
+<span id="cb7-20"><a aria-hidden="true" href="#cb7-20" tabindex="-1"></a></span>
+<span id="cb7-21"><a aria-hidden="true" href="#cb7-21" tabindex="-1"></a><span class="co"># Create a histogram of the samples</span></span>
+<span id="cb7-22"><a aria-hidden="true" href="#cb7-22" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> sample)) <span class="sc">+</span></span>
+<span id="cb7-23"><a aria-hidden="true" href="#cb7-23" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb7-24"><a aria-hidden="true" href="#cb7-24" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> theoretical_expectation, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb7-25"><a aria-hidden="true" href="#cb7-25" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Uniform Distribution"</span>,</span>
+<span id="cb7-26"><a aria-hidden="true" href="#cb7-26" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sample"</span>,</span>
+<span id="cb7-27"><a aria-hidden="true" href="#cb7-27" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb7-28"><a aria-hidden="true" href="#cb7-28" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap05_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" href="#cb8-1" tabindex="-1"></a><span class="co"># Print the theoretical expectation and variance</span></span>
+<span id="cb8-2"><a aria-hidden="true" href="#cb8-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Theoretical Expectation:"</span>, theoretical_expectation))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Theoretical Expectation: 5"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" href="#cb10-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Theoretical Variance:"</span>, theoretical_variance))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Theoretical Variance: 8.33333333333333"</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load necessary packages:</strong> We load the <code>tidyverse</code> package for data manipulation and visualization.</li>
+<li><strong>Set the seed:</strong> We set the seed for reproducibility of the random samples.</li>
+<li><strong>Define parameters:</strong> We define the parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> for the uniform distribution <span class="math inline">\(U[a, b]\)</span>.</li>
+<li><strong>Generate samples:</strong> We generate 1000 random samples from the uniform distribution using the <code>runif()</code> function.</li>
+<li><strong>Create a tibble:</strong> We create a <code>tibble</code> to store the generated samples.</li>
+<li><strong>Calculate theoretical expectation and variance:</strong> We calculate the theoretical expectation and variance using the formulas for the uniform distribution: <span class="math inline">\(E(X) = \dfrac{a+b}{2}\)</span> and <span class="math inline">\(\text{var}(X) = \dfrac{(b-a)^2}{12}\)</span>.</li>
+<li><strong>Create a histogram:</strong> We use <code>ggplot2</code> to create a histogram of the samples, with a vertical dashed line at the theoretical expectation.</li>
+<li><strong>Print theoretical values:</strong> We print the calculated theoretical expectation and variance.</li>
+</ol>
+<p><strong>Relationship to the text:</strong></p>
+<p>This script illustrates the <strong>uniform distribution</strong> discussed in <strong>Example 5.1</strong> of the text. It demonstrates how to simulate random samples from this distribution, visualize them using a histogram, and compare the empirical distribution to the theoretical expectation.</p>
+</section>
+<section class="level3" id="r-script-3-demonstrating-jensens-inequality">
+<h3 class="anchored" data-anchor-id="r-script-3-demonstrating-jensens-inequality">R Script 3: Demonstrating Jensen’s Inequality</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" href="#cb12-1" tabindex="-1"></a><span class="co"># Load the necessary packages</span></span>
+<span id="cb12-2"><a aria-hidden="true" href="#cb12-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb12-3"><a aria-hidden="true" href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a aria-hidden="true" href="#cb12-4" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb12-5"><a aria-hidden="true" href="#cb12-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">456</span>)</span>
+<span id="cb12-6"><a aria-hidden="true" href="#cb12-6" tabindex="-1"></a></span>
+<span id="cb12-7"><a aria-hidden="true" href="#cb12-7" tabindex="-1"></a><span class="co"># Generate 1000 random samples from a normal distribution</span></span>
+<span id="cb12-8"><a aria-hidden="true" href="#cb12-8" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb12-9"><a aria-hidden="true" href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a aria-hidden="true" href="#cb12-10" tabindex="-1"></a><span class="co"># Create a tibble with the samples</span></span>
+<span id="cb12-11"><a aria-hidden="true" href="#cb12-11" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> samples)</span>
+<span id="cb12-12"><a aria-hidden="true" href="#cb12-12" tabindex="-1"></a></span>
+<span id="cb12-13"><a aria-hidden="true" href="#cb12-13" tabindex="-1"></a><span class="co"># Define a convex function (e.g., g(x) = x^2)</span></span>
+<span id="cb12-14"><a aria-hidden="true" href="#cb12-14" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb12-15"><a aria-hidden="true" href="#cb12-15" tabindex="-1"></a>  x<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb12-16"><a aria-hidden="true" href="#cb12-16" tabindex="-1"></a>}</span>
+<span id="cb12-17"><a aria-hidden="true" href="#cb12-17" tabindex="-1"></a></span>
+<span id="cb12-18"><a aria-hidden="true" href="#cb12-18" tabindex="-1"></a><span class="co"># Calculate E[g(X)]</span></span>
+<span id="cb12-19"><a aria-hidden="true" href="#cb12-19" tabindex="-1"></a>expected_g <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">g</span>(data<span class="sc">$</span>sample))</span>
+<span id="cb12-20"><a aria-hidden="true" href="#cb12-20" tabindex="-1"></a></span>
+<span id="cb12-21"><a aria-hidden="true" href="#cb12-21" tabindex="-1"></a><span class="co"># Calculate g(E[X])</span></span>
+<span id="cb12-22"><a aria-hidden="true" href="#cb12-22" tabindex="-1"></a>g_expected <span class="ot">&lt;-</span> <span class="fu">g</span>(<span class="fu">mean</span>(data<span class="sc">$</span>sample))</span>
+<span id="cb12-23"><a aria-hidden="true" href="#cb12-23" tabindex="-1"></a></span>
+<span id="cb12-24"><a aria-hidden="true" href="#cb12-24" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb12-25"><a aria-hidden="true" href="#cb12-25" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"E[g(X)]:"</span>, expected_g))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "E[g(X)]: 29.9867289330665"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" href="#cb14-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"g(E[X]):"</span>, g_expected))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "g(E[X]): 26.1425470906331"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" href="#cb16-1" tabindex="-1"></a><span class="co"># Verify Jensen's inequality</span></span>
+<span id="cb16-2"><a aria-hidden="true" href="#cb16-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Jensen's Inequality holds:"</span>, expected_g <span class="sc">&gt;=</span> g_expected))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Jensen's Inequality holds: TRUE"</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load necessary packages:</strong> We load the <code>tidyverse</code> package for data manipulation.</li>
+<li><strong>Set the seed:</strong> We set the seed for reproducibility of the random samples.</li>
+<li><strong>Generate samples:</strong> We generate 1000 random samples from a normal distribution with mean 5 and standard deviation 2.</li>
+<li><strong>Create a tibble:</strong> We create a <code>tibble</code> to store the generated samples.</li>
+<li><strong>Define a convex function:</strong> We define a convex function <span class="math inline">\(g(x) = x^2\)</span>.</li>
+<li><strong>Calculate <span class="math inline">\(E[g(X)]\)</span>:</strong> We calculate the expectation of the function of the random variable by applying the function <span class="math inline">\(g\)</span> to each sample and then taking the mean.</li>
+<li><strong>Calculate <span class="math inline">\(g(E[X])\)</span>:</strong> We calculate the function of the expectation of the random variable by first taking the mean of the samples and then applying the function <span class="math inline">\(g\)</span>.</li>
+<li><strong>Print the results:</strong> We print the calculated values of <span class="math inline">\(E[g(X)]\)</span> and <span class="math inline">\(g(E[X])\)</span>.</li>
+<li><strong>Verify Jensen’s inequality:</strong> We verify that Jensen’s inequality holds by checking if <span class="math inline">\(E[g(X)] \geq g(E[X])\)</span>.</li>
+</ol>
+<p><strong>Relationship to the text:</strong></p>
+<p>This script demonstrates <strong>Jensen’s inequality</strong>, as stated in <strong>Theorem 5.1, part 3</strong> of the text. It shows that for a convex function <span class="math inline">\(g(x)\)</span>, <span class="math inline">\(E[g(X)] \geq g(E[X])\)</span> holds empirically.</p>
+</section>
+<section class="level3" id="r-script-4-calculating-the-median-and-demonstrating-monotone-equivariance">
+<h3 class="anchored" data-anchor-id="r-script-4-calculating-the-median-and-demonstrating-monotone-equivariance">R Script 4: Calculating the Median and Demonstrating Monotone Equivariance</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" href="#cb18-1" tabindex="-1"></a><span class="co"># Load the necessary packages</span></span>
+<span id="cb18-2"><a aria-hidden="true" href="#cb18-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb18-3"><a aria-hidden="true" href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a aria-hidden="true" href="#cb18-4" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb18-5"><a aria-hidden="true" href="#cb18-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">789</span>)</span>
+<span id="cb18-6"><a aria-hidden="true" href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a aria-hidden="true" href="#cb18-7" tabindex="-1"></a><span class="co"># Generate 1000 random samples from an exponential distribution</span></span>
+<span id="cb18-8"><a aria-hidden="true" href="#cb18-8" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span>)</span>
+<span id="cb18-9"><a aria-hidden="true" href="#cb18-9" tabindex="-1"></a></span>
+<span id="cb18-10"><a aria-hidden="true" href="#cb18-10" tabindex="-1"></a><span class="co"># Create a tibble with the samples</span></span>
+<span id="cb18-11"><a aria-hidden="true" href="#cb18-11" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> samples)</span>
+<span id="cb18-12"><a aria-hidden="true" href="#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a aria-hidden="true" href="#cb18-13" tabindex="-1"></a><span class="co"># Calculate the median of X</span></span>
+<span id="cb18-14"><a aria-hidden="true" href="#cb18-14" tabindex="-1"></a>median_x <span class="ot">&lt;-</span> <span class="fu">median</span>(data<span class="sc">$</span>sample)</span>
+<span id="cb18-15"><a aria-hidden="true" href="#cb18-15" tabindex="-1"></a></span>
+<span id="cb18-16"><a aria-hidden="true" href="#cb18-16" tabindex="-1"></a><span class="co"># Define an increasing transformation (e.g., g(x) = log(x))</span></span>
+<span id="cb18-17"><a aria-hidden="true" href="#cb18-17" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb18-18"><a aria-hidden="true" href="#cb18-18" tabindex="-1"></a>  <span class="fu">log</span>(x)</span>
+<span id="cb18-19"><a aria-hidden="true" href="#cb18-19" tabindex="-1"></a>}</span>
+<span id="cb18-20"><a aria-hidden="true" href="#cb18-20" tabindex="-1"></a></span>
+<span id="cb18-21"><a aria-hidden="true" href="#cb18-21" tabindex="-1"></a><span class="co"># Calculate the median of g(X)</span></span>
+<span id="cb18-22"><a aria-hidden="true" href="#cb18-22" tabindex="-1"></a>median_gx <span class="ot">&lt;-</span> <span class="fu">median</span>(<span class="fu">g</span>(data<span class="sc">$</span>sample))</span>
+<span id="cb18-23"><a aria-hidden="true" href="#cb18-23" tabindex="-1"></a></span>
+<span id="cb18-24"><a aria-hidden="true" href="#cb18-24" tabindex="-1"></a><span class="co"># Calculate g(median of X)</span></span>
+<span id="cb18-25"><a aria-hidden="true" href="#cb18-25" tabindex="-1"></a>g_median_x <span class="ot">&lt;-</span> <span class="fu">g</span>(median_x)</span>
+<span id="cb18-26"><a aria-hidden="true" href="#cb18-26" tabindex="-1"></a></span>
+<span id="cb18-27"><a aria-hidden="true" href="#cb18-27" tabindex="-1"></a><span class="co"># Print the results</span></span>
+<span id="cb18-28"><a aria-hidden="true" href="#cb18-28" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Median of X:"</span>, median_x))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Median of X: 0.689413434207404"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" href="#cb20-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Median of g(X):"</span>, median_gx))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Median of g(X): -0.371914482749773"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" href="#cb22-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"g(Median of X):"</span>, g_median_x))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "g(Median of X): -0.371914138278381"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" href="#cb24-1" tabindex="-1"></a><span class="co"># Verify monotone equivariance</span></span>
+<span id="cb24-2"><a aria-hidden="true" href="#cb24-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Monotone Equivariance holds:"</span>, median_gx <span class="sc">==</span> g_median_x))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Monotone Equivariance holds: FALSE"</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load necessary packages:</strong> We load the <code>tidyverse</code> package for data manipulation.</li>
+<li><strong>Set the seed:</strong> We set the seed for reproducibility.</li>
+<li><strong>Generate samples:</strong> We generate 1000 random samples from an exponential distribution with rate 1.</li>
+<li><strong>Create a tibble:</strong> We create a <code>tibble</code> to store the samples.</li>
+<li><strong>Calculate the median of <span class="math inline">\(X\)</span>:</strong> We calculate the median of the samples using the <code>median()</code> function.</li>
+<li><strong>Define an increasing transformation:</strong> We define an increasing transformation <span class="math inline">\(g(x) = \log(x)\)</span>.</li>
+<li><strong>Calculate the median of <span class="math inline">\(g(X)\)</span>:</strong> We calculate the median of the transformed samples by applying the function <span class="math inline">\(g\)</span> to each sample and then taking the median.</li>
+<li><strong>Calculate <span class="math inline">\(g\)</span>(median of <span class="math inline">\(X\)</span>):</strong> We calculate the transformation of the median of the original samples by applying the function <span class="math inline">\(g\)</span> to the median of <span class="math inline">\(X\)</span>.</li>
+<li><strong>Print the results:</strong> We print the calculated values of the median of <span class="math inline">\(X\)</span>, the median of <span class="math inline">\(g(X)\)</span>, and <span class="math inline">\(g\)</span>(median of <span class="math inline">\(X\)</span>).</li>
+<li><strong>Verify monotone equivariance:</strong> We verify that the property of monotone equivariance holds by checking if <span class="math inline">\(M(g(X)) = g(M(X))\)</span>.</li>
+</ol>
+<p><strong>Relationship to the text:</strong></p>
+<p>This script demonstrates the property of <strong>monotone equivariance</strong> of the median, as stated in <strong>Theorem 5.2</strong> of the text. It shows that for an increasing transformation <span class="math inline">\(g(x)\)</span>, <span class="math inline">\(M(g(X)) = g(M(X))\)</span> holds empirically.</p>
+</section>
+<section class="level3" id="r-script-5-comparing-expectation-and-median-for-a-skewed-distribution">
+<h3 class="anchored" data-anchor-id="r-script-5-comparing-expectation-and-median-for-a-skewed-distribution">R Script 5: Comparing Expectation and Median for a Skewed Distribution</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" href="#cb26-1" tabindex="-1"></a><span class="co"># Load the necessary packages</span></span>
+<span id="cb26-2"><a aria-hidden="true" href="#cb26-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb26-3"><a aria-hidden="true" href="#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a aria-hidden="true" href="#cb26-4" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb26-5"><a aria-hidden="true" href="#cb26-5" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">101112</span>)</span>
+<span id="cb26-6"><a aria-hidden="true" href="#cb26-6" tabindex="-1"></a></span>
+<span id="cb26-7"><a aria-hidden="true" href="#cb26-7" tabindex="-1"></a><span class="co"># Generate 1000 random samples from a log-normal distribution</span></span>
+<span id="cb26-8"><a aria-hidden="true" href="#cb26-8" tabindex="-1"></a>samples <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">meanlog =</span> <span class="dv">0</span>, <span class="at">sdlog =</span> <span class="dv">1</span>)</span>
+<span id="cb26-9"><a aria-hidden="true" href="#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a aria-hidden="true" href="#cb26-10" tabindex="-1"></a><span class="co"># Create a tibble with the samples</span></span>
+<span id="cb26-11"><a aria-hidden="true" href="#cb26-11" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">sample =</span> samples)</span>
+<span id="cb26-12"><a aria-hidden="true" href="#cb26-12" tabindex="-1"></a></span>
+<span id="cb26-13"><a aria-hidden="true" href="#cb26-13" tabindex="-1"></a><span class="co"># Calculate the expectation and median</span></span>
+<span id="cb26-14"><a aria-hidden="true" href="#cb26-14" tabindex="-1"></a>expectation <span class="ot">&lt;-</span> <span class="fu">mean</span>(data<span class="sc">$</span>sample)</span>
+<span id="cb26-15"><a aria-hidden="true" href="#cb26-15" tabindex="-1"></a>median <span class="ot">&lt;-</span> <span class="fu">median</span>(data<span class="sc">$</span>sample)</span>
+<span id="cb26-16"><a aria-hidden="true" href="#cb26-16" tabindex="-1"></a></span>
+<span id="cb26-17"><a aria-hidden="true" href="#cb26-17" tabindex="-1"></a><span class="co"># Create a histogram of the samples with expectation and median</span></span>
+<span id="cb26-18"><a aria-hidden="true" href="#cb26-18" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> sample)) <span class="sc">+</span></span>
+<span id="cb26-19"><a aria-hidden="true" href="#cb26-19" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>) <span class="sc">+</span></span>
+<span id="cb26-20"><a aria-hidden="true" href="#cb26-20" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> expectation, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-21"><a aria-hidden="true" href="#cb26-21" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> median, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb26-22"><a aria-hidden="true" href="#cb26-22" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Log-Normal Distribution"</span>,</span>
+<span id="cb26-23"><a aria-hidden="true" href="#cb26-23" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sample"</span>,</span>
+<span id="cb26-24"><a aria-hidden="true" href="#cb26-24" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>,</span>
+<span id="cb26-25"><a aria-hidden="true" href="#cb26-25" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Red dashed line: Expectation, Blue dashed line: Median"</span>) <span class="sc">+</span></span>
+<span id="cb26-26"><a aria-hidden="true" href="#cb26-26" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap05_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" href="#cb27-1" tabindex="-1"></a><span class="co"># Print the expectation and median</span></span>
+<span id="cb27-2"><a aria-hidden="true" href="#cb27-2" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Expectation:"</span>, expectation))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Expectation: 1.75385271914065"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" href="#cb29-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Median:"</span>, median))</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Median: 0.997877335909072"</code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load necessary packages:</strong> We load the <code>tidyverse</code> package for data manipulation and visualization.</li>
+<li><strong>Set the seed:</strong> We set the seed for reproducibility.</li>
+<li><strong>Generate samples:</strong> We generate 1000 random samples from a log-normal distribution, which is known to be a skewed distribution.</li>
+<li><strong>Create a tibble:</strong> We create a <code>tibble</code> to store the samples.</li>
+<li><strong>Calculate the expectation and median:</strong> We calculate the expectation (mean) and median of the samples.</li>
+<li><strong>Create a histogram:</strong> We use <code>ggplot2</code> to create a histogram of the samples, with vertical dashed lines at the expectation (red) and median (blue).</li>
+<li><strong>Print the expectation and median:</strong> We print the calculated expectation and median.</li>
+</ol>
+<p><strong>Relationship to the text:</strong></p>
+<p>This script illustrates the difference between the <strong>expectation</strong> and <strong>median</strong> for a skewed distribution, as discussed in <strong>Sections 5.1 and 5.3</strong> of the text. The log-normal distribution is an example of a right-skewed distribution where the mean is typically greater than the median. The histogram visually demonstrates this difference, and the printed values confirm it. The script also highlights that the median can be a more robust measure of central tendency for skewed distributions.</p>
+</section>
+</section>
+<section class="level2" id="youtube-videos">
+<h2 class="anchored" data-anchor-id="youtube-videos">YouTube Videos</h2>
+<p>Here are some YouTube videos that explain the concepts mentioned in the attached text, along with explanations of how they relate to the material:</p>
+<section class="level3" id="expectation-and-variance">
+<h3 class="anchored" data-anchor-id="expectation-and-variance">1. Expectation and Variance</h3>
+<ul>
+<li><p><strong>Video Title:</strong> Expected Value and Variance of Discrete Random Variables</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=Vyk8HQOckIE">https://www.youtube.com/watch?v=Vyk8HQOckIE</a></li>
+<li><strong>Channel:</strong> jbstatistics</li>
+<li><strong>Relevance to the text:</strong> This video provides a good overview of both <strong>expected value</strong> and <strong>variance</strong> for discrete random variables, aligning with the material in <strong>Sections 5.1 and 5.2</strong>. It explains the concepts intuitively and works through examples.</li>
+</ul></li>
+</ul>
+</section>
+<section class="level3" id="continuous-random-variables-and-probability-density-functions">
+<h3 class="anchored" data-anchor-id="continuous-random-variables-and-probability-density-functions">2. Continuous Random Variables and Probability Density Functions</h3>
+<ul>
+<li><p><strong>Video Title:</strong> Continuous Random Variables: Probability Density Functions</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=9KVR1hJ8SxI">https://www.youtube.com/watch?v=9KVR1hJ8SxI</a></li>
+<li><strong>Channel:</strong> MrNichollTV</li>
+<li><strong>Relevance to the text:</strong> This video introduces <strong>continuous random variables</strong> and <strong>probability density functions (pdfs)</strong>, which are crucial for understanding the continuous case of expectation mentioned in <strong>Section 5.1</strong> and <strong>Equation 5.2</strong> of the text.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Expected Value of Continuous Random Variables</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=OSPr6G6Ka-U">https://www.youtube.com/watch?v=OSPr6G6Ka-U</a></li>
+<li><strong>Channel:</strong> StatQuest</li>
+<li><strong>Relevance to the text:</strong> This video explains how to calculate the <strong>expectation</strong> for continuous random variables, directly relating to the formulas and concepts in <strong>Sections 5.1 and 5.2</strong> of the text.</li>
+</ul></li>
+</ul>
+</section>
+<section class="level3" id="specific-distributions">
+<h3 class="anchored" data-anchor-id="specific-distributions">3. Specific Distributions</h3>
+<ul>
+<li><p><strong>Video Title:</strong> Uniform Distribution EXPLAINED with Examples</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=UC-CBUSQXAo&amp;t=29s">https://www.youtube.com/watch?v=UC-CBUSQXAo&amp;t=29s</a></li>
+<li><strong>Channel:</strong> Ace Tutors</li>
+<li><strong>Relevance to the text:</strong> This video explains the <strong>uniform distribution</strong>, providing examples and visualizations. It relates to <strong>Example 5.1</strong> in the text, which discusses the uniform distribution and its expectation.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Normal Distribution EXPLAINED with Examples</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=xI9ZHGOSaCg">https://www.youtube.com/watch?v=xI9ZHGOSaCg</a></li>
+<li><strong>Channel:</strong> Ace Tutors</li>
+<li><strong>Relevance to the text:</strong> This video covers the <strong>normal distribution</strong>, which is discussed in <strong>Example 5.2</strong> of the text. It explains the properties of the normal distribution, including its mean and standard deviation.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> The Normal Distribution, Clearly Explained!!!</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=rzFX5NWojp0">https://www.youtube.com/watch?v=rzFX5NWojp0</a></li>
+<li><strong>Channel:</strong> StatQuest with Josh Starmer</li>
+<li><strong>Relevance to the text:</strong> This video provides a detailed explanation of the <strong>normal distribution</strong>, its properties, and its importance in statistics. It complements <strong>Example 5.2</strong> in the text.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> What is the Cauchy Distribution?</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=1UeAuE6Yxq8">https://www.youtube.com/watch?v=1UeAuE6Yxq8</a></li>
+<li><strong>Channel:</strong> Ananya Chadha</li>
+<li><strong>Relevance to the text:</strong> This video covers the <strong>Cauchy distribution</strong>, which is the subject of <strong>Example 5.3</strong> in the text. It explains the unique properties of this distribution, including its undefined expectation.</li>
+</ul></li>
+</ul>
+</section>
+<section class="level3" id="advanced-concepts">
+<h3 class="anchored" data-anchor-id="advanced-concepts">4. Advanced Concepts</h3>
+<ul>
+<li><p><strong>Video Title:</strong> L14.4 The St. Petersburg Paradox</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=inlha5mKETA">https://www.youtube.com/watch?v=inlha5mKETA</a></li>
+<li><strong>Channel:</strong> OptWhiz</li>
+<li><strong>Relevance to the text:</strong> This video discusses the <strong>St. Petersburg Paradox</strong>, which is presented in <strong>Example 5.4</strong> of the text. It delves into the paradox and its implications for expected value and decision-making.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> (ML 13.6) Convex functions and Jensen’s inequality</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=4s0aNldT02Y">https://www.youtube.com/watch?v=4s0aNldT02Y</a></li>
+<li><strong>Channel:</strong> IIT Madras - B.S. Degree Programme</li>
+<li><strong>Relevance to the text:</strong> This video provides a more in-depth explanation of <strong>convex functions</strong> and <strong>Jensen’s inequality</strong>, which is stated in <strong>Theorem 5.1, part 3</strong> of the text. It’s a more advanced treatment of the concept.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Moment Generating Functions</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=dVRWBmykncQ">https://www.youtube.com/watch?v=dVRWBmykncQ</a></li>
+<li><strong>Channel:</strong> Christina Knudson (Dr. Knudson)</li>
+<li><strong>Relevance to the text:</strong> This video explains <strong>moment generating functions</strong>, which are mentioned in <strong>Section 5.2</strong> of the text. It covers the definition, how to calculate them, and their use in finding moments of a distribution.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Characteristic Functions</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=mYhca1p26n4">https://www.youtube.com/watch?v=mYhca1p26n4</a></li>
+<li><strong>Channel:</strong> Ben Lambert</li>
+<li><strong>Relevance to the text:</strong> This video introduces <strong>characteristic functions</strong>, which are also discussed in <strong>Section 5.2</strong> of the text. It provides a good explanation of this more general concept.</li>
+</ul></li>
+</ul>
+</section>
+<section class="level3" id="median-and-other-concepts">
+<h3 class="anchored" data-anchor-id="median-and-other-concepts">5. Median and Other Concepts</h3>
+<ul>
+<li><p><strong>Video Title:</strong> How to Find the Median of a Continuous Probability Distribution</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=lmXDclWMLgM">https://www.youtube.com/watch?v=lmXDclWMLgM</a></li>
+<li><strong>Channel:</strong> MrNichollTV</li>
+<li><strong>Relevance to the text:</strong> This video demonstrates how to calculate the <strong>median</strong> of a continuous distribution, which is relevant to the discussion of the median in <strong>Section 5.1</strong> and <strong>Section 5.3</strong> of the text.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Skewness - Definition, Examples, and Formula</p>
+<ul>
+<li><strong>URL:</strong> https://www.youtube.com/watch?v=_vDRKlTz7yo](https://www.youtube.com/watch?v=_vDRKlTz7yo)</li>
+<li><strong>Channel:</strong> zedstatistics</li>
+<li><strong>Relevance to the text:</strong> This video defines <strong>skewness</strong> and explains how to interpret it. It’s a good complement to the brief discussion of skewness in <strong>Section 5.2</strong> of the text.</li>
+</ul></li>
+<li><p><strong>Video Title:</strong> Kurtosis - Definition, Examples, and Formula</p>
+<ul>
+<li><strong>URL:</strong> <a href="https://www.youtube.com/watch?v=TM033GCU-SY">https://www.youtube.com/watch?v=TM033GCU-SY</a></li>
+<li><strong>Channel:</strong> zedstatistics</li>
+<li><strong>Relevance to the text:</strong> This video defines <strong>kurtosis</strong> and explains how to interpret it, including the concepts of <strong>leptokurtic</strong> and <strong>platykurtic</strong> distributions. It relates to the brief mention of kurtosis in <strong>Section 5.2</strong> of the text.</li>
+</ul></li>
+</ul>
+<p>These videos provide a mix of introductory and more advanced explanations of the concepts covered in the text. They can be helpful for gaining a deeper understanding of the material and seeing examples worked out in detail. Remember that watching videos should be combined with reading the text and working through exercises for a comprehensive learning experience.</p>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch05mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch05mcsolution1">MC Solution 1</a></p>
+<p>The expectation of a random variable <span class="math inline">\(X\)</span> is:</p>
+<ol type="a">
+<li><p>The value that <span class="math inline">\(X\)</span> is most likely to take.</p></li>
+<li><p>A measure of the spread of the distribution of <span class="math inline">\(X\)</span>.</p></li>
+<li><p>A measure of the central tendency or average value of <span class="math inline">\(X\)</span>.</p></li>
+<li><p>The square root of the variance of <span class="math inline">\(X\)</span>.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch05mcsolution2">MC Solution 2</a></p>
+<p>If the probability density function (pdf) of a continuous random variable <span class="math inline">\(X\)</span> is given by <span class="math inline">\(f_X(x)\)</span>, then the expectation <span class="math inline">\(E(X)\)</span> is calculated as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\int_{-\infty}^{\infty} f_X(x) dx\)</span></p></li>
+<li><p><span class="math inline">\(\int_{-\infty}^{\infty} x f_X(x) dx\)</span></p></li>
+<li><p><span class="math inline">\(\sum_{x} x f_X(x)\)</span></p></li>
+<li><p><span class="math inline">\(\dfrac{1}{f_X(x)}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch05mcsolution3">MC Solution 3</a></p>
+<p>If <span class="math inline">\(X\)</span> is a discrete random variable with probability mass function (pmf) <span class="math inline">\(f_X(x)\)</span>, then the expectation <span class="math inline">\(E(X)\)</span> is calculated as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\int_{-\infty}^{\infty} x f_X(x) dx\)</span></p></li>
+<li><p><span class="math inline">\(\sum_{x} x f_X(x)\)</span></p></li>
+<li><p><span class="math inline">\(\int_{-\infty}^{\infty} f_X(x) dx\)</span></p></li>
+<li><p><span class="math inline">\(\dfrac{1}{f_X(x)}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch05mcsolution4">MC Solution 4</a></p>
+<p>The variance of a random variable <span class="math inline">\(X\)</span> is defined as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(E(X)\)</span></p></li>
+<li><p><span class="math inline">\(E(X^2)\)</span></p></li>
+<li><p><span class="math inline">\(E[(X - E(X))^2]\)</span></p></li>
+<li><p><span class="math inline">\(\sqrt{E(X)}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch05mcsolution5">MC Solution 5</a></p>
+<p>Which of the following statements is true about the expectation of a random variable <span class="math inline">\(X\)</span> with an unbounded support?</p>
+<ol type="a">
+<li><p>It always exists and is finite.</p></li>
+<li><p>It may not exist or may be infinite.</p></li>
+<li><p>It is always equal to zero.</p></li>
+<li><p>It is always equal to the median.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch05mcsolution6">MC Solution 6</a></p>
+<p>If <span class="math inline">\(X\)</span> is uniformly distributed on the interval <span class="math inline">\([a, b]\)</span>, what is the expectation <span class="math inline">\(E(X)\)</span>?</p>
+<ol type="a">
+<li><p><span class="math inline">\(\dfrac{a+b}{2}\)</span></p></li>
+<li><p><span class="math inline">\(b - a\)</span></p></li>
+<li><p><span class="math inline">\(\dfrac{b-a}{2}\)</span></p></li>
+<li><p><span class="math inline">\(\dfrac{a-b}{2}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch05mcsolution7">MC Solution 7</a></p>
+<p>For a normal distribution with parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>, the expectation is:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\sigma^2\)</span></p></li>
+<li><p><span class="math inline">\(\mu\)</span></p></li>
+<li><p><span class="math inline">\(\sigma\)</span></p></li>
+<li><p>0</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch05mcsolution8">MC Solution 8</a></p>
+<p>Which of the following is true for the Cauchy distribution?</p>
+<ol type="a">
+<li><p>Its expectation and variance are both finite.</p></li>
+<li><p>Its expectation is 0 and its variance is infinite.</p></li>
+<li><p>Its expectation is undefined and its variance is infinite.</p></li>
+<li><p>Its expectation is infinite and its variance is 0.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch05mcsolution9">MC Solution 9</a></p>
+<p>Jensen’s inequality states that for a convex function <span class="math inline">\(g(x)\)</span>:</p>
+<ol type="a">
+<li><p><span class="math inline">\(E[g(X)] = g(E(X))\)</span></p></li>
+<li><p><span class="math inline">\(E[g(X)] \leq g(E(X))\)</span></p></li>
+<li><p><span class="math inline">\(E[g(X)] \geq g(E(X))\)</span></p></li>
+<li><p><span class="math inline">\(E[g(X)] &lt; g(E(X))\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch05mcsolution10">MC Solution 10</a></p>
+<p>The median of a random variable <span class="math inline">\(X\)</span> is the value <span class="math inline">\(M\)</span> such that:</p>
+<ol type="a">
+<li><p><span class="math inline">\(P(X \leq M) = 0.25\)</span></p></li>
+<li><p><span class="math inline">\(P(X \leq M) = 0.75\)</span></p></li>
+<li><p><span class="math inline">\(P(X \leq M) = 0.5\)</span></p></li>
+<li><p><span class="math inline">\(P(X \leq M) = 1\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch05mcsolution11">MC Solution 11</a></p>
+<p>Which of the following properties holds for the median <span class="math inline">\(M(X)\)</span> of a random variable <span class="math inline">\(X\)</span> and an increasing function <span class="math inline">\(g(x)\)</span>?</p>
+<ol type="a">
+<li><p><span class="math inline">\(M(g(X)) = g(M(X))\)</span></p></li>
+<li><p><span class="math inline">\(M(g(X)) &lt; g(M(X))\)</span></p></li>
+<li><p><span class="math inline">\(M(g(X)) &gt; g(M(X))\)</span></p></li>
+<li><p><span class="math inline">\(M(g(X)) = \dfrac{1}{g(M(X))}\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch05mcsolution12">MC Solution 12</a></p>
+<p>The standard deviation of a random variable <span class="math inline">\(X\)</span> is:</p>
+<ol type="a">
+<li><p>The square of the variance.</p></li>
+<li><p>The square root of the variance.</p></li>
+<li><p>The same as the variance.</p></li>
+<li><p>The expectation of <span class="math inline">\(X\)</span>.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch05mcsolution13">MC Solution 13</a></p>
+<p>If <span class="math inline">\(X\)</span> is a random variable and <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are constants, then <span class="math inline">\(\text{var}(aX + b)\)</span> is equal to:</p>
+<ol type="a">
+<li><p><span class="math inline">\(a \cdot \text{var}(X)\)</span></p></li>
+<li><p><span class="math inline">\(a^2 \cdot \text{var}(X)\)</span></p></li>
+<li><p><span class="math inline">\(a^2 \cdot \text{var}(X) + b\)</span></p></li>
+<li><p><span class="math inline">\(a^2 \cdot \text{var}(X) + b^2\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch05mcsolution14">MC Solution 14</a></p>
+<p>The skewness of a distribution measures:</p>
+<ol type="a">
+<li><p>Its central tendency.</p></li>
+<li><p>Its dispersion.</p></li>
+<li><p>Its asymmetry.</p></li>
+<li><p>Its peakedness.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch05mcsolution15">MC Solution 15</a></p>
+<p>The kurtosis of a distribution measures:</p>
+<ol type="a">
+<li><p>Its central tendency.</p></li>
+<li><p>Its dispersion.</p></li>
+<li><p>Its asymmetry.</p></li>
+<li><p>The thickness of its tails relative to a normal distribution.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch05mcsolution16">MC Solution 16</a></p>
+<p>The moment generating function (MGF) of a random variable <span class="math inline">\(X\)</span>, if it exists, is defined as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(M_X(t) = E(e^{tX})\)</span></p></li>
+<li><p><span class="math inline">\(M_X(t) = E(t^X)\)</span></p></li>
+<li><p><span class="math inline">\(M_X(t) = E(X^t)\)</span></p></li>
+<li><p><span class="math inline">\(M_X(t) = E(e^{-tX})\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch05mcsolution17">MC Solution 17</a></p>
+<p>The characteristic function of a random variable <span class="math inline">\(X\)</span> is defined as:</p>
+<ol type="a">
+<li><p><span class="math inline">\(\phi_X(t) = E(e^{itX})\)</span>, where <span class="math inline">\(i\)</span> is the imaginary unit.</p></li>
+<li><p><span class="math inline">\(\phi_X(t) = E(e^{tX})\)</span></p></li>
+<li><p><span class="math inline">\(\phi_X(t) = E(t^X)\)</span></p></li>
+<li><p><span class="math inline">\(\phi_X(t) = E(e^{-itX})\)</span>, where <span class="math inline">\(i\)</span> is the imaginary unit.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch05mcsolution18">MC Solution 18</a></p>
+<p>Which of the following statements is true about the characteristic function of a random variable?</p>
+<ol type="a">
+<li><p>It may not exist for some random variables.</p></li>
+<li><p>It always exists for any random variable.</p></li>
+<li><p>It is always a real-valued function.</p></li>
+<li><p>It is the same as the moment generating function.</p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch05mcsolution19">MC Solution 19</a></p>
+<p><span class="math inline">\(E(X)\)</span> can be interpreted as the unique minimizer of:</p>
+<ol type="a">
+<li><p><span class="math inline">\(E(X - \theta)\)</span></p></li>
+<li><p><span class="math inline">\(E(X - \theta)^2\)</span></p></li>
+<li><p><span class="math inline">\(E|X - \theta|\)</span></p></li>
+<li><p><span class="math inline">\(E(\theta - X)\)</span></p></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch05mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch05mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch05mcsolution20">MC Solution 20</a></p>
+<p>The median <span class="math inline">\(M(X)\)</span> can be interpreted as the unique minimizer of:</p>
+<ol type="a">
+<li><p><span class="math inline">\(E(X - \theta)\)</span></p></li>
+<li><p><span class="math inline">\(E(X - \theta)^2\)</span></p></li>
+<li><p><span class="math inline">\(E|X - \theta|\)</span></p></li>
+<li><p><span class="math inline">\(E(\theta - X)\)</span></p></li>
+</ol>
+</section>
+</section>
+<section class="level2" id="multiple-choice-solutions">
+<h2 class="anchored" data-anchor-id="multiple-choice-solutions">Multiple Choice Solutions</h2>
+<section class="level3" id="sec-ch05mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch05mcexercise1">MC Exercise 1</a></p>
+<p>The correct answer is (c): A measure of the central tendency or average value of <span class="math inline">\(X\)</span>.</p>
+<p><strong>Intuitive explanation:</strong> The <strong>expectation</strong> of a random variable represents its average value in the long run. It’s a weighted average of the possible values, where the weights are the probabilities of those values. This is a fundamental concept introduced in <strong>Section 5.1</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch05mcexercise2">MC Exercise 2</a></p>
+<p>The correct answer is (b): <span class="math inline">\(\int_{-\infty}^{\infty} x f_X(x) dx\)</span></p>
+<p><strong>Intuitive explanation:</strong> For a continuous random variable, the expectation is calculated by integrating the product of each value <span class="math inline">\(x\)</span> and its corresponding probability density <span class="math inline">\(f_X(x)\)</span> over the entire range of possible values. This is stated in <strong>Equation 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch05mcexercise3">MC Exercise 3</a></p>
+<p>The correct answer is (b): <span class="math inline">\(\sum_{x} x f_X(x)\)</span></p>
+<p><strong>Intuitive explanation:</strong> For a discrete random variable, the expectation is calculated by summing the product of each value <span class="math inline">\(x\)</span> and its corresponding probability <span class="math inline">\(f_X(x)\)</span> over all possible values. This is stated in <strong>Equation 5.3</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch05mcexercise4">MC Exercise 4</a></p>
+<p>The correct answer is (c): <span class="math inline">\(E[(X - E(X))^2]\)</span></p>
+<p><strong>Intuitive explanation:</strong> The <strong>variance</strong> measures the spread or dispersion of a random variable around its mean. It’s calculated as the expected value of the squared deviations from the mean. This is explained in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch05mcexercise5">MC Exercise 5</a></p>
+<p>The correct answer is (b): It may not exist or may be infinite.</p>
+<p><strong>Intuitive explanation:</strong> When a random variable has unbounded support, its expectation might not be well-defined. The integrals or sums involved in the calculation might diverge, leading to an undefined or infinite expectation. This is discussed in <strong>Section 5.1</strong> and illustrated in <strong>Example 5.3</strong> (Cauchy distribution) of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch05mcexercise6">MC Exercise 6</a></p>
+<p>The correct answer is (a): <span class="math inline">\(\dfrac{a+b}{2}\)</span></p>
+<p><strong>Intuitive explanation:</strong> For a uniform distribution, the probability is evenly spread across the interval. The expectation, representing the average value, is simply the midpoint of the interval. This is shown in <strong>Example 5.1</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch05mcexercise7">MC Exercise 7</a></p>
+<p>The correct answer is (b): <span class="math inline">\(\mu\)</span></p>
+<p><strong>Intuitive explanation:</strong> In a normal distribution, the parameter <span class="math inline">\(\mu\)</span> represents the mean (expectation) of the distribution, while <span class="math inline">\(\sigma^2\)</span> represents the variance. This is mentioned in <strong>Example 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch05mcexercise8">MC Exercise 8</a></p>
+<p>The correct answer is (c): Its expectation is undefined and its variance is infinite.</p>
+<p><strong>Intuitive explanation:</strong> The Cauchy distribution has heavy tails, which means that the probability density decreases very slowly as <span class="math inline">\(x\)</span> moves away from the center. This results in the integrals for both the expectation and variance diverging. This is discussed in <strong>Example 5.3</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch05mcexercise9">MC Exercise 9</a></p>
+<p>The correct answer is (c): <span class="math inline">\(E[g(X)] \geq g(E(X))\)</span></p>
+<p><strong>Intuitive explanation:</strong> <strong>Jensen’s inequality</strong> states that for a convex function, the expectation of the function of a random variable is greater than or equal to the function of the expectation of the random variable. This is stated in <strong>Theorem 5.1, part 3</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch05mcexercise10">MC Exercise 10</a></p>
+<p>The correct answer is (c): <span class="math inline">\(P(X \leq M) = 0.5\)</span></p>
+<p><strong>Intuitive explanation:</strong> The <strong>median</strong> is the value that divides the distribution into two equal halves. It’s the value <span class="math inline">\(M\)</span> such that the probability of <span class="math inline">\(X\)</span> being less than or equal to <span class="math inline">\(M\)</span> is 0.5 (or 50%). This is a standard definition of the median, and it’s related to the discussion in <strong>Sections 5.1 and 5.3</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch05mcexercise11">MC Exercise 11</a></p>
+<p>The correct answer is (a): <span class="math inline">\(M(g(X)) = g(M(X))\)</span></p>
+<p><strong>Intuitive explanation:</strong> This property is known as <strong>monotone equivariance</strong> of the median. It states that if you apply an increasing function to a random variable, the median of the transformed variable is equal to the function applied to the median of the original variable. This is stated in <strong>Theorem 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch05mcexercise12">MC Exercise 12</a></p>
+<p>The correct answer is (b): The square root of the variance.</p>
+<p><strong>Intuitive explanation:</strong> The <strong>standard deviation</strong> is a measure of spread, just like the variance. It’s defined as the square root of the variance, which gives it the same units as the random variable itself. This is a standard definition, and it’s mentioned in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch05mcexercise13">MC Exercise 13</a></p>
+<p>The correct answer is (b): <span class="math inline">\(a^2 \cdot \text{var}(X)\)</span></p>
+<p><strong>Intuitive explanation:</strong> When you scale a random variable by a constant <span class="math inline">\(a\)</span>, its variance is scaled by the square of that constant (<span class="math inline">\(a^2\)</span>). Adding a constant <span class="math inline">\(b\)</span> does not affect the variance. This property is derived and explained in <strong>Section 5.2</strong> (see the solution to the exercise in that section) of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch05mcexercise14">MC Exercise 14</a></p>
+<p>The correct answer is (c): Its asymmetry.</p>
+<p><strong>Intuitive explanation:</strong> <strong>Skewness</strong> measures the asymmetry of a distribution. A distribution is symmetric if it looks the same to the left and right of the center. Positive skewness indicates a longer tail on the right, while negative skewness indicates a longer tail on the left. This is discussed in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch05mcexercise15">MC Exercise 15</a></p>
+<p>The correct answer is (d): The thickness of its tails relative to a normal distribution.</p>
+<p><strong>Intuitive explanation:</strong> <strong>Kurtosis</strong> measures the “tailedness” of a distribution compared to a normal distribution. Higher kurtosis means heavier tails (more extreme values), while lower kurtosis means lighter tails. This is discussed in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch05mcexercise16">MC Exercise 16</a></p>
+<p>The correct answer is (a): <span class="math inline">\(M_X(t) = E(e^{tX})\)</span></p>
+<p><strong>Intuitive explanation:</strong> The <strong>moment generating function (MGF)</strong> is defined as the expected value of <span class="math inline">\(e^{tX}\)</span>, where <span class="math inline">\(t\)</span> is a real number. If the MGF exists, it can be used to find the moments of the distribution. This is defined in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch05mcexercise17">MC Exercise 17</a></p>
+<p>The correct answer is (a): <span class="math inline">\(\phi_X(t) = E(e^{itX})\)</span>, where <span class="math inline">\(i\)</span> is the imaginary unit.</p>
+<p><strong>Intuitive explanation:</strong> The <strong>characteristic function</strong> is defined as the expected value of <span class="math inline">\(e^{itX}\)</span>, where <span class="math inline">\(t\)</span> is a real number and <span class="math inline">\(i\)</span> is the imaginary unit (<span class="math inline">\(\sqrt{-1}\)</span>). It’s a more general concept than the MGF because it always exists for any random variable. This is defined in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch05mcexercise18">MC Exercise 18</a></p>
+<p>The correct answer is (b): It always exists for any random variable.</p>
+<p><strong>Intuitive explanation:</strong> Unlike the moment generating function, the <strong>characteristic function</strong> always exists for any random variable, whether its moments exist or not. This is because it involves complex numbers and the magnitude of <span class="math inline">\(e^{itX}\)</span> is always 1. This is mentioned in <strong>Section 5.2</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch05mcexercise19">MC Exercise 19</a></p>
+<p>The correct answer is (b): <span class="math inline">\(E(X-\theta)^2\)</span></p>
+<p><strong>Intuitive explanation:</strong> The expectation <span class="math inline">\(E(X)\)</span> is the value that minimizes the mean squared error between <span class="math inline">\(X\)</span> and a constant <span class="math inline">\(\theta\)</span>. This is proven in <strong>Theorem 5.5</strong> of the text.</p>
+</section>
+<section class="level3" id="sec-ch05mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch05mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch05mcexercise20">MC Exercise 20</a></p>
+<p>The correct answer is (c): <span class="math inline">\(E|X - \theta|\)</span></p>
+<p><strong>Intuitive explanation:</strong> The median <span class="math inline">\(M(X)\)</span> is the value that minimizes the mean absolute error between <span class="math inline">\(X\)</span> and a constant <span class="math inline">\(\theta\)</span>. This is proven in <strong>Theorem 5.6</strong> of the text.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

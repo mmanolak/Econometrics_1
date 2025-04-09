@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 4: Transformations of Random Variables – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap05.html" rel="next"/>
+<link href="../chapters/chap03.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 4: Transformations of Random Variables</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level2" id="distributions-of-functions-of-a-random-variable">
+<h2 class="anchored" data-anchor-id="distributions-of-functions-of-a-random-variable">4.1 DISTRIBUTIONS OF FUNCTIONS OF A RANDOM VARIABLE</h2>
+<p>In this chapter, we will focus on the continuous case (i.e., <span class="math inline">\(F_X(\cdot)\)</span> is absolutely continuous with respect to Lebesgue measure) and the discrete case (absolutely continuous with respect to counting measure). In the continuous case, we can use the ordinary Riemann integration</p>
+<p><span class="math inline">\(\qquad \int_a^b f_X(x) \, dx\)</span>,</p>
+<p>which only requires the function <span class="math inline">\(f\)</span> to be continuous on the interval <span class="math inline">\([a, b]\)</span>. In this case, we can apply the standard tools of calculus. A proper treatment of more general situations requires Lebesgue integration theory in which we achieve a unification of the continuous and discrete cases, but we shall not pursue this further here.</p>
+<p>If <span class="math inline">\(X\)</span> is a random variable with c.d.f. <span class="math inline">\(F_X(x)\)</span>, then any real-valued <strong>measurable function</strong> of <span class="math inline">\(X\)</span> (in the sense of (3.1)), say <span class="math inline">\(Y = g(X)\)</span>, is also a random variable, and we can define</p>
+<p><span class="math inline">\(\qquad P_Y(B) = \Pr(Y \in B) = \Pr(g(X) \in B)\)</span></p>
+<p>for any set <span class="math inline">\(B\)</span> in the relevant sigma-algebra. Specifically, we have <span class="math inline">\(P_Y((-\infty, y]) = \Pr(g(X) \le y)\)</span>. This probability depends on <span class="math inline">\(P_X\)</span> and <span class="math inline">\(g(X)\)</span>. Continuous functions are measurable, but measurable functions need not be continuous. For example, the function <span class="math inline">\(g(x) = \mathbb{1}(x &gt; 0)\)</span> is not continuous at <span class="math inline">\(x = 0\)</span>, but it is a measurable mapping.</p>
+<p>Often we want to work with a normal distribution which has support the entire real line. If <span class="math inline">\(X &gt; 0\)</span> [e.g., price] or <span class="math inline">\(X \in [0, 1]\)</span> [e.g., infant mortality], then this would be logically inconsistent, i.e., <span class="math inline">\(X\)</span> could not have a normal distribution. But if we take <span class="math inline">\(Y = \ln X\)</span> (in the case where <span class="math inline">\(X &gt; 0\)</span>), and <span class="math inline">\(Y = \ln \left( \dfrac{X}{1 - X} \right)\)</span> (in the case where for <span class="math inline">\(X \in (0, 1)\)</span>), then in both cases the transformed random variable <span class="math inline">\(Y\)</span> may have support <span class="math inline">\(\mathbb{R}\)</span>, and therefore be consistent with a normal distribution. These transformations are often used in modelling.</p>
+<p>What we want to do is to express <span class="math inline">\(\Pr(Y \le y)\)</span> in terms of <span class="math inline">\(F_X\)</span> and <span class="math inline">\(g\)</span>, likewise to find a nice expression for the density function <span class="math inline">\(f_Y\)</span> of the random variable <span class="math inline">\(Y\)</span>. This is important for many applications in statistics, especially models where we specify distribution for unobservable error terms <span class="math inline">\(\varepsilon\)</span>, but are interesting in the distribution of the observed variables <span class="math inline">\(Y\)</span>, which are functions of <span class="math inline">\(\varepsilon\)</span>. In some cases, the answer can be found immediately.</p>
+<section class="level3" id="example-4.1">
+<h3 class="anchored" data-anchor-id="example-4.1">Example 4.1</h3>
+<p>Suppose that</p>
+<p><span class="math inline">\(\qquad Y = a + bX\)</span></p>
+<p>where <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span> are constants and <span class="math inline">\(X\)</span> is a scalar random variable. Then</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+\Pr(Y \le y) &amp;= \Pr(a + bX \le y) \\
+&amp;= \Pr \left( X \le \dfrac{y - a}{b} \right) \\
+&amp;= F_X \left( \dfrac{y - a}{b} \right)
+\end{aligned}\)</span></p>
+<p>provided <span class="math inline">\(b &gt; 0\)</span>. When <span class="math inline">\(b &lt; 0\)</span>, <span class="math inline">\(\Pr(Y \le y) = 1 - F_X \left( \dfrac{y - a}{b} \right)\)</span>. The density function can be found from the fact that <span class="math inline">\(f_Y(y) = \dfrac{d \Pr(Y \le y)}{dy}\)</span>, which gives</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{\lvert b \rvert} f_X \left( \dfrac{y - a}{b} \right)\)</span></p>
+<p>for any <span class="math inline">\(b \ne 0\)</span>.</p>
+</section>
+<section class="level3" id="example-4.2">
+<h3 class="anchored" data-anchor-id="example-4.2">Example 4.2</h3>
+<p><strong>Normal distribution</strong>. Suppose that</p>
+<p><span class="math inline">\(\qquad f_X(x) = \dfrac{1}{\sqrt{2 \pi \sigma^2}} \exp \left( - \dfrac{1}{2} \left( \dfrac{x - \mu}{\sigma} \right)^2 \right)\)</span></p>
+<p>we say that <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>. Then it follows that</p>
+<p><span class="math inline">\(\qquad Y = \dfrac{X - \mu}{\sigma} \sim N(0, 1)\)</span></p>
+<p>i.e.,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{\sqrt{2 \pi}} \exp \left( - \dfrac{1}{2} y^2 \right)\)</span></p>
+<p>Conversely, <span class="math inline">\(X = \mu + \sigma Y \sim N(\mu, \sigma^2)\)</span> when <span class="math inline">\(Y\)</span> is standard normal.</p>
+</section>
+<section class="level3" id="example-4.3">
+<h3 class="anchored" data-anchor-id="example-4.3">Example 4.3</h3>
+<p><strong>Uniform distribution</strong>. Suppose that <span class="math inline">\(X \sim U[0, 1]\)</span> meaning that</p>
+<p><span class="math inline">\(\qquad f_X(x) = \begin{cases}
+1 &amp;\text{if } x \in [0, 1] \\
+0 &amp;\text{else}
+\end{cases}\)</span></p>
+<p>Then</p>
+<p><span class="math inline">\(\qquad Y = a + bX \sim U[a, a + b]\)</span></p>
+<p>in which case</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \begin{cases}
+\dfrac{1}{b} &amp;\text{if } y \in [a, a + b] \\
+0 &amp;\text{else}
+\end{cases}\)</span></p>
+<!-- PF EDITED NEXT LINE: alpha -->
+<p>For the same example. What about <span class="math inline">\(Y = X^\alpha\)</span> for any <span class="math inline">\(\alpha &gt; 0\)</span>? We have</p>
+<p><span class="math inline">\(\qquad \Pr(Y \le y) = \Pr(X^\alpha \le y) = \Pr(X \le y^{1/\alpha}) = y^{1/\alpha}\)</span>.</p>
+<p>Therefore,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \begin{cases}
+\dfrac{1}{\alpha} y^{1/\alpha - 1} &amp;\text{if } y \in [0, 1] \\
+0 &amp;\text{else}
+\end{cases}\)</span></p>
+<p>A linear function is an example of a <strong>strictly monotonic function</strong>. Another monotonic function is the logarithm <span class="math inline">\(y = \ln X\)</span> for <span class="math inline">\(X &gt; 0\)</span>. In this case,</p>
+<p><span class="math inline">\(\qquad \Pr(Y \le y) = \Pr(\ln X \le y) = \Pr(X \le e^y) = F_X(e^y)\)</span></p>
+<p>because <span class="math inline">\(\ln X \le y \iff X \le e^y\)</span>. The density function is</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(e^y) e^y\)</span>.</p>
+</section>
+<section class="level3" id="example-4.4">
+<h3 class="anchored" data-anchor-id="example-4.4">Example 4.4</h3>
+<p>Suppose that <span class="math inline">\(y = X^2\)</span> with <span class="math inline">\(X \in \mathbb{R}\)</span>. This is not a monotonic function on <span class="math inline">\(\mathbb{R}\)</span>, but it is monotonic on the two subsets <span class="math inline">\(\mathbb{R}^+\)</span> and <span class="math inline">\(\mathbb{R}^-\)</span>, which together constitute <span class="math inline">\(\mathbb{R}\)</span>. We have by the law of total probability</p>
+<p><span class="math inline">\(\qquad \Pr(Y \le y) = \Pr(X^2 \le y) = \Pr(X^2 \le y, X &gt; 0) + \Pr(X^2 \le y, X &lt; 0)\)</span>.</p>
+<p>But on the set <span class="math inline">\(x &gt; 0\)</span>, <span class="math inline">\(y = x^2\)</span> is monotonic with inverse <span class="math inline">\(x = \sqrt{y}\)</span>. Therefore,</p>
+<!-- PF EDITED NEXT LINE: last term and second line -->
+<p><span class="math inline">\(\qquad \begin{aligned}
+\Pr(X^2 \le y) &amp;= \Pr(X \le \sqrt{y}, X &gt; 0) + \Pr(-X \le \sqrt{y}, X &lt; 0) \\
+&amp;= \Pr(X \le \sqrt{y}, X &gt; 0) + \Pr(X \ge -\sqrt{y}, X &lt; 0) \\
+&amp;= \Pr(-\sqrt{y} \le X \le \sqrt{y}) \\
+&amp;= F_X(\sqrt{y}) - F_X(-\sqrt{y}).
+\end{aligned}\)</span></p>
+<p>The density function is</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{2 \sqrt{y}} f_X(\sqrt{y}) + \dfrac{1}{2 \sqrt{y}} f_X(-\sqrt{y})\)</span>. (4.1)</p>
+</section>
+<section class="level3" id="example-4.5">
+<h3 class="anchored" data-anchor-id="example-4.5">Example 4.5</h3>
+<p>Suppose that <span class="math inline">\(X &gt; 0\)</span> and consider <span class="math inline">\(Y = X^{-1}\)</span>. Then</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \Pr(Y \le y) = \Pr \left( X \ge \dfrac{1}{y} \right) = 1 - F_X \left( \dfrac{1}{y} \right)\)</span></p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{y^2} f_X \left( \dfrac{1}{y} \right)\)</span>.</p>
+<p>We try now to provide some results for the general case <span class="math inline">\(Y = g(X)\)</span>. We must be more precise about the <strong>domain</strong> and <strong>range</strong> of the function. Define</p>
+<p><span class="math inline">\(\qquad S = \{ x \in \mathcal{X} : f_X(x) &gt; 0 \} \text{ and } \mathcal{Y} = \{ y : y = g(x) \text{ for some } x \in S \}\)</span>.</p>
+<p>These sets are called the <strong>support</strong> of the random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. For example, suppose that <span class="math inline">\(Y = X^2\)</span>, where <span class="math inline">\(X \in \mathcal{X} = \mathbb{R}\)</span>. Then, <span class="math inline">\(\mathcal{Y} = [0, \infty)\)</span>. Now consider the function</p>
+<p><span class="math inline">\(\qquad g : \mathcal{X} \to \mathcal{Y}\)</span>.</p>
+<p>If <span class="math inline">\(g\)</span> is <strong>one-to-one</strong> and <strong>onto</strong>, then <span class="math inline">\(g^{-1} : \mathcal{Y} \to \mathcal{X}\)</span> is well-defined, but in general,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+&amp;g^{-1} : \text{elements of } \mathcal{Y} \to \text{subsets of } S \\
+&amp;g^{-1}(y) = \{ x \in S : g(x) = y \}, y \in A.
+\end{aligned}\)</span></p>
+<p>We talk about <span class="math inline">\(g^{-1}(A) = \{ x \in S : g(x) \in A \}\)</span>, which is well-defined as a set-valued mapping. Now we say</p>
+<p><span class="math inline">\(\qquad P_Y(A) = P_X(g^{-1}(A)) = \Pr(g(X) \in A)\)</span>.</p>
+<p>We have already done the same thing when we defined random variables. We can show that <span class="math inline">\(P_Y(\cdot)\)</span> is a probability measure, e.g., it is countably additive. This formula will not generally lead to a density function for <span class="math inline">\(Y\)</span> unless additional structure is present.</p>
+<p><strong>Monotonic functions</strong> [or functions that are monotonic within a partition] allow a more developed theory that gives the density function <span class="math inline">\(f_Y(y)\)</span> of the random variable <span class="math inline">\(Y = g(X)\)</span> using the standard theory of change of variables for integration.</p>
+</section>
+<section class="level3" id="theorem-4.1">
+<h3 class="anchored" data-anchor-id="theorem-4.1">Theorem 4.1</h3>
+<ol type="1">
+<li><p>Suppose that the density <span class="math inline">\(f_X\)</span> and the inverse function <span class="math inline">\(g^{-1}(\cdot)\)</span> are well-defined and continuously differentiable. Then</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \begin{cases}
+F_X(g^{-1}(y)) &amp;\text{if } g \text{ is increasing} \\
+1 - F_X(g^{-1}(y)) &amp;\text{if } g \text{ is decreasing}
+\end{cases}\)</span></p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(g^{-1}(y)) \left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span></p>
+<p>is defined for <span class="math inline">\(y \in \mathcal{Y}\)</span>.</p></li>
+<li><p>Suppose that there is a partition <span class="math inline">\(\{ S_i \}_{i=0}^k\)</span> of <span class="math inline">\(S\)</span> such that <span class="math inline">\(\Pr(X \in \mathcal{X}_0) = 0\)</span> and <span class="math inline">\(f_X\)</span> is continuous on each <span class="math inline">\(S_i\)</span>. Further suppose that there exist functions <span class="math inline">\(g_i\)</span> defined on <span class="math inline">\(S_i\)</span> with <span class="math inline">\(g_i(x) = g(x)\)</span> for <span class="math inline">\(x \in S_i\)</span> such that the inverse functions <span class="math inline">\(g_i^{-1}(\cdot)\)</span> are well defined and continuously differentiable. Then,</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \sum_{i=1}^k \Pr(X \le g_i^{-1}(y), X \in \mathcal{X}_i)\)</span></p>
+<p><span class="math inline">\(\qquad f_Y(y) = \sum_{i=1}^k f_X(g_i^{-1}(y)) \left\lvert \dfrac{d}{dy} g_i^{-1}(y) \right\rvert\)</span>.</p></li>
+</ol>
+<p>We give some examples and discussion.</p>
+</section>
+<section class="level3" id="example-4.6">
+<h3 class="anchored" data-anchor-id="example-4.6">Example 4.6</h3>
+<p><span class="math inline">\(Y = X^2\)</span>, then <span class="math inline">\(k = 2\)</span>, <span class="math inline">\(S_1 = (-\infty, 0]\)</span>, <span class="math inline">\(S_2 = (0, \infty)\)</span>, <span class="math inline">\(\mathcal{Y} \in [0, \infty)\)</span>. Furthermore,</p>
+<!-- PF EDITED NEXT LINE: add \pm -->
+<p><span class="math inline">\(\qquad \begin{aligned}
+&amp;g_i(x) = x^2, i = 1, 2 \\
+&amp;g_i^{-1}(y) = \pm \sqrt{y}
+\end{aligned}\)</span></p>
+<p>and <span class="math inline">\(f_Y(y)\)</span> is as defined in (4.1).</p>
+</section>
+<section class="level3" id="example-4.7">
+<h3 class="anchored" data-anchor-id="example-4.7">Example 4.7</h3>
+<p>Suppose that <span class="math inline">\(Y = a X^2 + b X + c\)</span>. The gradient implies that the function is monotonic on the two sides of the point <span class="math inline">\(x = -b / 2a\)</span>. The <span class="math inline">\(g_i^{-1}\)</span> functions are found as the solutions to a quadratic equation, i.e.,</p>
+<p><span class="math inline">\(\qquad g_i^{-1}(y) = x = \dfrac{-b \pm \sqrt{b^2 - 4a(c - y)}}{2a}\)</span>.</p>
+</section>
+<section class="level3" id="example-4.8">
+<h3 class="anchored" data-anchor-id="example-4.8">Example 4.8</h3>
+<p>The <strong>Box-Cox transform</strong></p>
+<p><span class="math inline">\(\qquad y = \begin{cases}
+\dfrac{x^\lambda - 1}{\lambda} &amp;\lambda &gt; 0 \\
+\log x &amp;\lambda = 0
+\end{cases}\)</span>,</p>
+<p>which is defined for <span class="math inline">\(x &gt; 0\)</span>. The inverse transform <span class="math inline">\(g^{-1}\)</span> is defined and monotonic for <span class="math inline">\(y \ge -1 / \lambda\)</span>. This is an important transformation in econometrics and statistics.</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \begin{cases}
+f_X((y \lambda + 1)^{1/\lambda}) (y \lambda + 1)^{(1 - \lambda) / \lambda} &amp;\lambda &gt; 0 \\
+f_X(\exp(y)) \exp(y) &amp;\lambda = 0
+\end{cases}\)</span>.</p>
+</section>
+<section class="level3" id="example-4.9">
+<h3 class="anchored" data-anchor-id="example-4.9">Example 4.9</h3>
+<p>In option pricing theory, one is interested in transformations such as</p>
+<p><span class="math inline">\(\qquad Y = \max \{ X - K, 0 \}\)</span>,</p>
+<p>where <span class="math inline">\(X\)</span> is a continuously distributed random variable, the stock price, and <span class="math inline">\(K\)</span> is a fixed number. In this case, <span class="math inline">\(Y\)</span> has a distribution that has both discrete and continuous features. Specifically, <span class="math inline">\(\Pr(Y = 0) = \Pr(X \le K)\)</span>, while for <span class="math inline">\(y &gt; 0\)</span></p>
+<!-- PF EDITED NEXT LINE: - to + -->
+<p><span class="math inline">\(\qquad F_Y(y) = F_X(y + K) \quad ; \quad f_Y(y) = f_X(y + K)\)</span>.</p>
+</section>
+<section class="level3" id="example-4.10">
+<h3 class="anchored" data-anchor-id="example-4.10">Example 4.10</h3>
+<p>Finally, suppose that <span class="math inline">\(X \in \mathbb{R}\)</span> and</p>
+<p><span class="math inline">\(\qquad Y = \mathbb{1}(X \in A) = \begin{cases}
+1 &amp;\text{if } X \in A \subseteq \mathbb{R} \\
+0 &amp;\text{otherwise}
+\end{cases}\)</span>.</p>
+<p>We can’t apply the density theory here, since <span class="math inline">\(Y\)</span> is discrete while <span class="math inline">\(X\)</span> was continuous. Nevertheless, the distribution of <span class="math inline">\(Y\)</span> is obvious,</p>
+<p><span class="math inline">\(\qquad P_Y(\{ 1 \}) = \Pr(X \in A) = P_X(A)\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="probability-integral-transform">
+<h2 class="anchored" data-anchor-id="probability-integral-transform">4.2 PROBABILITY INTEGRAL TRANSFORM</h2>
+<section class="level3" id="theorem-4.2">
+<h3 class="anchored" data-anchor-id="theorem-4.2">Theorem 4.2</h3>
+<p>Let <span class="math inline">\(X\)</span> have a continuous c.d.f. <span class="math inline">\(F_X(x)\)</span> and let <span class="math inline">\(Y = F_X(X)\)</span>. Then <span class="math inline">\(Y\)</span> is uniformly distributed on <span class="math inline">\([0, 1]\)</span>, that is for all <span class="math inline">\(y \in [0, 1]\)</span></p>
+<p><span class="math inline">\(\qquad \Pr(Y \le y) = y\)</span>.</p>
+<p><strong>Proof</strong>. Although this is true for any continuous c.d.f. we just give the proof in the case that <span class="math inline">\(F_X(\cdot)\)</span> is strictly increasing. We have</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+\Pr(Y \le y) &amp;= \Pr(F_X(X) \le y) \\
+&amp;= \Pr(F_X^{-1}(F_X(X)) \le F_X^{-1}(y)) \\
+&amp;= \Pr(X \le F_X^{-1}(y)) \\
+&amp;= F_X(F_X^{-1}(y)) \\
+&amp;= y.
+\end{aligned}\)</span></p>
+</section>
+<section class="level3" id="corollary-4.1">
+<h3 class="anchored" data-anchor-id="corollary-4.1">Corollary 4.1</h3>
+<p>Suppose that <span class="math inline">\(X\)</span> has a continuous c.d.f. <span class="math inline">\(F_X\)</span> and that <span class="math inline">\(U\)</span> is uniformly distributed on <span class="math inline">\([0, 1]\)</span>. Then the random variable <span class="math inline">\(Y = F_X^{-1}(U)\)</span> has the distribution of <span class="math inline">\(X\)</span>.</p>
+<p>This result is used a lot in doing simulations: most programs give you a uniform random number generator and a normal random number generator, but for more exotic distributions you are on your own. For example, suppose you want to generate Logistic random variables. We have <span class="math inline">\(F_X(x) = 1 / (1 + \exp(-x))\)</span>, where <span class="math inline">\(Y = F_X(x)\)</span> is unifromly distributed, so that <span class="math inline">\(F_X^{-1}(y) = \ln(y / (1 - y))\)</span> gives <span class="math inline">\(X\)</span>. Therefore, <span class="math inline">\(\ln(U / (1 - U))\)</span> has the logit distribution when <span class="math inline">\(U\)</span> is uniform.</p>
+</section>
+<section class="level3" id="corollary-4.2">
+<h3 class="anchored" data-anchor-id="corollary-4.2">Corollary 4.2</h3>
+<p>Suppose that <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span> are continuous random variables with strictly increasing c.d.f.’s <span class="math inline">\(F_X\)</span>, <span class="math inline">\(F_Y\)</span> respectively. Then we can write <span class="math inline">\(Y = h(X)\)</span>, where <span class="math inline">\(h = F_Y^{-1}(F_X)\)</span>. Here, <span class="math inline">\(F_X(X)\)</span> is a uniformly distributed r.v., which is then plugged into <span class="math inline">\(F_Y^{-1}(F_X(X))\)</span> to give <span class="math inline">\(Y\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="exercises">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section class="level3" id="sec-ch04exercise1">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise1">Exercise 1</h3>
+<p><a href="#sec-ch04solution1">Solution 1</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the probability density function (pdf) given by</p>
+<p><span class="math inline">\(\qquad f_X(x) = \begin{cases}
+2x, &amp;\text{if } 0 \le x \le 1 \\
+0, &amp;\text{otherwise}
+\end{cases}\)</span></p>
+<p>Find the pdf of <span class="math inline">\(Y = 3X + 2\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise2">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise2">Exercise 2</h3>
+<p><a href="#sec-ch04solution2">Solution 2</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a standard normal random variable, i.e., <span class="math inline">\(X \sim N(0, 1)\)</span>. Find the pdf of <span class="math inline">\(Y = 2X + 3\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise3">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise3">Exercise 3</h3>
+<p><a href="#sec-ch04solution3">Solution 3</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable uniformly distributed on the interval <span class="math inline">\([0, 1]\)</span>, i.e., <span class="math inline">\(X \sim U[0, 1]\)</span>. Find the pdf of <span class="math inline">\(Y = 4X - 1\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise4">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise4">Exercise 4</h3>
+<p><a href="#sec-ch04solution4">Solution 4</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the pdf</p>
+<p><span class="math inline">\(\qquad f_X(x) = \begin{cases}
+\dfrac{1}{2} x^2, &amp;\text{if } 0 \le x \le 2 \\
+0, &amp;\text{otherwise}
+\end{cases}\)</span></p>
+<p>Find the pdf of <span class="math inline">\(Y = X^3\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise5">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise5">Exercise 5</h3>
+<p><a href="#sec-ch04solution5">Solution 5</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the pdf</p>
+<p><span class="math inline">\(\qquad f_X(x) = \begin{cases}
+\dfrac{1}{x^2}, &amp;\text{if } x \ge 1 \\
+0, &amp;\text{otherwise}
+\end{cases}\)</span></p>
+<p>Find the pdf of <span class="math inline">\(Y = \ln X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise6">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise6">Exercise 6</h3>
+<p><a href="#sec-ch04solution6">Solution 6</a></p>
+<p>Let <span class="math inline">\(X \sim N(0, 1)\)</span>. Find the pdf of <span class="math inline">\(Y = X^2\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise7">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise7">Exercise 7</h3>
+<p><a href="#sec-ch04solution7">Solution 7</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the cumulative distribution function (cdf) <span class="math inline">\(F_X(x)\)</span>. Assume that <span class="math inline">\(F_X(x)\)</span> is strictly increasing. Find the cdf of <span class="math inline">\(Y = a + bX\)</span> where <span class="math inline">\(b &gt; 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise8">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise8">Exercise 8</h3>
+<p><a href="#sec-ch04solution8">Solution 8</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the cdf <span class="math inline">\(F_X(x)\)</span>. Assume that <span class="math inline">\(F_X(x)\)</span> is strictly increasing. Find the cdf of <span class="math inline">\(Y = e^X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise9">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise9">Exercise 9</h3>
+<p><a href="#sec-ch04solution9">Solution 9</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the pdf</p>
+<p><span class="math inline">\(\qquad f_X(x) = \begin{cases}
+e^{-x}, &amp;\text{if } x \ge 0 \\
+0, &amp;\text{otherwise}
+\end{cases}\)</span></p>
+<p>Find the pdf of <span class="math inline">\(Y = \sqrt{X}\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise10">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise10">Exercise 10</h3>
+<p><a href="#sec-ch04solution10">Solution 10</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the pdf <span class="math inline">\(f_X(x)\)</span>. Let <span class="math inline">\(Y = g(X)\)</span> where <span class="math inline">\(g(x)\)</span> is a monotonically increasing and differentiable function. Find the pdf of <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise11">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise11">Exercise 11</h3>
+<p><a href="#sec-ch04solution11">Solution 11</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with the pdf <span class="math inline">\(f_X(x)\)</span>. Let <span class="math inline">\(Y = g(X)\)</span> where <span class="math inline">\(g(x)\)</span> is a monotonically decreasing and differentiable function. Find the pdf of <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise12">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise12">Exercise 12</h3>
+<p><a href="#sec-ch04solution12">Solution 12</a></p>
+<p>Let <span class="math inline">\(X \sim U[0, 1]\)</span>. Find the pdf of <span class="math inline">\(Y = -\ln(X)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise13">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise13">Exercise 13</h3>
+<p><a href="#sec-ch04solution13">Solution 13</a></p>
+<p>Let <span class="math inline">\(X \sim U[0, 1]\)</span>. Find the pdf of <span class="math inline">\(Y = \tan \left( \pi \left( X - \dfrac{1}{2} \right) \right)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise14">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise14">Exercise 14</h3>
+<p><a href="#sec-ch04solution14">Solution 14</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with a strictly increasing cdf <span class="math inline">\(F_X(x)\)</span>. Find the pdf of <span class="math inline">\(Y = F_X(X)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise15">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise15">Exercise 15</h3>
+<p><a href="#sec-ch04solution15">Solution 15</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span> and cdf <span class="math inline">\(F_X(x)\)</span>. Let <span class="math inline">\(Y = X^2\)</span>. Find the cdf of <span class="math inline">\(Y\)</span> in terms of <span class="math inline">\(F_X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise16">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise16">Exercise 16</h3>
+<p><a href="#sec-ch04solution16">Solution 16</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x) = \dfrac{1}{2} e^{-\lvert x \rvert}\)</span> for <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. Find the pdf of <span class="math inline">\(Y = \lvert X \rvert\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise17">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise17">Exercise 17</h3>
+<p><a href="#sec-ch04solution17">Solution 17</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a random variable with pdf <span class="math inline">\(f_X(x)\)</span>. Let <span class="math inline">\(Y = aX^2 + bX + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. Find the pdf of <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise18">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise18">Exercise 18</h3>
+<p><a href="#sec-ch04solution18">Solution 18</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>. Define the random variable <span class="math inline">\(Y\)</span> as follows:</p>
+<p><span class="math inline">\(\qquad Y = \begin{cases}
+X, &amp;\text{if } X &gt; c \\
+c, &amp;\text{if } X \le c
+\end{cases}\)</span></p>
+<p>where <span class="math inline">\(c\)</span> is a constant. Find the cdf of <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise19">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise19">Exercise 19</h3>
+<p><a href="#sec-ch04solution19">Solution 19</a></p>
+<p>Let <span class="math inline">\(X \sim U[0, 1]\)</span>. Let <span class="math inline">\(Y = \dfrac{X}{1 - X}\)</span>. Find the pdf of <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04exercise20">
+<h3 class="anchored" data-anchor-id="sec-ch04exercise20">Exercise 20</h3>
+<p><a href="#sec-ch04solution20">Solution 20</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>. Let <span class="math inline">\(Y = \mathbb{1}(X \in A)\)</span> where <span class="math inline">\(A\)</span> is a subset of the real numbers. Find the probability mass function of <span class="math inline">\(Y\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="solutions">
+<h2 class="anchored" data-anchor-id="solutions">Solutions</h2>
+<section class="level3" id="sec-ch04solution1">
+<h3 class="anchored" data-anchor-id="sec-ch04solution1">Solution 1</h3>
+<p><a href="#sec-ch04exercise1">Exercise 1</a></p>
+<p>We are given the transformation <span class="math inline">\(Y = 3X + 2\)</span>. This is a linear transformation of the form <span class="math inline">\(Y = a + bX\)</span> with <span class="math inline">\(a = 2\)</span> and <span class="math inline">\(b = 3\)</span>. Since <span class="math inline">\(b &gt; 0\)</span>, we can use the formula from Example 4.1:</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{\lvert b \rvert} f_X \left( \dfrac{y - a}{b} \right)\)</span></p>
+<p>In our case, <span class="math inline">\(f_X(x) = 2x\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>. Thus,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{3} f_X \left( \dfrac{y - 2}{3} \right)\)</span></p>
+<p>We need to find the range of <span class="math inline">\(y\)</span> values. Since <span class="math inline">\(0 \le x \le 1\)</span>, we have <span class="math inline">\(0 \le \dfrac{y - 2}{3} \le 1\)</span>, which implies <span class="math inline">\(2 \le y \le 5\)</span>. Therefore,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{3} \cdot 2 \left( \dfrac{y - 2}{3} \right) = \dfrac{2}{9} (y - 2)\)</span></p>
+<p>for <span class="math inline">\(2 \le y \le 5\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise.</p>
+<p>Thus, the pdf of <span class="math inline">\(Y\)</span> is</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \begin{cases}
+\dfrac{2}{9} (y - 2), &amp;\text{if } 2 \le y \le 5 \\
+0, &amp;\text{otherwise}
+\end{cases}\)</span></p>
+<p><strong>Intuition:</strong> The formula <span class="math inline">\(f_Y(y) = \dfrac{1}{\lvert b \rvert} f_X \left( \dfrac{y - a}{b} \right)\)</span> comes from the fact that for a linear transformation, the density is scaled by the inverse of the absolute value of the slope of the transformation. The term <span class="math inline">\(\dfrac{y - a}{b}\)</span> represents the inverse transformation, which maps <span class="math inline">\(y\)</span> back to the corresponding <span class="math inline">\(x\)</span> value.</p>
+</section>
+<section class="level3" id="sec-ch04solution2">
+<h3 class="anchored" data-anchor-id="sec-ch04solution2">Solution 2</h3>
+<p><a href="#sec-ch04exercise2">Exercise 2</a></p>
+<p>We are given <span class="math inline">\(X \sim N(0, 1)\)</span>, so <span class="math inline">\(f_X(x) = \dfrac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}\)</span>. We have the transformation <span class="math inline">\(Y = 2X + 3\)</span>, which is a linear transformation of the form <span class="math inline">\(Y = a + bX\)</span> with <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 2\)</span>.</p>
+<p>Using the formula from Example 4.1,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{\lvert b \rvert} f_X \left( \dfrac{y - a}{b} \right) = \dfrac{1}{2} f_X \left( \dfrac{y - 3}{2} \right)\)</span></p>
+<p>Substituting the pdf of <span class="math inline">\(X\)</span>, we get</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= \dfrac{1}{2} \cdot \dfrac{1}{\sqrt{2 \pi}} e^{-\frac{((y - 3)/2)^2}{2}} \\
+&amp;= \dfrac{1}{2 \sqrt{2 \pi}} e^{-\frac{(y - 3)^2}{8}}
+\end{aligned}\)</span></p>
+<p>This is the pdf of a normal distribution with mean 3 and variance 4, i.e., <span class="math inline">\(Y \sim N(3, 4)\)</span>.</p>
+<p><strong>Intuition:</strong> When we apply a linear transformation to a normal random variable, the result is also a normal random variable. The mean and variance of the transformed variable are determined by the linear transformation parameters.</p>
+</section>
+<section class="level3" id="sec-ch04solution3">
+<h3 class="anchored" data-anchor-id="sec-ch04solution3">Solution 3</h3>
+<p><a href="#sec-ch04exercise3">Exercise 3</a></p>
+<p>We are given <span class="math inline">\(X \sim U[0, 1]\)</span>, so <span class="math inline">\(f_X(x) = 1\)</span> for <span class="math inline">\(0 \le x \le 1\)</span> and <span class="math inline">\(0\)</span> otherwise. The transformation is <span class="math inline">\(Y = 4X - 1\)</span>, which is a linear transformation with <span class="math inline">\(a = -1\)</span> and <span class="math inline">\(b = 4\)</span>.</p>
+<p>Using the formula from Example 4.1,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{\lvert b \rvert} f_X \left( \dfrac{y - a}{b} \right) = \dfrac{1}{4} f_X \left( \dfrac{y + 1}{4} \right)\)</span></p>
+<p>Since <span class="math inline">\(0 \le x \le 1\)</span>, we have <span class="math inline">\(0 \le \dfrac{y + 1}{4} \le 1\)</span>, which implies <span class="math inline">\(-1 \le y \le 3\)</span>. Therefore,</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{4} \cdot 1 = \dfrac{1}{4}\)</span></p>
+<p>for <span class="math inline">\(-1 \le y \le 3\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise. Thus, <span class="math inline">\(Y \sim U[-1, 3]\)</span>.</p>
+<p><strong>Intuition:</strong> A linear transformation of a uniform random variable results in another uniform random variable. The range of the new uniform distribution is determined by the transformation parameters.</p>
+</section>
+<section class="level3" id="sec-ch04solution4">
+<h3 class="anchored" data-anchor-id="sec-ch04solution4">Solution 4</h3>
+<p><a href="#sec-ch04exercise4">Exercise 4</a></p>
+<p>Let <span class="math inline">\(Y = X^3\)</span>. Since <span class="math inline">\(X\)</span> takes values in the interval <span class="math inline">\([0, 2]\)</span>, <span class="math inline">\(Y\)</span> takes values in the interval <span class="math inline">\([0^3, 2^3] = [0, 8]\)</span>. Let <span class="math inline">\(F_X(x)\)</span> and <span class="math inline">\(F_Y(y)\)</span> be the CDFs of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> respectively. Then for <span class="math inline">\(y \in [0, 8]\)</span>, we have <span class="math display">\[ F_Y(y) = P(Y \le y) = P(X^3 \le y) = P(X \le \sqrt[3]{y}) = F_X(\sqrt[3]{y}). \]</span> To find the CDF of <span class="math inline">\(X\)</span>, we integrate the pdf of <span class="math inline">\(X\)</span>: <span class="math display">\[ F_X(x) = \int_{-\infty}^x f_X(t) dt = \int_0^x \dfrac{1}{2} t^2 dt = \dfrac{1}{2} \cdot \dfrac{1}{3} t^3 \Bigr|_0^x = \dfrac{1}{6} x^3 \]</span> for <span class="math inline">\(0 \le x \le 2\)</span>. So we have <span class="math display">\[ F_Y(y) = F_X(\sqrt[3]{y}) = \dfrac{1}{6} (\sqrt[3]{y})^3 = \dfrac{1}{6} y \]</span> for <span class="math inline">\(0 \le y \le 8\)</span>.</p>
+<p>To find the pdf of <span class="math inline">\(Y\)</span>, we differentiate the CDF of <span class="math inline">\(Y\)</span> with respect to <span class="math inline">\(y\)</span>: <span class="math display">\[ f_Y(y) = \dfrac{d}{dy} F_Y(y) = \dfrac{d}{dy} \left( \dfrac{1}{6} y \right) = \dfrac{1}{6} \]</span> for <span class="math inline">\(0 \le y \le 8\)</span>.</p>
+<p>Alternatively, we can use the change of variables formula. Since <span class="math inline">\(y = x^3\)</span>, we have <span class="math inline">\(x = y^{1/3}\)</span>. Thus, <span class="math inline">\(\dfrac{dx}{dy} = \dfrac{1}{3} y^{-2/3}\)</span>. Then, we have <span class="math display">\[\begin{aligned} f_Y(y) &amp;= f_X(x(y)) \left| \dfrac{dx}{dy} \right| \\
+&amp;= \dfrac{1}{2} x^2 \left| \dfrac{1}{3} y^{-2/3} \right| \\
+&amp;= \dfrac{1}{2} (y^{1/3})^2 \left( \dfrac{1}{3} y^{-2/3} \right) \\
+&amp;= \dfrac{1}{2} y^{2/3} \left( \dfrac{1}{3} y^{-2/3} \right) \\
+&amp;= \dfrac{1}{6}
+\end{aligned}\]</span> for <span class="math inline">\(0 \le y \le 8\)</span>.</p>
+<p>The pdf of <span class="math inline">\(Y\)</span> is <span class="math display">\[ f_Y(y) = \begin{cases}
+\dfrac{1}{6}, &amp;\text{if } 0 \le y \le 8 \\
+0, &amp;\text{otherwise}
+\end{cases} \]</span> Thus, <span class="math inline">\(Y\)</span> follows a uniform distribution on <span class="math inline">\([0, 8]\)</span>.</p>
+<p>Final Answer: <span class="math inline">\(f_Y(y) = \begin{cases} \frac{1}{6} &amp; 0 \le y \le 8 \\ 0 &amp; \text{otherwise} \end{cases}\)</span></p>
+<p><strong>Intuition:</strong> We can use the inverse transformation and its derivative to find the pdf of the transformed variable. Or we can use the change of variable formula. The absolute value of the derivative accounts for the change in scale.</p>
+</section>
+<section class="level3" id="sec-ch04solution5">
+<h3 class="anchored" data-anchor-id="sec-ch04solution5">Solution 5</h3>
+<p><a href="#sec-ch04exercise5">Exercise 5</a></p>
+<p>We are given <span class="math inline">\(f_X(x) = \dfrac{1}{x^2}\)</span> for <span class="math inline">\(x \ge 1\)</span>. The transformation is <span class="math inline">\(Y = \ln X\)</span>. The inverse transformation is <span class="math inline">\(X = e^Y\)</span>.</p>
+<p>Since <span class="math inline">\(x \ge 1\)</span>, we have <span class="math inline">\(y \ge 0\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = e^y\)</span>.</p>
+<p>Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X(e^y) \left\lvert e^y \right\rvert \\
+&amp;= \dfrac{1}{(e^y)^2} \cdot e^y \\
+&amp;= e^{-y}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y \ge 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise. Thus, <span class="math inline">\(Y\)</span> follows an exponential distribution with parameter 1.</p>
+<p><strong>Intuition:</strong> The transformation <span class="math inline">\(Y = \ln X\)</span> converts the given distribution to an exponential distribution. The inverse transformation and its derivative are used to find the pdf of the transformed variable.</p>
+</section>
+<section class="level3" id="sec-ch04solution6">
+<h3 class="anchored" data-anchor-id="sec-ch04solution6">Solution 6</h3>
+<p><a href="#sec-ch04exercise6">Exercise 6</a></p>
+<p>We are given <span class="math inline">\(X \sim N(0, 1)\)</span>, so <span class="math inline">\(f_X(x) = \dfrac{1}{\sqrt{2 \pi}} e^{-\frac{x^2}{2}}\)</span>. The transformation is <span class="math inline">\(Y = X^2\)</span>. This is not a monotonic function on the entire real line, but it is monotonic on <span class="math inline">\((-\infty, 0]\)</span> and <span class="math inline">\([0, \infty)\)</span>.</p>
+<p>We use the formula from Example 4.4:</p>
+<p><span class="math inline">\(\qquad f_Y(y) = \dfrac{1}{2 \sqrt{y}} f_X(\sqrt{y}) + \dfrac{1}{2 \sqrt{y}} f_X(-\sqrt{y})\)</span></p>
+<p>Since <span class="math inline">\(f_X(x) = f_X(-x)\)</span>, we have</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= \dfrac{1}{\sqrt{y}} f_X(\sqrt{y}) \\
+&amp;= \dfrac{1}{\sqrt{y}} \cdot \dfrac{1}{\sqrt{2 \pi}} e^{-\frac{y}{2}} \\
+&amp;= \dfrac{1}{\sqrt{2 \pi y}} e^{-\frac{y}{2}}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y &gt; 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise. This is the pdf of a chi-squared distribution with 1 degree of freedom.</p>
+<p><strong>Intuition:</strong> The square of a standard normal random variable follows a chi-squared distribution with 1 degree of freedom. The formula for non-monotonic transformations is used to derive the pdf.</p>
+</section>
+<section class="level3" id="sec-ch04solution7">
+<h3 class="anchored" data-anchor-id="sec-ch04solution7">Solution 7</h3>
+<p><a href="#sec-ch04exercise7">Exercise 7</a></p>
+<p>We are given <span class="math inline">\(Y = a + bX\)</span> where <span class="math inline">\(b &gt; 0\)</span>. We want to find the cdf of <span class="math inline">\(Y\)</span>, <span class="math inline">\(F_Y(y) = \Pr(Y \le y)\)</span>.</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(Y \le y) \\
+&amp;= \Pr(a + bX \le y) \\
+&amp;= \Pr \left( X \le \dfrac{y - a}{b} \right) \\
+&amp;= F_X \left( \dfrac{y - a}{b} \right)
+\end{aligned}\)</span></p>
+<p>Thus, the cdf of <span class="math inline">\(Y\)</span> is <span class="math inline">\(F_Y(y) = F_X \left( \dfrac{y - a}{b} \right)\)</span>.</p>
+<p><strong>Intuition:</strong> This is a direct application of the definition of the cdf and the properties of inequalities. We are essentially finding the probability that <span class="math inline">\(X\)</span> is less than or equal to the inverse transformed value of <span class="math inline">\(y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04solution8">
+<h3 class="anchored" data-anchor-id="sec-ch04solution8">Solution 8</h3>
+<p><a href="#sec-ch04exercise8">Exercise 8</a></p>
+<p>We are given <span class="math inline">\(Y = e^X\)</span>. We want to find the cdf of <span class="math inline">\(Y\)</span>, <span class="math inline">\(F_Y(y) = \Pr(Y \le y)\)</span>.</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(Y \le y) \\
+&amp;= \Pr(e^X \le y) \\
+&amp;= \Pr(X \le \ln y) \\
+&amp;= F_X(\ln y)
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y &gt; 0\)</span>, and <span class="math inline">\(F_Y(y) = 0\)</span> otherwise. Thus, the cdf of <span class="math inline">\(Y\)</span> is <span class="math inline">\(F_Y(y) = F_X(\ln y)\)</span> for <span class="math inline">\(y &gt; 0\)</span>.</p>
+<p><strong>Intuition:</strong> Since the exponential function is monotonically increasing, we can take the natural logarithm of both sides of the inequality. This allows us to express the cdf of <span class="math inline">\(Y\)</span> in terms of the cdf of <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04solution9">
+<h3 class="anchored" data-anchor-id="sec-ch04solution9">Solution 9</h3>
+<p><a href="#sec-ch04exercise9">Exercise 9</a></p>
+<p>We are given <span class="math inline">\(f_X(x) = e^{-x}\)</span> for <span class="math inline">\(x \ge 0\)</span>. The transformation is <span class="math inline">\(Y = \sqrt{X}\)</span>. The inverse transformation is <span class="math inline">\(X = Y^2\)</span>.</p>
+<p>Since <span class="math inline">\(x \ge 0\)</span>, we have <span class="math inline">\(y \ge 0\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = 2y\)</span>.</p>
+<p>Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X(y^2) \left\lvert 2y \right\rvert \\
+&amp;= e^{-y^2} \cdot 2y \\
+&amp;= 2y e^{-y^2}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y \ge 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise.</p>
+<p><strong>Intuition:</strong> We use the inverse transformation and its derivative to find the pdf of the transformed variable. The absolute value of the derivative accounts for the change in scale.</p>
+</section>
+<section class="level3" id="sec-ch04solution10">
+<h3 class="anchored" data-anchor-id="sec-ch04solution10">Solution 10</h3>
+<p><a href="#sec-ch04exercise10">Exercise 10</a></p>
+<p>We are given that <span class="math inline">\(Y = g(X)\)</span> where <span class="math inline">\(g(x)\)</span> is monotonically increasing and differentiable. The inverse transformation is <span class="math inline">\(X = g^{-1}(Y)\)</span>.</p>
+<p>Since <span class="math inline">\(g(x)\)</span> is monotonically increasing, we have</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \Pr(Y \le y) = \Pr(g(X) \le y) = \Pr(X \le g^{-1}(y)) = F_X(g^{-1}(y))\)</span></p>
+<p>Differentiating with respect to <span class="math inline">\(y\)</span>, we get</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(g^{-1}(y)) \dfrac{d}{dy} g^{-1}(y)\)</span></p>
+<p><strong>Intuition:</strong> This is a direct application of Theorem 4.1 part 1 for the case where <span class="math inline">\(g\)</span> is increasing. The derivative of the inverse transformation represents the change in scale.</p>
+</section>
+<section class="level3" id="sec-ch04solution11">
+<h3 class="anchored" data-anchor-id="sec-ch04solution11">Solution 11</h3>
+<p><a href="#sec-ch04exercise11">Exercise 11</a></p>
+<p>We are given that <span class="math inline">\(Y = g(X)\)</span> where <span class="math inline">\(g(x)\)</span> is monotonically decreasing and differentiable. The inverse transformation is <span class="math inline">\(X = g^{-1}(Y)\)</span>.</p>
+<p>Since <span class="math inline">\(g(x)\)</span> is monotonically decreasing, we have</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \Pr(Y \le y) = \Pr(g(X) \le y) = \Pr(X \ge g^{-1}(y)) = 1 - F_X(g^{-1}(y))\)</span></p>
+<p>Differentiating with respect to <span class="math inline">\(y\)</span>, we get</p>
+<p><span class="math inline">\(\qquad f_Y(y) = -f_X(g^{-1}(y)) \dfrac{d}{dy} g^{-1}(y)\)</span></p>
+<p>Since <span class="math inline">\(g\)</span> is decreasing, <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y)\)</span> is negative. Taking the absolute value as in Theorem 4.1 part 1, we get</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(g^{-1}(y)) \left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span></p>
+<p><strong>Intuition:</strong> This is a direct application of Theorem 4.1 part 1 for the case where <span class="math inline">\(g\)</span> is decreasing. The negative sign accounts for the fact that the inequality is reversed when applying a decreasing function.</p>
+</section>
+<section class="level3" id="sec-ch04solution12">
+<h3 class="anchored" data-anchor-id="sec-ch04solution12">Solution 12</h3>
+<p><a href="#sec-ch04exercise12">Exercise 12</a></p>
+<p>We are given <span class="math inline">\(X \sim U[0, 1]\)</span>, so <span class="math inline">\(f_X(x) = 1\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>. The transformation is <span class="math inline">\(Y = -\ln(X)\)</span>. The inverse transformation is <span class="math inline">\(X = e^{-Y}\)</span>.</p>
+<p>Since <span class="math inline">\(0 \le x \le 1\)</span>, we have <span class="math inline">\(y \ge 0\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = -e^{-y}\)</span>.</p>
+<p>Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X(e^{-y}) \left\lvert -e^{-y} \right\rvert \\
+&amp;= 1 \cdot e^{-y} \\
+&amp;= e^{-y}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y \ge 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise. Thus, <span class="math inline">\(Y\)</span> follows an exponential distribution with parameter 1.</p>
+<p><strong>Intuition:</strong> The negative natural logarithm of a uniform random variable on <span class="math inline">\([0, 1]\)</span> follows an exponential distribution.</p>
+</section>
+<section class="level3" id="sec-ch04solution13">
+<h3 class="anchored" data-anchor-id="sec-ch04solution13">Solution 13</h3>
+<p><a href="#sec-ch04exercise13">Exercise 13</a></p>
+<p>We are given <span class="math inline">\(X \sim U[0, 1]\)</span>, so <span class="math inline">\(f_X(x) = 1\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>. The transformation is <span class="math inline">\(Y = \tan \left( \pi \left( X - \dfrac{1}{2} \right) \right)\)</span>. The inverse transformation is <span class="math inline">\(X = \dfrac{1}{\pi} \arctan(Y) + \dfrac{1}{2}\)</span>.</p>
+<p>The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = \dfrac{1}{\pi (1 + y^2)}\)</span>. Since <span class="math inline">\(0 \le x \le 1\)</span>, we have <span class="math inline">\(-\infty &lt; y &lt; \infty\)</span>.</p>
+<p>Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X \left( \dfrac{1}{\pi} \arctan(y) + \dfrac{1}{2} \right) \left\lvert \dfrac{1}{\pi (1 + y^2)} \right\rvert \\
+&amp;= 1 \cdot \dfrac{1}{\pi (1 + y^2)} \\
+&amp;= \dfrac{1}{\pi (1 + y^2)}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(-\infty &lt; y &lt; \infty\)</span>. This is the pdf of a Cauchy distribution.</p>
+<p><strong>Intuition:</strong> This transformation maps a uniform random variable to a Cauchy random variable. The inverse transformation and its derivative are used to find the pdf of the transformed variable.</p>
+</section>
+<section class="level3" id="sec-ch04solution14">
+<h3 class="anchored" data-anchor-id="sec-ch04solution14">Solution 14</h3>
+<p><a href="#sec-ch04exercise14">Exercise 14</a></p>
+<p>This is the Probability Integral Transform (Theorem 4.2). We are given <span class="math inline">\(Y = F_X(X)\)</span>. Then for <span class="math inline">\(0 \le y \le 1\)</span>,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(Y \le y) \\
+&amp;= \Pr(F_X(X) \le y) \\
+&amp;= \Pr(X \le F_X^{-1}(y)) \\
+&amp;= F_X(F_X^{-1}(y)) \\
+&amp;= y
+\end{aligned}\)</span></p>
+<p>Differentiating with respect to <span class="math inline">\(y\)</span>, we get <span class="math inline">\(f_Y(y) = 1\)</span> for <span class="math inline">\(0 \le y \le 1\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise. Thus, <span class="math inline">\(Y \sim U[0, 1]\)</span>.</p>
+<p><strong>Intuition:</strong> The Probability Integral Transform states that if we apply the cdf of a random variable to itself, the result is a uniform random variable on <span class="math inline">\([0, 1]\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04solution15">
+<h3 class="anchored" data-anchor-id="sec-ch04solution15">Solution 15</h3>
+<p><a href="#sec-ch04exercise15">Exercise 15</a></p>
+<p>We are given <span class="math inline">\(Y = X^2\)</span>. We want to find the cdf of <span class="math inline">\(Y\)</span>, <span class="math inline">\(F_Y(y) = \Pr(Y \le y)\)</span>.</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(Y \le y) \\
+&amp;= \Pr(X^2 \le y)
+\end{aligned}\)</span></p>
+<p>For <span class="math inline">\(y \ge 0\)</span>, we have</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(-\sqrt{y} \le X \le \sqrt{y}) \\
+&amp;= F_X(\sqrt{y}) - F_X(-\sqrt{y})
+\end{aligned}\)</span></p>
+<p>For <span class="math inline">\(y &lt; 0\)</span>, <span class="math inline">\(F_Y(y) = 0\)</span>.</p>
+<p><strong>Intuition:</strong> This is similar to Example 4.4. We express the cdf of <span class="math inline">\(Y\)</span> in terms of the cdf of <span class="math inline">\(X\)</span> by considering the range of <span class="math inline">\(X\)</span> values that satisfy <span class="math inline">\(X^2 \le y\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04solution16">
+<h3 class="anchored" data-anchor-id="sec-ch04solution16">Solution 16</h3>
+<p><a href="#sec-ch04exercise16">Exercise 16</a></p>
+<p>We are given <span class="math inline">\(f_X(x) = \dfrac{1}{2} e^{-\lvert x \rvert}\)</span> for <span class="math inline">\(-\infty &lt; x &lt; \infty\)</span>. The transformation is <span class="math inline">\(Y = \lvert X \rvert\)</span>. This is not a monotonic function, but we can consider the intervals <span class="math inline">\((-\infty, 0)\)</span> and <span class="math inline">\([0, \infty)\)</span> separately.</p>
+<p>For <span class="math inline">\(y &gt; 0\)</span>, we have <span class="math inline">\(g_1(x) = -x\)</span> and <span class="math inline">\(g_2(x) = x\)</span>. The inverse transformations are <span class="math inline">\(g_1^{-1}(y) = -y\)</span> and <span class="math inline">\(g_2^{-1}(y) = y\)</span>. The derivatives are <span class="math inline">\(\dfrac{d}{dy} g_1^{-1}(y) = -1\)</span> and <span class="math inline">\(\dfrac{d}{dy} g_2^{-1}(y) = 1\)</span>.</p>
+<p>Using the formula for non-monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X(g_1^{-1}(y)) \left\lvert \dfrac{d}{dy} g_1^{-1}(y) \right\rvert + f_X(g_2^{-1}(y)) \left\lvert \dfrac{d}{dy} g_2^{-1}(y) \right\rvert \\
+&amp;= f_X(-y) \lvert -1 \rvert + f_X(y) \lvert 1 \rvert \\
+&amp;= f_X(-y) + f_X(y) \\
+&amp;= \dfrac{1}{2} e^{-\lvert -y \rvert} + \dfrac{1}{2} e^{-\lvert y \rvert} \\
+&amp;= e^{-y}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y &gt; 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise.</p>
+<p><strong>Intuition:</strong> We split the transformation into two monotonic parts and apply the formula for each part. Since the absolute value function is symmetric, we end up with a simpler expression.</p>
+</section>
+<section class="level3" id="sec-ch04solution17">
+<h3 class="anchored" data-anchor-id="sec-ch04solution17">Solution 17</h3>
+<p><a href="#sec-ch04exercise17">Exercise 17</a></p>
+<p>We are given <span class="math inline">\(Y = aX^2 + bX + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>. The function is monotonic on the two sides of the point <span class="math inline">\(x = -\dfrac{b}{2a}\)</span>. The inverse functions are given by</p>
+<p><span class="math inline">\(\qquad g_{1,2}^{-1}(y) = \dfrac{-b \pm \sqrt{b^2 - 4a(c - y)}}{2a}\)</span></p>
+<p>The derivatives are</p>
+<p><span class="math inline">\(\qquad \dfrac{d}{dy} g_{1,2}^{-1}(y) = \pm \dfrac{1}{\sqrt{b^2 - 4a(c - y)}}\)</span></p>
+<p>Using the formula for non-monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X \left( \dfrac{-b + \sqrt{b^2 - 4a(c - y)}}{2a} \right) \left\lvert \dfrac{1}{\sqrt{b^2 - 4a(c - y)}} \right\rvert \\
+&amp;+ f_X \left( \dfrac{-b - \sqrt{b^2 - 4a(c - y)}}{2a} \right) \left\lvert -\dfrac{1}{\sqrt{b^2 - 4a(c - y)}} \right\rvert
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y \ge c - \dfrac{b^2}{4a}\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise.</p>
+<p><strong>Intuition:</strong> This is a generalization of Example 4.7. We find the inverse functions by solving the quadratic equation and then apply the formula for non-monotonic transformations.</p>
+</section>
+<section class="level3" id="sec-ch04solution18">
+<h3 class="anchored" data-anchor-id="sec-ch04solution18">Solution 18</h3>
+<p><a href="#sec-ch04exercise18">Exercise 18</a></p>
+<p>We are given</p>
+<p><span class="math inline">\(\qquad Y = \begin{cases}
+X, &amp;\text{if } X &gt; c \\
+c, &amp;\text{if } X \le c
+\end{cases}\)</span></p>
+<p>We want to find the cdf of <span class="math inline">\(Y\)</span>, <span class="math inline">\(F_Y(y) = \Pr(Y \le y)\)</span>.</p>
+<p>If <span class="math inline">\(y &lt; c\)</span>, then <span class="math inline">\(F_Y(y) = 0\)</span>. If <span class="math inline">\(y = c\)</span>, then <span class="math inline">\(F_Y(y) = \Pr(Y \le c) = \Pr(X \le c) = F_X(c)\)</span>. If <span class="math inline">\(y &gt; c\)</span>, then <span class="math inline">\(F_Y(y) = \Pr(Y \le y) = \Pr(X \le y) = F_X(y)\)</span>.</p>
+<p>Thus,</p>
+<p><span class="math inline">\(\qquad F_Y(y) = \begin{cases}
+0, &amp;\text{if } y &lt; c \\
+F_X(c), &amp;\text{if } y = c \\
+F_X(y), &amp;\text{if } y &gt; c
+\end{cases}\)</span></p>
+<p><strong>Intuition:</strong> This transformation truncates the random variable at <span class="math inline">\(c\)</span>. The cdf of <span class="math inline">\(Y\)</span> is a mixture of a discrete distribution at <span class="math inline">\(c\)</span> and a continuous distribution for values greater than <span class="math inline">\(c\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04solution19">
+<h3 class="anchored" data-anchor-id="sec-ch04solution19">Solution 19</h3>
+<p><a href="#sec-ch04exercise19">Exercise 19</a></p>
+<p>We are given <span class="math inline">\(X \sim U[0, 1]\)</span>, so <span class="math inline">\(f_X(x) = 1\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>. The transformation is <span class="math inline">\(Y = \dfrac{X}{1 - X}\)</span>. The inverse transformation is <span class="math inline">\(X = \dfrac{Y}{1 + Y}\)</span>.</p>
+<p>Since <span class="math inline">\(0 \le x \le 1\)</span>, we have <span class="math inline">\(y \ge 0\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = \dfrac{1}{(1 + y)^2}\)</span>.</p>
+<p>Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X \left( \dfrac{y}{1 + y} \right) \left\lvert \dfrac{1}{(1 + y)^2} \right\rvert \\
+&amp;= 1 \cdot \dfrac{1}{(1 + y)^2} \\
+&amp;= \dfrac{1}{(1 + y)^2}
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(y \ge 0\)</span>, and <span class="math inline">\(f_Y(y) = 0\)</span> otherwise.</p>
+<p><strong>Intuition:</strong> This transformation maps a uniform random variable on <span class="math inline">\([0, 1]\)</span> to a distribution with support on <span class="math inline">\([0, \infty)\)</span>. The inverse transformation and its derivative are used to find the pdf of the transformed variable.</p>
+</section>
+<section class="level3" id="sec-ch04solution20">
+<h3 class="anchored" data-anchor-id="sec-ch04solution20">Solution 20</h3>
+<p><a href="#sec-ch04exercise20">Exercise 20</a></p>
+<p>We are given <span class="math inline">\(Y = \mathbb{1}(X \in A)\)</span>. This is an indicator function that takes the value 1 if <span class="math inline">\(X\)</span> is in the set <span class="math inline">\(A\)</span> and 0 otherwise.</p>
+<p>The probability mass function of <span class="math inline">\(Y\)</span> is given by</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+\Pr(Y = 1) &amp;= \Pr(X \in A) = \int_A f_X(x) \, dx \\
+\Pr(Y = 0) &amp;= \Pr(X \notin A) = 1 - \Pr(X \in A) = 1 - \int_A f_X(x) \, dx
+\end{aligned}\)</span></p>
+<p><strong>Intuition:</strong> This is a discrete random variable that indicates whether an event has occurred or not. The probability of <span class="math inline">\(Y = 1\)</span> is the probability that <span class="math inline">\(X\)</span> belongs to the set <span class="math inline">\(A\)</span>.</p>
+</section>
+</section>
+<section class="level2" id="r-script-examples">
+<h2 class="anchored" data-anchor-id="r-script-examples">R Script Examples</h2>
+<section class="level3" id="r-script-1-linear-transformation-of-a-normal-random-variable">
+<h3 class="anchored" data-anchor-id="r-script-1-linear-transformation-of-a-normal-random-variable">R Script 1: Linear Transformation of a Normal Random Variable</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb3-4"><a aria-hidden="true" href="#cb3-4" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb3-5"><a aria-hidden="true" href="#cb3-5" tabindex="-1"></a></span>
+<span id="cb3-6"><a aria-hidden="true" href="#cb3-6" tabindex="-1"></a><span class="co"># Define parameters for the normal distribution</span></span>
+<span id="cb3-7"><a aria-hidden="true" href="#cb3-7" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb3-8"><a aria-hidden="true" href="#cb3-8" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb3-9"><a aria-hidden="true" href="#cb3-9" tabindex="-1"></a></span>
+<span id="cb3-10"><a aria-hidden="true" href="#cb3-10" tabindex="-1"></a><span class="co"># Generate 1000 samples from a normal distribution</span></span>
+<span id="cb3-11"><a aria-hidden="true" href="#cb3-11" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb3-12"><a aria-hidden="true" href="#cb3-12" tabindex="-1"></a></span>
+<span id="cb3-13"><a aria-hidden="true" href="#cb3-13" tabindex="-1"></a><span class="co"># Define the linear transformation parameters</span></span>
+<span id="cb3-14"><a aria-hidden="true" href="#cb3-14" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb3-15"><a aria-hidden="true" href="#cb3-15" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb3-16"><a aria-hidden="true" href="#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a aria-hidden="true" href="#cb3-17" tabindex="-1"></a><span class="co"># Apply the linear transformation Y = a + bX</span></span>
+<span id="cb3-18"><a aria-hidden="true" href="#cb3-18" tabindex="-1"></a>Y <span class="ot">&lt;-</span> a <span class="sc">+</span> b <span class="sc">*</span> X</span>
+<span id="cb3-19"><a aria-hidden="true" href="#cb3-19" tabindex="-1"></a></span>
+<span id="cb3-20"><a aria-hidden="true" href="#cb3-20" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb3-21"><a aria-hidden="true" href="#cb3-21" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X, Y)</span>
+<span id="cb3-22"><a aria-hidden="true" href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a aria-hidden="true" href="#cb3-23" tabindex="-1"></a><span class="co"># Plot the distributions of X and Y</span></span>
+<span id="cb3-24"><a aria-hidden="true" href="#cb3-24" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb3-25"><a aria-hidden="true" href="#cb3-25" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> ..density..),</span>
+<span id="cb3-26"><a aria-hidden="true" href="#cb3-26" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb3-27"><a aria-hidden="true" href="#cb3-27" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb3-28"><a aria-hidden="true" href="#cb3-28" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb3-29"><a aria-hidden="true" href="#cb3-29" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb3-30"><a aria-hidden="true" href="#cb3-30" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-31"><a aria-hidden="true" href="#cb3-31" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> X), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-32"><a aria-hidden="true" href="#cb3-32" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y, <span class="at">y =</span> ..density..),</span>
+<span id="cb3-33"><a aria-hidden="true" href="#cb3-33" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb3-34"><a aria-hidden="true" href="#cb3-34" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb3-35"><a aria-hidden="true" href="#cb3-35" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb3-36"><a aria-hidden="true" href="#cb3-36" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb3-37"><a aria-hidden="true" href="#cb3-37" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-38"><a aria-hidden="true" href="#cb3-38" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-39"><a aria-hidden="true" href="#cb3-39" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-40"><a aria-hidden="true" href="#cb3-40" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of X and Y = a + bX"</span>,</span>
+<span id="cb3-41"><a aria-hidden="true" href="#cb3-41" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb3-42"><a aria-hidden="true" href="#cb3-42" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb3-43"><a aria-hidden="true" href="#cb3-43" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-44"><a aria-hidden="true" href="#cb3-44" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap04_files/figure-html/unnamed-chunk-1-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> We load the <code>tidyverse</code> library for data manipulation and <code>ggplot2</code> for plotting.</li>
+<li><strong>Set Seed:</strong> We set a seed to ensure reproducibility of the random samples.</li>
+<li><strong>Define Parameters:</strong> We define the mean (<code>mu</code>) and standard deviation (<code>sigma</code>) for the normal distribution, as well as the parameters <code>a</code> and <code>b</code> for the linear transformation <span class="math inline">\(Y = a + bX\)</span>.</li>
+<li><strong>Generate Samples:</strong> We generate 1000 random samples from the normal distribution <span class="math inline">\(N(\mu, \sigma)\)</span> using <code>rnorm()</code>.</li>
+<li><strong>Apply Transformation:</strong> We apply the linear transformation <span class="math inline">\(Y = a + bX\)</span> to the generated samples.</li>
+<li><strong>Create Data Frame:</strong> We create a data frame <code>df</code> containing the original samples <code>X</code> and the transformed samples <code>Y</code>.</li>
+<li><strong>Plot Distributions:</strong> We use <code>ggplot2</code> to create histograms and density plots for both <code>X</code> and <code>Y</code>. This allows us to visually compare the distributions of the original and transformed random variables.</li>
+</ol>
+<p><strong>Concepts from Text:</strong></p>
+<p>This script illustrates <strong>Example 4.1</strong> and <strong>Example 4.2</strong> from the text. We are applying a linear transformation to a random variable and observing the effect on its distribution. In this case, we are transforming a normal random variable, which, as discussed in the text, results in another normal random variable. The plot visually confirms that the transformed variable <span class="math inline">\(Y\)</span> also follows a normal distribution. The parameters of the new normal distribution can be derived from the transformation parameters <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span>, as shown in <strong>Example 4.2</strong>.</p>
+</section>
+<section class="level3" id="r-script-2-transformation-of-a-uniform-random-variable-to-an-exponential-random-variable">
+<h3 class="anchored" data-anchor-id="r-script-2-transformation-of-a-uniform-random-variable-to-an-exponential-random-variable">R Script 2: Transformation of a Uniform Random Variable to an Exponential Random Variable</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a></span>
+<span id="cb5-5"><a aria-hidden="true" href="#cb5-5" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb5-6"><a aria-hidden="true" href="#cb5-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb5-7"><a aria-hidden="true" href="#cb5-7" tabindex="-1"></a></span>
+<span id="cb5-8"><a aria-hidden="true" href="#cb5-8" tabindex="-1"></a><span class="co"># Generate 1000 samples from a uniform distribution U[0, 1]</span></span>
+<span id="cb5-9"><a aria-hidden="true" href="#cb5-9" tabindex="-1"></a>U <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
+<span id="cb5-10"><a aria-hidden="true" href="#cb5-10" tabindex="-1"></a></span>
+<span id="cb5-11"><a aria-hidden="true" href="#cb5-11" tabindex="-1"></a><span class="co"># Define the transformation Y = -ln(U)</span></span>
+<span id="cb5-12"><a aria-hidden="true" href="#cb5-12" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">log</span>(U)</span>
+<span id="cb5-13"><a aria-hidden="true" href="#cb5-13" tabindex="-1"></a></span>
+<span id="cb5-14"><a aria-hidden="true" href="#cb5-14" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb5-15"><a aria-hidden="true" href="#cb5-15" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(U, Y)</span>
+<span id="cb5-16"><a aria-hidden="true" href="#cb5-16" tabindex="-1"></a></span>
+<span id="cb5-17"><a aria-hidden="true" href="#cb5-17" tabindex="-1"></a><span class="co"># Plot the distributions of U and Y</span></span>
+<span id="cb5-18"><a aria-hidden="true" href="#cb5-18" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb5-19"><a aria-hidden="true" href="#cb5-19" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> U, <span class="at">y =</span> ..density..),</span>
+<span id="cb5-20"><a aria-hidden="true" href="#cb5-20" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb5-21"><a aria-hidden="true" href="#cb5-21" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb5-22"><a aria-hidden="true" href="#cb5-22" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb5-23"><a aria-hidden="true" href="#cb5-23" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb5-24"><a aria-hidden="true" href="#cb5-24" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-25"><a aria-hidden="true" href="#cb5-25" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> U), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-26"><a aria-hidden="true" href="#cb5-26" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y, <span class="at">y =</span> ..density..),</span>
+<span id="cb5-27"><a aria-hidden="true" href="#cb5-27" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb5-28"><a aria-hidden="true" href="#cb5-28" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb5-29"><a aria-hidden="true" href="#cb5-29" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb5-30"><a aria-hidden="true" href="#cb5-30" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb5-31"><a aria-hidden="true" href="#cb5-31" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-32"><a aria-hidden="true" href="#cb5-32" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-33"><a aria-hidden="true" href="#cb5-33" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-34"><a aria-hidden="true" href="#cb5-34" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of U and Y = -ln(U)"</span>,</span>
+<span id="cb5-35"><a aria-hidden="true" href="#cb5-35" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb5-36"><a aria-hidden="true" href="#cb5-36" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb5-37"><a aria-hidden="true" href="#cb5-37" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-38"><a aria-hidden="true" href="#cb5-38" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap04_files/figure-html/unnamed-chunk-2-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> We load the <code>tidyverse</code> library for data manipulation and <code>ggplot2</code> for plotting.</li>
+<li><strong>Set Seed:</strong> We set a seed to ensure reproducibility of the random samples.</li>
+<li><strong>Generate Samples:</strong> We generate 1000 random samples from the uniform distribution <span class="math inline">\(U[0, 1]\)</span> using <code>runif()</code>.</li>
+<li><strong>Apply Transformation:</strong> We apply the transformation <span class="math inline">\(Y = -\ln(U)\)</span> to the generated samples.</li>
+<li><strong>Create Data Frame:</strong> We create a data frame <code>df</code> containing the original samples <code>U</code> and the transformed samples <code>Y</code>.</li>
+<li><strong>Plot Distributions:</strong> We use <code>ggplot2</code> to create histograms and density plots for both <code>U</code> and <code>Y</code>.</li>
+</ol>
+<p><strong>Concepts from Text:</strong></p>
+<p>This script illustrates the concept discussed in <strong>Solution 12</strong> of the exercises. We are transforming a uniform random variable <span class="math inline">\(U\)</span> using the transformation <span class="math inline">\(Y = -\ln(U)\)</span>, which results in an exponential random variable <span class="math inline">\(Y\)</span>. The plot visually confirms that the transformed variable <span class="math inline">\(Y\)</span> follows an exponential distribution. This is a specific example of how a <strong>monotonic transformation</strong> can be used to generate a random variable with a desired distribution from a uniform random variable.</p>
+</section>
+<section class="level3" id="r-script-3-probability-integral-transform">
+<h3 class="anchored" data-anchor-id="r-script-3-probability-integral-transform">R Script 3: Probability Integral Transform</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" href="#cb6-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb6-2"><a aria-hidden="true" href="#cb6-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-3"><a aria-hidden="true" href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb6-4"><a aria-hidden="true" href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a aria-hidden="true" href="#cb6-5" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb6-6"><a aria-hidden="true" href="#cb6-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb6-7"><a aria-hidden="true" href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a aria-hidden="true" href="#cb6-8" tabindex="-1"></a><span class="co"># Generate 1000 samples from an exponential distribution with rate 1</span></span>
+<span id="cb6-9"><a aria-hidden="true" href="#cb6-9" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span>)</span>
+<span id="cb6-10"><a aria-hidden="true" href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a aria-hidden="true" href="#cb6-11" tabindex="-1"></a><span class="co"># Calculate the CDF of the exponential distribution</span></span>
+<span id="cb6-12"><a aria-hidden="true" href="#cb6-12" tabindex="-1"></a>F_X <span class="ot">&lt;-</span> <span class="fu">pexp</span>(X, <span class="at">rate =</span> <span class="dv">1</span>)</span>
+<span id="cb6-13"><a aria-hidden="true" href="#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a aria-hidden="true" href="#cb6-14" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb6-15"><a aria-hidden="true" href="#cb6-15" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X, F_X)</span>
+<span id="cb6-16"><a aria-hidden="true" href="#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a aria-hidden="true" href="#cb6-17" tabindex="-1"></a><span class="co"># Plot the distributions of X and F_X</span></span>
+<span id="cb6-18"><a aria-hidden="true" href="#cb6-18" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb6-19"><a aria-hidden="true" href="#cb6-19" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> ..density..),</span>
+<span id="cb6-20"><a aria-hidden="true" href="#cb6-20" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb6-21"><a aria-hidden="true" href="#cb6-21" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb6-22"><a aria-hidden="true" href="#cb6-22" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb6-23"><a aria-hidden="true" href="#cb6-23" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb6-24"><a aria-hidden="true" href="#cb6-24" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-25"><a aria-hidden="true" href="#cb6-25" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> X), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-26"><a aria-hidden="true" href="#cb6-26" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_X, <span class="at">y =</span> ..density..),</span>
+<span id="cb6-27"><a aria-hidden="true" href="#cb6-27" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb6-28"><a aria-hidden="true" href="#cb6-28" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb6-29"><a aria-hidden="true" href="#cb6-29" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb6-30"><a aria-hidden="true" href="#cb6-30" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb6-31"><a aria-hidden="true" href="#cb6-31" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-32"><a aria-hidden="true" href="#cb6-32" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> F_X), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-33"><a aria-hidden="true" href="#cb6-33" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-34"><a aria-hidden="true" href="#cb6-34" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of X and F_X(X)"</span>,</span>
+<span id="cb6-35"><a aria-hidden="true" href="#cb6-35" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb6-36"><a aria-hidden="true" href="#cb6-36" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb6-37"><a aria-hidden="true" href="#cb6-37" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-38"><a aria-hidden="true" href="#cb6-38" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap04_files/figure-html/unnamed-chunk-3-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> We load the <code>tidyverse</code> library for data manipulation and <code>ggplot2</code> for plotting.</li>
+<li><strong>Set Seed:</strong> We set a seed to ensure reproducibility of the random samples.</li>
+<li><strong>Generate Samples:</strong> We generate 1000 random samples from an exponential distribution with rate 1 using <code>rexp()</code>.</li>
+<li><strong>Calculate CDF:</strong> We calculate the cumulative distribution function (CDF) of the exponential distribution, <span class="math inline">\(F_X(x)\)</span>, for each generated sample <span class="math inline">\(X\)</span> using <code>pexp()</code>.</li>
+<li><strong>Create Data Frame:</strong> We create a data frame <code>df</code> containing the original samples <code>X</code> and the calculated CDF values <code>F_X</code>.</li>
+<li><strong>Plot Distributions:</strong> We use <code>ggplot2</code> to create histograms and density plots for both <code>X</code> and <code>F_X</code>.</li>
+</ol>
+<p><strong>Concepts from Text:</strong></p>
+<p>This script illustrates <strong>Theorem 4.2</strong>, the <strong>Probability Integral Transform</strong>. We are applying the CDF of a random variable to itself, <span class="math inline">\(Y = F_X(X)\)</span>. The theorem states that the resulting random variable <span class="math inline">\(Y\)</span> will be uniformly distributed on <span class="math inline">\([0, 1]\)</span>. The plot visually confirms that <code>F_X</code> follows a uniform distribution, demonstrating the Probability Integral Transform.</p>
+</section>
+<section class="level3" id="r-script-4-box-cox-transformation">
+<h3 class="anchored" data-anchor-id="r-script-4-box-cox-transformation">R Script 4: Box-Cox Transformation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" href="#cb7-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb7-2"><a aria-hidden="true" href="#cb7-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-3"><a aria-hidden="true" href="#cb7-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-4"><a aria-hidden="true" href="#cb7-4" tabindex="-1"></a><span class="fu">library</span>(MASS) <span class="co"># For boxcox() function</span></span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'MASS'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:dplyr':
+
+    select</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" href="#cb10-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb10-2"><a aria-hidden="true" href="#cb10-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb10-3"><a aria-hidden="true" href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a aria-hidden="true" href="#cb10-4" tabindex="-1"></a><span class="co"># Generate 1000 samples from a log-normal distribution</span></span>
+<span id="cb10-5"><a aria-hidden="true" href="#cb10-5" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rlnorm</span>(<span class="dv">1000</span>, <span class="at">meanlog =</span> <span class="dv">0</span>, <span class="at">sdlog =</span> <span class="dv">1</span>)</span>
+<span id="cb10-6"><a aria-hidden="true" href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a aria-hidden="true" href="#cb10-7" tabindex="-1"></a><span class="co"># Define a range of lambda values for the Box-Cox transformation</span></span>
+<span id="cb10-8"><a aria-hidden="true" href="#cb10-8" tabindex="-1"></a>lambda_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">by =</span> <span class="fl">0.5</span>)</span>
+<span id="cb10-9"><a aria-hidden="true" href="#cb10-9" tabindex="-1"></a></span>
+<span id="cb10-10"><a aria-hidden="true" href="#cb10-10" tabindex="-1"></a><span class="co"># Apply the Box-Cox transformation for each lambda</span></span>
+<span id="cb10-11"><a aria-hidden="true" href="#cb10-11" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lambda_values, <span class="cf">function</span>(lambda) {</span>
+<span id="cb10-12"><a aria-hidden="true" href="#cb10-12" tabindex="-1"></a>  <span class="cf">if</span> (lambda <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb10-13"><a aria-hidden="true" href="#cb10-13" tabindex="-1"></a>    <span class="fu">log</span>(X)</span>
+<span id="cb10-14"><a aria-hidden="true" href="#cb10-14" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb10-15"><a aria-hidden="true" href="#cb10-15" tabindex="-1"></a>    (X<span class="sc">^</span>lambda <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">/</span> lambda</span>
+<span id="cb10-16"><a aria-hidden="true" href="#cb10-16" tabindex="-1"></a>  }</span>
+<span id="cb10-17"><a aria-hidden="true" href="#cb10-17" tabindex="-1"></a>})</span>
+<span id="cb10-18"><a aria-hidden="true" href="#cb10-18" tabindex="-1"></a></span>
+<span id="cb10-19"><a aria-hidden="true" href="#cb10-19" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb10-20"><a aria-hidden="true" href="#cb10-20" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X, Y)</span>
+<span id="cb10-21"><a aria-hidden="true" href="#cb10-21" tabindex="-1"></a><span class="fu">colnames</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"X"</span>, <span class="fu">paste0</span>(<span class="st">"Y_lambda_"</span>, lambda_values))</span>
+<span id="cb10-22"><a aria-hidden="true" href="#cb10-22" tabindex="-1"></a></span>
+<span id="cb10-23"><a aria-hidden="true" href="#cb10-23" tabindex="-1"></a><span class="co"># Reshape the data frame for plotting with ggplot2</span></span>
+<span id="cb10-24"><a aria-hidden="true" href="#cb10-24" tabindex="-1"></a>df_long <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb10-25"><a aria-hidden="true" href="#cb10-25" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>X, <span class="at">names_to =</span> <span class="st">"Transformation"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>)</span>
+<span id="cb10-26"><a aria-hidden="true" href="#cb10-26" tabindex="-1"></a></span>
+<span id="cb10-27"><a aria-hidden="true" href="#cb10-27" tabindex="-1"></a><span class="co"># Plot the distributions of X and Y for different lambda values</span></span>
+<span id="cb10-28"><a aria-hidden="true" href="#cb10-28" tabindex="-1"></a><span class="fu">ggplot</span>(df_long) <span class="sc">+</span></span>
+<span id="cb10-29"><a aria-hidden="true" href="#cb10-29" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> Value, <span class="at">y =</span> ..density..),</span>
+<span id="cb10-30"><a aria-hidden="true" href="#cb10-30" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb10-31"><a aria-hidden="true" href="#cb10-31" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb10-32"><a aria-hidden="true" href="#cb10-32" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb10-33"><a aria-hidden="true" href="#cb10-33" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb10-34"><a aria-hidden="true" href="#cb10-34" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-35"><a aria-hidden="true" href="#cb10-35" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Value), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-36"><a aria-hidden="true" href="#cb10-36" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Transformation, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb10-37"><a aria-hidden="true" href="#cb10-37" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-38"><a aria-hidden="true" href="#cb10-38" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of X and Box-Cox Transformations"</span>,</span>
+<span id="cb10-39"><a aria-hidden="true" href="#cb10-39" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb10-40"><a aria-hidden="true" href="#cb10-40" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb10-41"><a aria-hidden="true" href="#cb10-41" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-42"><a aria-hidden="true" href="#cb10-42" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap04_files/figure-html/unnamed-chunk-4-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> We load <code>tidyverse</code> for data manipulation, <code>ggplot2</code> for plotting, and <code>MASS</code> for the <code>boxcox()</code> function (although we are implementing the Box-Cox transformation manually here for demonstration purposes).</li>
+<li><strong>Set Seed:</strong> We set a seed for reproducibility.</li>
+<li><strong>Generate Samples:</strong> We generate 1000 samples from a log-normal distribution using <code>rlnorm()</code>.</li>
+<li><strong>Define Lambda Values:</strong> We define a sequence of <code>lambda</code> values to explore different Box-Cox transformations.</li>
+<li><strong>Apply Box-Cox Transformation:</strong> We apply the <strong>Box-Cox transformation</strong> manually for each <code>lambda</code> in <code>lambda_values</code>. The formula is implemented as defined in <strong>Example 4.8</strong> of the text.</li>
+<li><strong>Create Data Frame:</strong> We create a data frame <code>df</code> to store the original data <code>X</code> and the transformed data <code>Y</code> for each <code>lambda</code>.</li>
+<li><strong>Reshape Data Frame:</strong> We use <code>pivot_longer()</code> from <code>tidyr</code> to reshape the data frame into a long format suitable for plotting with <code>ggplot2</code>.</li>
+<li><strong>Plot Distributions:</strong> We use <code>ggplot2</code> to create histograms and density plots for <code>X</code> and the transformed <code>Y</code> for each <code>lambda</code>, using <code>facet_wrap()</code> to create separate panels for each transformation.</li>
+</ol>
+<p><strong>Concepts from Text:</strong></p>
+<p>This script demonstrates the <strong>Box-Cox transformation</strong> described in <strong>Example 4.8</strong>. The script applies the transformation to a log-normally distributed random variable and visualizes how different values of <code>lambda</code> affect the distribution of the transformed variable. The Box-Cox transformation is a powerful tool for transforming data to achieve normality or stabilize variance.</p>
+</section>
+<section class="level3" id="r-script-5-simulation-of-option-payoff">
+<h3 class="anchored" data-anchor-id="r-script-5-simulation-of-option-payoff">R Script 5: Simulation of Option Payoff</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" href="#cb11-1" tabindex="-1"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb11-2"><a aria-hidden="true" href="#cb11-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb11-3"><a aria-hidden="true" href="#cb11-3" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb11-4"><a aria-hidden="true" href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a aria-hidden="true" href="#cb11-5" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb11-6"><a aria-hidden="true" href="#cb11-6" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb11-7"><a aria-hidden="true" href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a aria-hidden="true" href="#cb11-8" tabindex="-1"></a><span class="co"># Define parameters for the underlying asset price (normal distribution)</span></span>
+<span id="cb11-9"><a aria-hidden="true" href="#cb11-9" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb11-10"><a aria-hidden="true" href="#cb11-10" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="dv">15</span></span>
+<span id="cb11-11"><a aria-hidden="true" href="#cb11-11" tabindex="-1"></a></span>
+<span id="cb11-12"><a aria-hidden="true" href="#cb11-12" tabindex="-1"></a><span class="co"># Generate 1000 samples from a normal distribution (asset prices)</span></span>
+<span id="cb11-13"><a aria-hidden="true" href="#cb11-13" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> mu, <span class="at">sd =</span> sigma)</span>
+<span id="cb11-14"><a aria-hidden="true" href="#cb11-14" tabindex="-1"></a></span>
+<span id="cb11-15"><a aria-hidden="true" href="#cb11-15" tabindex="-1"></a><span class="co"># Define the strike price of the option</span></span>
+<span id="cb11-16"><a aria-hidden="true" href="#cb11-16" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">105</span></span>
+<span id="cb11-17"><a aria-hidden="true" href="#cb11-17" tabindex="-1"></a></span>
+<span id="cb11-18"><a aria-hidden="true" href="#cb11-18" tabindex="-1"></a><span class="co"># Calculate the option payoff Y = max(X - K, 0)</span></span>
+<span id="cb11-19"><a aria-hidden="true" href="#cb11-19" tabindex="-1"></a>Y <span class="ot">&lt;-</span> <span class="fu">pmax</span>(X <span class="sc">-</span> K, <span class="dv">0</span>)</span>
+<span id="cb11-20"><a aria-hidden="true" href="#cb11-20" tabindex="-1"></a></span>
+<span id="cb11-21"><a aria-hidden="true" href="#cb11-21" tabindex="-1"></a><span class="co"># Create a data frame for plotting</span></span>
+<span id="cb11-22"><a aria-hidden="true" href="#cb11-22" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X, Y)</span>
+<span id="cb11-23"><a aria-hidden="true" href="#cb11-23" tabindex="-1"></a></span>
+<span id="cb11-24"><a aria-hidden="true" href="#cb11-24" tabindex="-1"></a><span class="co"># Plot the distributions of X and Y</span></span>
+<span id="cb11-25"><a aria-hidden="true" href="#cb11-25" tabindex="-1"></a><span class="fu">ggplot</span>(df) <span class="sc">+</span></span>
+<span id="cb11-26"><a aria-hidden="true" href="#cb11-26" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> X, <span class="at">y =</span> ..density..),</span>
+<span id="cb11-27"><a aria-hidden="true" href="#cb11-27" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb11-28"><a aria-hidden="true" href="#cb11-28" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"blue"</span>,</span>
+<span id="cb11-29"><a aria-hidden="true" href="#cb11-29" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-30"><a aria-hidden="true" href="#cb11-30" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb11-31"><a aria-hidden="true" href="#cb11-31" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-32"><a aria-hidden="true" href="#cb11-32" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> X), <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-33"><a aria-hidden="true" href="#cb11-33" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y, <span class="at">y =</span> ..density..),</span>
+<span id="cb11-34"><a aria-hidden="true" href="#cb11-34" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">30</span>,</span>
+<span id="cb11-35"><a aria-hidden="true" href="#cb11-35" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"red"</span>,</span>
+<span id="cb11-36"><a aria-hidden="true" href="#cb11-36" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.7</span>,</span>
+<span id="cb11-37"><a aria-hidden="true" href="#cb11-37" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span></span>
+<span id="cb11-38"><a aria-hidden="true" href="#cb11-38" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-39"><a aria-hidden="true" href="#cb11-39" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">x =</span> Y), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb11-40"><a aria-hidden="true" href="#cb11-40" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-41"><a aria-hidden="true" href="#cb11-41" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribution of Asset Price (X) and Option Payoff (Y)"</span>,</span>
+<span id="cb11-42"><a aria-hidden="true" href="#cb11-42" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Value"</span>,</span>
+<span id="cb11-43"><a aria-hidden="true" href="#cb11-43" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Density"</span></span>
+<span id="cb11-44"><a aria-hidden="true" href="#cb11-44" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-45"><a aria-hidden="true" href="#cb11-45" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button class="code-copy-button" title="Copy to Clipboard"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img class="img-fluid figure-img" src="chap04_files/figure-html/unnamed-chunk-5-1.png" width="672"/></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Explanation:</strong></p>
+<ol type="1">
+<li><strong>Load Libraries:</strong> We load <code>tidyverse</code> for data manipulation and <code>ggplot2</code> for plotting.</li>
+<li><strong>Set Seed:</strong> We set a seed for reproducibility.</li>
+<li><strong>Define Parameters:</strong> We define the mean (<code>mu</code>) and standard deviation (<code>sigma</code>) for the underlying asset price, which is assumed to follow a normal distribution. We also define the strike price <code>K</code> of the option.</li>
+<li><strong>Generate Samples:</strong> We generate 1000 samples representing asset prices from the normal distribution <span class="math inline">\(N(\mu, \sigma)\)</span> using <code>rnorm()</code>.</li>
+<li><strong>Calculate Option Payoff:</strong> We calculate the option payoff using the formula <span class="math inline">\(Y = \max(X - K, 0)\)</span>, which is implemented using <code>pmax()</code>.</li>
+<li><strong>Create Data Frame:</strong> We create a data frame <code>df</code> containing the asset prices <code>X</code> and the corresponding option payoffs <code>Y</code>.</li>
+<li><strong>Plot Distributions:</strong> We use <code>ggplot2</code> to create histograms and density plots for both <code>X</code> and <code>Y</code>.</li>
+</ol>
+<p><strong>Concepts from Text:</strong></p>
+<p>This script illustrates <strong>Example 4.9</strong>, which discusses the transformation used in option pricing theory. The script simulates the payoff of a call option, <span class="math inline">\(Y = \max(X - K, 0)\)</span>, where <span class="math inline">\(X\)</span> represents the underlying asset price and <span class="math inline">\(K\)</span> is the strike price. The plot visually demonstrates the distribution of the option payoff, which is a <strong>mixed distribution</strong> with a point mass at 0 (when the option is not exercised) and a continuous part for positive payoffs. This example highlights how transformations can lead to distributions with both discrete and continuous features.</p>
+</section>
+</section>
+<section class="level2" id="youtube-videos">
+<h2 class="anchored" data-anchor-id="youtube-videos">YouTube Videos</h2>
+<p>Here are some YouTube videos that explain concepts related to the transformations of random variables discussed in the text:</p>
+<section class="level3" id="change-of-variables">
+<h3 class="anchored" data-anchor-id="change-of-variables">1. <strong>Change of Variables</strong></h3>
+<ul>
+<li><strong>Video:</strong> <a href="https://www.youtube.com/watch?v=yXwPUAIvFyg">Change of Variables (Stat 110, MIT)</a> by Blitzstein, J. (MIT)</li>
+<li><strong>Relevance to Text:</strong> This video explains the concept of <strong>change of variables</strong> which is fundamental to understanding how the probability density function (pdf) of a random variable is transformed when the variable itself undergoes a transformation. It connects directly to <strong>Theorem 4.1</strong> in the text, which provides formulas for the pdf and cumulative distribution function (cdf) of a transformed random variable when the transformation is monotonic. The video likely derives the formula using the Jacobian determinant, which is the multivariable calculus equivalent of the <span class="math inline">\(\left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span> term in Theorem 4.1.</li>
+<li><strong>Keywords:</strong> change of variables, probability density function, transformation, Jacobian, monotonic functions</li>
+</ul>
+</section>
+<section class="level3" id="probability-integral-transform-1">
+<h3 class="anchored" data-anchor-id="probability-integral-transform-1">2. <strong>Probability Integral Transform</strong></h3>
+<ul>
+<li><strong>Video:</strong> <a href="https://www.youtube.com/watch?v=GaxFot-65Jk">Probability Integral Transform</a> by Statistics Crystallized</li>
+<li><strong>Relevance to Text:</strong> This video explains the <strong>Probability Integral Transform</strong>, which is discussed in <strong>Theorem 4.2</strong> and <strong>Corollary 4.1</strong> of the text. It demonstrates that if <span class="math inline">\(X\)</span> is a continuous random variable with cdf <span class="math inline">\(F_X(x)\)</span>, then <span class="math inline">\(Y = F_X(X)\)</span> is uniformly distributed on <span class="math inline">\([0, 1]\)</span>. The video likely provides a visual and intuitive explanation of this theorem, and it may also show how the inverse transform, <span class="math inline">\(F_X^{-1}(U)\)</span> where <span class="math inline">\(U \sim U[0, 1]\)</span>, can be used to generate random variables from a desired distribution.</li>
+<li><strong>Keywords:</strong> probability integral transform, uniform distribution, inverse transform, random number generation, cumulative distribution function</li>
+</ul>
+</section>
+<section class="level3" id="transformations-of-random-variables">
+<h3 class="anchored" data-anchor-id="transformations-of-random-variables">3. <strong>Transformations of Random Variables</strong></h3>
+<ul>
+<li><strong>Video:</strong> <a href="https://www.youtube.com/watch?v=rnP9fZqOxV0">Transformations of random variables</a> by Lawrence Leemis</li>
+<li><strong>Relevance to Text:</strong> This video provides an introduction to <strong>transformations of random variables</strong> and gives examples that are similar to those in the text. It might cover transformations like <span class="math inline">\(Y = a + bX\)</span>, <span class="math inline">\(Y = X^2\)</span>, and <span class="math inline">\(Y = \ln(X)\)</span>, explaining how to find the pdf of <span class="math inline">\(Y\)</span> in each case. It connects to <strong>Examples 4.1, 4.3, 4.4</strong>, and the general concepts discussed in Section 4.1.</li>
+<li><strong>Keywords:</strong> transformations of random variables, probability density function, linear transformations, monotonic transformations, examples</li>
+</ul>
+</section>
+<section class="level3" id="box-cox-transformation">
+<h3 class="anchored" data-anchor-id="box-cox-transformation">4. <strong>Box-Cox Transformation</strong></h3>
+<ul>
+<li><strong>Video:</strong> <a href="https://www.youtube.com/watch?v=YGb9GeRMBg4">Box-Cox Transformation</a> by Egor Howell</li>
+<li><strong>Relevance to Text:</strong> This video focuses on the <strong>Box-Cox transformation</strong>, which is presented in <strong>Example 4.8</strong> of the text. It explains the formula for the transformation, how it is used to achieve normality, and how to select the optimal value of the parameter <span class="math inline">\(\lambda\)</span>. The video might also demonstrate the use of the Box-Cox transformation in statistical software like R or Python.</li>
+<li><strong>Keywords:</strong> Box-Cox transformation, normality, parameter estimation, statistical software</li>
+</ul>
+</section>
+</section>
+<section class="level2" id="multiple-choice-exercises">
+<h2 class="anchored" data-anchor-id="multiple-choice-exercises">Multiple Choice Exercises</h2>
+<section class="level3" id="sec-ch04mcexercise1">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise1">MC Exercise 1</h3>
+<p><a href="#sec-ch04mcsolution1">MC Solution 1</a></p>
+<p>If <span class="math inline">\(X \sim U[0, 1]\)</span>, what is the distribution of <span class="math inline">\(Y = 2X + 3\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(U[0, 1]\)</span></li>
+<li><span class="math inline">\(U[3, 5]\)</span></li>
+<li><span class="math inline">\(U[2, 3]\)</span></li>
+<li><span class="math inline">\(N(3, 4)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise2">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise2">MC Exercise 2</h3>
+<p><a href="#sec-ch04mcsolution2">MC Solution 2</a></p>
+<p>If <span class="math inline">\(X \sim N(0, 1)\)</span>, what is the distribution of <span class="math inline">\(Y = 4X - 2\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(N(0, 1)\)</span></li>
+<li><span class="math inline">\(N(-2, 4)\)</span></li>
+<li><span class="math inline">\(N(-2, 16)\)</span></li>
+<li><span class="math inline">\(U[-2, 2]\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise3">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise3">MC Exercise 3</h3>
+<p><a href="#sec-ch04mcsolution3">MC Solution 3</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>. If <span class="math inline">\(Y = g(X)\)</span> is a monotonically increasing and differentiable function, what is the pdf of <span class="math inline">\(Y\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(f_Y(y) = f_X(g^{-1}(y))\)</span></li>
+<li><span class="math inline">\(f_Y(y) = f_X(g^{-1}(y)) \left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span></li>
+<li><span class="math inline">\(f_Y(y) = f_X(g(y)) \left\lvert \dfrac{d}{dy} g(y) \right\rvert\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \dfrac{f_X(g^{-1}(y))}{\left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert}\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise4">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise4">MC Exercise 4</h3>
+<p><a href="#sec-ch04mcsolution4">MC Solution 4</a></p>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>. If <span class="math inline">\(Y = e^X\)</span>, what is the pdf of <span class="math inline">\(Y\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(f_Y(y) = f_X(\ln y)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \dfrac{f_X(\ln y)}{y}\)</span></li>
+<li><span class="math inline">\(f_Y(y) = f_X(e^y) e^y\)</span></li>
+<li><span class="math inline">\(f_Y(y) = y f_X(\ln y)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise5">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise5">MC Exercise 5</h3>
+<p><a href="#sec-ch04mcsolution5">MC Solution 5</a></p>
+<p>If <span class="math inline">\(X\)</span> has a cdf <span class="math inline">\(F_X(x)\)</span>, what is the cdf of <span class="math inline">\(Y = a + bX\)</span> where <span class="math inline">\(b &lt; 0\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(F_Y(y) = F_X \left( \dfrac{y - a}{b} \right)\)</span></li>
+<li><span class="math inline">\(F_Y(y) = 1 - F_X \left( \dfrac{y - a}{b} \right)\)</span></li>
+<li><span class="math inline">\(F_Y(y) = 1 - F_X \left( \dfrac{y + a}{b} \right)\)</span></li>
+<li><span class="math inline">\(F_Y(y) = F_X \left( \dfrac{y + a}{b} \right)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise6">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise6">MC Exercise 6</h3>
+<p><a href="#sec-ch04mcsolution6">MC Solution 6</a></p>
+<p>The <strong>Probability Integral Transform</strong> states that if <span class="math inline">\(X\)</span> has a continuous cdf <span class="math inline">\(F_X(x)\)</span>, then <span class="math inline">\(Y = F_X(X)\)</span> is:</p>
+<ol type="a">
+<li>Normally distributed</li>
+<li>Exponentially distributed</li>
+<li>Uniformly distributed on <span class="math inline">\([0, 1]\)</span></li>
+<li>Has the same distribution as <span class="math inline">\(X\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise7">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise7">MC Exercise 7</h3>
+<p><a href="#sec-ch04mcsolution7">MC Solution 7</a></p>
+<p>If <span class="math inline">\(X \sim U[0, 1]\)</span>, what is the distribution of <span class="math inline">\(Y = -\ln(X)\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(U[0, 1]\)</span></li>
+<li><span class="math inline">\(N(0, 1)\)</span></li>
+<li>Exponential with rate 1</li>
+<li>Chi-squared with 1 degree of freedom</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise8">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise8">MC Exercise 8</h3>
+<p><a href="#sec-ch04mcsolution8">MC Solution 8</a></p>
+<p>If <span class="math inline">\(X \sim N(0, 1)\)</span>, what is the distribution of <span class="math inline">\(Y = X^2\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(N(0, 1)\)</span></li>
+<li>Chi-squared with 1 degree of freedom</li>
+<li>Exponential with rate 1</li>
+<li><span class="math inline">\(U[0, 1]\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise9">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise9">MC Exercise 9</h3>
+<p><a href="#sec-ch04mcsolution9">MC Solution 9</a></p>
+<p>The Box-Cox transformation is used to:</p>
+<ol type="a">
+<li>Transform a random variable into a uniform distribution</li>
+<li>Transform data to achieve normality or stabilize variance</li>
+<li>Transform a random variable into an exponential distribution</li>
+<li>Transform a random variable into a normal distribution</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise10">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise10">MC Exercise 10</h3>
+<p><a href="#sec-ch04mcsolution10">MC Solution 10</a></p>
+<p>What is the support of the random variable <span class="math inline">\(Y\)</span> if <span class="math inline">\(Y = g(X)\)</span> and the support of <span class="math inline">\(X\)</span> is <span class="math inline">\(S\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(\{x \in \mathcal{X} : f_X(x) &gt; 0\}\)</span></li>
+<li><span class="math inline">\(\{y : y = g(x) \text{ for some } x \in S\}\)</span></li>
+<li>The entire real line</li>
+<li>The interval <span class="math inline">\([0, 1]\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise11">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise11">MC Exercise 11</h3>
+<p><a href="#sec-ch04mcsolution11">MC Solution 11</a></p>
+<p>If <span class="math inline">\(Y = \max(X - K, 0)\)</span>, where <span class="math inline">\(X\)</span> is a continuous random variable and <span class="math inline">\(K\)</span> is a constant, what type of distribution does <span class="math inline">\(Y\)</span> have?</p>
+<ol type="a">
+<li>Continuous</li>
+<li>Discrete</li>
+<li>Mixed (continuous and discrete)</li>
+<li>Uniform</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise12">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise12">MC Exercise 12</h3>
+<p><a href="#sec-ch04mcsolution12">MC Solution 12</a></p>
+<p>If <span class="math inline">\(X\)</span> is a continuous random variable with pdf <span class="math inline">\(f_X(x) = 2x\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>, and <span class="math inline">\(Y = X^2\)</span>, what is <span class="math inline">\(f_Y(y)\)</span> for <span class="math inline">\(0 \le y \le 1\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(f_Y(y) = 1\)</span></li>
+<li><span class="math inline">\(f_Y(y) = 2 \sqrt{y}\)</span></li>
+<li><span class="math inline">\(f_Y(y) = 2y\)</span></li>
+<li><span class="math inline">\(f_Y(y) = 4y^3\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise13">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise13">MC Exercise 13</h3>
+<p><a href="#sec-ch04mcsolution13">MC Solution 13</a></p>
+<p>If <span class="math inline">\(X\)</span> is a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>, and <span class="math inline">\(Y = aX^2 + bX + c\)</span> where <span class="math inline">\(a &gt; 0\)</span>, how many inverse functions <span class="math inline">\(g_i^{-1}(y)\)</span> are needed to find the pdf of <span class="math inline">\(Y\)</span>?</p>
+<ol type="a">
+<li>1</li>
+<li>2</li>
+<li>3</li>
+<li>4</li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise14">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise14">MC Exercise 14</h3>
+<p><a href="#sec-ch04mcsolution14">MC Solution 14</a></p>
+<p>If <span class="math inline">\(X \sim U[-1, 2]\)</span>, what is the distribution of <span class="math inline">\(Y = 2X + 1\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(U[-1, 5]\)</span></li>
+<li><span class="math inline">\(U[-1, 2]\)</span></li>
+<li><span class="math inline">\(U[1, 5]\)</span></li>
+<li><span class="math inline">\(N(1, 4)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise15">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise15">MC Exercise 15</h3>
+<p><a href="#sec-ch04mcsolution15">MC Solution 15</a></p>
+<p>If <span class="math inline">\(X\)</span> is a continuous random variable with pdf <span class="math inline">\(f_X(x)\)</span>, and <span class="math inline">\(Y = \dfrac{1}{X}\)</span> for <span class="math inline">\(X &gt; 0\)</span>, what is the pdf of <span class="math inline">\(Y\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(f_Y(y) = f_X \left( \dfrac{1}{y} \right)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \dfrac{1}{y^2} f_X \left( \dfrac{1}{y} \right)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = y^2 f_X \left( \dfrac{1}{y} \right)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \dfrac{1}{y} f_X \left( \dfrac{1}{y} \right)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise16">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise16">MC Exercise 16</h3>
+<p><a href="#sec-ch04mcsolution16">MC Solution 16</a></p>
+<p>If <span class="math inline">\(U\)</span> is uniformly distributed on <span class="math inline">\([0, 1]\)</span>, then <span class="math inline">\(Y = F_X^{-1}(U)\)</span> has the same distribution as:</p>
+<ol type="a">
+<li><span class="math inline">\(U\)</span></li>
+<li><span class="math inline">\(X\)</span></li>
+<li><span class="math inline">\(F_X(X)\)</span></li>
+<li><span class="math inline">\(F_X^{-1}(X)\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise17">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise17">MC Exercise 17</h3>
+<p><a href="#sec-ch04mcsolution17">MC Solution 17</a></p>
+<p>If <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span>, then <span class="math inline">\(Y = \dfrac{X - \mu}{\sigma}\)</span> is distributed as:</p>
+<ol type="a">
+<li><span class="math inline">\(N(\mu, \sigma^2)\)</span></li>
+<li><span class="math inline">\(N(0, 1)\)</span></li>
+<li><span class="math inline">\(U[0, 1]\)</span></li>
+<li><span class="math inline">\(U[\mu, \sigma]\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise18">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise18">MC Exercise 18</h3>
+<p><a href="#sec-ch04mcsolution18">MC Solution 18</a></p>
+<p>If <span class="math inline">\(X\)</span> has pdf <span class="math inline">\(f_X(x)\)</span> and <span class="math inline">\(Y = \lvert X \rvert\)</span>, what is the pdf of <span class="math inline">\(Y\)</span> for <span class="math inline">\(y &gt; 0\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\(f_Y(y) = f_X(y)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = f_X(y) + f_X(-y)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = f_X(y) - f_X(-y)\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \lvert f_X(y) \rvert\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise19">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise19">MC Exercise 19</h3>
+<p><a href="#sec-ch04mcsolution19">MC Solution 19</a></p>
+<p>If <span class="math inline">\(X\)</span> has a continuous cdf <span class="math inline">\(F_X(x)\)</span>, what is the range of the random variable <span class="math inline">\(Y = F_X(X)\)</span>?</p>
+<ol type="a">
+<li><span class="math inline">\((-\infty, \infty)\)</span></li>
+<li><span class="math inline">\([0, \infty)\)</span></li>
+<li><span class="math inline">\([0, 1]\)</span></li>
+<li>Depends on the distribution of <span class="math inline">\(X\)</span></li>
+</ol>
+</section>
+<section class="level3" id="sec-ch04mcexercise20">
+<h3 class="anchored" data-anchor-id="sec-ch04mcexercise20">MC Exercise 20</h3>
+<p><a href="#sec-ch04mcsolution20">MC Solution 20</a></p>
+<p>If <span class="math inline">\(Y = \mathbb{1}(X \in A)\)</span>, where <span class="math inline">\(X\)</span> is a continuous random variable and <span class="math inline">\(A\)</span> is a subset of the real numbers, what is <span class="math inline">\(\Pr(Y = 1)\)</span>?</p>
+<ol type="a">
+<li>0</li>
+<li>1</li>
+<li><span class="math inline">\(\Pr(X \in A)\)</span></li>
+<li><span class="math inline">\(1 - \Pr(X \in A)\)</span></li>
+</ol>
+</section>
+</section>
+<section class="level2" id="solutions-1">
+<h2 class="anchored" data-anchor-id="solutions-1">Solutions</h2>
+<section class="level3" id="sec-ch04mcsolution1">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution1">MC Solution 1</h3>
+<p><a href="#sec-ch04mcexercise1">MC Exercise 1</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(U[3, 5]\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is a linear transformation of the form <span class="math inline">\(Y = a + bX\)</span> with <span class="math inline">\(a = 3\)</span> and <span class="math inline">\(b = 2\)</span>. As discussed in <strong>Example 4.3</strong>, a linear transformation of a uniform random variable results in another uniform random variable. Since <span class="math inline">\(X \sim U[0, 1]\)</span>, the range of <span class="math inline">\(Y\)</span> will be <span class="math inline">\([a + b(0), a + b(1)] = [3, 5]\)</span>. Therefore, <span class="math inline">\(Y \sim U[3, 5]\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution2">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution2">MC Solution 2</h3>
+<p><a href="#sec-ch04mcexercise2">MC Exercise 2</a></p>
+<p><strong>Correct Answer:</strong> (c) <span class="math inline">\(N(-2, 16)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is a linear transformation of a normal random variable. As stated in <strong>Example 4.2</strong>, a linear transformation of a normal random variable results in another normal random variable. If <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> and <span class="math inline">\(Y = a + bX\)</span>, then <span class="math inline">\(Y \sim N(a + b\mu, b^2 \sigma^2)\)</span>. In this case, <span class="math inline">\(a = -2\)</span>, <span class="math inline">\(b = 4\)</span>, <span class="math inline">\(\mu = 0\)</span>, and <span class="math inline">\(\sigma^2 = 1\)</span>. Therefore, <span class="math inline">\(Y \sim N(-2 + 4(0), 4^2(1)) = N(-2, 16)\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution3">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution3">MC Solution 3</h3>
+<p><a href="#sec-ch04mcexercise3">MC Exercise 3</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(f_Y(y) = f_X(g^{-1}(y)) \left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is the formula for the pdf of a transformed random variable when the transformation is monotonically increasing and differentiable, as stated in <strong>Theorem 4.1</strong> part 1. The term <span class="math inline">\(g^{-1}(y)\)</span> represents the inverse transformation, and <span class="math inline">\(\left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert\)</span> is the absolute value of the derivative of the inverse transformation, which accounts for the change in scale.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution4">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution4">MC Solution 4</h3>
+<p><a href="#sec-ch04mcexercise4">MC Exercise 4</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(f_Y(y) = \dfrac{f_X(\ln y)}{y}\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>Here, <span class="math inline">\(g(x) = e^x\)</span>, so the inverse transformation is <span class="math inline">\(g^{-1}(y) = \ln y\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = \dfrac{1}{y}\)</span>. Since <span class="math inline">\(e^x\)</span> is monotonically increasing, we use the formula from <strong>Theorem 4.1</strong> part 1:</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(g^{-1}(y)) \left\lvert \dfrac{d}{dy} g^{-1}(y) \right\rvert = f_X(\ln y) \left\lvert \dfrac{1}{y} \right\rvert = \dfrac{f_X(\ln y)}{y}\)</span></p>
+<p>for <span class="math inline">\(y &gt; 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution5">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution5">MC Solution 5</h3>
+<p><a href="#sec-ch04mcexercise5">MC Exercise 5</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(F_Y(y) = 1 - F_X \left( \dfrac{y - a}{b} \right)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>When <span class="math inline">\(b &lt; 0\)</span>, the inequality sign reverses when we divide by <span class="math inline">\(b\)</span>. So,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+F_Y(y) &amp;= \Pr(Y \le y) \\
+&amp;= \Pr(a + bX \le y) \\
+&amp;= \Pr \left( X \ge \dfrac{y - a}{b} \right) \\
+&amp;= 1 - \Pr \left( X &lt; \dfrac{y - a}{b} \right) \\
+&amp;= 1 - F_X \left( \dfrac{y - a}{b} \right)
+\end{aligned}\)</span></p>
+<p>This is consistent with the statement in <strong>Example 4.1</strong> regarding the case when <span class="math inline">\(b &lt; 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution6">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution6">MC Solution 6</h3>
+<p><a href="#sec-ch04mcexercise6">MC Exercise 6</a></p>
+<p><strong>Correct Answer:</strong> (c) Uniformly distributed on <span class="math inline">\([0, 1]\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is the statement of the <strong>Probability Integral Transform</strong> (<strong>Theorem 4.2</strong>). It states that applying the cdf of a continuous random variable to itself results in a uniform distribution on the interval <span class="math inline">\([0, 1]\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution7">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution7">MC Solution 7</h3>
+<p><a href="#sec-ch04mcexercise7">MC Exercise 7</a></p>
+<p><strong>Correct Answer:</strong> (c) Exponential with rate 1</p>
+<p><strong>Explanation:</strong></p>
+<p>This is a classic result. If <span class="math inline">\(U \sim U[0, 1]\)</span> and <span class="math inline">\(Y = -\ln(U)\)</span>, then <span class="math inline">\(Y\)</span> follows an exponential distribution with rate 1. This is shown in <strong>Solution 12</strong> of the exercises in the provided text.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution8">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution8">MC Solution 8</h3>
+<p><a href="#sec-ch04mcexercise8">MC Exercise 8</a></p>
+<p><strong>Correct Answer:</strong> (b) Chi-squared with 1 degree of freedom</p>
+<p><strong>Explanation:</strong></p>
+<p>If <span class="math inline">\(X \sim N(0, 1)\)</span>, then <span class="math inline">\(X^2\)</span> follows a chi-squared distribution with 1 degree of freedom. This is a well-known result in statistics and is demonstrated in <strong>Example 4.4</strong> and <strong>Solution 6</strong> of the exercises.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution9">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution9">MC Solution 9</h3>
+<p><a href="#sec-ch04mcexercise9">MC Exercise 9</a></p>
+<p><strong>Correct Answer:</strong> (b) Transform data to achieve normality or stabilize variance</p>
+<p><strong>Explanation:</strong></p>
+<p>The <strong>Box-Cox transformation</strong> (<strong>Example 4.8</strong>) is a family of power transformations used to transform data to make it more closely resemble a normal distribution or to stabilize the variance.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution10">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution10">MC Solution 10</h3>
+<p><a href="#sec-ch04mcexercise10">MC Exercise 10</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(\{y : y = g(x) \text{ for some } x \in S\}\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The support of a random variable is the set of all possible values it can take. If <span class="math inline">\(Y = g(X)\)</span>, then the support of <span class="math inline">\(Y\)</span> is the set of all values that can be obtained by applying the function <span class="math inline">\(g\)</span> to the values in the support of <span class="math inline">\(X\)</span>. This is stated in the text following <strong>Example 4.5</strong>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution11">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution11">MC Solution 11</h3>
+<p><a href="#sec-ch04mcexercise11">MC Exercise 11</a></p>
+<p><strong>Correct Answer:</strong> (c) Mixed (continuous and discrete)</p>
+<p><strong>Explanation:</strong></p>
+<p>The transformation <span class="math inline">\(Y = \max(X - K, 0)\)</span> represents the payoff of a call option. This distribution has a discrete component at <span class="math inline">\(Y = 0\)</span> (when <span class="math inline">\(X \le K\)</span>) and a continuous component for <span class="math inline">\(Y &gt; 0\)</span> (when <span class="math inline">\(X &gt; K\)</span>). This is discussed in <strong>Example 4.9</strong>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution12">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution12">MC Solution 12</h3>
+<p><a href="#sec-ch04mcexercise12">MC Exercise 12</a></p>
+<p><strong>Correct Answer:</strong> (a) <span class="math inline">\(f_Y(y) = 1\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The transformation is <span class="math inline">\(Y = X^2\)</span>, and the inverse transformation is <span class="math inline">\(X = \sqrt{Y}\)</span> for <span class="math inline">\(0 \le x \le 1\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = \dfrac{1}{2 \sqrt{y}}\)</span>. Using the formula for monotonic transformations,</p>
+<p><span class="math inline">\(\qquad \begin{aligned}
+f_Y(y) &amp;= f_X(\sqrt{y}) \left\lvert \dfrac{1}{2 \sqrt{y}} \right\rvert \\
+&amp;= 2 \sqrt{y} \cdot \dfrac{1}{2 \sqrt{y}} \\
+&amp;= 1
+\end{aligned}\)</span></p>
+<p>for <span class="math inline">\(0 \le y \le 1\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution13">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution13">MC Solution 13</h3>
+<p><a href="#sec-ch04mcexercise13">MC Exercise 13</a></p>
+<p><strong>Correct Answer:</strong> (b) 2</p>
+<p><strong>Explanation:</strong></p>
+<p>The function <span class="math inline">\(g(x) = ax^2 + bx + c\)</span> is a quadratic function, which is not monotonic over the entire real line. However, it is monotonic on the two intervals <span class="math inline">\((-\infty, -b/2a]\)</span> and <span class="math inline">\([-b/2a, \infty)\)</span>. Therefore, we need two inverse functions, as explained in <strong>Example 4.7</strong> and <strong>Theorem 4.1</strong> part 2.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution14">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution14">MC Solution 14</h3>
+<p><a href="#sec-ch04mcexercise14">MC Exercise 14</a></p>
+<p><strong>Correct Answer:</strong> (a) <span class="math inline">\(U[-1, 5]\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is a linear transformation of a uniform random variable. Since <span class="math inline">\(X \sim U[-1, 2]\)</span>, the range of <span class="math inline">\(Y = 2X + 1\)</span> will be <span class="math inline">\([2(-1) + 1, 2(2) + 1] = [-1, 5]\)</span>. Therefore, <span class="math inline">\(Y \sim U[-1, 5]\)</span>, following the principle in <strong>Example 4.3</strong>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution15">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution15">MC Solution 15</h3>
+<p><a href="#sec-ch04mcexercise15">MC Exercise 15</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(f_Y(y) = \dfrac{1}{y^2} f_X \left( \dfrac{1}{y} \right)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The transformation is <span class="math inline">\(Y = \dfrac{1}{X}\)</span>, and the inverse transformation is <span class="math inline">\(X = \dfrac{1}{Y}\)</span>. The derivative of the inverse transformation is <span class="math inline">\(\dfrac{d}{dy} g^{-1}(y) = -\dfrac{1}{y^2}\)</span>. Since the transformation is monotonically decreasing for <span class="math inline">\(X &gt; 0\)</span>, we use the formula from <strong>Theorem 4.1</strong> part 1 (and as shown in <strong>Example 4.5</strong>):</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X \left( \dfrac{1}{y} \right) \left\lvert -\dfrac{1}{y^2} \right\rvert = \dfrac{1}{y^2} f_X \left( \dfrac{1}{y} \right)\)</span></p>
+<p>for <span class="math inline">\(y &gt; 0\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution16">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution16">MC Solution 16</h3>
+<p><a href="#sec-ch04mcexercise16">MC Exercise 16</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(X\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is the inverse of the <strong>Probability Integral Transform</strong> (<strong>Corollary 4.1</strong>). If <span class="math inline">\(U\)</span> is uniformly distributed on <span class="math inline">\([0, 1]\)</span>, then applying the inverse of the cdf of <span class="math inline">\(X\)</span> to <span class="math inline">\(U\)</span> results in a random variable with the same distribution as <span class="math inline">\(X\)</span>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution17">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution17">MC Solution 17</h3>
+<p><a href="#sec-ch04mcexercise17">MC Exercise 17</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(N(0, 1)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>This is a linear transformation of a normal random variable, resulting in a standard normal distribution. This is a standard result in statistics and is also shown in <strong>Example 4.2</strong>.</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution18">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution18">MC Solution 18</h3>
+<p><a href="#sec-ch04mcexercise18">MC Exercise 18</a></p>
+<p><strong>Correct Answer:</strong> (b) <span class="math inline">\(f_Y(y) = f_X(y) + f_X(-y)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The transformation <span class="math inline">\(Y = \lvert X \rvert\)</span> is not monotonic over the entire real line. However, we can consider the intervals <span class="math inline">\((-\infty, 0)\)</span> and <span class="math inline">\([0, \infty)\)</span> separately. For <span class="math inline">\(y &gt; 0\)</span>, we have two inverse transformations: <span class="math inline">\(g_1^{-1}(y) = -y\)</span> and <span class="math inline">\(g_2^{-1}(y) = y\)</span>. Using the formula for non-monotonic transformations (<strong>Theorem 4.1</strong> part 2), we get</p>
+<p><span class="math inline">\(\qquad f_Y(y) = f_X(-y) \lvert -1 \rvert + f_X(y) \lvert 1 \rvert = f_X(y) + f_X(-y)\)</span></p>
+</section>
+<section class="level3" id="sec-ch04mcsolution19">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution19">MC Solution 19</h3>
+<p><a href="#sec-ch04mcexercise19">MC Exercise 19</a></p>
+<p><strong>Correct Answer:</strong> (c) <span class="math inline">\([0, 1]\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The cdf of any random variable always takes values between 0 and 1, inclusive. Therefore, the range of <span class="math inline">\(Y = F_X(X)\)</span> is <span class="math inline">\([0, 1]\)</span>. This is related to the <strong>Probability Integral Transform</strong> (<strong>Theorem 4.2</strong>).</p>
+</section>
+<section class="level3" id="sec-ch04mcsolution20">
+<h3 class="anchored" data-anchor-id="sec-ch04mcsolution20">MC Solution 20</h3>
+<p><a href="#sec-ch04mcexercise20">MC Exercise 20</a></p>
+<p><strong>Correct Answer:</strong> (c) <span class="math inline">\(\Pr(X \in A)\)</span></p>
+<p><strong>Explanation:</strong></p>
+<p>The indicator function <span class="math inline">\(Y = \mathbb{1}(X \in A)\)</span> takes the value 1 if and only if <span class="math inline">\(X\)</span> belongs to the set <span class="math inline">\(A\)</span>. Therefore, the probability that <span class="math inline">\(Y = 1\)</span> is equal to the probability that <span class="math inline">\(X\)</span> belongs to <span class="math inline">\(A\)</span>, which is <span class="math inline">\(\Pr(X \in A)\)</span>. This is shown in <strong>Example 4.10</strong>.</p>
+</section>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>

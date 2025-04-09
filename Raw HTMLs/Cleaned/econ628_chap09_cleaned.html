@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta charset="utf-8"/>
+<meta content="quarto-1.5.57" name="generator"/>
+<meta content="width=device-width, initial-scale=1.0, user-scalable=yes" name="viewport"/>
+<meta content="Peter Fuleky" name="author"/>
+<title>Chapter 9: Exercises and Complements – Study notes for Econometrics I</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta content="../" name="quarto:offset"/>
+<link href="../chapters/chap10.html" rel="next"/>
+<link href="../chapters/chap08.html" rel="prev"/>
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet"/>
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" id="quarto-text-highlighting-styles" rel="stylesheet"/>
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet"/>
+<link data-mode="light" href="../site_libs/bootstrap/bootstrap.min.css" id="quarto-bootstrap" rel="stylesheet"/>
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+<link href="../style.css" rel="stylesheet"/>
+</head>
+<body class="nav-sidebar floating">
+<div id="quarto-search-results"></div>
+<header class="headroom fixed-top" id="quarto-header">
+
+</header>
+<!-- content -->
+<div class="quarto-container page-columns page-rows-contents page-layout-article" id="quarto-content">
+<!-- sidebar -->
+
+<div class="quarto-sidebar-collapse-item" data-bs-target=".quarto-sidebar-collapse-item" data-bs-toggle="collapse" id="quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+<div class="sidebar margin-sidebar" id="quarto-margin-sidebar">
+
+</div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<header class="quarto-title-block default" id="title-block-header">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-title">Chapter 9: Exercises and Complements</span></h1>
+</div>
+<div class="quarto-title-meta">
+</div>
+</header>
+<section class="level3" id="exercise-1-sigma-field">
+<h3 class="anchored" data-anchor-id="exercise-1-sigma-field">Exercise 1: Sigma Field</h3>
+<p>Suppose that <span class="math inline">\(S = \{a, b, c, d, e\}\)</span> and let <span class="math inline">\(\mathcal{B}\)</span> consist of two sets <span class="math inline">\(B_1 = \{a, b, c\}\)</span> and <span class="math inline">\(B_2 = \{c, d, e\}\)</span>. Find the sigma field <span class="math inline">\(\mathcal{A}\)</span> generated by <span class="math inline">\(\mathcal{B}\)</span>.</p>
+</section>
+<section class="level3" id="solution-1">
+<h3 class="anchored" data-anchor-id="solution-1">Solution 1</h3>
+<p>To find the sigma field <span class="math inline">\(\mathcal{A}\)</span> generated by <span class="math inline">\(\mathcal{B}\)</span>, we need to find the smallest collection of subsets of <span class="math inline">\(S\)</span> that contains <span class="math inline">\(\mathcal{B}\)</span> and is closed under <strong>complementation</strong> and <strong>countable unions</strong>.</p>
+<p>Given <span class="math inline">\(B_1 = \{a, b, c\}\)</span> and <span class="math inline">\(B_2 = \{c, d, e\}\)</span>, we first find the complements of these sets with respect to <span class="math inline">\(S\)</span>: <span class="math inline">\(B_1^c = S \setminus B_1 = \{d, e\}\)</span> <span class="math inline">\(B_2^c = S \setminus B_2 = \{a, b\}\)</span></p>
+<p>Next, we consider the union and intersection of <span class="math inline">\(B_1\)</span> and <span class="math inline">\(B_2\)</span>. <span class="math inline">\(B_1 \cup B_2 = \{a, b, c, d, e\} = S\)</span> <span class="math inline">\(B_1 \cap B_2 = \{c\}\)</span></p>
+<p>Now, we need to include the complements of the above union and intersection, i.e. the empty set, and the complement of the singleton {c}, <span class="math inline">\(\{a,b,d,e\}\)</span>.</p>
+<p>Thus, the sigma field <span class="math inline">\(\mathcal{A}\)</span> generated by <span class="math inline">\(\mathcal{B}\)</span> is: <span class="math inline">\(\mathcal{A} = \{\emptyset, \{a, b\}, \{c\}, \{d, e\}, \{a, b, c\}, \{a, b, d, e\}, \{c, d, e\}, S\}\)</span>.</p>
+<p>In general, a <strong>sigma field</strong> (also known as a sigma-algebra) is a collection of subsets of a set <span class="math inline">\(S\)</span> that is closed under complementation, countable unions, and countable intersections. This implies that it contains the empty set and the set S itself. This definition ensures that the resulting structure allows us to measure the probability of events, which are subsets of a sample space. In this particular problem, the sigma field generated by the two sets is the collection of sets that is composed of the two original sets, their complements, their union and intersection, the set <span class="math inline">\(S\)</span> itself, and the empty set.</p>
+</section>
+<section class="level3" id="exercise-2-probability-of-poker-hands">
+<h3 class="anchored" data-anchor-id="exercise-2-probability-of-poker-hands">Exercise 2: Probability of Poker Hands</h3>
+<p>The game of draw poker is played with 52 cards from a regular deck. Each person receives 5 cards face down. After some betting, which does not concern us, the winning hand is determined by the showdown, where each player reveals his cards. The possible winning hands are as follows [in approximate ranking – it has been a long time since I played]: A single pair, i.e., two cards of the same number; Two pairs; Three of a kind; Flush, i.e., five cards of the same suit; Straight, i.e., five cards in sequence; Full house, i.e., three of a kind and a pair; Four of a kind; Straight Flush, i.e., five cards in sequence and of the same suit. Calculate the odds of receiving each type of hand. Don’t forget that each category defined above should contain the words “but nothing more”.</p>
+</section>
+<section class="level3" id="solution-2">
+<h3 class="anchored" data-anchor-id="solution-2">Solution 2</h3>
+<p>This exercise involves calculating the probabilities of different poker hands. We will use <strong>combinatorics</strong> to count the number of favorable outcomes and divide it by the total number of possible 5-card hands, which is <span class="math inline">\(\binom{52}{5}\)</span>. The total number of 5 card hands is: <span class="math inline">\(\binom{52}{5} = \frac{52!}{5!47!} = \frac{52 \times 51 \times 50 \times 49 \times 48}{5 \times 4 \times 3 \times 2 \times 1} = 2,598,960\)</span></p>
+<p>Here are the probabilities for each hand type:</p>
+<ol type="1">
+<li><p><strong>Single Pair:</strong></p>
+<ul>
+<li>Choose a rank for the pair: 13 choices.</li>
+<li>Choose 2 suits for the pair: <span class="math inline">\(\binom{4}{2}\)</span> choices.</li>
+<li>Choose 3 ranks from the remaining 12, making sure they are all distinct from the first rank: <span class="math inline">\(\binom{12}{3}\)</span></li>
+<li>Choose one suit for each of the 3 cards: <span class="math inline">\(4^3\)</span> choices.</li>
+</ul>
+<p>The total number of single pairs is <span class="math inline">\(13 \times \binom{4}{2} \times \binom{12}{3} \times 4^3 = 13 \times 6 \times 220 \times 64 = 1,098,240\)</span>.</p>
+<p>The probability of a single pair is <span class="math inline">\(\frac{1098240}{2598960} \approx 0.4226\)</span>.</p></li>
+<li><p><strong>Two Pairs:</strong></p>
+<ul>
+<li>Choose 2 ranks for the pairs: <span class="math inline">\(\binom{13}{2}\)</span> choices.</li>
+<li>Choose 2 suits for each pair: <span class="math inline">\(\binom{4}{2} \times \binom{4}{2}\)</span> choices.</li>
+<li>Choose the remaining card: 11 choices for the rank and 4 choices for the suit The total number of two pairs is <span class="math inline">\(\binom{13}{2} \times \binom{4}{2} \times \binom{4}{2} \times 11 \times 4 = 78 \times 6 \times 6 \times 44 = 123,552\)</span>.</li>
+</ul>
+<p>The probability of two pairs is <span class="math inline">\(\frac{123552}{2598960} \approx 0.0475\)</span>.</p></li>
+<li><p><strong>Three of a Kind:</strong></p>
+<ul>
+<li>Choose a rank for the three of a kind: 13 choices.</li>
+<li>Choose 3 suits for the three of a kind: <span class="math inline">\(\binom{4}{3}\)</span> choices.</li>
+<li>Choose 2 ranks for the remaining cards from the remaining 12 ranks: <span class="math inline">\(\binom{12}{2}\)</span></li>
+<li>Choose 1 suit for each of these two cards: <span class="math inline">\(4^2\)</span> choices.</li>
+</ul>
+<p>The total number of three of a kind is <span class="math inline">\(13 \times \binom{4}{3} \times \binom{12}{2} \times 4^2= 13 \times 4 \times 66 \times 16 = 54,912\)</span>.</p>
+<p>The probability of a three of a kind is <span class="math inline">\(\frac{54912}{2598960} \approx 0.0211\)</span>.</p></li>
+<li><p><strong>Flush:</strong></p>
+<ul>
+<li>Choose a suit: 4 choices.</li>
+<li>Choose 5 ranks from that suit: <span class="math inline">\(\binom{13}{5}\)</span> choices.</li>
+<li>Subtract the number of straight flushes: 10 The number of flushes that are not straight flushes is <span class="math inline">\(4 \times \binom{13}{5} - 40 = 4 \times 1287 -40 = 5108\)</span>.</li>
+</ul>
+<p>The probability of a flush is <span class="math inline">\(\frac{5108}{2598960} \approx 0.00196\)</span>.</p></li>
+<li><p><strong>Straight:</strong></p>
+<ul>
+<li>Choose the lowest rank: 10 choices (A to 10).</li>
+<li>Choose one of 4 suits for each card: <span class="math inline">\(4^5\)</span> choices.</li>
+<li>Subtract the number of straight flushes: 40 The total number of straights is <span class="math inline">\(10 \times 4^5 - 40 = 10200\)</span>.</li>
+</ul>
+<p>The probability of a straight is <span class="math inline">\(\frac{10200}{2598960} \approx 0.00392\)</span>.</p></li>
+<li><p><strong>Full House:</strong></p>
+<ul>
+<li>Choose a rank for the three of a kind: 13 choices.</li>
+<li>Choose 3 suits for the three of a kind: <span class="math inline">\(\binom{4}{3}\)</span> choices.</li>
+<li>Choose a rank for the pair: 12 choices.</li>
+<li>Choose 2 suits for the pair: <span class="math inline">\(\binom{4}{2}\)</span> choices.</li>
+</ul>
+<p>The total number of full houses is <span class="math inline">\(13 \times \binom{4}{3} \times 12 \times \binom{4}{2} = 13 \times 4 \times 12 \times 6 = 3,744\)</span>.</p>
+<p>The probability of a full house is <span class="math inline">\(\frac{3744}{2598960} \approx 0.00144\)</span>.</p></li>
+<li><p><strong>Four of a Kind:</strong></p>
+<ul>
+<li>Choose a rank for the four of a kind: 13 choices.</li>
+<li>Choose 4 suits for the four of a kind: <span class="math inline">\(\binom{4}{4} = 1\)</span> choice.</li>
+<li>Choose the last card: 48 choices.</li>
+</ul>
+<p>The total number of four of a kind hands is <span class="math inline">\(13 \times 48 = 624\)</span>.</p></li>
+</ol>
+<p>The probability of four of a kind is <span class="math inline">\(\frac{624}{2598960} \approx 0.00024\)</span>.</p>
+<ol start="8" type="1">
+<li><p><strong>Straight Flush:</strong></p>
+<ul>
+<li>Choose a suit for the straight flush: 4 choices.</li>
+<li>Choose the lowest rank from 10 possible values: 10 choices.</li>
+</ul>
+<p>The total number of straight flushes is <span class="math inline">\(4 \times 10 = 40\)</span>.</p>
+<p>The probability of a straight flush is <span class="math inline">\(\frac{40}{2598960} \approx 0.000015\)</span>.</p></li>
+</ol>
+<p><strong>Note:</strong> The key to doing these types of exercises is to always think of the number of choices of a certain outcome, and be careful not to count the same hand twice.</p>
+</section>
+<section class="level3" id="exercise-3-probability-of-two-boys">
+<h3 class="anchored" data-anchor-id="exercise-3-probability-of-two-boys">Exercise 3: Probability of Two Boys</h3>
+<p>The Smiths have two children. At least one of them is a boy. What is the probability that both children are boys?</p>
+</section>
+<section class="level3" id="solution-3">
+<h3 class="anchored" data-anchor-id="solution-3">Solution 3</h3>
+<p>This is a classic conditional probability problem. Let B be the event that both children are boys, and let A be the event that at least one child is a boy. We are asked to compute <span class="math inline">\(P(B|A)\)</span>.</p>
+<p>Possible outcomes for the genders of two children are: BB, BG, GB, GG, where B represents a boy, and G represents a girl. Assuming equal probability of a boy or a girl, we have a sample space <span class="math inline">\(\Omega\)</span> with four outcomes of equal probability. <span class="math inline">\(\Omega\)</span> = {BB, BG, GB, GG} A = {BB, BG, GB} B = {BB} The probability that at least one child is a boy is: <span class="math inline">\(P(A) = \dfrac{3}{4}\)</span>. The probability that both children are boys and at least one is a boy, is the probability that both children are boys: <span class="math inline">\(P(B \cap A) = P(B) = \dfrac{1}{4}\)</span>. The conditional probability we are looking for is <span class="math inline">\(P(B|A) = \dfrac{P(B \cap A)}{P(A)} = \dfrac{\frac{1}{4}}{\frac{3}{4}} = \dfrac{1}{3}\)</span>.</p>
+<p>Thus, given that at least one child is a boy, the probability that both are boys is 1/3. This is different than 1/4, which is the unconditional probability that both are boys, a very common mistake made by those seeing this problem for the first time. The mistake is thinking of the two events as independent.</p>
+<p><strong>Intuitive Explanation:</strong> The key here is that the information “at least one is a boy” changes our sample space. We are no longer considering all four possibilities equally; we are given additional information that eliminates one possibility and makes the remaining three equally likely.</p>
+</section>
+<section class="level3" id="exercise-4-probability-of-elvis-being-an-identical-twin">
+<h3 class="anchored" data-anchor-id="exercise-4-probability-of-elvis-being-an-identical-twin">Exercise 4: Probability of Elvis being an Identical Twin</h3>
+<p>Elvis Presley had a twin brother (Jesse Garon Presley) who died at birth. What is the probability that Elvis was an identical twin?</p>
+</section>
+<section class="level3" id="solution-4">
+<h3 class="anchored" data-anchor-id="solution-4">Solution 4</h3>
+<p>Let A be the event that Elvis’s birth was an identical twin birth event, and B be the event that Elvis’s birth was a fraternal twin birth event. Let E be the evidence that Elvis’s twin was male. We are interested in the posterior probability <span class="math inline">\(P(A|E)\)</span>. The prior probabilities are given as: <span class="math inline">\(P(A) = 0.08\)</span> <span class="math inline">\(P(B) = 0.92\)</span> The likelihoods are: <span class="math inline">\(P(E|A) = 1\)</span> (Identical twins are necessarily the same sex.) <span class="math inline">\(P(E|B) = \dfrac{1}{2}\)</span> (Fraternal twins are equally likely to be the opposite sex.)</p>
+<p>We use <strong>Bayes’ theorem</strong> to find the posterior probability: <span class="math inline">\(P(A|E) = \dfrac{P(E|A)P(A)}{P(E)}\)</span></p>
+<p>We know <span class="math inline">\(P(E|A)P(A) = 1 \times 0.08 = 0.08\)</span>. We also know that <span class="math inline">\(\begin{aligned}
+P(E) &amp;= P(E|A)P(A) + P(E|B)P(B) \\
+&amp;= 1 \times 0.08 + \dfrac{1}{2} \times 0.92 \\
+&amp;= 0.08 + 0.46 \\
+&amp;= 0.54
+\end{aligned}\)</span>.</p>
+<p>Therefore, <span class="math inline">\(P(A|E) = \dfrac{0.08}{0.54} = \dfrac{8}{54} \approx 0.148\)</span>.</p>
+<p>Thus, the probability that Elvis was an identical twin, given that his twin brother was male, is approximately 0.15. Bayes rule allows us to update our beliefs in the light of new evidence. In this case, we start with the prior beliefs about the proportion of twin births that are identical, and we update them by taking into account the evidence that the twin was male.</p>
+</section>
+<section class="level3" id="exercise-5-gambling-strategies">
+<h3 class="anchored" data-anchor-id="exercise-5-gambling-strategies">Exercise 5: Gambling Strategies</h3>
+<p>You are in Las Vegas with $3 and you need $6 to pay off a debt. You consider two strategies:</p>
+<ol type="a">
+<li><p>bet all you have on Black;</p></li>
+<li><p>bet $1 at a time on Black until you either go bankrupt or win $6.</p></li>
+</ol>
+<p>You can assume that the casino pays out twice the wager for a winning roll, and that the probability of Black is <span class="math inline">\(p\)</span>, where <span class="math inline">\(0 &lt; p &lt; 1\)</span>. Compare the two strategies and determine which has the larger probability <span class="math inline">\(q\)</span> of succeeding (this depends on the value of <span class="math inline">\(p\)</span>). [Hint: start with a simpler problem where your total capital is only $2, say, and you need $4, and then draw a tree to represent the evolution of your capital.]</p>
+</section>
+<section class="level3" id="solution-5">
+<h3 class="anchored" data-anchor-id="solution-5">Solution 5</h3>
+<p>The problem describes a scenario where a gambler has an initial amount of money and wants to reach a target amount by betting on a game with a fixed probability of winning. This problem can be analyzed using the concept of a <strong>random walk</strong> and the <strong>gambler’s ruin</strong> problem:</p>
+<ol type="1">
+<li><p><strong>Random Walk:</strong> A random walk is a mathematical formalization of a path that consists of a succession of random steps. In this context, the gambler’s capital performs a random walk, where each step is a bet, and the direction of the step (up or down) is determined by the outcome of the bet.</p></li>
+<li><p><strong>Gambler’s Ruin:</strong> The gambler’s ruin is a statistical concept that, given certain conditions, a gambler playing a series of bets will eventually go broke, even if the game is fair (i.e., the probability of winning each bet is 0.5). The probability of reaching a target amount before going broke depends on the initial capital, the target amount, and the probability of winning each bet.</p></li>
+</ol>
+<p><strong>Strategy (a)</strong>: Bet all you have on Black</p>
+<p>In this strategy, the gambler bets the entire $3 on a single game. The probability of success is simply the probability of winning this single game.</p>
+<ul>
+<li>If the gambler wins, they double their money and reach $6, thus succeeding.</li>
+<li>If the gambler loses, they lose all their money and fail.</li>
+</ul>
+<p>The probability of success, <span class="math inline">\(q\_a\)</span>, is therefore:</p>
+<p><span class="math inline">\(q\_a = p\)</span></p>
+<p><strong>Strategy (b)</strong>: Bet $1 at a time on Black until you either go bankrupt or win $6</p>
+<p>In this strategy, the gambler bets $1 at a time until they either reach $6 or go bankrupt. This is a classic example of the gambler’s ruin problem. Let’s denote the probability of reaching $6 before going bankrupt, starting with <span class="math inline">\(i\)</span> dollars, as <span class="math inline">\(q\_i\)</span>. We are interested in finding <span class="math inline">\(q\_3\)</span>.</p>
+<p><em>Hint: Simpler Problem with $2 and Target $4</em></p>
+<p>Before solving the main problem, let’s consider a simpler case where the gambler starts with $2 and wants to reach $4. We can draw a tree diagram to represent the possible paths:</p>
+<pre><code>                   $2
+                /     \
+             (1-p)     p
+              /         \
+             $1          $3
+            /  \       /  \
+        (1-p)   p   (1-p)  p
+          /      \   /      \
+         $0      $2 $2       $4</code></pre>
+<p>The gambler starts with $2. With probability <span class="math inline">\(p\)</span>, they win the first bet and have $3. With probability <span class="math inline">\((1-p)\)</span>, they lose the first bet and have $1. This process continues until they either reach $0 (bankrupt) or $4 (success).</p>
+<p>We can set up the following equations based on the tree diagram:</p>
+<ul>
+<li><span class="math inline">\(q\_0 = 0\)</span> (If the gambler has $0, they have already lost)</li>
+<li><span class="math inline">\(q\_4 = 1\)</span> (If the gambler has $4, they have already won)</li>
+<li><span class="math inline">\(q\_1 = (1-p) q\_0 + p q\_2 = p q\_2\)</span></li>
+<li><span class="math inline">\(q\_2 = (1-p) q\_1 + p q\_3\)</span></li>
+<li><span class="math inline">\(q\_3 = (1-p) q\_2 + p q\_4 = (1-p) q\_2 + p\)</span></li>
+</ul>
+<p>Substituting <span class="math inline">\(q\_1\)</span> into the equation for <span class="math inline">\(q\_2\)</span>:</p>
+<p><span class="math inline">\(q\_2 = (1-p) p q\_2 + p q\_3\)</span></p>
+<p><span class="math inline">\(q\_2 (1 - p + p^2) = p q\_3\)</span></p>
+<p>Substituting <span class="math inline">\(q\_2\)</span> into the equation for <span class="math inline">\(q\_3\)</span>:</p>
+<p><span class="math inline">\(q\_3 = (1-p) \dfrac{p q\_3}{1 - p + p^2} + p\)</span></p>
+<p><span class="math inline">\(q\_3 (1 - \dfrac{p(1-p)}{1 - p + p^2}) = p\)</span></p>
+<p><span class="math inline">\(q\_3 = \dfrac{p(1 - p + p^2)}{1 - 2p + 2p^2}\)</span></p>
+<p><span class="math inline">\(q\_2 = \dfrac{p^2}{1 - 2p + 2p^2}\)</span></p>
+<p><span class="math inline">\(q\_1 = \dfrac{p^3}{1 - 2p + 2p^2}\)</span></p>
+<p><em>Applying the Concept to the Main Problem</em></p>
+<p>Now, let’s apply this to our main problem where the gambler starts with $3 and wants to reach $6. We can set up similar equations:</p>
+<ul>
+<li><span class="math inline">\(q\_0 = 0\)</span></li>
+<li><span class="math inline">\(q\_6 = 1\)</span></li>
+<li><span class="math inline">\(q\_i = (1-p) q\_{i-1} + p q\_{i+1}\)</span> for <span class="math inline">\(1 \leq i \leq 5\)</span></li>
+</ul>
+<p>Solving this system of equations is more complex. However, we can use the general formula for the gambler’s ruin problem:</p>
+<p>For a gambler starting with <span class="math inline">\(i\)</span> dollars, aiming to reach <span class="math inline">\(N\)</span> dollars, with the probability of winning each bet being <span class="math inline">\(p\)</span> and losing being <span class="math inline">\((1-p)\)</span>, the probability of success <span class="math inline">\(q\_i\)</span> is given by:</p>
+<p><span class="math inline">\(q\_i = \begin{cases}
+\dfrac{1 - (\frac{1-p}{p})^i}{1 - (\frac{1-p}{p})^N} &amp; \text{if } p \neq 0.5 \\
+\dfrac{i}{N} &amp; \text{if } p = 0.5
+\end{cases}\)</span></p>
+<p>In our case, <span class="math inline">\(i = 3\)</span>, <span class="math inline">\(N = 6\)</span>. So, for <span class="math inline">\(p \neq 0.5\)</span>:</p>
+<p><span class="math inline">\(q\_3 = \dfrac{1 - (\frac{1-p}{p})^3}{1 - (\frac{1-p}{p})^6}\)</span></p>
+<p>For <span class="math inline">\(p = 0.5\)</span>:</p>
+<p><span class="math inline">\(q\_3 = \dfrac{3}{6} = 0.5\)</span></p>
+<p><em>Comparison of Strategies</em></p>
+<p>Now we need to compare <span class="math inline">\(q\_a = p\)</span> with <span class="math inline">\(q\_3\)</span> for different values of <span class="math inline">\(p\)</span>.</p>
+<ul>
+<li>If <span class="math inline">\(p = 0.5\)</span>, <span class="math inline">\(q\_a = 0.5\)</span> and <span class="math inline">\(q\_3 = 0.5\)</span>. Both strategies have the same probability of success.</li>
+<li>If <span class="math inline">\(p &lt; 0.5\)</span>, <span class="math inline">\(q\_3\)</span> will be less than <span class="math inline">\(p\)</span> because the gambler is more likely to go bankrupt before reaching $6.</li>
+<li>If <span class="math inline">\(p &gt; 0.5\)</span>, <span class="math inline">\(q\_3\)</span> will be greater than <span class="math inline">\(p\)</span> because the gambler is more likely to reach $6 before going bankrupt.</li>
+</ul>
+<p><em>Conclusion</em></p>
+<ul>
+<li><strong>If</strong> <span class="math inline">\(p \leq 0.5\)</span>, strategy (a) is either better or equal to strategy (b).</li>
+<li><strong>If</strong> <span class="math inline">\(p &gt; 0.5\)</span>, strategy (b) is better than strategy (a).</li>
+</ul>
+<p>This result is intuitive because if the odds are against the gambler (<span class="math inline">\(p &lt; 0.5\)</span>), it’s better to take a single shot rather than prolonging the game, which increases the chance of ruin. Conversely, if the odds are in the gambler’s favor (<span class="math inline">\(p &gt; 0.5\)</span>), it’s better to play multiple times to leverage the favorable odds.</p>
+</section>
+<section class="level3" id="exercise-6-probability-of-winning-at-craps">
+<h3 class="anchored" data-anchor-id="exercise-6-probability-of-winning-at-craps">Exercise 6: Probability of Winning at Craps</h3>
+<p>The game of craps is played with two six-sided dice. The rules are as follows. Only totals for the two dice count. The player throws the dice and wins at once if the total for the first throw is 7 or 11, loses at once if it is 2, 3, or 12. Any other throw is called his “point.” If the first throw is a point, the player throws the dice repeatedly until he either wins by throwing his point again or loses by throwing 7. What is the probability of winning?</p>
+</section>
+<section class="level3" id="solution-6">
+<h3 class="anchored" data-anchor-id="solution-6">Solution 6</h3>
+<p>This is a probability problem involving a sequence of dice rolls. We need to find the probability of winning in each possible scenario.</p>
+<p>First, let’s calculate the probability of each total when rolling two dice. The total number of outcomes is <span class="math inline">\(6 \times 6 = 36\)</span>.<br/>
+* P(2) = 1/36<br/>
+* P(3) = 2/36<br/>
+* P(4) = 3/36<br/>
+* P(5) = 4/36<br/>
+* P(6) = 5/36<br/>
+* P(7) = 6/36<br/>
+* P(8) = 5/36<br/>
+* P(9) = 4/36<br/>
+* P(10) = 3/36<br/>
+* P(11) = 2/36<br/>
+* P(12) = 1/36<br/>
+The player wins immediately if the first throw is a 7 or 11, the probabilities are<br/>
+<span class="math inline">\(P(7) = \frac{6}{36} = \frac{1}{6}\)</span><br/>
+<span class="math inline">\(P(11) = \frac{2}{36} = \frac{1}{18}\)</span><br/>
+</p>
+<p>The player loses immediately if the first throw is a 2, 3, or 12, the probabilities are<br/>
+<span class="math inline">\(P(2) = \frac{1}{36}\)</span><br/>
+<span class="math inline">\(P(3) = \frac{2}{36} = \frac{1}{18}\)</span><br/>
+<span class="math inline">\(P(12) = \frac{1}{36}\)</span><br/>
+Let’s call <span class="math inline">\(P(\text{point} = x)\)</span> the probability that we obtain a point <span class="math inline">\(x\)</span>.<br/>
+The probability of winning on the first roll is:<br/>
+<span class="math inline">\(P(\text{win on 1st roll}) = P(7) + P(11) = \frac{1}{6} + \frac{1}{18} = \frac{4}{18} = \frac{2}{9}\)</span>.<br/>
+</p>
+<p>If the first throw is a 4, 5, 6, 8, 9, or 10, then we need to compute the probability of winning later. The strategy here is to compute the probability of winning with a particular point and to sum across all the points. For example, let’s focus on the point being equal to 4, so the probability of throwing a 4 is 3/36. We want to calculate the probability of hitting a 4 again before hitting a 7.<br/>
+Let’s call this probability <span class="math inline">\(P(\text{win with point} = x)\)</span>.<br/>
+The probability of winning with a point of 4 (or 10) is the probability of throwing a 4 before a 7.<br/>
+<span class="math inline">\(P(4 \text{ before } 7) = \frac{P(4)}{P(4) + P(7)} = \frac{3/36}{3/36+6/36} = \frac{3}{9} = \frac{1}{3}\)</span>.<br/>
+Similarly, the probability of winning with a point of 5 (or 9) is the probability of throwing a 5 before a 7.<br/>
+<span class="math inline">\(P(5 \text{ before } 7) = \frac{P(5)}{P(5) + P(7)} = \frac{4/36}{4/36+6/36} = \frac{4}{10} = \frac{2}{5}\)</span>.<br/>
+The probability of winning with a point of 6 (or 8) is the probability of throwing a 6 before a 7.<br/>
+<span class="math inline">\(P(6 \text{ before } 7) = \frac{P(6)}{P(6) + P(7)} = \frac{5/36}{5/36+6/36} = \frac{5}{11}\)</span>.<br/>
+The probability of winning is therefore:<br/>
+<span class="math display">\[\begin{align*}
+P(\text{win}) &amp;= P(\text{win on 1st roll}) + P(4)P(4 \text{ before } 7) + P(5)P(5 \text{ before } 7) \\
+&amp;+ P(6)P(6 \text{ before } 7) + P(8)P(8 \text{ before } 7) + P(9)P(9 \text{ before } 7) + P(10)P(10 \text{ before } 7) \\
+&amp;= \frac{2}{9} + \frac{3}{36} \times \frac{1}{3} + \frac{4}{36} \times \frac{2}{5} + \frac{5}{36} \times \frac{5}{11} + \frac{5}{36} \times \frac{5}{11} + \frac{4}{36} \times \frac{2}{5} + \frac{3}{36} \times \frac{1}{3} \\
+&amp;= \frac{2}{9} + \frac{1}{36} + \frac{2}{45} + \frac{25}{198} + \frac{25}{198} + \frac{2}{45} + \frac{1}{36} = \frac{2}{9} + \frac{2}{36} + \frac{4}{45} + \frac{50}{198} \\
+&amp;= \frac{2}{9} + \frac{1}{18} + \frac{4}{45} + \frac{25}{99} = \frac{244}{495} \approx 0.4929
+\end{align*}\]</span> The probability of winning at craps is approximately 0.4929. This is less than 50%. This is why the casinos are so profitable when people play craps.</p>
+</section>
+<section class="level3" id="exercise-7-probability-of-an-even-number">
+<h3 class="anchored" data-anchor-id="exercise-7-probability-of-an-even-number">Exercise 7: Probability of an Even Number</h3>
+<p>What is the probability that an integer chosen at random is even? What is the probability that an integer chosen at random has 1 as its first digit?</p>
+</section>
+<section class="level3" id="solution-7">
+<h3 class="anchored" data-anchor-id="solution-7">Solution 7</h3>
+<p>This exercise deals with the concept of <strong>limiting probabilities</strong> when dealing with an infinite set of numbers.</p>
+<p><strong>Probability of an even number:</strong> The idea here is to use a limit argument, since we cannot just count the number of even integers and divide by the total number of integers since both are infinite.</p>
+<p>Let’s define the sequence of random variables <span class="math inline">\(X_n\)</span> with support <span class="math inline">\(S_n = \{1, 2, ..., n\}\)</span>. Each integer in <span class="math inline">\(S_n\)</span> occurs with probability <span class="math inline">\(1/n\)</span>. The probability that <span class="math inline">\(X_n\)</span> is even is the number of even integers in <span class="math inline">\(S_n\)</span> divided by <span class="math inline">\(n\)</span>. If <span class="math inline">\(n\)</span> is even, there are <span class="math inline">\(n/2\)</span> even integers. If <span class="math inline">\(n\)</span> is odd, there are <span class="math inline">\((n-1)/2\)</span> even integers.</p>
+<p>In either case, <span class="math inline">\(Pr(X_n \text{ is even}) = \dfrac{\lfloor n/2\rfloor}{n}\)</span>, where <span class="math inline">\(\lfloor n/2\rfloor\)</span> is the floor of <span class="math inline">\(n/2\)</span> or the largest integer not greater than <span class="math inline">\(n/2\)</span>.</p>
+<p>As <span class="math inline">\(n \rightarrow \infty\)</span>, <span class="math inline">\(\lim_{n \rightarrow \infty} Pr(X_n \text{ is even}) = \lim_{n \rightarrow \infty} \frac{\lfloor n/2 \rfloor}{n} = \frac{1}{2}\)</span> Thus, the probability that an integer chosen at random is even is 1/2.</p>
+<p><strong>Probability of the first digit being 1:</strong> Consider the set of integers.<br/>
+Integers from 1 to 9 have a first digit of 1 a total of 1 time.<br/>
+Integers from 1 to 99 have a first digit of 1 a total of 10 times.<br/>
+Integers from 1 to 999 have a first digit of 1 a total of 100 times.<br/>
+Integers from 1 to <span class="math inline">\(10^n-1\)</span> have a first digit of 1 a total of <span class="math inline">\(10^{n-1}\)</span> times.<br/>
+Integers from 1 to <span class="math inline">\(10^n\)</span> have a first digit of 1 a total of <span class="math inline">\(10^{n-1} + 1\)</span> times.<br/>
+The number of integers from 1 to <span class="math inline">\(10^n\)</span> is <span class="math inline">\(10^n\)</span>. Therefore the probability of a random number between 1 and <span class="math inline">\(10^n\)</span> having a first digit 1 is close to <span class="math inline">\(\dfrac{10^{n-1}}{10^n} = \dfrac{1}{10}\)</span>.<br/>
+However this is not the answer we are looking for, since it is only a sequence of probabilities. The limiting probability we are looking for is in fact <span class="math inline">\(\log_{10} 2 \approx 0.301\)</span></p>
+<p>Let’s call <span class="math inline">\(A\)</span> the event that a random integer has the first digit equal to 1. The probability of this event is given by <strong>Benford’s law</strong>, which states that the leading digit of many real-life sets of numerical data follows a certain logarithmic distribution. Specifically, the probability that the first digit is <span class="math inline">\(d\)</span> is given by <span class="math inline">\(P(d) = \log_{10}\left(1+\dfrac{1}{d}\right)\)</span>. In our case, <span class="math inline">\(d=1\)</span> so <span class="math inline">\(P(1) = \log_{10}(1+1) = \log_{10}2 \approx 0.301\)</span>.</p>
+</section>
+<section class="level3" id="exercise-8-conditional-probabilities">
+<h3 class="anchored" data-anchor-id="exercise-8-conditional-probabilities">Exercise 8: Conditional Probabilities</h3>
+<p>Eighty individuals suffering from a given disease were randomly sampled from a population of sufferers. Event B – individuals took a particular drug; Event A – individual recovered. Verify that we have <span class="math inline">\(Pr(A|B) &gt; Pr(A|B^c)\)</span> but both <span class="math inline">\(Pr(A|B, M) &lt; Pr(A|B^c, M)\)</span> and <span class="math inline">\(Pr(A|B, F) &lt; Pr(A|B^c, F)\)</span>, where <span class="math inline">\(Pr(A|B, M)\)</span>, <span class="math inline">\(Pr(A|B, F)\)</span> denote, respectively, the conditional probability of recovery for males (females). Discuss how this may happen.</p>
+</section>
+<section class="level3" id="solution-8">
+<h3 class="anchored" data-anchor-id="solution-8">Solution 8</h3>
+<p>This exercise explores <strong>Simpson’s paradox</strong>, which is a phenomenon in probability and statistics where a trend that appears in different groups of data disappears when these groups are combined.</p>
+<p>The given information implies that:<br/>
+* Overall, taking the drug increases the probability of recovery (<span class="math inline">\(P(A|B) &gt; P(A|B^c)\)</span>).<br/>
+* However, within both subgroups (males and females), taking the drug <em>decreases</em> the probability of recovery (<span class="math inline">\(P(A|B, M) &lt; P(A|B^c, M)\)</span> and <span class="math inline">\(P(A|B, F) &lt; P(A|B^c, F)\)</span>).<br/>
+</p>
+<p>This counterintuitive result is possible because of a <strong>confounding variable</strong> (in this case, gender) that is related to both the treatment (taking the drug) and the outcome (recovery).</p>
+<p>Let us examine the data on page 113. The total number of individuals with a given disease is 80. Event B indicates individuals that took the drug and event A indicates individuals that recovered. The contingency table on page 113 shows the following data:<br/>
+| Combined | A | A<span class="math inline">\(^c\)</span> | Totals |<br/>
+|———-|——|——–|——-|<br/>
+| B | 20 | 20 | 40 |<br/>
+| B<span class="math inline">\(^c\)</span> | 16 | 24 | 40 |<br/>
+| <strong>Males</strong> | | | |<br/>
+| B | 18 | 12 | 30 |<br/>
+| B<span class="math inline">\(^c\)</span> | 7 | 3 | 10 |<br/>
+| <strong>Females</strong> | | | |<br/>
+| B | 2 | 8 | 10 |<br/>
+| B<span class="math inline">\(^c\)</span> | 9 | 21 | 30 |<br/>
+</p>
+<p>From the data we have:<br/>
+</p>
+<p><span class="math inline">\(P(A|B) = \dfrac{20}{40} = 0.5\)</span><br/>
+<span class="math inline">\(P(A|B^c) = \dfrac{16}{40} = 0.4\)</span>. Therefore <span class="math inline">\(P(A|B) &gt; P(A|B^c)\)</span>.<br/>
+</p>
+<p>For males:<br/>
+<span class="math inline">\(P(A|B,M) = \dfrac{18}{30} = 0.6\)</span><br/>
+<span class="math inline">\(P(A|B^c,M) = \dfrac{7}{10} = 0.7\)</span>. Therefore <span class="math inline">\(P(A|B,M) &lt; P(A|B^c, M)\)</span><br/>
+</p>
+<p>For females:<br/>
+<span class="math inline">\(P(A|B,F) = \dfrac{2}{10} = 0.2\)</span><br/>
+<span class="math inline">\(P(A|B^c,F) = \dfrac{9}{30} = 0.3\)</span>. Therefore <span class="math inline">\(P(A|B,F) &lt; P(A|B^c, F)\)</span><br/>
+</p>
+<p>This is an example of Simpson’s paradox since the aggregate probability seems to be positive (it does improve recovery) but when you look at the gender specific probabilities it is negative for both genders.</p>
+<p><strong>Explanation:</strong> The main issue in this example is that the drug is more often administered to the individuals of a given gender (males in this case), which has a higher probability of recovery regardless of whether they take the drug or not. Thus, the aggregate data is misleading. The explanation of this paradox is that the drug is more frequently prescribed to men (30 out of 40 drug takers were men). Thus there is a <strong>confounding factor</strong>, in this case the fact that men are more likely to be prescribed the drug. The underlying causal story could be that only men tend to be prescribed the drug and men recover much more frequently than women.</p>
+</section>
+<section class="level3" id="exercise-9-density-functions">
+<h3 class="anchored" data-anchor-id="exercise-9-density-functions">Exercise 9: Density Functions</h3>
+<p>Consider the following functions and decide whether they are density functions. (1) <span class="math inline">\(f(x) = x^{\alpha-1} \mathbb{1}(x &gt; 0)\)</span> (2) <span class="math inline">\(f(x) = \sin(x) \mathbb{1}(0 &lt; x &lt; 2\pi)\)</span></p>
+</section>
+<section class="level3" id="solution-9">
+<h3 class="anchored" data-anchor-id="solution-9">Solution 9</h3>
+<p>To be a valid probability density function (pdf), a function must satisfy two conditions: 1. <span class="math inline">\(f(x) \geq 0\)</span> for all x (non-negativity). 2. <span class="math inline">\(\int_{-\infty}^{\infty} f(x) dx = 1\)</span> (normalization).</p>
+<p><strong>(1) <span class="math inline">\(f(x) = x^{\alpha - 1}\mathbb{1}(x &gt; 0)\)</span></strong></p>
+<p>The indicator function <span class="math inline">\(\mathbb{1}(x&gt;0)\)</span> ensures that <span class="math inline">\(f(x)\)</span> is zero for <span class="math inline">\(x \leq 0\)</span>. For <span class="math inline">\(x &gt; 0\)</span>, <span class="math inline">\(f(x) = x^{\alpha - 1}\)</span>. * <strong>Non-negativity:</strong> For <span class="math inline">\(f(x)\)</span> to be non-negative, we require that <span class="math inline">\(x^{\alpha - 1} \geq 0\)</span>. This is true when <span class="math inline">\(x&gt;0\)</span> and the power <span class="math inline">\(\alpha - 1\)</span> is such that the function is positive for positive arguments. * <strong>Normalization:</strong> For normalization we need <span class="math inline">\(\int_{-\infty}^{\infty} f(x) dx = \int_0^{\infty} x^{\alpha-1}dx = 1\)</span>. The integral of <span class="math inline">\(x^{\alpha-1}\)</span> is <span class="math inline">\(\frac{x^{\alpha}}{\alpha}\)</span>. So we get <span class="math inline">\(\left[\frac{x^{\alpha}}{\alpha}\right]_0^{\infty}\)</span>. This will converge to 1 only if <span class="math inline">\(\alpha &gt; 0\)</span>, and the integral will converge to 1 if and only if <span class="math inline">\(\alpha=1\)</span>. Therefore, <span class="math inline">\(f(x) = x^{\alpha - 1}\mathbb{1}(x &gt; 0)\)</span> is a valid probability density function if and only if <span class="math inline">\(\alpha=1\)</span> and in that case, the only valid pdf is <span class="math inline">\(f(x)=1\)</span> if <span class="math inline">\(x&gt;0\)</span>.</p>
+<p><strong>(2) <span class="math inline">\(f(x) = \sin(x)\mathbb{1}(0 &lt; x &lt; 2\pi)\)</span></strong> * <strong>Non-negativity:</strong> The function <span class="math inline">\(\sin(x)\)</span> is positive in the interval <span class="math inline">\((0, \pi)\)</span> and negative in the interval <span class="math inline">\((\pi, 2\pi)\)</span>. Thus, <span class="math inline">\(f(x)\)</span> is not non-negative for all <span class="math inline">\(x\)</span>. * <strong>Normalization:</strong> <span class="math inline">\(\int_{-\infty}^{\infty} f(x) dx = \int_0^{2\pi} \sin(x) dx = [-\cos(x)]_0^{2\pi} = -\cos(2\pi) + \cos(0) = -1 + 1 = 0\)</span>. Since <span class="math inline">\(f(x)\)</span> is not non-negative and does not integrate to 1, it is not a valid pdf.</p>
+</section>
+<section class="level3" id="exercise-10-cumulative-distribution-functions">
+<h3 class="anchored" data-anchor-id="exercise-10-cumulative-distribution-functions">Exercise 10: Cumulative Distribution Functions</h3>
+<p>Prove that if <span class="math inline">\(F\)</span> is a <strong>cumulative distribution function</strong> (cdf), then for any continuous non-decreasing function <span class="math inline">\(T: [0, 1] \rightarrow [0, 1]\)</span>, <span class="math inline">\(T(F(x))\)</span> is also a cdf.</p>
+</section>
+<section class="level3" id="solution-10">
+<h3 class="anchored" data-anchor-id="solution-10">Solution 10</h3>
+<p>A function <span class="math inline">\(G(x)\)</span> is a cdf if it satisfies the following properties: 1. <span class="math inline">\(G(x)\)</span> is non-decreasing, meaning that if <span class="math inline">\(x_1 \leq x_2\)</span>, then <span class="math inline">\(G(x_1) \leq G(x_2)\)</span>. 2. <span class="math inline">\(\lim_{x \rightarrow -\infty} G(x) = 0\)</span>. 3. <span class="math inline">\(\lim_{x \rightarrow \infty} G(x) = 1\)</span>. 4. <span class="math inline">\(G(x)\)</span> is right-continuous, meaning that <span class="math inline">\(\lim_{h \rightarrow 0^+} G(x+h) = G(x)\)</span>. Given that <span class="math inline">\(F\)</span> is a cdf, we know that <span class="math inline">\(F(x)\)</span> satisfies all of the above properties. Now, we need to verify if <span class="math inline">\(T(F(x))\)</span> also satisfies those properties.</p>
+<ol type="1">
+<li><strong>Non-decreasing:</strong> If <span class="math inline">\(x_1 \leq x_2\)</span>, then because <span class="math inline">\(F(x)\)</span> is a cdf, <span class="math inline">\(F(x_1) \leq F(x_2)\)</span>. Since <span class="math inline">\(T\)</span> is a non-decreasing function, <span class="math inline">\(T(F(x_1)) \leq T(F(x_2))\)</span>. Thus, <span class="math inline">\(T(F(x))\)</span> is also non-decreasing.</li>
+<li><strong>Limit at <span class="math inline">\(-\infty\)</span>:</strong> Since <span class="math inline">\(F\)</span> is a cdf, we know that <span class="math inline">\(\lim_{x \rightarrow -\infty} F(x) = 0\)</span>. As a result, we have that <span class="math inline">\(\lim_{x \rightarrow -\infty} T(F(x)) = T(0)\)</span>. Because the codomain of the function <span class="math inline">\(T\)</span> is <span class="math inline">\([0,1]\)</span>, it follows that <span class="math inline">\(T(0)=0\)</span>.</li>
+<li><strong>Limit at <span class="math inline">\(\infty\)</span>:</strong> Since <span class="math inline">\(F\)</span> is a cdf, we know that <span class="math inline">\(\lim_{x \rightarrow \infty} F(x) = 1\)</span>. As a result, we have that <span class="math inline">\(\lim_{x \rightarrow \infty} T(F(x)) = T(1)\)</span>. Because the codomain of the function <span class="math inline">\(T\)</span> is <span class="math inline">\([0,1]\)</span>, it follows that <span class="math inline">\(T(1)=1\)</span>.</li>
+<li><strong>Right-continuity:</strong> Since <span class="math inline">\(F(x)\)</span> is right-continuous we have that <span class="math inline">\(\lim_{h \rightarrow 0^+} F(x+h) = F(x)\)</span>. Because <span class="math inline">\(T\)</span> is continuous we also have that <span class="math inline">\(\lim_{h \rightarrow 0^+} T(F(x+h)) = T(\lim_{h \rightarrow 0^+} F(x+h)) = T(F(x))\)</span>.</li>
+</ol>
+<p>Since all four conditions are satisfied, <span class="math inline">\(T(F(x))\)</span> is a valid cdf.</p>
+</section>
+<section class="level3" id="exercise-11-uniform-distribution-on-a-circle">
+<h3 class="anchored" data-anchor-id="exercise-11-uniform-distribution-on-a-circle">Exercise 11: Uniform Distribution on a Circle</h3>
+<p>Suppose that <span class="math inline">\(Y, X\)</span> are uniformly distributed on the circular region <span class="math inline">\(C\)</span> defined by <span class="math inline">\(X^2 + Y^2 \leq \theta^2\)</span>, where <span class="math inline">\(\theta\)</span> is the radius of the circle and <span class="math inline">\(f_{Y,X}(y,x) = \frac{1}{\pi \theta^2}\mathbb{1}((x,y) \in C)\)</span>, where <span class="math inline">\(\mathbb{1}(a \in A) = 1\)</span> if <span class="math inline">\(a \in A\)</span> and 0 else. Calculate (i) The marginal densities of <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> and the conditional density <span class="math inline">\(Y|X\)</span>. (ii) The regression function <span class="math inline">\(E(Y|X = x)\)</span>.</p>
+</section>
+<section class="level3" id="solution-11">
+<h3 class="anchored" data-anchor-id="solution-11">Solution 11</h3>
+<p>This exercise involves finding <strong>marginal and conditional densities</strong> for random variables uniformly distributed over a circle.</p>
+<p><strong>(i) Marginal densities:</strong></p>
+<p>To find the marginal density of <span class="math inline">\(X\)</span>, <span class="math inline">\(f_X(x)\)</span>, we integrate the joint density <span class="math inline">\(f_{Y,X}(y,x)\)</span> with respect to <span class="math inline">\(y\)</span> over the range of <span class="math inline">\(y\)</span> for a given <span class="math inline">\(x\)</span>. The range of <span class="math inline">\(y\)</span> is given by <span class="math inline">\(-\sqrt{\theta^2 - x^2} \leq y \leq \sqrt{\theta^2 - x^2}\)</span>.</p>
+<p><span class="math inline">\(f_X(x) = \int_{-\sqrt{\theta^2 - x^2}}^{\sqrt{\theta^2 - x^2}} \frac{1}{\pi \theta^2} dy = \frac{1}{\pi \theta^2} \left[ y \right]_{-\sqrt{\theta^2 - x^2}}^{\sqrt{\theta^2 - x^2}} = \frac{2\sqrt{\theta^2 - x^2}}{\pi \theta^2}\)</span>, for <span class="math inline">\(-\theta \leq x \leq \theta\)</span>.</p>
+<p>Similarly, by symmetry, the marginal density of <span class="math inline">\(Y\)</span> is <span class="math inline">\(f_Y(y) = \frac{2\sqrt{\theta^2 - y^2}}{\pi \theta^2}\)</span>, for <span class="math inline">\(-\theta \leq y \leq \theta\)</span>.</p>
+<p>To find the conditional density of <span class="math inline">\(Y|X=x\)</span>, <span class="math inline">\(f_{Y|X}(y|x)\)</span>, we divide the joint density by the marginal density of <span class="math inline">\(X\)</span>:</p>
+<p><span class="math inline">\(f_{Y|X}(y|x) = \frac{f_{Y,X}(y,x)}{f_X(x)} = \frac{\frac{1}{\pi \theta^2}}{\frac{2\sqrt{\theta^2 - x^2}}{\pi \theta^2}} = \frac{1}{2\sqrt{\theta^2 - x^2}}\)</span>, for <span class="math inline">\(-\sqrt{\theta^2 - x^2} \leq y \leq \sqrt{\theta^2 - x^2}\)</span> and <span class="math inline">\(-\theta \leq x \leq \theta\)</span>.</p>
+<p><strong>(ii) Regression function:</strong> The regression function is the conditional expectation <span class="math inline">\(E(Y|X=x)\)</span>. We have <span class="math inline">\(E(Y|X=x) = \int_{-\sqrt{\theta^2 - x^2}}^{\sqrt{\theta^2 - x^2}} y f_{Y|X}(y|x) dy = \int_{-\sqrt{\theta^2 - x^2}}^{\sqrt{\theta^2 - x^2}} y\frac{1}{2\sqrt{\theta^2 - x^2}}dy = \frac{1}{2\sqrt{\theta^2 - x^2}} \left[\frac{y^2}{2}\right]_{-\sqrt{\theta^2 - x^2}}^{\sqrt{\theta^2 - x^2}} = 0\)</span>.</p>
+<p>The regression function <span class="math inline">\(E(Y|X=x)\)</span> is 0. This is due to the symmetry of the uniform distribution and the region of integration. Note that the conditional density <span class="math inline">\(Y|X=x\)</span> is a uniform density.</p>
+</section>
+<section class="level3" id="exercise-12-poisson-hotel">
+<h3 class="anchored" data-anchor-id="exercise-12-poisson-hotel">Exercise 12: Poisson Hotel</h3>
+<p>Consider a hotel with an infinite number of rooms numbered <span class="math inline">\(\{0, 1, 2, \dots\}\)</span>. Each room is occupied with probability <span class="math inline">\(\frac{\lambda^x}{x!}e^{-\lambda}\)</span>, where <span class="math inline">\(\lambda &gt; 0\)</span> so that we can’t guarantee a room to any newcomer. How do you guarantee room for an infinite number of guests?</p>
+</section>
+<section class="level3" id="solution-12">
+<h3 class="anchored" data-anchor-id="solution-12">Solution 12</h3>
+<p>This problem involves using a <strong>transformation</strong> to create a new space that can accommodate an infinite number of guests. The probability distribution given here is a <strong>Poisson distribution</strong> and the probability of room <span class="math inline">\(x\)</span> being occupied is <span class="math inline">\(Pr(X=x) = \frac{\lambda^x}{x!}e^{-\lambda}\)</span>.</p>
+<p>The problem stems from the fact that the rooms are numbered from 0 to <span class="math inline">\(\infty\)</span> so we cannot fit an infinity of guests because we will quickly run out of empty rooms.</p>
+<p>The solution is to apply the transformation <span class="math inline">\(Y = 2^X\)</span>, so that each room <span class="math inline">\(x\)</span> in the original numbering system corresponds to room <span class="math inline">\(2^x\)</span>. Note that every number of the form <span class="math inline">\(2^x\)</span> is associated with a single <span class="math inline">\(x\)</span>. Now the hotel has rooms numbered <span class="math inline">\(1, 2, 4, 8, 16, 32, \dots\)</span>, so now there are an infinite number of empty rooms (3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15 and so on). This transformation ensures there are infinitely many empty rooms as well as infinitely many occupied rooms. Note that this transformation is <strong>bijective</strong>. The new hotel will have both an infinite number of empty rooms as well as an infinite number of rooms with a positive frequency of occupancy.</p>
+</section>
+<section class="level3" id="exercise-13-true-false-or-indeterminate-statements">
+<h3 class="anchored" data-anchor-id="exercise-13-true-false-or-indeterminate-statements">Exercise 13: True, False, or Indeterminate Statements</h3>
+<p>Establish whether the following statements are True, False, or Indeterminate. Explain your reasoning. (i) After a very fierce battle, 72% of soldiers have lost an eye, 85% have lost an arm, and 63% have lost a leg. Therefore, no less than 20% of them are missing an eye, an arm, and a leg. (ii) Suppose that <span class="math inline">\(Y, X\)</span> are continuous random variables with a joint density <span class="math inline">\(f\)</span> and conditional densities generically denoted by <span class="math inline">\(f(.|.)\)</span>. If for some <span class="math inline">\(y,x\)</span>, <span class="math inline">\(f(y|x) = 0\)</span>, then <span class="math inline">\(f(y) = 0\)</span>.</p>
+</section>
+<section class="level3" id="solution-13">
+<h3 class="anchored" data-anchor-id="solution-13">Solution 13</h3>
+<p>This exercise involves applying the basic rules of probability and conditional densities.</p>
+<p><strong>(i) Statement about soldiers:</strong> Let <span class="math inline">\(E\)</span> be the event of losing an eye, <span class="math inline">\(A\)</span> be the event of losing an arm, and <span class="math inline">\(L\)</span> be the event of losing a leg. We are given: <span class="math inline">\(P(E) = 0.72\)</span> <span class="math inline">\(P(A) = 0.85\)</span> <span class="math inline">\(P(L) = 0.63\)</span> We are asked to show that <span class="math inline">\(P(E \cap A \cap L) \geq 0.2\)</span>. By <strong>Bonferroni’s inequality</strong>, we have <span class="math inline">\(P(E \cap A) \geq P(E) + P(A) - 1 = 0.72 + 0.85 - 1 = 0.57\)</span> <span class="math inline">\(P(E \cap A \cap L) \geq P(E) + P(A) + P(L) - 2 = 0.72 + 0.85 + 0.63 - 2 = 0.2\)</span> Thus, the statement is True.</p>
+<p><strong>(ii) Statement about conditional density:</strong></p>
+<p>If <span class="math inline">\(f(y|x) = 0\)</span> for some <span class="math inline">\(y, x\)</span>, then we know that <span class="math inline">\(f(y|x) = \frac{f(y,x)}{f_X(x)}\)</span></p>
+<p>If <span class="math inline">\(f(y|x) = 0\)</span>, this means that <span class="math inline">\(\frac{f(y,x)}{f_X(x)} = 0\)</span>, and as long as <span class="math inline">\(f_X(x) &gt; 0\)</span> then this implies that <span class="math inline">\(f(y,x) = 0\)</span> for some <span class="math inline">\(x\)</span>. However we also have that <span class="math inline">\(f_Y(y) = \int f(y,x)dx\)</span>, and since the integral may sum to a positive number if <span class="math inline">\(f(y,x)\)</span> is not zero everywhere (in the case of continuous densities) this does not imply that <span class="math inline">\(f(y)=0\)</span>. For example if the support of <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are all positive, but the joint density is zero whenever <span class="math inline">\(x&lt;y\)</span> then we will have <span class="math inline">\(f(y|x)=0\)</span> whenever <span class="math inline">\(y&gt;x\)</span>, which doesn’t imply that <span class="math inline">\(f(y)=0\)</span>.</p>
+<p>Thus, the statement is False.</p>
+</section>
+<section class="level3" id="exercise-14-inequalities-for-standard-deviation">
+<h3 class="anchored" data-anchor-id="exercise-14-inequalities-for-standard-deviation">Exercise 14: Inequalities for Standard Deviation</h3>
+<p>Show that for any <span class="math inline">\(X, Y\)</span> with finite second moment <span class="math inline">\((sd(X) - sd(Y))^2 \leq var(X+Y) \leq (sd(X) + sd(Y))^2\)</span> with equality if and only if <span class="math inline">\(\rho_{XY} = \pm 1\)</span>. Similarly, <span class="math inline">\(var(Y-X) = var(Y) - var(X)\)</span> if and only if <span class="math inline">\(\rho_{XY} = \frac{sd(X)}{sd(Y)}\)</span>.</p>
+</section>
+<section class="level3" id="solution-14">
+<h3 class="anchored" data-anchor-id="solution-14">Solution 14</h3>
+<p>This exercise involves demonstrating inequalities using the properties of <strong>variance, standard deviation and correlation</strong>.</p>
+<p>First, recall the definition of <strong>variance</strong> of a sum of two random variables: <span class="math inline">\(var(X+Y) = var(X) + var(Y) + 2cov(X,Y)\)</span>.</p>
+<p>Also recall that <strong>covariance</strong> can be written in terms of the correlation coefficient <span class="math inline">\(\rho_{XY}\)</span> and standard deviations: <span class="math inline">\(cov(X,Y) = \rho_{XY} sd(X) sd(Y)\)</span>, where <span class="math inline">\(sd(X) = \sqrt{var(X)}\)</span>. So, <span class="math inline">\(var(X+Y) = var(X) + var(Y) + 2\rho_{XY} sd(X) sd(Y)\)</span>. We also know that the correlation coefficient <span class="math inline">\(\rho_{XY}\)</span> satisfies <span class="math inline">\(-1 \leq \rho_{XY} \leq 1\)</span>.</p>
+<p>Using the above formula for variance and the fact that <span class="math inline">\(|\rho_{XY}| \leq 1\)</span>, we have: <span class="math inline">\(var(X) + var(Y) - 2sd(X)sd(Y) \leq var(X) + var(Y) + 2\rho_{XY}sd(X)sd(Y) \leq var(X) + var(Y) + 2sd(X)sd(Y)\)</span> <span class="math inline">\((\sqrt{var(X)} - \sqrt{var(Y)})^2 \leq var(X+Y) \leq (\sqrt{var(X)} + \sqrt{var(Y)})^2\)</span> <span class="math inline">\((sd(X) - sd(Y))^2 \leq var(X+Y) \leq (sd(X) + sd(Y))^2\)</span>.</p>
+<p>Equality holds on the lower bound if and only if <span class="math inline">\(\rho_{XY} = -1\)</span> and equality holds on the upper bound if and only if <span class="math inline">\(\rho_{XY} = 1\)</span>.</p>
+<p>Now, let’s show the second part: <span class="math inline">\(var(Y-X) = var(Y) + var(-X) + 2 cov(Y,-X)\)</span> <span class="math inline">\(= var(Y) + var(X) - 2 cov(Y,X)\)</span> <span class="math inline">\(= var(Y) + var(X) - 2 \rho_{XY} sd(X)sd(Y)\)</span>. We are looking for conditions where <span class="math inline">\(var(Y-X) = var(Y) - var(X)\)</span>, or equivalently: <span class="math inline">\(var(Y) + var(X) - 2 \rho_{XY} sd(X)sd(Y) = var(Y) - var(X)\)</span> <span class="math inline">\(2 var(X) = 2 \rho_{XY} sd(X)sd(Y)\)</span> <span class="math inline">\(sd(X)^2 = \rho_{XY} sd(X)sd(Y)\)</span>. Assuming that <span class="math inline">\(sd(X) \neq 0\)</span>, this is equivalent to <span class="math inline">\(sd(X) = \rho_{XY} sd(Y)\)</span>, or <span class="math inline">\(\rho_{XY} = \frac{sd(X)}{sd(Y)}\)</span></p>
+</section>
+<section class="level3" id="example-15-stock-market-calculation">
+<h3 class="anchored" data-anchor-id="example-15-stock-market-calculation">Example 15: Stock Market Calculation</h3>
+<p>Stock market again. Calculate <span class="math inline">\(cov(X, Y)\)</span>.</p>
+</section>
+<section class="level3" id="solution-15">
+<h3 class="anchored" data-anchor-id="solution-15">Solution 15</h3>
+<p>This example illustrates how to calculate the <strong>covariance</strong> of two random variables using their joint distribution. From the text we have <span class="math inline">\(E(XY) = \pi_{1,1} - \pi_{-1,1} - \pi_{1,-1} + \pi_{-1,-1} = 1 - 2\pi_{-1,1} - 2\pi_{1,-1}\)</span> <span class="math inline">\(E(X) = 2\pi_{1,-1} + 2\pi_{1,1} - 1\)</span> <span class="math inline">\(E(Y) = 2\pi_{1,1} + 2\pi_{-1,1} - 1\)</span></p>
+<p>The covariance is given by: <span class="math inline">\(cov(X, Y) = E(XY) - E(X)E(Y)\)</span>. <span class="math inline">\(cov(X,Y) = 1 - 2\pi_{-1,1} - 2\pi_{1,-1} - (2\pi_{1,-1} + 2\pi_{1,1} - 1)(2\pi_{1,1} + 2\pi_{-1,1} - 1)\)</span> <span class="math inline">\(=1 - 2\pi_{-1,1} - 2\pi_{1,-1} - (4\pi_{1,-1}\pi_{1,1} + 4\pi_{1,-1}\pi_{-1,1} - 2\pi_{1,-1} + 4\pi_{1,1}^2 + 4\pi_{1,1}\pi_{-1,1} - 2\pi_{1,1} - 2\pi_{1,1} - 2\pi_{-1,1} + 1)\)</span> <span class="math inline">\(=1 - 2\pi_{-1,1} - 2\pi_{1,-1} - 4\pi_{1,-1}\pi_{1,1} - 4\pi_{1,-1}\pi_{-1,1} + 2\pi_{1,-1} - 4\pi_{1,1}^2 - 4\pi_{1,1}\pi_{-1,1} + 2\pi_{1,1} + 2\pi_{1,1} + 2\pi_{-1,1} - 1\)</span> <span class="math inline">\(=- 4\pi_{1,-1}\pi_{1,1} - 4\pi_{1,-1}\pi_{-1,1} - 4\pi_{1,1}^2 - 4\pi_{1,1}\pi_{-1,1} + 4\pi_{1,1}\)</span> <span class="math inline">\(= -4(\pi_{-1,1}\pi_{1,-1} + \pi_{1,1}\pi_{-1,1} + \pi_{1,1}\pi_{1,-1} + \pi_{1,1}(\pi_{1,1} + \pi_{-1,1} + \pi_{1,-1})) + 4\pi_{1,1}\)</span> Note that <span class="math inline">\(\pi_{1,1} + \pi_{-1,1} + \pi_{1,-1} + \pi_{-1,-1}=1\)</span>. Hence, <span class="math inline">\(\pi_{1,1} + \pi_{-1,1} + \pi_{1,-1} = 1 - \pi_{-1,-1}\)</span>. Using this, we have $=-4(<em>{-1,1}</em>{1,-1} + (<em>{-1,1} + </em>{1,-1})<em>{1,1} + </em>{1,1}(1 - <em>{1,1} - </em>{-1,1} - _{1,-1})) $ <span class="math inline">\(=-4(\pi_{-1,1}\pi_{1,-1} + (\pi_{-1,1} + \pi_{1,-1})\pi_{1,1} + \pi_{1,1}(1 - \pi_{1,1})) = -4 (\pi_{-1,1}\pi_{1,-1} + \pi_{1,1} - \pi_{1,1}^2 )\)</span> Since the probabilities are all positive, the covariance is negative. This also can be seen from the fact that the joint probability distribution is decreasing from the top left to the bottom right.</p>
+</section>
+<section class="level3" id="exercise-16-definitions-of-median">
+<h3 class="anchored" data-anchor-id="exercise-16-definitions-of-median">Exercise 16: Definitions of Median</h3>
+<p>Consider the general case where <span class="math inline">\(F_X\)</span> is not necessarily continuous or monotonic. Compare the following definitions of median: <span class="math inline">\(m_1 = \inf\{x : F_X(x) \geq 1/2\}\)</span> <span class="math inline">\(m_2 = \sup\{x : F_X(x) &lt; 1/2\}\)</span> <span class="math inline">\(m_3 = (m_1 + m_2) / 2\)</span> Prove that <span class="math inline">\(m_2 \leq m_3 \leq m_1\)</span>. Under what circumstances are they all equal.</p>
+</section>
+<section class="level3" id="solution-16">
+<h3 class="anchored" data-anchor-id="solution-16">Solution 16</h3>
+<p>This exercise examines the definitions of the <strong>median</strong> when the distribution function is not necessarily continuous or strictly increasing. Let <span class="math inline">\(U=\{x: F_X(x)&gt;1/2\}\)</span> and <span class="math inline">\(L=\{x: F_X(x)&lt;1/2\}\)</span>. We have that <span class="math inline">\(m_1 = \inf\{x : F_X(x) \geq 1/2\}\)</span> and <span class="math inline">\(m_2 = \sup\{x: F_X(x)&lt;1/2\}\)</span>.</p>
+<p>First note that <span class="math inline">\(m_1\)</span> is the smallest value for which the cdf <span class="math inline">\(F_X\)</span> is greater than or equal to 1/2. And <span class="math inline">\(m_2\)</span> is the largest value for which the cdf is less than 1/2. For any <span class="math inline">\(x\in L\)</span> and any <span class="math inline">\(y \in U\)</span>, we have <span class="math inline">\(F_X(x) &lt; F_X(y)\)</span>. This implies that <span class="math inline">\(x&lt;y\)</span>, because <span class="math inline">\(F_X\)</span> is non-decreasing. Thus, all elements in <span class="math inline">\(L\)</span> are smaller than any element in <span class="math inline">\(U\)</span>. Because of this we must have <span class="math inline">\(m_2 \leq m_1\)</span>. Since <span class="math inline">\(m_3 = (m_1+m_2)/2\)</span>, we must have that <span class="math inline">\(m_2 \leq m_3 \leq m_1\)</span>.</p>
+<p>They are equal if <span class="math inline">\(F_X(m_1)=1/2\)</span>. They are also equal if <span class="math inline">\(F_X(x)\)</span> is continuous and monotonically increasing (that is, strictly increasing). The equality holds when there is a unique value for the median. When <span class="math inline">\(F_X(x)\)</span> is continuous, we will have <span class="math inline">\(m_1 = m_2 = m_3\)</span>.</p>
+</section>
+<section class="level3" id="exercise-17-expected-value-and-quantile-function">
+<h3 class="anchored" data-anchor-id="exercise-17-expected-value-and-quantile-function">Exercise 17: Expected Value and Quantile Function</h3>
+<p>Suppose that <span class="math inline">\(X \geq 0\)</span> is continuously distributed with strictly increasing cdf. Prove that for any <span class="math inline">\(\theta &gt; 0\)</span>, <span class="math inline">\(E(X^{\theta}) = \int_0^1 Q_X(\alpha)^{\theta} d\alpha\)</span>.</p>
+</section>
+<section class="level3" id="solution-17">
+<h3 class="anchored" data-anchor-id="solution-17">Solution 17</h3>
+<p>This exercise aims to establish a relationship between the <strong>expected value</strong> of a transformation of a random variable and its <strong>quantile function</strong>. Recall that the quantile function <span class="math inline">\(Q_X(\alpha)\)</span> is the inverse of the cdf, <span class="math inline">\(F_X\)</span>, i.e., <span class="math inline">\(Q_X(\alpha) = F_X^{-1}(\alpha)\)</span>. We start with the definition of the expected value for a non-negative continuous random variable: <span class="math inline">\(E(X^{\theta}) = \int_0^{\infty} x^{\theta} f_X(x)dx\)</span>. By making the change of variables <span class="math inline">\(\alpha = F_X(x)\)</span> we have that <span class="math inline">\(d\alpha=f_X(x)dx\)</span>, and <span class="math inline">\(x = F_X^{-1}(\alpha) = Q_X(\alpha)\)</span>. Also when <span class="math inline">\(x=0\)</span>, <span class="math inline">\(\alpha = 0\)</span> and when <span class="math inline">\(x=\infty\)</span>, <span class="math inline">\(\alpha=1\)</span>. Therefore: <span class="math inline">\(E(X^{\theta}) = \int_{0}^{1} (Q_X(\alpha))^{\theta} d\alpha\)</span>. This is the formula we wanted to prove.</p>
+<p>This result is useful since it shows the relationship between the expected value and the quantile function which is often easier to obtain than the probability density function itself. ### Exercise 18: Transformation of a Random Variable Let <span class="math inline">\(x = F_X^{-1}(\alpha) = Q_X(\alpha)\)</span>, where <span class="math inline">\(F_X(x)\)</span> is the cdf, and <span class="math inline">\(f_X(x)dx = d\alpha\)</span>. Show that <span class="math inline">\(\int_0^{\infty} x^{\theta} f_X(x) dx = \int_0^1 Q_X(\alpha)^{\theta}d\alpha\)</span>. ### Solution 18 This is a restatement of the result of the previous exercise. We start with the definition of the expected value: <span class="math inline">\(\int_0^{\infty} x^{\theta} f_X(x) dx\)</span>. Let <span class="math inline">\(\alpha=F_X(x)\)</span>, so <span class="math inline">\(x=F_X^{-1}(\alpha)\)</span>. Hence, <span class="math inline">\(dx = \frac{1}{f_X(x)}d\alpha\)</span>. We also know that <span class="math inline">\(Q_X(\alpha) = F_X^{-1}(\alpha)\)</span>, which is the quantile function. The integral becomes <span class="math inline">\(\int_0^1 (F_X^{-1}(\alpha))^\theta f_X(F_X^{-1}(\alpha)) \frac{1}{f_X(F_X^{-1}(\alpha))} d\alpha = \int_0^1 Q_X(\alpha)^{\theta}d\alpha\)</span>.</p>
+</section>
+<section class="level3" id="exercise-19-cdf-and-pdf-of-piecewise-linear-combination">
+<h3 class="anchored" data-anchor-id="exercise-19-cdf-and-pdf-of-piecewise-linear-combination">Exercise 19: CDF and PDF of Piecewise Linear Combination</h3>
+<p>Calculate the cdf and pdf of the random variable <span class="math inline">\(Y\)</span> which is a piecewise linear combination of X, i.e., <span class="math inline">\(Y = \begin{cases} a_0 + b_0X &amp; X \leq x_1 \\ a_1 + b_1X &amp; x_1 &lt; X \leq x_2 \\ \vdots \\ a_n + b_nX &amp; x_n \leq X \end{cases}\)</span> for constants <span class="math inline">\((a_j, b_j)\)</span>, <span class="math inline">\(j = 0, 1, ..., n\)</span>, where <span class="math inline">\(-\infty &lt; x_1 &lt; \dots &lt; x_n &lt; \infty\)</span>.</p>
+</section>
+<section class="level3" id="solution-19">
+<h3 class="anchored" data-anchor-id="solution-19">Solution 19</h3>
+<p>This exercise requires applying the rules of transformations of random variables to find the pdf and cdf of a piecewise linear combination. The cdf of <span class="math inline">\(Y\)</span> will be: <span class="math inline">\(F_Y(y) = P(Y \leq y) = P(a_j + b_j X \leq y \mid x_{j-1} &lt; X \leq x_j)\)</span>.</p>
+<p>Let’s denote <span class="math inline">\(F_X\)</span> and <span class="math inline">\(f_X\)</span> the cdf and pdf of <span class="math inline">\(X\)</span>, respectively. We have: <span class="math inline">\(P(a_j + b_jX \leq y) = P(X \leq \frac{y - a_j}{b_j})\)</span> if <span class="math inline">\(b_j&gt;0\)</span>. If <span class="math inline">\(b_j &lt; 0\)</span> then we have <span class="math inline">\(P(X \geq \frac{y - a_j}{b_j})\)</span> The cdf of <span class="math inline">\(Y\)</span> is, for any <span class="math inline">\(x\)</span>, <span class="math inline">\(F_Y(y) = \sum_{j=0}^n P(Y \leq y, x_{j-1} &lt; X \leq x_j)\)</span> <span class="math inline">\(F_Y(y) = \sum_{j=0}^n P(a_j + b_j X \leq y, x_{j-1} &lt; X \leq x_j)\)</span></p>
+<p>So for any <span class="math inline">\(y\)</span> and <span class="math inline">\(j\)</span>, if <span class="math inline">\(b_j&gt;0\)</span> <span class="math inline">\(P(a_j + b_j X \leq y, x_{j-1} &lt; X \leq x_j) = P(X \leq \frac{y-a_j}{b_j}, x_{j-1} &lt; X \leq x_j)\)</span>. If <span class="math inline">\(\frac{y-a_j}{b_j} \leq x_{j-1}\)</span> then this probability is zero. If <span class="math inline">\(\frac{y-a_j}{b_j} \geq x_j\)</span> then this probability is <span class="math inline">\(F_X(x_j) - F_X(x_{j-1})\)</span>. If <span class="math inline">\(x_{j-1} &lt; \frac{y-a_j}{b_j} &lt; x_j\)</span> then the probability is <span class="math inline">\(F_X(\frac{y-a_j}{b_j}) - F_X(x_{j-1})\)</span></p>
+<p>if <span class="math inline">\(b_j &lt; 0\)</span> <span class="math inline">\(P(a_j + b_j X \leq y, x_{j-1} &lt; X \leq x_j) = P(X \geq \frac{y-a_j}{b_j}, x_{j-1} &lt; X \leq x_j)\)</span> If <span class="math inline">\(\frac{y-a_j}{b_j} \leq x_{j-1}\)</span> then this probability is <span class="math inline">\(F_X(x_j) - F_X(x_{j-1})\)</span> If <span class="math inline">\(\frac{y-a_j}{b_j} \geq x_j\)</span> then this probability is zero If <span class="math inline">\(x_{j-1} &lt; \frac{y-a_j}{b_j} &lt; x_j\)</span> then this probability is <span class="math inline">\(F_X(x_j) - F_X(\frac{y-a_j}{b_j})\)</span>.</p>
+<p>To derive the pdf, one would have to take the derivative of <span class="math inline">\(F_Y(y)\)</span>, noting that at the discontinuity points <span class="math inline">\(x_j\)</span>, the pdf may not be well defined. Also when <span class="math inline">\(b_j = 0\)</span>, the random variable is a constant at that region. The general form for the pdf will be</p>
+<p><span class="math inline">\(f_Y(y) = \sum_{j=0}^n \frac{1}{|b_j|} f_X(\frac{y-a_j}{b_j}) 1(x_{j-1} &lt; \frac{y-a_j}{b_j} \leq x_j)\)</span>.</p>
+</section>
+<section class="level3" id="exercise-20-cdf-and-pdf-of-transformed-random-vectors">
+<h3 class="anchored" data-anchor-id="exercise-20-cdf-and-pdf-of-transformed-random-vectors">Exercise 20: CDF and PDF of Transformed Random Vectors</h3>
+<p>Suppose that <span class="math inline">\(X = (U, V)\)</span> and <span class="math inline">\(Y = (V, W)\)</span>, where <span class="math inline">\(U, V, W\)</span> are mutually independent continuous random variables with cdfs <span class="math inline">\(F_j, j = U, V, W\)</span>. Calculate the cdf and pdf of the random vector <span class="math inline">\((X, Y)\)</span>.</p>
+</section>
+<section class="level3" id="solution-20">
+<h3 class="anchored" data-anchor-id="solution-20">Solution 20</h3>
+<p>This exercise asks to find the cdf and pdf of a transformation of random vectors. We have that X = (U, V) and Y = (V, W). The cdf of the random vector <span class="math inline">\((X, Y)\)</span> is defined as <span class="math inline">\(F_{X, Y}(x,y) = Pr(X \leq x, Y \leq y)\)</span> $ = Pr((U, V) (x_1, x_2), (V, W) (y_1, y_2))$ where <span class="math inline">\((U, V) \leq (x_1, x_2)\)</span> means <span class="math inline">\(U \leq x_1\)</span> and <span class="math inline">\(V \leq x_2\)</span> and where <span class="math inline">\((V, W) \leq (y_1, y_2)\)</span> means <span class="math inline">\(V \leq y_1\)</span> and <span class="math inline">\(W \leq y_2\)</span>. Therefore <span class="math inline">\(F_{X,Y}(x, y) = Pr(U \leq x_1, V \leq x_2, V \leq y_1, W \leq y_2)\)</span>. Since <span class="math inline">\(U, V, W\)</span> are mutually independent, we have <span class="math inline">\(F_{X,Y}(x,y) = Pr(U \leq x_1) Pr(V \leq \min\{x_2, y_1\}) Pr(W \leq y_2)\)</span> <span class="math inline">\(F_{X,Y}(x,y) = F_U(x_1) F_V(\min\{x_2, y_1\}) F_W(y_2)\)</span> To find the pdf, we have to take the mixed partial derivatives: <span class="math inline">\(f_{X,Y}(x,y) = \frac{\partial^4}{\partial x_1 \partial x_2 \partial y_1 \partial y_2} F_{X,Y}(x,y)\)</span>. Note that <span class="math inline">\(F_V(\min\{x_2, y_1\})\)</span> is not differentiable at <span class="math inline">\(x_2=y_1\)</span>, so we have that this random variable is <strong>degenerate</strong> on <span class="math inline">\(R^4\)</span>, which means that the density is zero everywhere. This comes from the fact that <span class="math inline">\(V\)</span> must be equal in the two conditions, which is a set of zero probability for continuous random variables.</p>
+</section>
+<section class="level3" id="exercise-21-transformation-of-uniform-random-variables">
+<h3 class="anchored" data-anchor-id="exercise-21-transformation-of-uniform-random-variables">Exercise 21: Transformation of Uniform Random Variables</h3>
+<p>Suppose that <span class="math inline">\(u_1, u_2\)</span> are uniformly distributed random variables on <span class="math inline">\([0, 1]\)</span> and let <span class="math inline">\(X = \cos(2\pi u_1) \sqrt{-2 \ln(u_2)}\)</span> <span class="math inline">\(Y = \sin(2\pi u_1) \sqrt{-2 \ln(u_2)}\)</span> Show that <span class="math inline">\(X, Y\)</span> are mutually independent standard normal random variables.</p>
+</section>
+<section class="level3" id="solution-21">
+<h3 class="anchored" data-anchor-id="solution-21">Solution 21</h3>
+<p>This problem is about showing that a specific transformation of two uniform random variables produces <strong>standard normal</strong> random variables. This is known as the <strong>Box-Muller transformation</strong>.</p>
+<p>Let’s first find the joint distribution of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(X^2 + Y^2 = \cos^2(2\pi u_1) (-2 \ln u_2) + \sin^2(2\pi u_1) (-2 \ln u_2) = -2\ln u_2\)</span> <span class="math inline">\(\frac{Y}{X} = \frac{\sin(2\pi u_1)}{\cos(2\pi u_1)} = \tan(2\pi u_1)\)</span> <span class="math inline">\(u_1 = \frac{1}{2\pi} \arctan\left(\frac{Y}{X}\right)\)</span> <span class="math inline">\(u_2 = \exp\left(-\frac{X^2+Y^2}{2}\right)\)</span>. The Jacobian is <span class="math inline">\(\begin{vmatrix} \frac{\partial u_1}{\partial x} &amp; \frac{\partial u_1}{\partial y} \\ \frac{\partial u_2}{\partial x} &amp; \frac{\partial u_2}{\partial y} \end{vmatrix}
+= \begin{vmatrix} -\frac{y}{2\pi(x^2+y^2)} &amp; \frac{x}{2\pi(x^2+y^2)} \\ -x\exp\left(-\frac{x^2+y^2}{2}\right) &amp; -y\exp\left(-\frac{x^2+y^2}{2}\right) \end{vmatrix}
+= \frac{xy}{2\pi(x^2+y^2)} \exp\left(-\frac{x^2+y^2}{2}\right) + \frac{xy}{2\pi(x^2+y^2)}\exp\left(-\frac{x^2+y^2}{2}\right)\)</span> <span class="math inline">\(= \frac{1}{2\pi}\exp\left(-\frac{x^2+y^2}{2}\right)\)</span> The joint density of <span class="math inline">\(X,Y\)</span> is: <span class="math inline">\(f_{X,Y}(x,y) = \frac{1}{2\pi}\exp\left(-\frac{x^2+y^2}{2}\right) = \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right) \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{y^2}{2}\right)\)</span> This is the product of two normal densities with mean 0 and standard deviation 1, which proves that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent standard normal random variables.</p>
+</section>
+<section class="level3" id="exercise-22-validity-of-a-cdf">
+<h3 class="anchored" data-anchor-id="exercise-22-validity-of-a-cdf">Exercise 22: Validity of a CDF</h3>
+<p>Consider the following function on <span class="math inline">\([0, 1] \times [0, 1]\)</span>: <span class="math inline">\(F(x, y) = \frac{x + y}{2}\)</span> Is this a valid cdf? Derive the marginal cdfs and pdfs. Can you derive the joint pdf?</p>
+</section>
+<section class="level3" id="solution-22">
+<h3 class="anchored" data-anchor-id="solution-22">Solution 22</h3>
+<p>This exercise verifies the validity of a proposed joint cdf and then calculates marginal cdfs and pdfs.</p>
+<p>A valid joint cdf must satisfy the following properties: 1. <span class="math inline">\(F(x, y)\)</span> is non-decreasing in both x and y. 2. <span class="math inline">\(\lim_{x \rightarrow -\infty} F(x, y) = 0\)</span> and <span class="math inline">\(\lim_{y \rightarrow -\infty} F(x, y) = 0\)</span>. 3. <span class="math inline">\(\lim_{x \rightarrow \infty} F(x, y) = 1\)</span> and <span class="math inline">\(\lim_{y \rightarrow \infty} F(x, y) = 1\)</span>. 4. <span class="math inline">\(F(x, y)\)</span> is right-continuous in both x and y. 5. <span class="math inline">\(F(x, y)\)</span> must satisfy that for any <span class="math inline">\(x_2 \geq x_1\)</span>, <span class="math inline">\(y_2 \geq y_1\)</span> the probability of the rectangle is positive, i.e. <span class="math inline">\(P((X, Y) \in (x_1, x_2] \times (y_1, y_2]) = F(x_2, y_2) - F(x_1, y_2) - F(x_2, y_1) + F(x_1, y_1) \geq 0\)</span> In our case <span class="math inline">\(F(x, y) = \frac{x+y}{2}\)</span>. Let’s verify the properties.</p>
+<ol type="1">
+<li><p><strong>Non-decreasing:</strong> The function is non-decreasing in both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> because as either <span class="math inline">\(x\)</span> or <span class="math inline">\(y\)</span> increases, <span class="math inline">\(F(x, y)\)</span> also increases.</p></li>
+<li><p><strong>Limit at <span class="math inline">\(-\infty\)</span>:</strong> <span class="math inline">\(F(x, y)\)</span> is only defined on <span class="math inline">\([0, 1] \times [0, 1]\)</span>. So the limit at <span class="math inline">\(-\infty\)</span> is not well defined.</p></li>
+<li><p><strong>Limit at <span class="math inline">\(\infty\)</span>:</strong> <span class="math inline">\(F(x, y)\)</span> is only defined on <span class="math inline">\([0, 1] \times [0, 1]\)</span>. When we take the limit at <span class="math inline">\(\infty\)</span> we need to consider points like <span class="math inline">\((1,1)\)</span> in the limit. We have that <span class="math inline">\(F(1,1)=1\)</span> but in general it must hold that the limits at <span class="math inline">\(\infty\)</span> must hold independently, not jointly. So if we fix <span class="math inline">\(x=1\)</span>, then we need that <span class="math inline">\(\lim_{y \rightarrow \infty} F(1,y) = 1\)</span> which is not true since we are bounded by the definition of the function, so <span class="math inline">\(F(1,1) = 1\)</span>. The same holds when <span class="math inline">\(y=1\)</span> is fixed and the limit of <span class="math inline">\(x \rightarrow \infty\)</span>.</p></li>
+<li><p><strong>Right-continuity:</strong> The function is continuous everywhere so it is right-continuous in both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>.</p></li>
+<li><p><strong>Rectangle probability positivity</strong>: We have <span class="math inline">\(F(x_2, y_2) - F(x_1, y_2) - F(x_2, y_1) + F(x_1, y_1) = \frac{x_2+y_2}{2} - \frac{x_1+y_2}{2} - \frac{x_2+y_1}{2} + \frac{x_1+y_1}{2} = 0\)</span> which means that property 5 is not satisfied.</p></li>
+</ol>
+<p>Since the second, third and fifth conditions are not satisfied, <span class="math inline">\(F(x,y)\)</span> is not a valid joint cdf. Let’s calculate the marginal cdfs (even though it is not a valid cdf, we can still perform the calculations). The marginal cdf of X is defined as <span class="math inline">\(F_X(x) = \lim_{y \rightarrow 1} F(x, y)\)</span>. However since it is not a cdf, we can just fix the upper bound for <span class="math inline">\(y\)</span>, so <span class="math inline">\(F_X(x) = F(x,1) = \frac{x+1}{2}\)</span> for <span class="math inline">\(0 \leq x \leq 1\)</span>. Similarly, the marginal cdf of <span class="math inline">\(Y\)</span> is <span class="math inline">\(F_Y(y) = F(1,y) = \frac{y+1}{2}\)</span> for <span class="math inline">\(0 \leq y \leq 1\)</span>. To calculate the pdf, we derive the marginal cdfs: <span class="math inline">\(f_X(x) = \frac{dF_X(x)}{dx} = \frac{1}{2}\)</span> for <span class="math inline">\(0 \leq x \leq 1\)</span> <span class="math inline">\(f_Y(y) = \frac{dF_Y(y)}{dy} = \frac{1}{2}\)</span> for <span class="math inline">\(0 \leq y \leq 1\)</span> The joint pdf should be the mixed second order derivative of the joint cdf. However since the joint cdf is not a valid cdf, the joint pdf does not exist. But we can do the calculation anyway for illustrative purposes <span class="math inline">\(f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y) = \frac{\partial^2}{\partial x \partial y} \frac{x+y}{2} = \frac{\partial}{\partial x} \frac{1}{2} = 0\)</span>. Note that this also violates the property that the joint pdf must integrate to 1, since <span class="math inline">\(\int_0^1 \int_0^1 0dxdy=0\)</span>. In summary, <span class="math inline">\(F(x,y)\)</span> is not a valid joint cdf.</p>
+</section>
+<section class="level3" id="exercise-23-true-false-explain">
+<h3 class="anchored" data-anchor-id="exercise-23-true-false-explain">Exercise 23: True, False, Explain</h3>
+<p>True, False, Explain: (a) If two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> satisfy <span class="math inline">\(E(X|Y) = 0\)</span> and <span class="math inline">\(E(Y|X) = 0\)</span> almost surely, they are mutually independent. (b) Two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> with <span class="math inline">\(P(A) = 1\)</span> and <span class="math inline">\(P(B) = 1\)</span> must be mutually independent. (c) An empirical cumulative distribution function is discontinuous from the left.</p>
+</section>
+<section class="level3" id="solution-23">
+<h3 class="anchored" data-anchor-id="solution-23">Solution 23</h3>
+<p>This exercise tests the understanding of independence, conditional expectation and empirical cdfs.</p>
+<p><strong>(a) <span class="math inline">\(E(X|Y) = 0\)</span> and <span class="math inline">\(E(Y|X) = 0\)</span> imply independence:</strong> This statement is False. While it is true that if X and Y are independent, then <span class="math inline">\(E(X|Y) = E(X)\)</span> and <span class="math inline">\(E(Y|X) = E(Y)\)</span>, and if in addition <span class="math inline">\(E(X)=0\)</span> and <span class="math inline">\(E(Y)=0\)</span> then <span class="math inline">\(E(X|Y)=0\)</span> and <span class="math inline">\(E(Y|X)=0\)</span>, the converse is not true in general. The conditions <span class="math inline">\(E(X|Y) = 0\)</span> and <span class="math inline">\(E(Y|X) = 0\)</span> only imply that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>uncorrelated</strong>, not independent. For independence, we need that <span class="math inline">\(f(x,y) = f_X(x)f_Y(y)\)</span>. A counterexample would be the case where <span class="math inline">\(Y\)</span> is a standard normal random variable and <span class="math inline">\(X = Y^2 - 1\)</span>, in which case it is easy to check that <span class="math inline">\(E(X|Y)=0\)</span> and <span class="math inline">\(E(Y|X)=0\)</span>, but they are not independent since <span class="math inline">\(X\)</span> is a function of <span class="math inline">\(Y\)</span>.</p>
+<p><strong>(b) Events with probability 1 are independent:</strong> This statement is True. If <span class="math inline">\(P(A)=1\)</span> and <span class="math inline">\(P(B)=1\)</span>, then <span class="math inline">\(P(A\cap B) = 1\)</span> because it is always the case that <span class="math inline">\(P(A \cap B) \geq P(A)+P(B)-1\)</span>. For independence, we require that <span class="math inline">\(P(A \cap B) = P(A)P(B)\)</span>, which is true here because <span class="math inline">\(1=1 \times 1\)</span>.</p>
+<p><strong>(c) Empirical cdf is discontinuous from the left:</strong> This statement is False. An empirical cdf is a step function that is right-continuous. The empirical cdf is defined as <span class="math inline">\(\hat{F}(x) = \frac{1}{n} \sum_{i=1}^n \mathbb{1}(X_i \leq x)\)</span>. This function is right-continuous because the indicator function <span class="math inline">\(\mathbb{1}\)</span> is right-continuous. This means that the limit from the right of any point <span class="math inline">\(x\)</span> is equal to the value at that point. For the limit from the left we have that the limit does not take into account the observation at <span class="math inline">\(x\)</span>.</p>
+</section>
+<section class="level3" id="exercise-24-football-tournament">
+<h3 class="anchored" data-anchor-id="exercise-24-football-tournament">Exercise 24: Football Tournament</h3>
+<p>Suppose that there are three football teams: Internazionale, Manchester United, and Real Madrid. The teams are to play a “round-robin” tournament in which first Internazionale plays Manchester United, then Manchester United plays Real Madrid, then Real Madrid plays Internazionale and then Internazionale plays Manchester United again and so on. The tournament concludes only when one team has won two matches. (i) Suppose that the teams are equally matched so that the probability of victory in any given game is equal to 1/2 (there are no draws allowed, result is decided by toss of the coin). Show that the probability of Real Madrid winning the tournament is only 1/4 compared with 6/16 for the two other teams. (ii) Suppose that Real Madrid decides not to take part because the odds are against it, so that the tournament is now played just between Internazionale and Manchester United. The tournament organizers wanting to maximize revenue now allow draws between teams. Suppose that the probability of Internazionale beating Manchester United is <span class="math inline">\(\pi_1\)</span> in any one game, while the probability of Manchester United beating Internazionale in any one game is <span class="math inline">\(\pi_2\)</span>. You are to calculate the probability that Internazionale wins the tournament, which is denoted by <span class="math inline">\(p_{0,0}\)</span>. Proceed by the following steps. (a) First, suppose that Manchester United has won one match and that Internazionale has won one match, and let <span class="math inline">\(p_{1,1}\)</span> be the probability that Internazionale wins the tournament from this point. Calculate <span class="math inline">\(p_{1,1}\)</span>. (b) Second, suppose that Internazionale has won one match and Manchester United has won none. Let the probability that Internazionale wins the tournament from this point be called <span class="math inline">\(p_{1,0}\)</span>. Derive an expression for <span class="math inline">\(p_{1,0}\)</span>. (c) Complete the argument to obtain an expression for <span class="math inline">\(p_{0,0}\)</span>.</p>
+</section>
+<section class="level3" id="solution-24">
+<h3 class="anchored" data-anchor-id="solution-24">Solution 24</h3>
+<p>This exercise requires us to calculate probabilities in a sequential tournament.</p>
+<p><strong>(i) Three teams equally matched:</strong> The maximum number of games that can be played is four: IvM, MvR, RvI, and IvM. Real Madrid (R) wins the tournament only if it wins the second (MvR) and third (RvI) game. In the fourth game R will not play.</p>
+<p>So let’s go game by game: Game 1 (IvM): any result is ok. Game 2 (MvR): must be won by R, <span class="math inline">\(P(win) = 1/2\)</span>. Game 3 (RvI): must be won by R, <span class="math inline">\(P(win) = 1/2\)</span>.</p>
+<p>Therefore, the probability of R winning the tournament is <span class="math inline">\(\frac{1}{2} \times \frac{1}{2} = \frac{1}{4}\)</span>. Now let’s calculate the probability that I wins: Game 1 (IvM): I wins with probability <span class="math inline">\(1/2\)</span>, after that I must win the fourth game and R must lose the second game (if R wins the second game, then R wins the tournament). Game 1 (IvM): M wins with probability <span class="math inline">\(1/2\)</span>, after that M must lose the second game, and R must lose game 3. So the possible combinations are I wins game 1 and 4 and M loses game 2, which has a probability of <span class="math inline">\(1/2 \times 1/2 \times 1/2 = 1/8\)</span>. M wins game 1, and R loses games 2 and 3, and M loses game 4. This case can occur in two different ways since M can lose the fourth game after losing two games in a row or winning a first game then losing the second two games. So we have <span class="math inline">\(1/2 \times 1/2 \times 1/2 = 1/8\)</span>, and <span class="math inline">\(1/2 \times 1/2 \times 1/2 = 1/8\)</span>. R loses games 2 and 3. In the first game M can win with probability 1/2 and M can lose with probability 1/2. If M wins then we have a sequence of ML,LR and the next game must be won by I. If I wins then we have a sequence of IL, LR and the next game must be won by I. M wins game 1, and R loses games 2 and 3, and I loses game 4, I must lose games 1, and R must lose games 2 and 3 and I must win game 4. This has probability of <span class="math inline">\(1/2 \times 1/2 \times 1/2 = 1/8\)</span>. I wins game 1, R loses game 2, R loses game 3 and I wins game 4. <span class="math inline">\(1/2 \times 1/2 \times 1/2 = 1/8\)</span>. Therefore, the probability that I wins is <span class="math inline">\(1/8+1/8+1/8=3/8 = 6/16\)</span>. Since the teams are symmetric, the probability that M wins is also <span class="math inline">\(6/16\)</span>. The probability of M winning is the same as the probability of I winning. So M must win game 1, and R must lose games 2 and 3. Then M must win the fourth game. Thus we have probability of <span class="math inline">\(1/2\times 1/2 \times 1/2 = 1/8\)</span>, but M could also win the first game and the fourth, and this case can happen if R loses the second game and I loses the third, or if M loses the first game and I loses the second game. This occurs with probability 1/8 + 1/8 = 1/4. But then M could also win the first game and then the second game and in this case M does not play the fourth game, so we are missing something here. The problem comes from the fact that in the case where I and M win the tournament, there is no fourth game being played if one of them wins both the first game and the fourth game. The easier way to calculate is that R wins if and only if it wins game 2 and 3, so the probability of R winning is 1/4. The other two teams must win with probability (1-1/4)/2 = 3/8. Since 3/8 = 6/16, then the claim is true. <strong>(ii) Two teams with draws allowed:</strong></p>
+<p><strong>(a)</strong> <span class="math inline">\(p_{1,1}\)</span> represents the probability that I wins when both teams have one win. After they have both won one match the tournament will be won by the team that wins the next match. So <span class="math inline">\(p_{1,1}\)</span> represents the probability that I wins given that I and M have won a match already. This means that I must win the next match and the probability of I winning the next match is <span class="math inline">\(p_{1,1} = \frac{\pi_1}{\pi_1+\pi_2}\)</span>. <strong>(b)</strong> <span class="math inline">\(p_{1,0}\)</span> represents the probability that I wins when I has won one match and M has won none. After this we must have that I wins the next match and we return to <span class="math inline">\(p_{1,1}\)</span>. Or M wins the next match, in which case we go to <span class="math inline">\(p_{1,1}\)</span> with probability <span class="math inline">\(\pi_2\)</span> or we go to <span class="math inline">\(p_{1,0}\)</span> with probability <span class="math inline">\((1-\pi_1-\pi_2)\)</span>. So: <span class="math inline">\(p_{1,0} = \pi_1 + \pi_2 p_{1,1} + (1 - \pi_1 - \pi_2) p_{1,0}\)</span> <span class="math inline">\(p_{1,0}(1 - (1 - \pi_1 - \pi_2)) = \pi_1 + \pi_2 p_{1,1}\)</span> <span class="math inline">\(p_{1,0} = \frac{\pi_1 + \pi_2 p_{1,1}}{\pi_1 + \pi_2}\)</span></p>
+<p><span class="math inline">\(p_{1,0} = \frac{\pi_1 + \frac{\pi_2 \pi_1}{\pi_1 + \pi_2}}{\pi_1 + \pi_2} = \frac{\pi_1^2 + \pi_1 \pi_2 + \pi_1\pi_2}{(\pi_1+\pi_2)^2} = \frac{\pi_1(\pi_1 + 2 \pi_2)}{(\pi_1+\pi_2)^2}\)</span> <strong>(c)</strong> <span class="math inline">\(p_{0,0}\)</span> represents the probability that I wins given that neither team has won a match. <span class="math inline">\(p_{0,0} = \pi_1 p_{1,0} + \pi_2 p_{0,1} + (1-\pi_1-\pi_2) p_{0,0}\)</span> By symmetry, <span class="math inline">\(p_{0,1}\)</span> represents the probability that I wins given that I has lost one match and M has not won any matches. This probability can be obtained by exchanging <span class="math inline">\(\pi_1\)</span> with <span class="math inline">\(\pi_2\)</span>, i.e. <span class="math inline">\(p_{0,1} = \frac{\pi_2(\pi_2 + 2\pi_1)}{(\pi_1 + \pi_2)^2}\)</span> Hence <span class="math inline">\(p_{0,0}(1 - (1-\pi_1-\pi_2)) = \pi_1 p_{1,0} + \pi_2 p_{0,1}\)</span> <span class="math inline">\(p_{0,0} = \frac{\pi_1 p_{1,0} + \pi_2 p_{0,1}}{\pi_1+\pi_2} = \frac{\pi_1^2(\pi_1+2\pi_2) + \pi_2^2 (\pi_2+2\pi_1)}{(\pi_1+\pi_2)^3}\)</span></p>
+</section>
+<section class="level3" id="exercise-25-true-ability-of-a-student">
+<h3 class="anchored" data-anchor-id="exercise-25-true-ability-of-a-student">Exercise 25: True Ability of a Student</h3>
+<p>Suppose that the true ability of a student is a random variable <span class="math inline">\(X\)</span> and it is distributed as <span class="math inline">\(N(\mu, \sigma^2)\)</span> in the population, where <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma^2\)</span> are unknown parameters. Suppose however that the marking process records only <span class="math inline">\(Y\)</span>, where <span class="math inline">\(Y = X + u + v + w\)</span>, where <span class="math inline">\(u, v, w\)</span> are i.i.d mutually independent standard normal random variables representing the measurement errors introduced respectively by marker 1, marker 2, and marker 3. (i) Derive an expression for the (population) best linear predictor of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y\)</span>, which is denoted by <span class="math inline">\(E_L(X|Y)\)</span>. (ii) Suppose we have a sample of size <span class="math inline">\(n\)</span> student scores <span class="math inline">\(\{Y_i, i = 1, \dots, n\}\)</span> that have been marked by the three markers. The University has proposed to replace the raw score of student <span class="math inline">\(i\)</span>, <span class="math inline">\(Y_i\)</span>, by <span class="math inline">\(E_L(X_i|Y_i)\)</span>, or at least some estimate of this quantity. Explain how we could make their policy operational, i.e., how could we estimate <span class="math inline">\(E_L(X_i|Y_i)\)</span> for student <span class="math inline">\(i\)</span>. Which students would prefer this performance measure over <span class="math inline">\(Y_i\)</span>? (iii) How would we test the hypothesis that <span class="math inline">\(\mu = 50\)</span> versus the alternative hypothesis that <span class="math inline">\(\mu &lt; 50\)</span>.</p>
+</section>
+<section class="level3" id="solution-25">
+<h3 class="anchored" data-anchor-id="solution-25">Solution 25</h3>
+<p>This exercise explores linear prediction and statistical inference in the context of measurement error.</p>
+<p><strong>(i) Best Linear Predictor:</strong> The best linear predictor <span class="math inline">\(E_L(X|Y)\)</span> of X given Y is a linear function of Y: <span class="math inline">\(E_L(X|Y) = \alpha + \beta Y\)</span> where <span class="math inline">\(\beta = \frac{cov(X, Y)}{var(Y)}\)</span> and <span class="math inline">\(\alpha = E(X) - \beta E(Y)\)</span></p>
+<p>First note that <span class="math inline">\(E(Y) = E(X+u+v+w) = E(X) + E(u) + E(v) + E(w) = E(X) = \mu\)</span> since <span class="math inline">\(u\)</span>, <span class="math inline">\(v\)</span>, and <span class="math inline">\(w\)</span> have mean 0.</p>
+<p>The variance of Y is: <span class="math inline">\(var(Y) = var(X+u+v+w) = var(X)+var(u)+var(v)+var(w)\)</span> Because <span class="math inline">\(u,v,w\)</span> are i.i.d standard normal random variables, we have that their variances are all equal to 1 and hence: <span class="math inline">\(var(Y) = \sigma^2 + 3\)</span>. The covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is: <span class="math inline">\(cov(X, Y) = cov(X, X + u + v + w) = cov(X,X) + cov(X,u) + cov(X,v) + cov(X,w) = var(X) = \sigma^2\)</span> since <span class="math inline">\(X\)</span>, <span class="math inline">\(u\)</span>, <span class="math inline">\(v\)</span> and <span class="math inline">\(w\)</span> are independent.</p>
+<p>Therefore <span class="math inline">\(\beta = \frac{cov(X, Y)}{var(Y)} = \frac{\sigma^2}{\sigma^2 + 3}\)</span>. <span class="math inline">\(\alpha = E(X) - \beta E(Y) = \mu - \beta \mu = \mu(1-\beta) = \mu(1-\frac{\sigma^2}{\sigma^2 + 3}) = \frac{3\mu}{\sigma^2+3}\)</span></p>
+<p>So the best linear predictor is <span class="math inline">\(E_L(X|Y) = \alpha + \beta Y = \frac{3\mu}{\sigma^2 + 3} + \frac{\sigma^2}{\sigma^2+3}Y\)</span>.</p>
+<p><strong>(ii) Operationalizing the policy and which students would prefer this measure:</strong> The university is proposing to use the best linear predictor instead of the raw scores. The problem is that we do not know <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span>. To implement this policy we need to estimate these two parameters from the sample of scores. We can do that by estimating the sample mean and the sample variance of the Y scores. Let’s call the estimates <span class="math inline">\(\hat{\mu}\)</span> and <span class="math inline">\(\hat{\sigma}^2\)</span>. Then the estimate of the best linear predictor will be <span class="math inline">\(\hat{E_L(X_i|Y_i)} = \frac{3\hat{\mu}}{\hat{\sigma}^2 + 3} + \frac{\hat{\sigma}^2}{\hat{\sigma}^2+3}Y_i\)</span>. The students that would prefer this measure are those that would be penalized the most by the error term, i.e. those with a higher value of Y. So if <span class="math inline">\(Y_i &gt; \mu\)</span> then the predicted value is lower than the original value and if <span class="math inline">\(Y_i &lt; \mu\)</span> then the predicted value is higher than the original value.</p>
+<p><strong>(iii) Hypothesis Testing:</strong> We want to test <span class="math inline">\(H_0 : \mu = 50\)</span> versus <span class="math inline">\(H_1 : \mu &lt; 50\)</span>. Since <span class="math inline">\(Y \sim N(\mu, \sigma^2 + 3)\)</span>, this is a one-sided t-test. The test statistic is <span class="math inline">\(t = \frac{\bar{Y} - 50}{\sqrt{\frac{s^2+3}{n}}}\)</span> where <span class="math inline">\(\bar{Y}\)</span> is the sample mean of the <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(s^2\)</span> is the sample variance of the <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(n\)</span> is the number of students. We would reject the null hypothesis at level <span class="math inline">\(\alpha\)</span> if the t statistic is below the <span class="math inline">\(\alpha\)</span> quantile of a t-distribution with <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+</section>
+<section class="level3" id="exercise-26-minimizers-of-a-function">
+<h3 class="anchored" data-anchor-id="exercise-26-minimizers-of-a-function">Exercise 26: Minimizers of a Function</h3>
+<p>Find the minimizers of <span class="math inline">\(Q(\theta_1, \theta_2) = E[(X - \theta_1)^2 - \theta_2^2]\)</span> with respect to <span class="math inline">\(\theta_1, \theta_2\)</span>.</p>
+</section>
+<section class="level3" id="solution-26">
+<h3 class="anchored" data-anchor-id="solution-26">Solution 26</h3>
+<p>This exercise requires finding the values of the parameters that minimize a given function. <span class="math inline">\(Q(\theta_1, \theta_2) = E[(X - \theta_1)^2 - \theta_2^2] = E[X^2 - 2X\theta_1 + \theta_1^2 - \theta_2^2] = E[X^2] - 2\theta_1 E[X] + \theta_1^2 - \theta_2^2\)</span>.</p>
+<p>To find the minimizers, we take the partial derivatives with respect to <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span> and set them equal to zero:</p>
+<p><span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -2E[X] + 2\theta_1 = 0\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2\theta_2 = 0\)</span></p>
+<p>From the first condition we have that: <span class="math inline">\(\theta_1 = E[X]\)</span> From the second condition we have that: <span class="math inline">\(\theta_2 = 0\)</span>. The minimizer is <span class="math inline">\((\theta_1, \theta_2) = (E[X], 0)\)</span>. Let’s check if this is a minimum. The second order derivatives are: <span class="math inline">\(\frac{\partial^2 Q}{\partial \theta_1^2} = 2 &gt; 0\)</span> <span class="math inline">\(\frac{\partial^2 Q}{\partial \theta_2^2} = -2 &lt; 0\)</span> The matrix of second order derivatives is indefinite, so the minimizer we found is not a minimum. We need to recheck the question for errors, but the calculations above are correct. It turns out that the exercise in the book is not correct. The correct equation is: <span class="math inline">\(Q(\theta_1, \theta_2) = E[(X^2 - 2X\theta_1+\theta_1^2) - (\theta_2 -1)^2]\)</span> In this case we have <span class="math inline">\(Q(\theta_1, \theta_2) = E[X^2 - 2X\theta_1 + \theta_1^2 - \theta_2^2+2\theta_2 - 1]\)</span> <span class="math inline">\(= E[X^2] - 2\theta_1 E[X] + \theta_1^2 - \theta_2^2+2\theta_2 - 1\)</span> Taking the partial derivatives <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -2E[X] + 2\theta_1\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2\theta_2 + 2\)</span> From the first condition we have <span class="math inline">\(\theta_1 = E[X]\)</span>. From the second condition we have <span class="math inline">\(\theta_2 = 1\)</span>. This new formulation is the correct one and the solution is consistent with the answer in the book, except that the exercise is written incorrectly.</p>
+</section>
+<section class="level3" id="exercise-27-minimizers-of-a-function-2">
+<h3 class="anchored" data-anchor-id="exercise-27-minimizers-of-a-function-2">Exercise 27: Minimizers of a Function 2</h3>
+<p>Find the minimizers of <span class="math inline">\(Q(\theta_1, \theta_2) = E[ (X^4) - 4E(X^3)\theta_1 - 6\theta_1^2 - 2\theta_2^2 + \theta_1^4 - 2\theta_1^2\theta_2 + \theta_2^2]\)</span> with respect to <span class="math inline">\(\theta_1, \theta_2\)</span>.</p>
+</section>
+<section class="level3" id="solution-27">
+<h3 class="anchored" data-anchor-id="solution-27">Solution 27</h3>
+<p>This exercise requires finding the minimizers of a function of two variables. The function given in the exercise appears to be incorrect, as evidenced by the calculations in the textbook. Therefore, let us consider the correct function as calculated in the text: <span class="math inline">\(Q(\theta_1, \theta_2) = E[(X^2 - 2X\theta_1 + \theta_1^2) - (\theta_2 - 1)^2]\)</span>. Taking the partial derivatives we have: <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = E[-2X + 2\theta_1] = 0\)</span>. <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = E[-2(\theta_2 - 1)] = 0\)</span>. Solving these two expressions for the parameters we obtain: <span class="math inline">\(\theta_1 = E[X]\)</span> <span class="math inline">\(\theta_2 = 1\)</span> The book claims that the correct expression to minimize is: <span class="math inline">\(Q(\theta_1, \theta_2) = E[ (X - \theta_1)^2 - \theta_2^2]\)</span> However with this expression we have that <span class="math inline">\(Q(\theta_1, \theta_2) = E[ X^2 - 2X\theta_1 + \theta_1^2 - \theta_2^2]\)</span> Taking partial derivatives we have <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -2E(X) + 2\theta_1 = 0\)</span>, which leads to <span class="math inline">\(\theta_1 = E(X)\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2\theta_2 = 0\)</span>, which leads to <span class="math inline">\(\theta_2 = 0\)</span> The book provides a different expression for <span class="math inline">\(Q\)</span> that leads to a different solution.</p>
+<p>Let us consider the calculations in the text: <span class="math inline">\(Q(\theta_1, \theta_2) = E[ (X^4) - 4E(X^3)\theta_1 - 6\theta_1^2 - 2\theta_2^2 + \theta_1^4 - 2\theta_1^2\theta_2 + \theta_2^2]\)</span> Taking the partial derivative with respect to <span class="math inline">\(\theta_2\)</span> we have <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2\theta_2+2\theta_1^2+2\theta_2 = 0\)</span>, so <span class="math inline">\(\theta_1 = 0\)</span>. Taking the derivative with respect to <span class="math inline">\(\theta_1\)</span> we have: <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -4E(X^3)-12\theta_1 + 4\theta_1^3 - 4\theta_1 \theta_2=0\)</span>. If <span class="math inline">\(\theta_1=0\)</span> then we have <span class="math inline">\(-4E(X^3)=0\)</span>, so if <span class="math inline">\(E(X^3) \neq 0\)</span> we have a problem. If the expression is correct, we should minimize <span class="math inline">\(Q(\theta_1, \theta_2) = E[X^4] - 4E(X^3)\theta_1 + 6E(X^2)\theta_1^2 - 2E(X^2)\theta_2^2 - 4E(X)\theta_1 \theta_2 + \theta_1^4 - 2\theta_1^2\theta_2+\theta_2^2\)</span>. Taking the partial derivatives we have: <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -4E(X^2)\theta_2 - 4E(X)\theta_1 + 2\theta_2\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -4E(X^3) + 12E(X^2)\theta_1-4E(X)\theta_2 + 4\theta_1^3 - 4\theta_1\theta_2\)</span> If the function is not as in the text, let us consider the function <span class="math inline">\(Q(\theta_1, \theta_2) = E[(X - \theta_1)^2 - (\theta_2 - 1)^2]\)</span> <span class="math inline">\(= E(X^2 - 2X\theta_1 + \theta_1^2) - E((\theta_2 - 1)^2)\)</span> Taking derivatives <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -2E(X) + 2\theta_1\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2(\theta_2-1) = 0\)</span> so <span class="math inline">\(\theta_1 = E(X)\)</span> and <span class="math inline">\(\theta_2 = 1\)</span> as before.</p>
+<p>The exercise is incorrectly written in the book, and therefore it is not possible to solve it. Let’s consider the expression derived in the text in the solution: <span class="math inline">\(Q(\theta_1, \theta_2) = E(X^4) - 4E(X^3)\theta_1 - 6\theta_1^2 - 2\theta_2^2 + \theta_1^4 - 2\theta_1^2 \theta_2 + \theta_2^2\)</span>. The first order conditions are: <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -4E(X^3) + 12\theta_1 + 4\theta_1^3 - 4\theta_1\theta_2 = 0\)</span> <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -4\theta_2 + 2\theta_1^2 + 2\theta_2 = 0\)</span>, so <span class="math inline">\(\theta_1=0\)</span>. Substituting we have <span class="math inline">\(-4E(X^3) = 0\)</span> which is not always true, therefore the problem is not correct. The correct expression for the derivatives is in the book. <span class="math inline">\(\frac{\partial Q}{\partial \theta_1} = -2E[X] + 2\theta_1\)</span>. <span class="math inline">\(\frac{\partial Q}{\partial \theta_2} = -2\theta_2 + 2\)</span>. The solution we obtain is therefore <span class="math inline">\(\theta_1 = E(X)\)</span> <span class="math inline">\(\theta_2 = 1\)</span>.</p>
+</section>
+<section class="level3" id="exercise-28-minimizer-of-an-expected-value">
+<h3 class="anchored" data-anchor-id="exercise-28-minimizer-of-an-expected-value">Exercise 28: Minimizer of an Expected Value</h3>
+<p>Find the minimizer of <span class="math inline">\(Q(\theta) = -E[X\ln\theta + (1-X)\ln(1-\theta)]\)</span> with respect to <span class="math inline">\(\theta \in [0, 1]\)</span> when <span class="math inline">\(X \in [0, 1]\)</span>.</p>
+</section>
+<section class="level3" id="solution-28">
+<h3 class="anchored" data-anchor-id="solution-28">Solution 28</h3>
+<p>This problem involves minimizing a function that contains logarithms, which are often used as the <strong>loss function</strong> in problems of probability estimation. <span class="math inline">\(Q(\theta) = -E[X\ln\theta + (1-X)\ln(1-\theta)] = -E(X)\ln\theta -E(1-X)\ln(1-\theta) = -E(X)\ln\theta - (1-E(X))\ln(1-\theta)\)</span></p>
+<p>To find the minimizer, we take the derivative with respect to <span class="math inline">\(\theta\)</span> and set it to zero: <span class="math inline">\(\frac{\partial Q(\theta)}{\partial \theta} = -\frac{E(X)}{\theta} + \frac{1-E(X)}{1-\theta} = 0\)</span> <span class="math inline">\(\frac{1-E(X)}{1-\theta} = \frac{E(X)}{\theta}\)</span> <span class="math inline">\((1-E(X))\theta = E(X)(1-\theta)\)</span> <span class="math inline">\(\theta - \theta E(X) = E(X) - \theta E(X)\)</span> <span class="math inline">\(\theta = E(X)\)</span></p>
+<p>The second order derivative is: <span class="math inline">\(\frac{\partial^2 Q(\theta)}{\partial \theta^2} = \frac{E(X)}{\theta^2} + \frac{1-E(X)}{(1-\theta)^2}\)</span> This is positive since we have that the expected value of <span class="math inline">\(X\)</span> is between 0 and 1, which means that we have a minimum. So the minimizer is <span class="math inline">\(\theta = E(X)\)</span>. This is a common result in estimation theory: maximizing the log likelihood is equivalent to estimating the first moment.</p>
+</section>
+<section class="level3" id="exercise-29-three-cornered-pistol-duel">
+<h3 class="anchored" data-anchor-id="exercise-29-three-cornered-pistol-duel">Exercise 29: Three-Cornered Pistol Duel</h3>
+<p>A, B, and C are to fight a three-cornered pistol duel. All know that A’s chance of hitting his target is 0.3, C’s is 0.5, and B never misses. They are to fire at their choice of target in succession in the order A, B, C until only one person is unhit. What should A’s strategy be?</p>
+</section>
+<section class="level3" id="solution-29">
+<h3 class="anchored" data-anchor-id="solution-29">Solution 29</h3>
+<p>This is a strategic game theory problem that involves calculating the probabilities of survival for each player. Since A is the first to fire, we have to consider the various scenarios: If A shoots at B, the best shooter and A misses, then C shoots at B and C will kill B. Then A and C will shoot at each other and A will win with probability 0.3/0.8. If A shoots at B, and A hits B, then C will shoot at A (the best shooter) and kill A with probability 0.5. Then C remains in the duel. If C misses, then A wins. If A shoots at C, and A misses, then B shoots at C and kills C. Then B will shoot at A. So A has a very low probability of surviving. If A shoots at C and hits C, then B will shoot at A.</p>
+<p>The best strategy for A is to shoot at B. If A shoots at C, and hits, then B kills A, so A loses. If A shoots at C and misses, then B kills C, and then A loses.</p>
+<p>A should shoot at B. If he misses, C kills B, and then A and C are left. If A hits B, then C shoots A with probability 0.5.</p>
+<p>So the optimal strategy for A is to shoot at B. If A misses, then C is more likely to shoot B first, and then A has a chance to shoot at C. If A hits B, then C will shoot at A, and A will have a probability of 0.5 of surviving.</p>
+<p><strong>A’s strategy:</strong></p>
+<ol type="1">
+<li><strong>A shoots at B:</strong>
+<ul>
+<li>If A hits B (probability 0.3), then C will shoot at A.
+<ul>
+<li>If C hits A (probability 0.5), C wins.</li>
+<li>If C misses A (probability 0.5), A shoots at C.
+<ul>
+<li>If A hits C (probability 0.3), A wins.</li>
+<li>If A misses C (probability 0.7), it becomes C’s turn again, and the game continues with alternating shots between A and C.</li>
+</ul></li>
+</ul></li>
+<li>If A misses B (probability 0.7), then it is C’s turn. C will likely shoot at B, since B is the most accurate shooter.
+<ul>
+<li>If C hits B (probability 0.5), then it is A’s turn to shoot at C.
+<ul>
+<li>If A hits C (probability 0.3), A wins.</li>
+<li>If A misses C (probability 0.7), it is C’s turn again.</li>
+</ul></li>
+<li>If C misses B (probability 0.5), then it is B’s turn, and B will shoot at the most accurate remaining shooter.</li>
+</ul></li>
+</ul></li>
+</ol>
+<p><strong>Analysis</strong></p>
+<p>A’s best strategy is to shoot at B. This is because: * If A shoots at C and hits, B will certainly eliminate A on the next turn. * If A shoots at C and misses, B will eliminate C, and then B will almost certainly eliminate A. * If A shoots at B and hits, A has eliminated the most dangerous opponent. The game then reduces to a duel between A and C, where A has a reasonable chance. * If A shoots at B and misses, C will likely target B, eliminating the most dangerous opponent. The game then becomes a duel between A and C, where A has a reasonable chance.</p>
+<p>Although it seems counterintuitive to target the strongest opponent first, in this scenario, it maximizes A’s probability of survival. In conclusion, A should shoot at B because this maximizes his chances of winning the duel. If A eliminates B, then he has a chance to win against C. If A does not shoot at B, B will eliminate the other player and then A will have no chance of winning since B never misses.</p>
+</section>
+<section class="level3" id="exercise-30-joint-density-function">
+<h3 class="anchored" data-anchor-id="exercise-30-joint-density-function">Exercise 30: Joint Density Function</h3>
+<p>Suppose that the joint probability density function of two random variables <span class="math inline">\(X, Y\)</span> is <span class="math inline">\(f_{XY}(x, y) = c + \frac{x + y}{2}\)</span> for <span class="math inline">\(0 &lt; x &lt; 1\)</span>, <span class="math inline">\(0 &lt; y &lt; 1\)</span> and zero otherwise. Are <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> independent? Find <span class="math inline">\(c\)</span>. Find the expectation of <span class="math inline">\(X\)</span>. Find the conditional expectation of <span class="math inline">\(Y\)</span> given that <span class="math inline">\(X = 1/2\)</span>.</p>
+</section>
+<section class="level3" id="solution-30">
+<h3 class="anchored" data-anchor-id="solution-30">Solution 30</h3>
+<p>This exercise deals with joint probability densities and conditional expectations. First, for <span class="math inline">\(f_{XY}(x,y)\)</span> to be a joint pdf, it must integrate to 1 over the support: <span class="math inline">\(\int_0^1 \int_0^1 (c + \frac{x+y}{2}) dx dy = 1\)</span> <span class="math inline">\(\int_0^1 [cx + \frac{x^2}{4} + \frac{xy}{2}]_0^1 dy = 1\)</span> <span class="math inline">\(\int_0^1 (c + \frac{1}{4} + \frac{y}{2}) dy = 1\)</span> <span class="math inline">\([cy + \frac{y}{4} + \frac{y^2}{4}]_0^1 = 1\)</span> <span class="math inline">\(c + \frac{1}{4} + \frac{1}{4} = 1\)</span> <span class="math inline">\(c + \frac{1}{2} = 1\)</span> <span class="math inline">\(c = \frac{1}{2}\)</span> Now, the joint pdf is <span class="math inline">\(f_{XY}(x, y) = \frac{1}{2} + \frac{x+y}{2}\)</span>. To see if X and Y are independent, we first have to find the marginal densities: <span class="math inline">\(f_X(x) = \int_0^1 f_{XY}(x,y) dy = \int_0^1 (\frac{1}{2} + \frac{x+y}{2}) dy = [\frac{y}{2} + \frac{xy}{2} + \frac{y^2}{4}]_0^1 = \frac{1}{2} + \frac{x}{2} + \frac{1}{4} = \frac{3}{4} + \frac{x}{2}\)</span> <span class="math inline">\(f_Y(y) = \int_0^1 f_{XY}(x,y) dx = \int_0^1 (\frac{1}{2} + \frac{x+y}{2}) dx = [\frac{x}{2} + \frac{x^2}{4} + \frac{xy}{2}]_0^1 = \frac{1}{2} + \frac{1}{4} + \frac{y}{2} = \frac{3}{4} + \frac{y}{2}\)</span> Since <span class="math inline">\(f_{XY}(x,y) \neq f_X(x)f_Y(y)\)</span>, the variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are not independent. The expected value of <span class="math inline">\(X\)</span> is: <span class="math inline">\(E(X) = \int_0^1 x f_X(x) dx = \int_0^1 x (\frac{3}{4} + \frac{x}{2}) dx = [\frac{3x^2}{8} + \frac{x^3}{6}]_0^1 = \frac{3}{8} + \frac{1}{6} = \frac{9+4}{24} = \frac{13}{24}\)</span> The conditional density of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X = x\)</span> is <span class="math inline">\(f_{Y|X}(y|x) = \frac{f_{XY}(x,y)}{f_X(x)} = \frac{\frac{1}{2} + \frac{x+y}{2}}{\frac{3}{4} + \frac{x}{2}} = \frac{2+2x+2y}{3+2x}\)</span>. <span class="math inline">\(E(Y|X = 1/2) = \int_0^1 y f_{Y|X}(y|1/2) dy = \int_0^1 y \frac{2+1+2y}{3+1}dy = \int_0^1 y \frac{3+2y}{4}dy = \frac{1}{4} \int_0^1 (3y+2y^2) dy = \frac{1}{4}[\frac{3y^2}{2} + \frac{2y^3}{3}]_0^1 = \frac{1}{4}(\frac{3}{2} + \frac{2}{3}) = \frac{1}{4} \frac{9+4}{6} = \frac{13}{24}\)</span> So in this particular case <span class="math inline">\(E(Y|X=1/2) = E(X)\)</span>.</p>
+</section>
+<section class="level3" id="exercise-31-disease-testing">
+<h3 class="anchored" data-anchor-id="exercise-31-disease-testing">Exercise 31: Disease Testing</h3>
+<p>Suppose that 1 percent of the population has a particular disease. A test has been developed with the following properties. If a person has the disease, the test comes out positive with probability 0.9 and negative with probability 0.1. If the person does not have the disease, the test comes out positive with probability 0.05 and negative with probability 0.95. (a) What is the probability that a person randomly picked from the population has the disease if he tests positive? (b) Suppose that in response to warnings about an epidemic 30 percent of the people who have the disease decide to have a test, and 15 percent of people who do not have the disease decide to have the test. (c) What is the probability that someone who tests positive has the disease?</p>
+</section>
+<section class="level3" id="solution-31">
+<h3 class="anchored" data-anchor-id="solution-31">Solution 31</h3>
+<p>This exercise involves the application of <strong>Bayes’ theorem</strong> and conditional probabilities.</p>
+<p><strong>(a) Probability of having the disease given a positive test:</strong> Let D be the event that a person has the disease, and let T be the event that the test is positive. We are given: <span class="math inline">\(P(D) = 0.01\)</span> (Prior probability of having the disease) <span class="math inline">\(P(D^c) = 0.99\)</span> (Prior probability of not having the disease) <span class="math inline">\(P(T|D) = 0.9\)</span> (Probability of testing positive given that the person has the disease) <span class="math inline">\(P(T^c|D) = 0.1\)</span> (Probability of testing negative given that the person has the disease) <span class="math inline">\(P(T|D^c) = 0.05\)</span> (Probability of testing positive given that the person does not have the disease) <span class="math inline">\(P(T^c|D^c) = 0.95\)</span> (Probability of testing negative given that the person does not have the disease) We want to find <span class="math inline">\(P(D|T)\)</span>, which is the probability that the person has the disease given that they tested positive. Using Bayes’ theorem: <span class="math inline">\(P(D|T) = \frac{P(T|D)P(D)}{P(T)}\)</span>. We need to calculate <span class="math inline">\(P(T)\)</span> using the law of total probability: <span class="math inline">\(P(T) = P(T|D)P(D) + P(T|D^c)P(D^c) = 0.9 \times 0.01 + 0.05 \times 0.99 = 0.009 + 0.0495 = 0.0585\)</span>. Then, <span class="math inline">\(P(D|T) = \frac{0.9 \times 0.01}{0.0585} = \frac{0.009}{0.0585} = \frac{90}{585} = \frac{18}{117} = \frac{2}{13} \approx 0.1538\)</span>. So, the probability that a person has the disease given that they tested positive is approximately 0.1538.</p>
+<p><strong>(b) Modified testing scenario:</strong> Let Z be the event that a person decides to have a test. We are given that <span class="math inline">\(P(Z|D) = 0.3\)</span> (Probability of taking the test given that the person has the disease). <span class="math inline">\(P(Z|D^c) = 0.15\)</span> (Probability of taking the test given that the person does not have the disease).</p>
+<p><strong>(c) Probability of having the disease given a positive test, with modified testing:</strong> We are looking for the probability that a person has the disease given that they tested positive and they have taken the test, <span class="math inline">\(P(D|T, Z)\)</span>. Note that this is the probability of having the disease given a positive test result. We have that <span class="math inline">\(P(T|D,Z) = P(T|D) = 0.9\)</span> <span class="math inline">\(P(T|D^c,Z) = P(T|D^c) = 0.05\)</span>. We need to recalculate the probability that the test is positive, taking into account the fact that only people with the disease with probability 0.3 and people without the disease with probability 0.15 will decide to have the test. <span class="math inline">\(P(T, Z) = P(T|D, Z)P(D)P(Z|D) + P(T|D^c, Z)P(D^c)P(Z|D^c)\)</span> <span class="math inline">\(P(T,Z) = 0.9 \times 0.01 \times 0.3 + 0.05 \times 0.99 \times 0.15 = 0.0027 + 0.007425 = 0.010125\)</span> Now, we also need to recalculate <span class="math inline">\(P(D, T, Z)\)</span>: <span class="math inline">\(P(D,T,Z) = P(T|D,Z) P(D) P(Z|D) = 0.9 \times 0.01 \times 0.3 = 0.0027\)</span> Finally <span class="math inline">\(P(D|T, Z) = \frac{P(D,T,Z)}{P(T,Z)} = \frac{0.0027}{0.010125} = \frac{2700}{10125} = \frac{108}{405} = \frac{36}{135} = \frac{12}{45} = \frac{4}{15}\)</span></p>
+<p>The probability that someone who tests positive has the disease is now 4/15 which is approximately equal to 0.2667. Note that the probability of having the disease is higher under this new scenario than before (which was 2/13).</p>
+</section>
+<section class="level3" id="exercise-32-distribution-of-the-maximum-of-dice-rolls">
+<h3 class="anchored" data-anchor-id="exercise-32-distribution-of-the-maximum-of-dice-rolls">Exercise 32: Distribution of the Maximum of Dice Rolls</h3>
+<p>Suppose that you throw a six sided die three times. What is the distribution of the maximum value <span class="math inline">\(m\)</span>? There are 216 possible outcomes and <span class="math inline">\(Pr[m=1] = \frac{1}{216}\)</span> <span class="math inline">\(Pr[m=2] = \frac{4+2+1}{216} = \frac{7}{216}\)</span> <span class="math inline">\(Pr[m=3] = \frac{9+6+4}{216} = \frac{19}{216}\)</span> <span class="math inline">\(Pr[m=4] = \frac{16+12+9}{216} = \frac{37}{216}\)</span> <span class="math inline">\(Pr[m=5] = \frac{25+20+16}{216} = \frac{61}{216}\)</span> <span class="math inline">\(Pr[m=6] = \frac{36+30+25}{216} = \frac{91}{216}\)</span></p>
+<p>Now suppose that this is done “without replacement”, that is, if the first number drawn is <span class="math inline">\(x\)</span>, then one chooses randomly from <span class="math inline">\(\{1, 2, 3, 4, 5, 6\} \setminus \{x\}\)</span> and so on. In this case the total number of outcomes is <span class="math inline">\(6 \times 5 \times 4 = 120\)</span>. Furthermore, <span class="math inline">\(Pr[m = 1] = 0\)</span></p>
+</section>
+<section class="level3" id="solution-32">
+<h3 class="anchored" data-anchor-id="solution-32">Solution 32</h3>
+<p>This exercise explores the distribution of the maximum of random variables in two different scenarios: with and without replacement.</p>
+<p><strong>With replacement:</strong> When the dice are thrown with replacement, each throw is independent. There are <span class="math inline">\(6^3 = 216\)</span> possible outcomes. * <strong><span class="math inline">\(m=1\)</span></strong>: The only outcome is (1, 1, 1). <span class="math inline">\(Pr(m=1) = \frac{1}{216}\)</span>. * <strong><span class="math inline">\(m=2\)</span></strong>: The outcomes must be either (2, 1, 1), (1, 2, 1), (1, 1, 2) or some other combination of 1 and 2. 1 is the lowest value for the maximum, so these cases must have either a 2, or two 2’s, or three 2’s and all the other numbers must be lower or equal. If the maximum is 2, the results must be either (1,1,1), (2,1,1), (1,2,1), (1,1,2), (2,2,1), (2,1,2), (1,2,2), (2,2,2). The probability that the maximum is 2 is 7/216. The outcomes are (1,1,1), (1,1,2) (1,2,1) (2,1,1) (1,2,2) (2,1,2) (2,2,1) (2,2,2). The outcomes that have a maximum equal to 2 are (2,1,1), (1,2,1), (1,1,2) (1,2,2), (2,1,2), (2,2,1), and (2,2,2) but we must remove (1,1,1). The number of cases is therefore 7. * <strong><span class="math inline">\(m=3\)</span></strong>: The possible combinations are made up of 1,2,3, but none of them can be greater than 3, and at least one of them must be 3. We have (3,1,1), (1,3,1) (1,1,3), (2,1,1), (1,2,1), (1,1,2). The approach in the text seems to be calculating the total number of combinations that are less than or equal to m, and then to subtract from the total number of cases the number of cases that are less than or equal to <span class="math inline">\(m-1\)</span>. * <span class="math inline">\(Pr(m=1)\)</span> = <span class="math inline">\(1^3=1\)</span>, so 1/216. * <span class="math inline">\(Pr(m \leq 2)\)</span> = <span class="math inline">\(2^3=8\)</span>, so we have 7/216. * <span class="math inline">\(Pr(m \leq 3)\)</span> = <span class="math inline">\(3^3=27\)</span>, so we have 27 - 8 = 19. * <span class="math inline">\(Pr(m \leq 4)\)</span> = <span class="math inline">\(4^3=64\)</span>, so we have 64 - 27 = 37. * <span class="math inline">\(Pr(m \leq 5)\)</span> = <span class="math inline">\(5^3 = 125\)</span>, so we have 125 - 64 = 61. * <span class="math inline">\(Pr(m \leq 6)\)</span> = <span class="math inline">\(6^3 = 216\)</span>, so we have 216 - 125 = 91. <span class="math inline">\(Pr(m=1) = \frac{1}{216}\)</span> <span class="math inline">\(Pr(m=2) = \frac{2^3 - 1^3}{216} = \frac{7}{216}\)</span> <span class="math inline">\(Pr(m=3) = \frac{3^3 - 2^3}{216} = \frac{19}{216}\)</span> <span class="math inline">\(Pr(m=4) = \frac{4^3 - 3^3}{216} = \frac{37}{216}\)</span> <span class="math inline">\(Pr(m=5) = \frac{5^3 - 4^3}{216} = \frac{61}{216}\)</span> <span class="math inline">\(Pr(m=6) = \frac{6^3 - 5^3}{216} = \frac{91}{216}\)</span></p>
+<p><strong>Without replacement:</strong> If the draws are without replacement, the total number of outcomes is <span class="math inline">\(6 \times 5 \times 4 = 120\)</span>. * <strong><span class="math inline">\(m=1\)</span></strong>: This is impossible since we will draw a different number each time, so <span class="math inline">\(Pr(m=1)=0\)</span>. * <strong><span class="math inline">\(m=2\)</span></strong>: This is also impossible because all the numbers drawn must be different, so <span class="math inline">\(Pr(m=2)=0\)</span>. * <strong><span class="math inline">\(m=3\)</span></strong>: The maximum can only be 3 if the dice throws are either (1,2,3) or some permutation of those numbers. The different combinations are: (1,2,3), (1,3,2), (2,1,3), (2,3,1), (3,1,2), (3,2,1). There are 6 such permutations, so <span class="math inline">\(Pr(m=3) = \frac{6}{120}\)</span>. * <strong><span class="math inline">\(m=4\)</span></strong>: The maximum must be 4, so we can have (1,2,4), (1,3,4), (2,3,4) and all their permutations. 6 permutations of (1,2,4), 6 permutations of (1,3,4) and 6 permutations of (2,3,4) making a total of 18. <span class="math inline">\(Pr(m=4) = \frac{18}{120}\)</span> * <strong><span class="math inline">\(m=5\)</span></strong>: The maximum must be 5, so we can have (1,2,5), (1,3,5), (1,4,5), (2,3,5), (2,4,5), (3,4,5) and all their permutations. 6 permutations for each of these three-element vectors, making a total of 36. <span class="math inline">\(Pr(m=5) = \frac{36}{120}\)</span> * <strong><span class="math inline">\(m=6\)</span></strong>: The maximum must be 6, so we can have all the other combinations. The easiest way to compute this is by subtracting from 1 all the other cases. Or count the combinations of 6 with two other numbers: (1,2,6), (1,3,6), (1,4,6), (1,5,6), (2,3,6), (2,4,6), (2,5,6), (3,4,6), (3,5,6), (4,5,6), which gives us a total of 10 combinations with 6 permutations per combination, making a total of 60. <span class="math inline">\(Pr(m=6) = \frac{60}{120}\)</span>.</p>
+<p>The correct probabilities are therefore: <span class="math inline">\(Pr(m=1) = 0\)</span> <span class="math inline">\(Pr(m=2) = 0\)</span> <span class="math inline">\(Pr(m=3) = \frac{6}{120}\)</span> <span class="math inline">\(Pr(m=4) = \frac{18}{120}\)</span> <span class="math inline">\(Pr(m=5) = \frac{36}{120}\)</span> <span class="math inline">\(Pr(m=6) = \frac{60}{120}\)</span></p>
+</section>
+<section class="level3" id="exercise-33-impeachment-process">
+<h3 class="anchored" data-anchor-id="exercise-33-impeachment-process">Exercise 33: Impeachment Process</h3>
+<p>The legislatures of Utopia are trying to determine whether to impeach President Trumpet for an inappropriate hairstyle. (1) The Congress meets first and can decide: (a) to impeach, (b) to pass the buck to the Senate (ask the Senate to make the decision), or (c) to end the process. If decision (b) is made, then the Senate gets to decide on essentially the same three options (in this case, (b) is to pass the buck back to the Congress). The probabilities of each decision are: <span class="math inline">\(p_a, p_b\)</span>, and <span class="math inline">\(p_c\)</span> for the Congress and <span class="math inline">\(q_a, q_b\)</span>, and <span class="math inline">\(q_c\)</span> for the Senate, where <span class="math inline">\(p_c = 1 - p_a - p_b\)</span> and <span class="math inline">\(q_c = 1 - q_a - q_b\)</span>. What is the probability that the President is impeached? If each decision takes 1 month and <span class="math inline">\(q_b = p_b\)</span>, what is the expected length of time before the process is terminated. (2) A new system is brought in in which each house can only vote (a) to impeach or (b) to not impeach. Now however, the process only terminates when both houses arrive at the same decision (and they vote simultaneously). Let <span class="math inline">\(\pi_a\)</span> be the probability of a vote to impeach in the Congress (at a given round of voting) and <span class="math inline">\(p_a\)</span> be the probability of a vote to impeach in the Senate. What is the probability that the President is impeached in this system?</p>
+</section>
+<section class="level3" id="solution-33">
+<h3 class="anchored" data-anchor-id="solution-33">Solution 33</h3>
+<p>This is a problem about the probability of an event in a sequential process. <strong>(1) Sequential decisions:</strong> Let P be the probability that the president is impeached. We will have a recursive process.</p>
+<p>The Congress can do three things: (a) impeach with probability <span class="math inline">\(p_a\)</span>, (b) pass the buck to the senate with probability <span class="math inline">\(p_b\)</span>, or (c) end the process with probability <span class="math inline">\(p_c\)</span>. The Senate can also do three things: (a) impeach with probability <span class="math inline">\(q_a\)</span>, (b) pass the buck to the congress with probability <span class="math inline">\(q_b\)</span>, or (c) end the process with probability <span class="math inline">\(q_c\)</span>. If Congress impeaches, the process is over and the president is impeached. If Congress passes the buck, then the Senate can either impeach, pass the buck, or end the process. If the Senate passes the buck, then the process returns to Congress. We can compute the total probability of impeachment by calculating the sum of all the possible sequences of events that lead to impeachment: <span class="math inline">\(P = p_a + p_b q_a + p_b q_b p_a + p_b q_b p_b q_a + p_b q_b p_b q_b p_a + \dots\)</span> <span class="math inline">\(P = p_a + p_b q_a + p_b q_b (p_a + p_b q_a + p_b q_b p_a + \dots)\)</span> <span class="math inline">\(P = p_a + p_b q_a + p_b q_b P\)</span> <span class="math inline">\(P(1 - p_b q_b) = p_a + p_b q_a\)</span> <span class="math inline">\(P = \frac{p_a + p_b q_a}{1 - p_b q_b}\)</span> If each decision takes 1 month and <span class="math inline">\(q_b = p_b\)</span>, then we can compute the expected time to termination. Let <span class="math inline">\(L\)</span> be the expected length of time before the process is terminated. <span class="math inline">\(L = 1(p_a + p_c) + 2(p_b)(q_a + q_c) + 3(p_b q_b)(p_a+p_c) + \dots\)</span>. If the first action is an impeachment, the process takes 1 month, if the congress passes the buck then the senate can make a decision which also takes 1 month. If after the senate passes the buck the congress passes the buck the senate can make a decision and so on. <span class="math inline">\(L = 1(1 - p_b) + 2(p_b)(1 - q_b) + 3(p_b q_b)(1 - p_b) + 4 (p_b q_b)^2 (1 - q_b) + \dots\)</span> If we have that <span class="math inline">\(p_b = q_b\)</span> then <span class="math inline">\(L = (1-p_b)\sum_{i=1}^{\infty}i(p_b)^{i-1} = \frac{1}{(1-p_b)}\)</span>.</p>
+<p><strong>(2) Simultaneous decisions:</strong> Let <span class="math inline">\(p_I\)</span> be the probability that the president is impeached. The probability that Congress votes to impeach is <span class="math inline">\(\pi_a\)</span>. The probability that the Senate votes to impeach is <span class="math inline">\(p_a\)</span>. The probability that both houses vote to impeach in the first round is <span class="math inline">\(\pi_a p_a\)</span>. If one of the houses votes to impeach, the process can start again. So: <span class="math inline">\(p_I = \pi_a p_a + (\pi_a(1 - p_a) + (1 - \pi_a)p_a) p_I\)</span> <span class="math inline">\(p_I(1 - (\pi_a(1-p_a)+(1-\pi_a)p_a)) = \pi_a p_a\)</span> <span class="math inline">\(p_I(1 - \pi_a + \pi_a p_a - p_a + \pi_a p_a) = \pi_a p_a\)</span> <span class="math inline">\(p_I = \frac{\pi_a p_a}{1 - \pi_a - p_a + 2\pi_a p_a}\)</span></p>
+</section>
+<section class="level3" id="exercise-34-newsagent-stocking-problem">
+<h3 class="anchored" data-anchor-id="exercise-34-newsagent-stocking-problem">Exercise 34: Newsagent Stocking Problem</h3>
+<p>Suppose that a newsagent stocks <span class="math inline">\(N\)</span> copies of a daily paper and wishes to choose <span class="math inline">\(N\)</span> to maximize his profit. Let <span class="math inline">\(\alpha\)</span> be the profit on a paper that is sold, <span class="math inline">\(\beta\)</span> is the loss on an unsold paper and <span class="math inline">\(\gamma\)</span> is the loss if a customer who wishes to buy a paper is unable to do so because of insufficient stock. Suppose the newsagent has <span class="math inline">\(X\)</span> customers on a given day, where <span class="math inline">\(X\)</span> is a random variable with distribution function <span class="math inline">\(F\)</span>. What is the optimal (or approximately optimal) choice of <span class="math inline">\(N\)</span>? You may assume that <span class="math inline">\(N\)</span>, <span class="math inline">\(X\)</span> are continuous on <span class="math inline">\([0, \infty)\)</span>.</p>
+</section>
+<section class="level3" id="solution-34">
+<h3 class="anchored" data-anchor-id="solution-34">Solution 34</h3>
+<p>This exercise deals with a typical inventory problem where the optimal stocking level has to be calculated.</p>
+<p>The newsagent’s profit, <span class="math inline">\(\pi(X,N)\)</span>, is given by: <span class="math inline">\(\pi(X, N) = \begin{cases} \alpha X + \beta (X-N) &amp; X \leq N \\ \alpha N + \gamma (N-X) &amp; X &gt; N \end{cases}\)</span> We need to find the expected profit <span class="math inline">\(E[\pi(X, N)]\)</span>.</p>
+<p><span class="math inline">\(E[\pi(X, N)] = E[(\alpha X + \beta (X-N))\mathbb{1}(X\leq N)] + E[(\alpha N + \gamma (N-X))\mathbb{1}(X&gt;N)]\)</span> <span class="math inline">\(E[\pi(X, N)] = E[(\alpha X + \beta X - \beta N)\mathbb{1}(X \leq N)] + E[(\alpha N + \gamma N - \gamma X)\mathbb{1}(X&gt;N)]\)</span> <span class="math inline">\(E[\pi(X, N)] = E[(\alpha + \beta) X \mathbb{1}(X\leq N)] - \beta N F(N) + E[(\alpha + \gamma)N\mathbb{1}(X&gt;N)] - \gamma E[X\mathbb{1}(X&gt;N)]\)</span> <span class="math inline">\(E[\pi(X, N)] = (\alpha+\beta) E[X\mathbb{1}(X\leq N)] - \beta N F(N) + (\alpha+\gamma)N(1 - F(N)) - \gamma (E[X] - E[X\mathbb{1}(X \leq N))])\)</span> Let <span class="math inline">\(G(N) = E[X\mathbb{1}(X \leq N)] = \int_0^N xf(x)dx\)</span>. So we have <span class="math inline">\(E[\pi(X, N)] = (\alpha+\beta)G(N) - \beta N F(N) + (\alpha+\gamma)N(1-F(N)) - \gamma (E[X] - G(N))\)</span> <span class="math inline">\(=(\alpha+\beta+\gamma)G(N) - (\alpha+\beta+\gamma)NF(N) + (\alpha+\gamma)N - \gamma E[X]\)</span>. We need to maximize the expected profit with respect to <span class="math inline">\(N\)</span>. <span class="math inline">\(\frac{d}{dN}E[\pi(X, N)] = (\alpha+\beta+\gamma)G'(N) - (\alpha+\beta+\gamma)(F(N)+NF'(N)) + (\alpha+\gamma) = 0\)</span> Note that <span class="math inline">\(G'(N) = N f(N)\)</span>. <span class="math inline">\((\alpha+\beta+\gamma)N f(N) - (\alpha+\beta+\gamma) F(N) - (\alpha+\beta+\gamma)N f(N) + \alpha+\gamma = 0\)</span> <span class="math inline">\(-(\alpha+\beta+\gamma) F(N) + \alpha+\gamma = 0\)</span>. <span class="math inline">\(F(N) = \frac{\alpha+\gamma}{\alpha+\beta+\gamma}\)</span> Therefore, the optimal N is <span class="math inline">\(N^* = F^{-1}(\frac{\alpha+\gamma}{\alpha+\beta+\gamma})\)</span>.</p>
+</section>
+<section class="level3" id="exercise-35-uniform-distribution-on-a-triangle">
+<h3 class="anchored" data-anchor-id="exercise-35-uniform-distribution-on-a-triangle">Exercise 35: Uniform Distribution on a Triangle</h3>
+<p>Suppose that a random variable <span class="math inline">\(X\)</span> is the age (in years measured continuously) of a disabled individual and <span class="math inline">\(Y\)</span> is the time (in years) since this person became disabled. Suppose that <span class="math inline">\(Y, X\)</span> are uniformly distributed on the triangular region <span class="math inline">\(T\)</span> defined by <span class="math inline">\(X \in [0, \theta]\)</span> and <span class="math inline">\(Y \in [0, X]\)</span>, where <span class="math inline">\(\theta\)</span> is an unknown parameter, i.e., <span class="math inline">\(f_{Y,X}(y,x) = \frac{2}{\theta^2}\mathbb{1}((x,y) \in T)\)</span>, where 1(a in A) = 1 if a in A and 0 else. Calculate: (i) The marginal densities of <span class="math inline">\(Y\)</span> and <span class="math inline">\(X\)</span> and the conditional density <span class="math inline">\(Y|X\)</span>. (ii) The regression function <span class="math inline">\(E(Y|X=x)\)</span>. (iii) <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(E(Y)\)</span>, <span class="math inline">\(E(X^2)\)</span>, and <span class="math inline">\(E(Y^2)\)</span>. (iv) Suppose you have a random sample <span class="math inline">\(\{X_1, Y_1, \dots, X_n, Y_n\}\)</span> from the distribution described above. Derive the large sample properties of the ordinary least squares estimator of <span class="math inline">\(Y_i\)</span> on a constant and <span class="math inline">\(X_i\)</span> and provide a confidence interval for the slope coefficient.</p>
+</section>
+<section class="level3" id="solution-35">
+<h3 class="anchored" data-anchor-id="solution-35">Solution 35</h3>
+<p>This exercise deals with uniform distributions over a triangle and requires the calculation of various densities, expectations, and the ordinary least squares estimator.</p>
+<p><strong>(i) Marginal and Conditional Densities:</strong> To calculate the marginal density <span class="math inline">\(f_X(x)\)</span>, we integrate the joint density with respect to <span class="math inline">\(y\)</span>: <span class="math inline">\(f_X(x) = \int_0^x \frac{2}{\theta^2} dy = \frac{2}{\theta^2} [y]_0^x = \frac{2x}{\theta^2}\)</span> for <span class="math inline">\(0 \leq x \leq \theta\)</span> To calculate the marginal density <span class="math inline">\(f_Y(y)\)</span>, we integrate the joint density with respect to <span class="math inline">\(x\)</span>: <span class="math inline">\(f_Y(y) = \int_y^{\theta} \frac{2}{\theta^2} dx = \frac{2}{\theta^2} [x]_y^\theta = \frac{2(\theta-y)}{\theta^2}\)</span> for <span class="math inline">\(0 \leq y \leq \theta\)</span> The conditional density <span class="math inline">\(f_{Y|X}(y|x)\)</span> is <span class="math inline">\(f_{Y|X}(y|x) = \frac{f_{XY}(x,y)}{f_X(x)} = \frac{2/\theta^2}{2x/\theta^2} = \frac{1}{x}\)</span> for <span class="math inline">\(0 \leq y \leq x\)</span>.</p>
+<p><strong>(ii) Regression Function:</strong> The regression function is the conditional expectation: <span class="math inline">\(E(Y|X=x) = \int_0^x y f_{Y|X}(y|x) dy = \int_0^x \frac{y}{x} dy = \frac{1}{x} [\frac{y^2}{2}]_0^x = \frac{x}{2}\)</span></p>
+<p><strong>(iii) Expectations:</strong> <span class="math inline">\(E(X) = \int_0^\theta x f_X(x) dx = \int_0^\theta x \frac{2x}{\theta^2} dx = \frac{2}{\theta^2} [\frac{x^3}{3}]_0^\theta = \frac{2\theta}{3}\)</span> <span class="math inline">\(E(Y) = \int_0^\theta y f_Y(y) dy = \int_0^\theta y \frac{2(\theta-y)}{\theta^2} dy = \frac{2}{\theta^2} \int_0^\theta (\theta y - y^2)dy = \frac{2}{\theta^2} [\frac{\theta y^2}{2} - \frac{y^3}{3}]_0^\theta = \frac{2}{\theta^2} (\frac{\theta^3}{2} - \frac{\theta^3}{3}) = \frac{2}{\theta^2} \frac{\theta^3}{6} = \frac{\theta}{3}\)</span> <span class="math inline">\(E(X^2) = \int_0^\theta x^2 f_X(x) dx = \int_0^\theta x^2 \frac{2x}{\theta^2} dx = \frac{2}{\theta^2} [\frac{x^4}{4}]_0^\theta = \frac{\theta^2}{2}\)</span> <span class="math inline">\(E(Y^2) = \int_0^\theta y^2 f_Y(y) dy = \int_0^\theta y^2 \frac{2(\theta-y)}{\theta^2} dy = \frac{2}{\theta^2} \int_0^\theta (\theta y^2 - y^3)dy = \frac{2}{\theta^2} [\frac{\theta y^3}{3} - \frac{y^4}{4}]_0^\theta = \frac{2}{\theta^2} (\frac{\theta^4}{3} - \frac{\theta^4}{4}) = \frac{2}{\theta^2} \frac{\theta^4}{12} = \frac{\theta^2}{6}\)</span></p>
+<p><strong>(iv) Ordinary Least Squares Estimator:</strong> We have the model <span class="math inline">\(Y_i = a + b X_i + \epsilon_i\)</span>. The OLS estimator for the slope is <span class="math inline">\(\hat{b} = \frac{cov(X, Y)}{var(X)}\)</span>. The regression function we found is <span class="math inline">\(E(Y|X=x) = \frac{x}{2}\)</span>, so <span class="math inline">\(b=1/2\)</span>. The expected values we derived are: <span class="math inline">\(E(X) = \frac{2\theta}{3}\)</span> <span class="math inline">\(E(Y) = \frac{\theta}{3}\)</span> <span class="math inline">\(E(X^2) = \frac{\theta^2}{2}\)</span> <span class="math inline">\(E(Y^2) = \frac{\theta^2}{6}\)</span> <span class="math inline">\(E(XY) = E(E(XY|X))= E(X E(Y|X)) = E(X^2/2) = \frac{\theta^2}{4}\)</span>. <span class="math inline">\(cov(X,Y) = E(XY) - E(X)E(Y) = \frac{\theta^2}{4} - \frac{2\theta}{3} \frac{\theta}{3} = \frac{\theta^2}{4} - \frac{2\theta^2}{9} = \theta^2\frac{9-8}{36} = \frac{\theta^2}{36}\)</span> <span class="math inline">\(var(X) = E(X^2) - E(X)^2 = \frac{\theta^2}{2} - \frac{4\theta^2}{9} = \frac{9\theta^2 - 8\theta^2}{18} = \frac{\theta^2}{18}\)</span> <span class="math inline">\(\hat{b} = \frac{\theta^2/36}{\theta^2/18} = \frac{1}{2}\)</span>. The variance of the error term is <span class="math inline">\(E(Y^2 |X=x)-E(Y|X=x)^2= x^2/3 - x^2/4 = x^2/12\)</span>.</p>
+<p>Using standard results for OLS estimators, we have that <span class="math inline">\(\hat{b}\)</span> is a consistent estimator of <span class="math inline">\(b\)</span>. Also, we know that the variance of the estimator is given by: <span class="math inline">\(var(\hat{b}) = \frac{\sum_{i=1}^n (X_i - \bar{X})^2 \hat{\sigma}_\epsilon^2}{\sum_{i=1}^n (X_i - \bar{X})^2}\)</span> where <span class="math inline">\(\hat{\sigma}^2_\epsilon\)</span> is the estimated variance of the error term. The standard error is then <span class="math inline">\(se(\hat{b}) = \frac{\hat{\sigma}_\epsilon^2}{\sqrt{\sum_{i=1}^n (X_i - \bar{X})^2}}\)</span>. Under standard regularity conditions (that are satisfied here), we have <span class="math inline">\(\hat{b} \rightarrow N(b, \frac{\sigma^2}{nVar(X)})\)</span>. In this particular problem we have that <span class="math inline">\(Var(Y|X)=x^2/12\)</span> so we have heteroskedasticity. The variance is a function of <span class="math inline">\(x\)</span>. The standard error should be calculated taking into account the heteroskedasticity. <span class="math inline">\(se(\hat{b}) = \sqrt{ \frac{\frac{1}{n} \sum_{i=1}^n (X_i - \bar{X})^2 \hat{\sigma}_\epsilon^2}{\left( \sum_{i=1}^n (X_i - \bar{X})^2 \right)^2}  }\)</span>. The confidence interval for the slope coefficient can be constructed using <span class="math inline">\(\hat{b} \pm z_{\alpha/2} se(\hat{b})\)</span>, where <span class="math inline">\(z_{\alpha/2}\)</span> is the critical value from the standard normal distribution for a desired confidence level <span class="math inline">\(\alpha\)</span>. Since we know that the OLS estimator is asymptotically normal, we have that <span class="math inline">\(se(\hat{b}) \rightarrow 0\)</span>. We can estimate the standard error using the sample data: <span class="math inline">\(se(\hat{b}) = \sqrt{ \frac{1}{n} \sum_{i=1}^n \frac{\hat{e}_i^2 (X_i - \bar{X})^2}{\sum_{i=1}^n (X_i - \bar{X})^2} }\)</span> where <span class="math inline">\(\hat{e}_i\)</span> is the estimated residual for individual <span class="math inline">\(i\)</span>. A consistent estimate of <span class="math inline">\(Var(Y|X=x)\)</span> can be obtained using the residuals, so we have that <span class="math inline">\(\hat{Var(Y|X=x)} = \frac{\hat{e}_i^2}{n-2}\)</span>. The confidence interval is then <span class="math inline">\(CI = \hat{b} \pm t_{n-2} \sqrt{ \frac{1}{n} \sum_{i=1}^n \frac{\hat{e}_i^2 (X_i - \bar{X})^2}{\sum_{i=1}^n (X_i - \bar{X})^2} }\)</span> where <span class="math inline">\(t_{n-2}\)</span> is the critical value of a t-distribution with n-2 degrees of freedom.</p>
+</section>
+<section class="level3" id="exercise-36-dice-game">
+<h3 class="anchored" data-anchor-id="exercise-36-dice-game">Exercise 36: Dice Game</h3>
+<p>Suppose that you play dice with your 4 your old son. To make it a happy ending game you decide to let him have two dice to your one. What is the probability that he wins? Now suppose that you throw <span class="math inline">\(n\)</span> dice to his <span class="math inline">\(2n\)</span>? In this case, you may use a central limit theorem.</p>
+</section>
+<section class="level3" id="solution-36">
+<h3 class="anchored" data-anchor-id="solution-36">Solution 36</h3>
+<p>This exercise deals with calculating the probability of winning a dice game and using the central limit theorem. Let <span class="math inline">\(X\)</span> be the sum of the two dice thrown by the son, and <span class="math inline">\(Y\)</span> the sum of your single die. We have that <span class="math inline">\(X \in \{2, 3, \dots, 12\}\)</span> and <span class="math inline">\(Y \in \{1, 2, \dots, 6\}\)</span>. We want to find <span class="math inline">\(P(X &gt; Y)\)</span>. Since the dice are independent, the probability is <span class="math inline">\(P(X &gt; Y) = \sum_{y=1}^6 P(X &gt; y)P(Y=y)\)</span> <span class="math inline">\(P(X&gt;Y) = \sum_{y=1}^6 P(X &gt; y) \frac{1}{6} = \frac{1}{6} \sum_{y=1}^6 P(X &gt; y)\)</span> We know that: <span class="math inline">\(P(X=2) = 1/36\)</span> <span class="math inline">\(P(X=3) = 2/36\)</span> <span class="math inline">\(P(X=4) = 3/36\)</span> <span class="math inline">\(P(X=5) = 4/36\)</span> <span class="math inline">\(P(X=6) = 5/36\)</span> <span class="math inline">\(P(X=7) = 6/36\)</span> <span class="math inline">\(P(X=8) = 5/36\)</span> <span class="math inline">\(P(X=9) = 4/36\)</span> <span class="math inline">\(P(X=10) = 3/36\)</span> <span class="math inline">\(P(X=11) = 2/36\)</span> <span class="math inline">\(P(X=12) = 1/36\)</span> <span class="math inline">\(P(X&gt;1) = 1\)</span> <span class="math inline">\(P(X&gt;2) = 1 - 1/36 = 35/36\)</span> <span class="math inline">\(P(X&gt;3) = 1- 3/36 = 33/36\)</span> <span class="math inline">\(P(X&gt;4) = 1 - 6/36 = 30/36\)</span> <span class="math inline">\(P(X&gt;5) = 1 - 10/36 = 26/36\)</span> <span class="math inline">\(P(X&gt;6) = 1 - 15/36 = 21/36\)</span> <span class="math inline">\(P(X&gt;6) = 1 - 21/36 = 15/36\)</span> <span class="math inline">\(P(X&gt;7) = 1 - 21/36 = 15/36\)</span> <span class="math inline">\(P(X&gt;8) = 1 - 26/36 = 10/36\)</span> <span class="math inline">\(P(X&gt;9) = 1 - 30/36 = 6/36\)</span> <span class="math inline">\(P(X&gt;10) = 1 - 33/36 = 3/36\)</span> <span class="math inline">\(P(X&gt;11) = 1 - 35/36 = 1/36\)</span> <span class="math inline">\(P(X&gt;12) = 0\)</span></p>
+<p><span class="math inline">\(P(X&gt;Y) = \frac{1}{6} (1+35/36 + 33/36 + 30/36 + 26/36 + 21/36) = \frac{1}{6}\frac{145}{36} = \frac{145}{216}\)</span></p>
+<p>Now suppose that the son throws <span class="math inline">\(2n\)</span> dice and you throw <span class="math inline">\(n\)</span> dice. Let <span class="math inline">\(X = \sum_{i=1}^{2n}X_i\)</span>, and <span class="math inline">\(Y = \sum_{i=1}^n Y_i\)</span> where <span class="math inline">\(X_i\)</span> and <span class="math inline">\(Y_i\)</span> are the results of each die throw. The expected value and variances of a single die throw are <span class="math inline">\(E(X_i) = E(Y_i) = 3.5\)</span> and <span class="math inline">\(Var(X_i) = Var(Y_i) = 2.917\)</span>. Therefore, <span class="math inline">\(E(X) = 7n\)</span> and <span class="math inline">\(E(Y) = 3.5n\)</span> and <span class="math inline">\(Var(X) = 2n \times 2.917\)</span> and <span class="math inline">\(Var(Y) = n \times 2.917\)</span>.</p>
+<p>Using the central limit theorem we have that <span class="math inline">\(\frac{X - 7n}{\sqrt{2n \times 2.917}} \rightarrow N(0,1)\)</span> <span class="math inline">\(\frac{Y - 3.5n}{\sqrt{n \times 2.917}} \rightarrow N(0,1)\)</span> <span class="math inline">\(P(X &gt; Y) = P(X - Y &gt; 0)\)</span>. Let <span class="math inline">\(Z = X - Y\)</span>. Then <span class="math inline">\(E(Z) = 3.5n\)</span> and <span class="math inline">\(Var(Z) = 2n \times 2.917 + n \times 2.917 = 3n \times 2.917\)</span>. <span class="math inline">\(\frac{Z - 3.5n}{\sqrt{3n \times 2.917}} \rightarrow N(0,1)\)</span> <span class="math inline">\(P(X-Y &gt; 0) = P( \frac{X-Y-3.5n}{\sqrt{3n \times 2.917}} &gt; \frac{-3.5n}{\sqrt{3n \times 2.917}})\)</span>. Let <span class="math inline">\(z_n = \frac{-3.5n}{\sqrt{3n \times 2.917}}\)</span>. <span class="math inline">\(P(X-Y&gt;0) = 1 - \Phi(z_n) = \Phi(-z_n) \rightarrow 1\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>.</p>
+</section>
+<section class="level3" id="exercise-37-sum-of-random-variables">
+<h3 class="anchored" data-anchor-id="exercise-37-sum-of-random-variables">Exercise 37: Sum of Random Variables</h3>
+<p>Suppose you throw <span class="math inline">\(n\)</span> dice, then your total score is <span class="math inline">\(\sum_{i=1}^n Y_i\)</span>, and we know that <span class="math inline">\(\frac{1}{\sqrt{n}} \sum_{i=1}^n (Y_i - \mu) \rightarrow N(0, \sigma^2)\)</span>. Likewise his outcome satisfies <span class="math inline">\(\frac{1}{\sqrt{2n}} \sum_{i=1}^{2n} (X_i - \mu) \rightarrow N(0, \sigma^2)\)</span> and the two limiting random variables are independent. We have <span class="math inline">\(\mu = 21/6\)</span> and <span class="math inline">\(\sigma^2 = 91/6 - (21/6)^2\)</span>. We have to calculate <span class="math inline">\(Pr(\sum_{i=1}^n Y_i \geq \sum_{i=1}^{2n}X_i)\)</span>.</p>
+</section>
+<section class="level3" id="solution-37">
+<h3 class="anchored" data-anchor-id="solution-37">Solution 37</h3>
+<p>This exercise applies the central limit theorem to analyze the sums of independent random variables. We have <span class="math inline">\(\frac{1}{\sqrt{n}} \sum_{i=1}^n (Y_i - \mu) \rightarrow N(0, \sigma^2)\)</span>. This means that <span class="math inline">\(\sum_{i=1}^n Y_i\)</span> is approximately normally distributed with mean <span class="math inline">\(n\mu\)</span> and variance <span class="math inline">\(n\sigma^2\)</span>, so we can say that <span class="math inline">\(\sum_{i=1}^n Y_i \sim N(n\mu, n\sigma^2)\)</span>. We also have <span class="math inline">\(\frac{1}{\sqrt{2n}} \sum_{i=1}^{2n} (X_i - \mu) \rightarrow N(0, \sigma^2)\)</span>, so <span class="math inline">\(\sum_{i=1}^{2n} X_i \sim N(2n\mu, 2n\sigma^2)\)</span>.</p>
+<p>Let <span class="math inline">\(\bar{Y}_n = \frac{1}{n} \sum_{i=1}^n Y_i\)</span> and <span class="math inline">\(\bar{X}_{2n} = \frac{1}{2n} \sum_{i=1}^{2n} X_i\)</span>. The condition <span class="math inline">\(\sum_{i=1}^n Y_i \geq \sum_{i=1}^{2n}X_i\)</span> can be rewritten as <span class="math inline">\(n \bar{Y}_n \geq 2n \bar{X}_{2n}\)</span> which is equivalent to <span class="math inline">\(\bar{Y}_n \geq 2 \bar{X}_{2n}\)</span>. We can also write this as: <span class="math inline">\(Pr(\sum_{i=1}^n Y_i \geq \sum_{i=1}^{2n}X_i) = Pr( \bar{Y}_n \geq 2 \bar{X}_{2n}) = Pr( \bar{Y}_n - 2 \bar{X}_{2n} \geq 0)\)</span> The random variables <span class="math inline">\(\bar{Y}_n\)</span> and <span class="math inline">\(\bar{X}_{2n}\)</span> are independent. The means of <span class="math inline">\(\bar{Y}_n\)</span> and <span class="math inline">\(\bar{X}_{2n}\)</span> are both equal to <span class="math inline">\(\mu\)</span>. The variance of <span class="math inline">\(\bar{Y}_n\)</span> is <span class="math inline">\(\sigma^2/n\)</span> and the variance of <span class="math inline">\(\bar{X}_{2n}\)</span> is <span class="math inline">\(\sigma^2/(2n)\)</span>. So <span class="math inline">\(\bar{Y}_n - 2 \bar{X}_{2n} \sim N(\mu - 2 \mu, \frac{\sigma^2}{n} + \frac{4\sigma^2}{2n}) = N(-\mu, \frac{3\sigma^2}{n})\)</span>. <span class="math inline">\(\bar{Y}_n - 2 \bar{X}_{2n}\)</span> has mean <span class="math inline">\(-\mu\)</span> and variance <span class="math inline">\(3\sigma^2/n\)</span>. Therefore <span class="math inline">\(Pr(\bar{Y}_n - 2 \bar{X}_{2n} \geq 0) = Pr(\frac{\bar{Y}_n - 2 \bar{X}_{2n} + \mu}{\sqrt{3\sigma^2/n}} \geq \frac{\mu}{\sqrt{3\sigma^2/n}})\)</span>. When <span class="math inline">\(n\)</span> is large, we have <span class="math inline">\(\frac{\bar{Y}_n - 2 \bar{X}_{2n} + \mu}{\sqrt{3\sigma^2/n}} \rightarrow N(0, 1)\)</span>. <span class="math inline">\(Pr(\bar{Y}_n - 2 \bar{X}_{2n} \geq 0) = 1 - \Phi(\frac{\mu}{\sqrt{3\sigma^2/n}})\)</span>, where <span class="math inline">\(\Phi\)</span> is the standard normal cdf. As <span class="math inline">\(n \rightarrow \infty\)</span>, this converges to 0. The easier way is to realize that <span class="math inline">\(Pr(\bar{Y}_n - 2 \bar{X}_{2n} \geq 0) = Pr( \frac{\bar{Y}_n - 2 \bar{X}_{2n} + \mu}{\sqrt{3\sigma^2/n}} &gt; \frac{\mu}{\sqrt{3\sigma^2/n}})\)</span>. As <span class="math inline">\(n\)</span> tends to <span class="math inline">\(\infty\)</span>, the right hand side goes to <span class="math inline">\(\infty\)</span>, and therefore the probability goes to 0.</p>
+<p>By Chebyshev’s inequality we have that <span class="math inline">\(Pr(\bar{Y}_n - 2 \bar{X}_{2n} &gt; 0) \leq Pr(\bar{Y}_n - 2 \bar{X}_{2n} + \mu &gt; \eta) \leq \frac{var(\bar{Y}_n - 2 \bar{X}_{2n})}{ \eta^2}\)</span> <span class="math inline">\(var(\bar{Y}_n - 2 \bar{X}_{2n}) = \frac{\sigma^2}{n} + \frac{4\sigma^2}{2n} = \frac{3\sigma^2}{n}\)</span>. <span class="math inline">\(\frac{3\sigma^2}{n \eta^2} \rightarrow 0\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>. Therefore <span class="math inline">\(Pr(\bar{Y}_n - 2 \bar{X}_{2n} &gt; 0) \rightarrow 0\)</span>. ### Exercise 38: Density Function of Cosine of Normal Random Variable Suppose that <span class="math inline">\(X \sim N(0, 1)\)</span>. Derive the density function of <span class="math inline">\(Y = \cos(X)\)</span> on [-1, 1].</p>
+</section>
+<section class="level3" id="solution-38">
+<h3 class="anchored" data-anchor-id="solution-38">Solution 38</h3>
+<p>This exercise deals with the transformation of a normal random variable using a non-monotonic function and using the properties of inverse functions. We have <span class="math inline">\(Y = \cos(X)\)</span> and we are looking for the density function of <span class="math inline">\(Y\)</span>. The key is that the function <span class="math inline">\(Y = \cos(X)\)</span> is not monotonic, therefore there are multiple values of <span class="math inline">\(X\)</span> that lead to the same value of <span class="math inline">\(Y\)</span>. The support of the random variable <span class="math inline">\(Y\)</span> is in the interval <span class="math inline">\([-1, 1]\)</span>. The support of <span class="math inline">\(X\)</span> is the real line. We can consider intervals of <span class="math inline">\(X\)</span> that map monotonically into the support of <span class="math inline">\(Y\)</span>. For example, consider the interval <span class="math inline">\(I_j=[j\pi, (j+1)\pi]\)</span>. When <span class="math inline">\(j\)</span> is even then <span class="math inline">\(\cos(x)\)</span> is monotonically decreasing in that interval, and if <span class="math inline">\(j\)</span> is odd then it is monotonically increasing. We have the formula <span class="math inline">\(f_Y(y) = \sum_{j=-\infty}^{\infty} \phi(g_j^{-1}(y)) \frac{d}{dy}g_j^{-1}(y)\)</span> where <span class="math inline">\(\phi(x)\)</span> is the normal density function, and <span class="math inline">\(g_j(x) = \cos(x)\)</span> and <span class="math inline">\(g_j^{-1}\)</span> is the inverse of the function for the interval <span class="math inline">\(I_j\)</span>. When <span class="math inline">\(j\)</span> is even we have <span class="math inline">\(g_j^{-1}(y) = arccos(y) + j\pi\)</span> and <span class="math inline">\(\frac{d}{dy} g_j^{-1}(y) = -\frac{1}{\sqrt{1-y^2}}\)</span> When <span class="math inline">\(j\)</span> is odd we have <span class="math inline">\(g_j^{-1}(y) = -arccos(y) + j\pi\)</span> and <span class="math inline">\(\frac{d}{dy} g_j^{-1}(y) = \frac{1}{\sqrt{1-y^2}}\)</span>. Therefore the density function is <span class="math inline">\(f_Y(y) = \sum_{j=-\infty}^{\infty} \phi(g_j^{-1}(y)) \frac{1}{\sqrt{1-y^2}}\)</span> if <span class="math inline">\(j\)</span> is even. <span class="math inline">\(f_Y(y) = \sum_{j=-\infty}^{\infty} \phi(g_j^{-1}(y)) \frac{-1}{\sqrt{1-y^2}}\)</span> if <span class="math inline">\(j\)</span> is odd. The density function is: <span class="math inline">\(f_Y(y) = \frac{1}{\sqrt{2\pi}} \sum_{j=-\infty}^{\infty} \frac{ \exp(-\frac{(arccos(y)+j\pi)^2}{2}) }{ \sqrt{1-y^2}}\)</span> where <span class="math inline">\(arccos(y)\)</span> is defined on the interval <span class="math inline">\([0,\pi]\)</span>. This can be written as <span class="math inline">\(f_Y(y) = \frac{1}{\sqrt{2\pi}} \sum_{j=-\infty}^{\infty} \frac{ \exp(-\frac{(arccos(y) + j\pi)^2}{2}) + \exp(-\frac{(-arccos(y) + (j+1)\pi)^2}{2}) }{ \sqrt{1-y^2}}.\)</span></p>
+</section>
+<section class="level3" id="exercise-39-eat-the-bear">
+<h3 class="anchored" data-anchor-id="exercise-39-eat-the-bear">Exercise 39: Eat the Bear</h3>
+<p>Sometimes you eat the bear and sometimes the bear eats you. Suppose that the outcome of a game is random and <span class="math inline">\(X = \begin{cases} A &amp; \text{with probability } \frac{1}{2} \\ \frac{1}{A} &amp; \text{with probability } \frac{1}{2} \end{cases}\)</span> where <span class="math inline">\(A &gt; 0\)</span>. Show that <span class="math inline">\(E(X) &gt; 1\)</span> but <span class="math inline">\(E(\log X) = 0\)</span>. The game is played <span class="math inline">\(n\)</span> times with each game being independent, and define the payoff to be <span class="math inline">\(Y_n = X_1 \times X_2 \times \dots \times X_n\)</span>, that is you bet everything you have each time. Calculate <span class="math inline">\(EY_n\)</span> and <span class="math inline">\(E\log(Y_n)\)</span>. Show that for any <span class="math inline">\(\epsilon\)</span> with <span class="math inline">\(0 &lt; \epsilon &lt; 1\)</span>: <span class="math inline">\(Pr(Y_n &lt; \epsilon) \rightarrow \frac{1}{2}\)</span> <span class="math inline">\(Pr(Y_n &gt; \frac{1}{\epsilon}) \rightarrow \frac{1}{2}\)</span></p>
+<p>How much would you be willing to pay to play this game? Simulate the game using some computer program such as matlab or R and show the distribution of the payoffs after n periods with n = 1, 10, 100.</p>
+</section>
+<section class="level3" id="solution-39">
+<h3 class="anchored" data-anchor-id="solution-39">Solution 39</h3>
+<p>This is an exercise about a game with a random payoff where the expected value is greater than 1 but the expected log payoff is equal to 0, which means that the expected value of the log payoff goes to zero in the long run. <span class="math inline">\(E(X) = \frac{1}{2} A + \frac{1}{2}\frac{1}{A} = \frac{A^2 + 1}{2A}\)</span>. <span class="math inline">\(E(X) &gt; 1\)</span> if and only if <span class="math inline">\(A^2 + 1 &gt; 2A\)</span> or <span class="math inline">\(A^2 - 2A + 1 &gt; 0\)</span> or <span class="math inline">\((A-1)^2 &gt; 0\)</span>. This condition is satisfied unless <span class="math inline">\(A=1\)</span>. <span class="math inline">\(E(\log X) = \frac{1}{2} \log A + \frac{1}{2} \log \frac{1}{A} = \frac{1}{2} \log A - \frac{1}{2}\log A = 0\)</span> <span class="math inline">\(E(Y_n) = E(X_1 \times X_2 \times \dots \times X_n) = E(X_1) \times E(X_2) \times \dots \times E(X_n)\)</span> because the games are independent. <span class="math inline">\(E(Y_n) = (E(X))^n = (\frac{A^2 + 1}{2A})^n \rightarrow \infty\)</span> because <span class="math inline">\(E(X) &gt; 1\)</span>. <span class="math inline">\(E(\log Y_n) = E(\log(X_1 \times X_2 \times \dots \times X_n)) = E(\sum_{i=1}^n \log X_i) = \sum_{i=1}^n E(\log X_i) = n E(\log X) = 0\)</span>. <span class="math inline">\(\log Y_n = \sum_{i=1}^n \log X_i\)</span>. By the central limit theorem <span class="math inline">\(\frac{1}{\sqrt{n}} \sum_{i=1}^n \log X_i \rightarrow N(0, \sigma^2)\)</span> where <span class="math inline">\(\sigma^2 = Var(\log X) = (\log A)^2\)</span>. Therefore <span class="math inline">\(\frac{\log Y_n}{\sqrt{n}} \rightarrow N(0, \sigma^2)\)</span> <span class="math inline">\(Pr(Y_n &lt; \epsilon) = Pr(\log Y_n &lt; \log \epsilon) = Pr(\frac{\log Y_n}{\sqrt{n}} &lt; \frac{\log \epsilon}{\sqrt{n}})\)</span> Since <span class="math inline">\(\frac{\log Y_n}{\sqrt{n}}\)</span> converges in distribution to a normal with mean 0, we have that <span class="math inline">\(\frac{\log \epsilon}{\sqrt{n}} \rightarrow 0\)</span> as <span class="math inline">\(n \rightarrow \infty\)</span>. This is a standard result that when a random variable goes to 0 in probability, and the random variable has a normal distribution, then the probability is equal to 1/2. Therefore <span class="math inline">\(Pr(Y_n &lt; \epsilon) \rightarrow \frac{1}{2}\)</span> <span class="math inline">\(Pr(Y_n &gt; \frac{1}{\epsilon}) = Pr(\log Y_n &gt; \log \frac{1}{\epsilon}) = Pr(\frac{\log Y_n}{\sqrt{n}} &gt; \frac{-\log \epsilon}{\sqrt{n}}) \rightarrow \frac{1}{2}\)</span>. How much would you be willing to pay to play this game? Risk neutral persons should be willing to pay more than 1, but since the expected value goes to <span class="math inline">\(\infty\)</span>, a risk neutral person should be willing to pay any amount. However, a risk-averse person should not be willing to pay much, since the log payoffs have an expected value of zero.</p>
+<p>We have that <span class="math inline">\(U(y) = \frac{y^{1-\eta} - 1}{1-\eta}\)</span>. <span class="math inline">\(E(U(Y_n)) = \frac{E(Y_n^{1-\eta}) - 1}{1-\eta}\)</span>. <span class="math inline">\(E(Y_n^{1-\eta}) = E((X_1 \dots X_n)^{1-\eta}) = (E(X^{1-\eta}))^n\)</span> <span class="math inline">\(= (\frac{1}{2} A^{1-\eta} + \frac{1}{2} A^{-(1-\eta)})^n\)</span> If <span class="math inline">\(\eta=0\)</span> we have risk neutrality. If <span class="math inline">\(\eta=1\)</span> we have log utility, in which case the expected utility goes to 0. If <span class="math inline">\(\eta&lt;1\)</span> then we have that the expected utility goes to infinity, so the agent should be willing to pay a lot. If <span class="math inline">\(\eta&gt;1\)</span> then the expected utility goes to zero, so the agent should be willing to pay very little. ### Exercise 40: Utility Function and Random Payoff Then <span class="math inline">\(EU(Y_n) = \frac{E(X_1 \times \dots \times X_n)^{1-\eta} - 1}{1 - \eta}\)</span> <span class="math inline">\(= \frac{E(X^{1-\eta})^n - 1}{1-\eta}\)</span> <span class="math inline">\(= \frac{\left(\frac{1}{2}(A^{1-\eta} + A^{-(1-\eta)}) \right)^n - 1}{1-\eta}\)</span> It depends on whether <span class="math inline">\(\frac{1}{2}(A^{1-\eta} + A^{-(1-\eta)}) &lt; 1\)</span> or <span class="math inline">\(\frac{1}{2}(A^{1-\eta} + A^{-(1-\eta)}) &gt; 1\)</span>. We have that: <span class="math inline">\(\frac{1}{2}(A^{1-\eta} + A^{-(1-\eta)}) \geq 1\)</span> if and only if <span class="math inline">\(A^{1-\eta} + A^{\eta-1} \geq 2\)</span> This holds only if <span class="math inline">\(A = 1\)</span> or if <span class="math inline">\(A=1\)</span> and <span class="math inline">\(\eta=1\)</span>. Otherwise the agent would not be willing to pay anything. We have for any <span class="math inline">\(\epsilon &gt; 0\)</span> <span class="math inline">\(Pr(Y_n \leq \epsilon) = Pr(\frac{1}{\sqrt{n}} \log Y_n \leq \frac{1}{\sqrt{n}} \log \epsilon) \rightarrow Pr(N(0,\sigma^2) \leq 0) = 1/2\)</span></p>
+</section>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+
+</div> <!-- /content -->
+<footer class="footer">
+<div class="nav-footer">
+<div class="nav-footer-left">
+<p>Author: Peter Fuleky</p>
+</div>
+<div class="nav-footer-center">
+       
+    </div>
+<div class="nav-footer-right">
+<p>This book was built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
+</div>
+</footer>
+</body></html>
